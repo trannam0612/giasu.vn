@@ -92,7 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               decoration: InputDecoration(
                 errorText: widget.error,
                 hintText: widget.hintText,
-                hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey8C686F7A),
+                hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4.0),
                   borderSide: BorderSide(

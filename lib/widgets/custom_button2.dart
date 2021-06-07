@@ -9,7 +9,7 @@ class CustomButton2 extends StatelessWidget {
   final String title;
   final VoidCallback onPressed;
 
-  const CustomButton2({Key key, this.color = AppColors.primary2169A8, this.title, this.textColor = AppColors.whiteFFFFFF, this.onPressed}) : super
+  const CustomButton2({Key key, this.color = AppColors.primary1574D0, this.title, this.textColor = AppColors.whiteFFFFFF, this.onPressed}) : super
       (key: key);
 
   @override
@@ -18,7 +18,7 @@ class CustomButton2 extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: color, // background
         onPrimary: color,
-        // padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
+        padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
       ),
       onPressed: onPressed,
       child: Text(

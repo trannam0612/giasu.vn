@@ -2,6 +2,20 @@ class Images {
   static const String _img_ = 'assets/images/';
 
   //svg
+  static const String ic_search = _img_ + 'ic_search.svg';
+  static const String ic_menu = _img_ + 'ic_menu.svg';
+  static const String ic_add_friend = _img_ + 'ic_add_friend.svg';
+  static const String ic_like = _img_ + 'ic_like.svg';
+  static const String ic_document = _img_ + 'ic_document.svg';
+  static const String ic_presentation = _img_ + 'ic_presentation.svg';
+  static const String ic_book = _img_ + 'ic_book.svg';
+  static const String ic_location = _img_ + 'ic_location.svg';
+  static const String ic_save = _img_ + 'ic_save.svg';
+  static const String ic_saved = _img_ + 'ic_saved.svg';
+  static const String ic_money = _img_ + 'ic_money.svg';
+
+
+
   static const String ic_check_blue = _img_ + 'ic_check_blue.svg';
   static const String ic_uncheck_blue = _img_ + 'ic_uncheck_blue.svg';
   static const String ic_add_image = _img_ + 'ic_add_image.svg';
@@ -25,7 +39,6 @@ class Images {
   static const String ic_message = _img_ + 'ic_message.svg';
   static const String ic_notifications = _img_ + 'ic_notifications.svg';
   static const String ic_notifications_2 = _img_ + 'ic_notifications_2.svg';
-  static const String ic_search = _img_ + 'ic_search.svg';
   static const String ic_seen_message = _img_ + 'ic_seen_message.svg';
   static const String ic_send = _img_ + 'ic_send.svg';
   static const String ic_user = _img_ + 'ic_user.svg';
@@ -49,7 +62,6 @@ class Images {
   static const String ic_double_check = _img_ + 'ic_double_check.svg';
   static const String ic_send_2 = _img_ + 'ic_send_2.svg';
   static const String star = _img_ + 'star.svg';
-  static const String ic_save = _img_ + 'ic_save.svg';
 
   //PNG
   static const String img_bg_bottom = _img_ + 'img_bg_bottom.png';
@@ -64,6 +76,7 @@ class Images {
   static const String img_welcome_giasu = _img_ + 'img_welcome_giasu.png';
   static const String img_welcome_phuhuynh = _img_ + 'img_welcome_phuhuynh.png';
   static const String bg_background = _img_ + 'bg_background.png';
+  static const String bg_background_container = _img_ + 'bg_background_container.png';
   static const String img_giasu_welcome = _img_ + 'img_giasu_welcome.png';
   static const String img_phuhuynh_welcome = _img_ + 'img_phuhuynh_welcome.png';
   static const String img_confirm_success = _img_ + 'img_confirm_success.png';

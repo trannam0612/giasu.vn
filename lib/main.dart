@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/screen/home/home_screen.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'common/theme/app_colors.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.primary2169A8,
+      statusBarColor: AppColors.primary1574D0,
     ));
 
     return GetMaterialApp(
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       // getPages: AppPages.routes,
-      home: LoginScreen(),
+      home: HomeScreen(),
     );
   }
 }

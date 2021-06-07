@@ -19,7 +19,7 @@ class CustomButton1 extends StatelessWidget {
         primary: backColor, // background
         onPrimary: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
-        side: BorderSide(width: 1, color: color),
+        side: BorderSide(width: 0.5, color: color),
       ),
       onPressed: onPressed,
       child: Text(
