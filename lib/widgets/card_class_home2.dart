@@ -26,12 +26,12 @@ class CardClassHome2 extends StatelessWidget {
   final String numberSuggest;
   final bool save;
   final bool hasButton;
-  const CardClassHome2({Key key, this.title, this.time, this.fee, this.subject, this.address, this.classId, this.methodTeach, this.numberSuggest, this.save, this.hasButton}) : super(key: key);
+  final bool hasButtonSave;
+  const CardClassHome2({Key key, this.title, this.time, this.fee, this.subject, this.address, this.classId, this.methodTeach, this.numberSuggest, this.save, this.hasButton, this.hasButtonSave = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
       padding: EdgeInsets.all(AppDimens.padding12),
       width: AppDimens.width,
       decoration: BoxDecoration(
@@ -52,7 +52,7 @@ class CardClassHome2 extends StatelessWidget {
                       color: AppColors.primary4C5BD4),
                 ),
               ),
-              save ? SvgPicture.asset(Images.ic_saved,width: 20, height: 20,) : SvgPicture.asset(Images.ic_save,width: 20, height: 20,),
+              hasButtonSave ? save ? SvgPicture.asset(Images.ic_saved,width: 20, height: 20,) : SvgPicture.asset(Images.ic_save,width: 20, height: 20,) : Container(),
             ],
           ),
           SizedBox(height: AppDimens.space6,),
@@ -136,27 +136,32 @@ class CardClassHome2 extends StatelessWidget {
               ),
             ],
           ),
-          hasButton ? Row(
+          hasButton ? Column(
             children: [
-              Spacer(),
-              CustomButton2(
-                title: 'Đồng ý',
-                color: AppColors.primary4C5BD4,
-                onPressed: () {
+              SizedBox(height: AppDimens.space16,),
+              Row(
+                children: [
+                  Spacer(),
+                  CustomButton2(
+                    title: 'Đồng ý',
+                    color: AppColors.primary4C5BD4,
+                    onPressed: () {
 
-                },
-                textColor: AppColors.whiteFFFFFF,
+                    },
+                    textColor: AppColors.whiteFFFFFF,
+                  ),
+                  SizedBox(width: AppDimens.space20,),
+                  CustomButton1(
+                    textColor: AppColors.black,
+                    onPressed: () {
+
+                    },
+                    color: AppColors.grey747474,
+                    title: 'Từ chối',
+                    backColor: AppColors.whiteFFFFFF,
+                  )
+                ],
               ),
-              SizedBox(width: AppDimens.space20,),
-              CustomButton1(
-                textColor: AppColors.black,
-                onPressed: () {
-
-                },
-                color: AppColors.grey747474,
-                title: 'Từ chối',
-                backColor: AppColors.whiteFFFFFF,
-              )
             ],
           ) : Container()
         ],

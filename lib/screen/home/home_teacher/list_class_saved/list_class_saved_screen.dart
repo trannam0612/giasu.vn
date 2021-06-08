@@ -1,19 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
-import '../../../../common/images.dart';
-import '../../../../common/theme/app_colors.dart';
-import '../../../../common/theme/app_colors.dart';
-
-class ListClassInviteScreen extends StatelessWidget {
-  const ListClassInviteScreen({Key key}) : super(key: key);
+class ListClassSavedScreen extends StatelessWidget {
+  const ListClassSavedScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class ListClassInviteScreen extends StatelessWidget {
       backgroundColor: AppColors.greyf6f6f6,
       appBar: AppBar(
         title: Text(
-          'Lớp mời bạn dạy',
+          'Lớp bạn đã lưu',
           style: AppTextStyles.regularW500(context,
               size: AppDimens.textSize24,
               lineHeight: AppDimens.textSize28,
@@ -156,7 +152,7 @@ class ListClassInviteScreen extends StatelessWidget {
                       children: [
                         Spacer(),
                         CustomButton2(
-                          title: 'Đồng ý',
+                          title: 'Đề nghị dạy',
                           color: AppColors.primary4C5BD4,
                           onPressed: () {
 
@@ -170,7 +166,7 @@ class ListClassInviteScreen extends StatelessWidget {
 
                           },
                           color: AppColors.grey747474,
-                          title: 'Từ chối',
+                          title: 'Huỷ lưu',
                           backColor: AppColors.whiteFFFFFF,
                         )
                       ],
