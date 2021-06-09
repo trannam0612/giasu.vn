@@ -124,8 +124,9 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: (value) {
                           controller.onChanged();
                         },
-                        activeTrackColor: AppColors.grey747474,
-                        activeColor: AppColors.green5DC22D,
+                        activeTrackColor: AppColors.whiteFFFFFF,
+                        activeColor: AppColors.primary4C5BD4,
+                        inactiveTrackColor: AppColors.grey747474,
                       ),
 
                     )
