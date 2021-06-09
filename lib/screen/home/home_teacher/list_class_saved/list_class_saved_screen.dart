@@ -151,23 +151,31 @@ class ListClassSavedScreen extends StatelessWidget {
                     Row(
                       children: [
                         Spacer(),
-                        CustomButton2(
-                          title: 'Đề nghị dạy',
-                          color: AppColors.primary4C5BD4,
-                          onPressed: () {
+                        SizedBox(
+                          width: 100,
+                          height: 35,
+                          child: CustomButton2(
+                            title: 'Đề nghị dạy',
+                            color: AppColors.primary4C5BD4,
+                            onPressed: () {
 
-                          },
-                          textColor: AppColors.whiteFFFFFF,
+                            },
+                            textColor: AppColors.whiteFFFFFF,
+                          ),
                         ),
                         SizedBox(width: AppDimens.space20,),
-                        CustomButton1(
-                          textColor: AppColors.black,
-                          onPressed: () {
+                        SizedBox(
+                          width: 100,
+                          height: 35,
+                          child: CustomButton1(
+                            textColor: AppColors.black,
+                            onPressed: () {
 
-                          },
-                          color: AppColors.grey747474,
-                          title: 'Huỷ lưu',
-                          backColor: AppColors.whiteFFFFFF,
+                            },
+                            color: AppColors.grey747474,
+                            title: 'Huỷ lưu',
+                            backColor: AppColors.whiteFFFFFF,
+                          ),
                         )
                       ],
                     )

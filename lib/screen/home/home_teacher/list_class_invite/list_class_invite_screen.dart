@@ -155,23 +155,31 @@ class ListClassInviteScreen extends StatelessWidget {
                     Row(
                       children: [
                         Spacer(),
-                        CustomButton2(
-                          title: 'Đồng ý',
-                          color: AppColors.primary4C5BD4,
-                          onPressed: () {
+                        SizedBox(
+                          height: 35,
+                          width: 90,
+                          child: CustomButton2(
+                            title: 'Đồng ý',
+                            color: AppColors.primary4C5BD4,
+                            onPressed: () {
 
-                          },
-                          textColor: AppColors.whiteFFFFFF,
+                            },
+                            textColor: AppColors.whiteFFFFFF,
+                          ),
                         ),
                         SizedBox(width: AppDimens.space20,),
-                        CustomButton1(
-                          textColor: AppColors.black,
-                          onPressed: () {
+                        SizedBox(
+                          height: 35,
+                          width: 90,
+                          child: CustomButton1(
+                            textColor: AppColors.black,
+                            onPressed: () {
 
-                          },
-                          color: AppColors.grey747474,
-                          title: 'Từ chối',
-                          backColor: AppColors.whiteFFFFFF,
+                            },
+                            color: AppColors.grey747474,
+                            title: 'Từ chối',
+                            backColor: AppColors.whiteFFFFFF,
+                          ),
                         )
                       ],
                     )

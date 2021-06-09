@@ -43,8 +43,8 @@ class CustomSearchTextField extends StatelessWidget {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: AppDimens.padding16, right: AppDimens.padding16),
             filled: true,
-            hintText: ('Tìm Kiếm'),
-            hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.greyAAAAAA),
+            hintText: ('Tìm kiếm'),
+            hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.textSize16, color: AppColors.greyAAAAAA),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: AppColors.whiteFFFFFF, width: 1.0),
@@ -56,24 +56,24 @@ class CustomSearchTextField extends StatelessWidget {
             prefixIcon: GestureDetector(
               onTap: onPressed,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 5),
+                padding: EdgeInsets.all(8),
                 child: SvgPicture.asset(
                   Images.ic_search,
                   color: AppColors.greyAAAAAA,
-                  height: 20,
-                  width: 20,
+                  height: 14,
+                  width: 14,
                 ),
               ),
             ),
           suffixIcon:GestureDetector(
             onTap: onPressed,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 5),
+              padding: EdgeInsets.all(8),
               child: SvgPicture.asset(
                 Images.ic_menu,
-                color: AppColors.greyAAAAAA,
-                height: 20,
-                width: 20,
+                color: AppColors.black,
+                height: 14,
+                width: 14,
               ),
             ),
           )

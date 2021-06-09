@@ -23,7 +23,16 @@ class CardClassHome extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: AppColors.whiteFFFFFF,
           border: Border.all(
-              color: AppColors.primary4C5BD4, width: 0.15)),
+              color: AppColors.primary4C5BD4, width: 0.25),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 4,
+              offset:
+              Offset(0, 3), // changes position of shadow
+            ),
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

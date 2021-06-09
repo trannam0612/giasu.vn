@@ -9,8 +9,9 @@ class CustomButton1 extends StatelessWidget {
   final Color backColor;
   final String title;
   final VoidCallback onPressed;
+  final bool hasRadius;
 
-  const CustomButton1({Key key, this.color, this.title, this.textColor, this.onPressed, this.backColor = AppColors.whiteFFFFFF}) : super(key: key);
+  const CustomButton1({Key key, this.color, this.title, this.textColor, this.onPressed, this.backColor = AppColors.whiteFFFFFF, this.hasRadius = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,17 @@ class CustomButton1 extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: backColor, // background
         onPrimary: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
+        // padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
         side: BorderSide(width: 0.5, color: color),
+          shape: hasRadius ? RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10.0),
+          ) : null
       ),
       onPressed: onPressed,
       child: Text(
         title,
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: textColor),
+
       ),
     );
   }

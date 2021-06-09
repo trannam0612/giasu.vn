@@ -7,7 +7,7 @@ import 'package:giasu_vn/screen/home/home_teacher/list_class_invite/list_class_i
 import 'package:giasu_vn/screen/home/home_teacher/list_class_saved/list_class_saved_screen.dart';
 import 'package:giasu_vn/screen/home/home_teacher/list_class_suggest/list_class_suggest_screen.dart';
 import 'package:giasu_vn/screen/home/home_teacher/list_class_teaching/list_class_teaching_screen.dart';
-import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 
@@ -128,8 +128,8 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => Get.to(ListClassInviteScreen()),
                         child: Container(
-                          width: 90,
-                          height: 110,
+                          width: width * 0.2,
+                          height: height * 0.13,
                           padding: EdgeInsets.symmetric(
                               vertical: AppDimens.space10,
                               horizontal: AppDimens.space6),
@@ -176,8 +176,8 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => Get.to(ListClassTeachingScreen()),
                         child: Container(
-                          width: 90,
-                          height: 110,
+                          width: width * 0.2,
+                          height: height * 0.13,
                           padding: EdgeInsets.symmetric(
                               vertical: AppDimens.space10,
                               horizontal: AppDimens.space6),
@@ -224,8 +224,8 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => Get.to(ListClassSuggestScreen()),
                         child: Container(
-                          width: 90,
-                          height: 110,
+                          width: width * 0.2,
+                          height: height * 0.13,
                           padding: EdgeInsets.symmetric(
                               vertical: AppDimens.space10,
                               horizontal: AppDimens.space6),
@@ -272,8 +272,8 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => Get.to(ListClassSavedScreen()),
                         child: Container(
-                          width: 90,
-                          height: 110,
+                          width: width * 0.2,
+                          height: height * 0.13,
                           padding: EdgeInsets.symmetric(
                               vertical: AppDimens.space10,
                               horizontal: AppDimens.space6),
@@ -342,14 +342,14 @@ class HomeScreen extends StatelessWidget {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => InkWell(
-                          onTap: () => Get.to(InformationClassScreen()),
-                          child: CardClassHome(
-                            title: 'Tìm gia sư dạy tiếng anh',
-                            subject: 'Tiếng Anh',
-                            address: 'Thanh Xuân, Hà Nội',
-                            time: '1 phút trước.',
-                          ),
-                        ),
+                              onTap: () => Get.to(InformationClassScreen()),
+                              child: CardClassHome(
+                                title: 'Tìm gia sư dạy tiếng anh',
+                                subject: 'Tiếng Anh',
+                                address: 'Thanh Xuân, Hà Nội',
+                                time: '1 phút trước.',
+                              ),
+                            ),
                         separatorBuilder: (context, index) => SizedBox(
                               width: AppDimens.space10,
                             ),
@@ -390,7 +390,7 @@ class HomeScreen extends StatelessWidget {
                                 hasButton: false,
                               ),
                             ),
-                        itemCount: 5),
+                        itemCount: 10),
                   )
                 ],
               ),

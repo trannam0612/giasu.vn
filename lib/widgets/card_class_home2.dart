@@ -27,7 +27,21 @@ class CardClassHome2 extends StatelessWidget {
   final bool save;
   final bool hasButton;
   final bool hasButtonSave;
-  const CardClassHome2({Key key, this.title, this.time, this.fee, this.subject, this.address, this.classId, this.methodTeach, this.numberSuggest, this.save, this.hasButton, this.hasButtonSave = true}) : super(key: key);
+
+  const CardClassHome2(
+      {Key key,
+      this.title,
+      this.time,
+      this.fee,
+      this.subject,
+      this.address,
+      this.classId,
+      this.methodTeach,
+      this.numberSuggest,
+      this.save,
+      this.hasButton,
+      this.hasButtonSave = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +49,16 @@ class CardClassHome2 extends StatelessWidget {
       padding: EdgeInsets.all(AppDimens.padding12),
       width: AppDimens.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppDimens.space16),
-        color: AppColors.whiteFFFFFF,
-      ),
+          borderRadius: BorderRadius.circular(AppDimens.space16),
+          color: AppColors.whiteFFFFFF,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 4 ,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,17 +73,32 @@ class CardClassHome2 extends StatelessWidget {
                       color: AppColors.primary4C5BD4),
                 ),
               ),
-              hasButtonSave ? save ? SvgPicture.asset(Images.ic_saved,width: 20, height: 20,) : SvgPicture.asset(Images.ic_save,width: 20, height: 20,) : Container(),
+              hasButtonSave
+                  ? save
+                      ? SvgPicture.asset(
+                          Images.ic_saved,
+                          width: 20,
+                          height: 20,
+                        )
+                      : SvgPicture.asset(
+                          Images.ic_save,
+                          width: 20,
+                          height: 20,
+                        )
+                  : Container(),
             ],
           ),
-          SizedBox(height: AppDimens.space6,),
+          SizedBox(
+            height: AppDimens.space6,
+          ),
           Text(
             time,
             style: AppTextStyles.regular(context,
-                size: AppDimens.textSize16,
-                color: AppColors.greyAAAAAA),
+                size: AppDimens.textSize16, color: AppColors.greyAAAAAA),
           ),
-          SizedBox(height: AppDimens.space6,),
+          SizedBox(
+            height: AppDimens.space6,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -73,29 +109,69 @@ class CardClassHome2 extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(Images.ic_money, width: 16, height: 16,),
-                      SizedBox(width: AppDimens.space8,),
-                      Text(fee, style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                      SvgPicture.asset(
+                        Images.ic_money,
+                        width: 16,
+                        height: 16,
+                      ),
+                      SizedBox(
+                        width: AppDimens.space8,
+                      ),
+                      Text(
+                        fee,
+                        style: AppTextStyles.regular(
+                          context,
+                          size: AppDimens.textSize16,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: AppDimens.space6,),
+                  SizedBox(
+                    height: AppDimens.space6,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(Images.ic_book, width: 16, height: 16,),
-                      SizedBox(width: AppDimens.space8,),
-                      Text(subject, style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                      SvgPicture.asset(
+                        Images.ic_book,
+                        width: 16,
+                        height: 16,
+                      ),
+                      SizedBox(
+                        width: AppDimens.space8,
+                      ),
+                      Text(
+                        subject,
+                        style: AppTextStyles.regular(
+                          context,
+                          size: AppDimens.textSize16,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: AppDimens.space6,),
+                  SizedBox(
+                    height: AppDimens.space6,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(Images.ic_location, width: 16, height: 16,),
-                      SizedBox(width: AppDimens.space8,),
-                      Text(address, style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                      SvgPicture.asset(
+                        Images.ic_location,
+                        width: 16,
+                        height: 16,
+                      ),
+                      SizedBox(
+                        width: AppDimens.space8,
+                      ),
+                      Text(
+                        address,
+                        style: AppTextStyles.regular(
+                          context,
+                          size: AppDimens.textSize16,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -107,63 +183,107 @@ class CardClassHome2 extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('Mã lớp:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                      SizedBox(width: AppDimens.space4,),
-                      Text(classId, style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                      Text(
+                        'Mã lớp:',
+                        style: AppTextStyles.regular(context,
+                            size: AppDimens.textSize16,
+                            color: AppColors.grey747474),
+                      ),
+                      SizedBox(
+                        width: AppDimens.space4,
+                      ),
+                      Text(
+                        classId,
+                        style: AppTextStyles.regular(
+                          context,
+                          size: AppDimens.textSize16,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(height: AppDimens.space6,),
+                  SizedBox(
+                    height: AppDimens.space6,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('Hình thức dạy:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                      SizedBox(width: AppDimens.space6,),
-                      Text(methodTeach, style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.green5DC22D),),
+                      Text(
+                        'Hình thức dạy:',
+                        style: AppTextStyles.regular(context,
+                            size: AppDimens.textSize16,
+                            color: AppColors.grey747474),
+                      ),
+                      SizedBox(
+                        width: AppDimens.space6,
+                      ),
+                      Text(
+                        methodTeach,
+                        style: AppTextStyles.regular(context,
+                            size: AppDimens.textSize16,
+                            color: AppColors.green5DC22D),
+                      ),
                     ],
                   ),
-                  SizedBox(height: AppDimens.space6,),
+                  SizedBox(
+                    height: AppDimens.space6,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('Đề nghị dạy:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                      SizedBox(width: AppDimens.space8,),
-                      Text(numberSuggest, style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                      Text(
+                        'Đề nghị dạy:',
+                        style: AppTextStyles.regular(context,
+                            size: AppDimens.textSize16,
+                            color: AppColors.grey747474),
+                      ),
+                      SizedBox(
+                        width: AppDimens.space8,
+                      ),
+                      Text(
+                        numberSuggest,
+                        style: AppTextStyles.regular(
+                          context,
+                          size: AppDimens.textSize16,
+                        ),
+                      ),
                     ],
                   ),
                 ],
               ),
             ],
           ),
-          hasButton ? Column(
-            children: [
-              SizedBox(height: AppDimens.space16,),
-              Row(
-                children: [
-                  Spacer(),
-                  CustomButton2(
-                    title: 'Đồng ý',
-                    color: AppColors.primary4C5BD4,
-                    onPressed: () {
-
-                    },
-                    textColor: AppColors.whiteFFFFFF,
-                  ),
-                  SizedBox(width: AppDimens.space20,),
-                  CustomButton1(
-                    textColor: AppColors.black,
-                    onPressed: () {
-
-                    },
-                    color: AppColors.grey747474,
-                    title: 'Từ chối',
-                    backColor: AppColors.whiteFFFFFF,
-                  )
-                ],
-              ),
-            ],
-          ) : Container()
+          hasButton
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: AppDimens.space16,
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        CustomButton2(
+                          title: 'Đồng ý',
+                          color: AppColors.primary4C5BD4,
+                          onPressed: () {},
+                          textColor: AppColors.whiteFFFFFF,
+                        ),
+                        SizedBox(
+                          width: AppDimens.space20,
+                        ),
+                        CustomButton1(
+                          textColor: AppColors.black,
+                          onPressed: () {},
+                          color: AppColors.grey747474,
+                          title: 'Từ chối',
+                          backColor: AppColors.whiteFFFFFF,
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              : Container()
         ],
       ),
     );
