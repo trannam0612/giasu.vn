@@ -8,8 +8,9 @@ class CustomButton2 extends StatelessWidget {
   final Color textColor;
   final String title;
   final VoidCallback onPressed;
+  final bool hasRadius;
 
-  const CustomButton2({Key key, this.color = AppColors.primary2169A8, this.title, this.textColor = AppColors.whiteFFFFFF, this.onPressed}) : super
+  const CustomButton2({Key key, this.color = AppColors.primary1574D0, this.title, this.textColor = AppColors.whiteFFFFFF, this.onPressed, this.hasRadius = false,}) : super
       (key: key);
 
   @override
@@ -18,12 +19,15 @@ class CustomButton2 extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         primary: color, // background
         onPrimary: color,
-        // padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30, vertical: AppDimens.smallPadding10),
+        // padding: EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.smallPadding10),
+          shape: hasRadius ? RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10.0),
+          ) : null
       ),
       onPressed: onPressed,
       child: Text(
         title,
-        style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: textColor),
+        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: textColor),
       ),
     );
   }

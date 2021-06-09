@@ -4,6 +4,8 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+
+import '../common/theme/app_dimens.dart';
 class CustomSearchTextField extends StatelessWidget {
   final controller;
   final ValueChanged<String> onChanged;
@@ -17,16 +19,18 @@ class CustomSearchTextField extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(top:8),
+      width: width*0.6,
+      height: 36,
+      // margin: EdgeInsets.only(top:8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: AppColors.whiteFFFFFF,
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary2169A8.withOpacity(0.15),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: Offset(4, 0), // changes position of shadow
+            color: AppColors.primary1574D0.withOpacity(0.15),
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: Offset(2, 2), // changes position of shadow
           ),
         ],
       ),
@@ -39,8 +43,8 @@ class CustomSearchTextField extends StatelessWidget {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: AppDimens.padding16, right: AppDimens.padding16),
             filled: true,
-            hintText: ('Nhập từ khóa tìm kiếm'),
-            hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize12, color: AppColors.grey8C686F7A),
+            hintText: ('Tìm kiếm'),
+            hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.textSize16, color: AppColors.greyAAAAAA),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: AppColors.whiteFFFFFF, width: 1.0),
@@ -49,18 +53,31 @@ class CustomSearchTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               borderSide: BorderSide(color: AppColors.whiteFFFFFF, width: 1.0),
             ),
-            suffixIcon: GestureDetector(
+            prefixIcon: GestureDetector(
               onTap: onPressed,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 13),
+                padding: EdgeInsets.all(8),
                 child: SvgPicture.asset(
                   Images.ic_search,
-                  color: AppColors.grey686F7A,
-                  height: 16,
-                  width: 16,
+                  color: AppColors.greyAAAAAA,
+                  height: 14,
+                  width: 14,
                 ),
               ),
-            )),
+            ),
+          suffixIcon:GestureDetector(
+            onTap: onPressed,
+            child: Container(
+              padding: EdgeInsets.all(8),
+              child: SvgPicture.asset(
+                Images.ic_menu,
+                color: AppColors.black,
+                height: 14,
+                width: 14,
+              ),
+            ),
+          )
+        ),
       ),
     );
   }
