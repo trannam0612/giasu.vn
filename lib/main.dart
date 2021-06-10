@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:giasu_vn/screen/home/home_teacher/home_teacher_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       // getPages: AppPages.routes,
-      home: SettingsScreen(),
+      home: HomeAfterScreen(),
     );
   }
 }

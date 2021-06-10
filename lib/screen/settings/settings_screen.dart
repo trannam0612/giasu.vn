@@ -99,12 +99,16 @@ class SettingsScreen extends StatelessWidget {
                     color: AppColors.whiteFFFFFF,
                     borderRadius: BorderRadius.circular(5)),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Cài đặt',
-                      style: AppTextStyles.regularW700(
-                        context,
-                        size: AppDimens.textSize18,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: AppDimens.space16),
+                      child: Text(
+                        'Cài đặt',
+                        style: AppTextStyles.regularW700(
+                          context,
+                          size: AppDimens.textSize18,
+                        ),
                       ),
                     ),
                     ListTile(
@@ -120,15 +124,73 @@ class SettingsScreen extends StatelessWidget {
                             color: AppColors.greyAAAAAA),
                       ),
                       trailing: Switch(
-                        value: controller.isSwitched,
+                        value: controller.isSwitchedNotification,
                         onChanged: (value) {
-                          controller.onChanged();
+                          controller.onChangedNotification();
                         },
-                        activeTrackColor: AppColors.whiteFFFFFF,
+                        activeTrackColor: AppColors.greyAAAAAA,
                         activeColor: AppColors.primary4C5BD4,
-                        inactiveTrackColor: AppColors.grey747474,
+                        inactiveTrackColor: AppColors.greyAAAAAA,
                       ),
 
+                    ),
+                    Divider(thickness: 0.25, color: AppColors.greyAAAAAA,),
+                    ListTile(
+                      title: Text(
+                        'Cài đặt tin nhắn',
+                        style: AppTextStyles.regularW400(context,
+                            size: AppDimens.textSize16),
+                      ),
+                      subtitle: Text(
+                        ' Âm thanh tin nhắn',
+                        style: AppTextStyles.regularW400(context,
+                            size: AppDimens.textSize16,
+                            color: AppColors.greyAAAAAA),
+                      ),
+                      trailing: Switch(
+                        value: controller.isSwitchedMessage,
+                        onChanged: (value) {
+                          controller.onChangedMessage();
+                        },
+                        activeTrackColor: AppColors.greyAAAAAA,
+                        activeColor: AppColors.primary4C5BD4,
+                        inactiveTrackColor: AppColors.greyAAAAAA,
+                      ),
+                    ),
+                    Divider(thickness: 0.25, color: AppColors.greyAAAAAA,),
+                    ListTile(
+                      title: Text(
+                        'Cài đặt chế độ rung',
+                        style: AppTextStyles.regularW400(context,
+                            size: AppDimens.textSize16),
+                      ),
+                      trailing: Switch(
+                        value: controller.isSwitchedVibrate,
+                        onChanged: (value) {
+                          controller.onChangedVibrate();
+                        },
+                        activeTrackColor: AppColors.greyAAAAAA,
+                        activeColor: AppColors.primary4C5BD4,
+                        inactiveTrackColor: AppColors.greyAAAAAA,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space16),
+                      child: Text(
+                        'Chung',
+                        style: AppTextStyles.regularW700(
+                          context,
+                          size: AppDimens.textSize18,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(AppDimens.space16),
+                      child: Text('Đổi mật khẩu', style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(AppDimens.space16),
+                      child: Text('Đăng xuất', style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),),
                     )
                   ],
                 ),
