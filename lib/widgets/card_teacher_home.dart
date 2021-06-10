@@ -64,7 +64,7 @@ class CardTeacherHome extends StatelessWidget {
                   SizedBox(
                     height: AppDimens.space6,
                   ),
-                  RatingBar.builder(
+                  RatingBar(
                     initialRating: rate.toDouble(),
                     itemSize: 12,
                     minRating: 1,
@@ -73,9 +73,9 @@ class CardTeacherHome extends StatelessWidget {
                     itemCount: 5,
                     ignoreGestures: true,
                     itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                    itemBuilder: (context, _) => SvgPicture.asset(
-                      Images.ic_star,
-                      color: Colors.amber,
+                    ratingWidget: RatingWidget(
+                      full: SvgPicture.asset(Images.ic_star),
+                      empty: SvgPicture.asset(Images.ic_star_border),
                     ),
                     unratedColor: AppColors.greyAAAAAA,
                     onRatingUpdate: (rating) {

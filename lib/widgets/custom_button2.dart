@@ -22,7 +22,9 @@ class CustomButton2 extends StatelessWidget {
         // padding: EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.smallPadding10),
           shape: hasRadius ? RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0),
-          ) : null
+          ) : RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(5.0),
+          )
       ),
       onPressed: onPressed,
       child: Text(

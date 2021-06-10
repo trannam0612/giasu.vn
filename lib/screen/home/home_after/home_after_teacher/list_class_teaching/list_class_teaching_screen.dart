@@ -10,7 +10,26 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class ListClassTeachingScreen extends StatelessWidget {
-  const ListClassTeachingScreen({Key key}) : super(key: key);
+  final String title;
+  final String fee;
+  final String subject;
+  final String address;
+  final String classId;
+  final String methodTeach;
+  final String date;
+  final String status;
+
+  const ListClassTeachingScreen({
+    Key key,
+    this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
+    this.fee = '300.000 vnđ/giờ',
+    this.subject = 'Hóa học lớp 10',
+    this.address = 'Thanh Xuân, Hà Nội',
+    this.classId = '01234',
+    this.methodTeach = 'Gặp mặt',
+    this.date = '05/07/2019',
+    this.status = 'Đang dạy',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +84,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn...',
+                                title,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.regularW500(context,
                                     size: AppDimens.textSize18,
@@ -96,7 +115,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      '300.000 vnđ/giờ',
+                                      fee,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -120,7 +139,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Hóa học lớp 10',
+                                      subject,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -144,7 +163,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Thanh Xuân, Hà Nội',
+                                      address,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -171,7 +190,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space4,
                                     ),
                                     Text(
-                                      '05/07/2019',
+                                      date,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -196,9 +215,11 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space6,
                                     ),
                                     Text(
-                                      '01234',
-                                      style: AppTextStyles.regular(context,
-                                          size: AppDimens.textSize16,),
+                                      classId,
+                                      style: AppTextStyles.regular(
+                                        context,
+                                        size: AppDimens.textSize16,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -219,12 +240,10 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Gặp mặt',
-                                      style: AppTextStyles.regular(
-                                        context,
-                                        size: AppDimens.textSize16,
-                                        color: AppColors.primary4C5BD4
-                                      ),
+                                      methodTeach,
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.primary4C5BD4),
                                     ),
                                   ],
                                 ),
@@ -232,7 +251,9 @@ class ListClassTeachingScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: AppDimens.space12,),
+                        SizedBox(
+                          height: AppDimens.space12,
+                        ),
                         Center(
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -240,7 +261,8 @@ class ListClassTeachingScreen extends StatelessWidget {
                                 horizontal: AppDimens.space12),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 0.5, color: AppColors.primary4C5BD4,
+                                width: 0.5,
+                                color: AppColors.primary4C5BD4,
                               ),
                               borderRadius: BorderRadius.circular(5),
                             ),
@@ -257,7 +279,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  'Đang dạy',
+                                  status,
                                   style: AppTextStyles.regularW400(context,
                                       size: AppDimens.textSize16,
                                       color: AppColors.secondaryF8971C),

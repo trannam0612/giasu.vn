@@ -10,8 +10,23 @@ import 'package:giasu_vn/common/theme/app_text_style.dart';
 
 class ListTeacherInvitedScreen extends StatelessWidget {
   final bool saved;
+  final String name;
+  final int rate;
+  final String date;
+  final String subject;
+  final String fee;
+  final String image;
 
-  const ListTeacherInvitedScreen({Key key, this.saved = false})
+  const ListTeacherInvitedScreen(
+      {Key key,
+      this.saved = false,
+      this.name = 'Nguyễn Văn Tuấn Anh',
+      this.rate = 3,
+      this.date = '10/05/2020',
+      this.subject = 'Hóa học lớp 10',
+      this.fee = '300.000 vnđ/giờ',
+      this.image =
+          'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg'})
       : super(key: key);
 
   @override
@@ -49,7 +64,7 @@ class ListTeacherInvitedScreen extends StatelessWidget {
           child: SizedBox(
             height: height * 0.14,
             child: Stack(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.topLeft,
               children: [
                 Positioned.fill(
                   left: 30,
@@ -80,15 +95,15 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Nguyễn Văn Tuấn Anh',
+                                  name,
                                   style: AppTextStyles.regularW500(context,
                                       size: AppDimens.textSize14),
                                 ),
                                 SizedBox(
                                   height: AppDimens.space6,
                                 ),
-                                RatingBar.builder(
-                                  initialRating: 3,
+                                RatingBar(
+                                  initialRating: rate.toDouble(),
                                   itemSize: 12,
                                   minRating: 1,
                                   direction: Axis.horizontal,
@@ -97,9 +112,10 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                                   ignoreGestures: true,
                                   itemPadding:
                                       EdgeInsets.symmetric(horizontal: 2.0),
-                                  itemBuilder: (context, _) => SvgPicture.asset(
-                                    Images.ic_star,
-                                    color: Colors.amber,
+                                  ratingWidget: RatingWidget(
+                                    full: SvgPicture.asset(Images.ic_star),
+                                    empty:
+                                        SvgPicture.asset(Images.ic_star_border),
                                   ),
                                   unratedColor: AppColors.greyAAAAAA,
                                   onRatingUpdate: (rating) {
@@ -124,10 +140,15 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                                   size: AppDimens.textSize14,
                                   color: AppColors.greyAAAAAA),
                             ),
+                            SizedBox(
+                              width: AppDimens.space4,
+                            ),
                             Text(
-                              '10/05/2020',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize14,),
+                              date,
+                              style: AppTextStyles.regularW400(
+                                context,
+                                size: AppDimens.textSize14,
+                              ),
                             ),
                           ],
                         ),
@@ -150,7 +171,7 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  'Hóa học lớp 10',
+                                  subject,
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,
@@ -172,12 +193,10 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  '300.000 vnđ/giờ',
-                                  style: AppTextStyles.regular(
-                                    context,
-                                    size: AppDimens.textSize14,
-                                    color: AppColors.secondaryF8971C
-                                  ),
+                                  fee,
+                                  style: AppTextStyles.regular(context,
+                                      size: AppDimens.textSize14,
+                                      color: AppColors.secondaryF8971C),
                                 ),
                               ],
                             ),
@@ -187,27 +206,28 @@ class ListTeacherInvitedScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black.withOpacity(0.25),
-                        spreadRadius: 0,
-                        blurRadius: 3,
-                        offset:
-                        Offset(0, 3), // changes position of shadow
+                Positioned(
+                  top: 5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.black.withOpacity(0.25),
+                          spreadRadius: 0,
+                          blurRadius: 3,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(80),
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
                       ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

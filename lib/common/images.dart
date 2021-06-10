@@ -13,6 +13,10 @@ class Images {
   static const String ic_save = _img_ + 'ic_save.svg';
   static const String ic_saved = _img_ + 'ic_saved.svg';
   static const String ic_money = _img_ + 'ic_money.svg';
+  static const String ic_star = _img_ + 'ic_star.svg';
+  static const String ic_star_border = _img_ + 'ic_star_border.svg';
+  static const String ic_call = _img_ + 'ic_call.svg';
+  static const String ic_mail = _img_ + 'ic_mail.svg';
 
 
 
@@ -34,7 +38,6 @@ class Images {
   static const String ic_home_2 = _img_ + 'ic_home_2.svg';
   static const String ic_image = _img_ + 'ic_image.svg';
   static const String ic_intersex = _img_ + 'ic_intersex.svg';
-  static const String ic_mail = _img_ + 'ic_mail.svg';
   static const String ic_map = _img_ + 'ic_map.svg';
   static const String ic_message = _img_ + 'ic_message.svg';
   static const String ic_notifications = _img_ + 'ic_notifications.svg';
@@ -48,7 +51,6 @@ class Images {
   static const String ic_index_page_welcome = _img_ + 'ic_index_page_welcome.svg';
   static const String ic_rectangle = _img_ + 'ic_rectangle.svg';
   static const String ic_arrow_left_iphone = _img_ + 'ic_arrow_left_iphone.svg';
-  static const String ic_star = _img_ + 'ic_star.svg';
   static const String ic_error = _img_ + 'ic_error.svg';
   static const String ic_close = _img_ + 'ic_close.svg';
   static const String ic_assignment = _img_ + 'ic_assignment.svg';
@@ -61,7 +63,6 @@ class Images {
   static const String ic_check = _img_ + 'ic_check.svg';
   static const String ic_double_check = _img_ + 'ic_double_check.svg';
   static const String ic_send_2 = _img_ + 'ic_send_2.svg';
-  static const String star = _img_ + 'star.svg';
 
   //PNG
   static const String img_bg_bottom = _img_ + 'img_bg_bottom.png';

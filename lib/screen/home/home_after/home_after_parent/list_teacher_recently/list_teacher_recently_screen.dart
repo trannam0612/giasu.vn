@@ -10,25 +10,25 @@ import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
-class ListTeacherSaved extends StatelessWidget {
+class ListTeacherRecentlyScreen extends StatelessWidget {
   final bool saved;
   final String name;
   final int rate;
-  final String date;
+  final String address;
   final String subject;
   final String fee;
   final String image;
 
-  const ListTeacherSaved(
+  const ListTeacherRecentlyScreen(
       {Key key,
       this.saved = false,
       this.name = 'Nguyễn Văn Tuấn Anh',
       this.rate = 3,
-      this.date = '10/05/2020',
       this.subject = 'Hóa học lớp 10',
       this.fee = '300.000 vnđ/giờ',
       this.image =
-          'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg'})
+          'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
+      this.address ='Thanh Xuân, Hà Nội'})
       : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class ListTeacherSaved extends StatelessWidget {
       backgroundColor: AppColors.greyf6f6f6,
       appBar: AppBar(
         title: Text(
-          'Gia sư đã lưu',
+          'Gia sư gần đây',
           style: AppTextStyles.regularW500(context,
               size: AppDimens.textSize24,
               lineHeight: AppDimens.textSize28,
@@ -64,7 +64,7 @@ class ListTeacherSaved extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal: AppDimens.space6, vertical: AppDimens.space6),
           child: SizedBox(
-            height: height * 0.175,
+            height: height * 0.19,
             child: Stack(
               alignment: Alignment.topLeft,
               children: [
@@ -88,69 +88,37 @@ class ListTeacherSaved extends StatelessWidget {
                           ),
                         ]),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  name,
-                                  style: AppTextStyles.regularW500(context,
-                                      size: AppDimens.textSize14),
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                RatingBar(
-                                  initialRating: rate.toDouble(),
-                                  itemSize: 12,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: false,
-                                  itemCount: 5,
-                                  ignoreGestures: true,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 2.0),
-                                  ratingWidget: RatingWidget(
-                                    full: SvgPicture.asset(Images.ic_star),
-                                    empty:
-                                        SvgPicture.asset(Images.ic_star_border),
-                                  ),
-                                  unratedColor: AppColors.greyAAAAAA,
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                              ],
-                            ),
-                            saved
-                                ? SvgPicture.asset(Images.ic_saved)
-                                : SvgPicture.asset(Images.ic_save)
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppDimens.space6,
-                        ),
-                        Row(
                           children: [
                             Text(
-                              'Ngày lưu:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize14,
-                                  color: AppColors.greyAAAAAA),
+                              name,
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize14),
                             ),
                             SizedBox(
-                              width: AppDimens.space4,
+                              height: AppDimens.space6,
                             ),
-                            Text(
-                              date,
-                              style: AppTextStyles.regularW400(
-                                context,
-                                size: AppDimens.textSize14,
+                            RatingBar(
+                              initialRating: rate.toDouble(),
+                              itemSize: 12,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: false,
+                              itemCount: 5,
+                              ignoreGestures: true,
+                              itemPadding:
+                              EdgeInsets.symmetric(horizontal: 2.0),
+                              ratingWidget: RatingWidget(
+                                full: SvgPicture.asset(Images.ic_star),
+                                empty: SvgPicture.asset(Images.ic_star_border),
                               ),
+                              unratedColor: AppColors.greyAAAAAA,
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
                             ),
                           ],
                         ),
@@ -178,9 +146,33 @@ class ListTeacherSaved extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: AppDimens.space6,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  Images.ic_location,
+                                  width: 16,
+                                  height: 16,
+                                ),
+                                SizedBox(
+                                  width: AppDimens.space8,
+                                ),
+                                Text(
+                                  address,
+                                  style: AppTextStyles.regular(
+                                    context,
+                                    size: AppDimens.textSize14,
+                                  ),
+                                ),
+                              ],
+                            ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -202,24 +194,48 @@ class ListTeacherSaved extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: 95,
-                              height: 30,
-                              child: CustomButton2(
-                                title: 'Mời dạy',
-                                color: AppColors.primary4C5BD4,
-                                onPressed: () {},
-                                textColor: AppColors.whiteFFFFFF,
-                              ),
-                            ),
                           ],
                         ),
+                        Column(
+                          children: [
+                            SizedBox(height: AppDimens.space10,),
+                            Row(
+                              children: [
+                                Spacer(),
+                                SizedBox(
+                                  height: 30,
+                                  width: 95,
+                                  child: CustomButton2(
+                                    title: 'Đề nghị dạy',
+                                    color: AppColors.primary4C5BD4,
+                                    onPressed: () {},
+                                    textColor: AppColors.whiteFFFFFF,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: AppDimens.space20,
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                  width: 95,
+                                  child: CustomButton1(
+                                    textColor: AppColors.secondaryF8971C,
+                                    onPressed: () {},
+                                    color: AppColors.secondaryF8971C,
+                                    title: 'Lưu',
+                                    backColor: AppColors.whiteFFFFFF,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                  top: 10,
+                  top: 5,
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),

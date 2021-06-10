@@ -5,12 +5,18 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_post_created/list_post_created_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_invited/list_teacher_invited_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_saved/list_teacher_saved_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_invite/list_class_invite_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_saved/list_class_saved_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_suggest/list_class_suggest_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
@@ -96,7 +102,9 @@ class HomeAfterScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
-                        onTap: () =>controller.userType =='2' ? Get.to(ListClassInviteScreen()) : Get.to(ListTeacherInvitedScreen()),
+                        onTap: () => controller.userType == '2'
+                            ? Get.to(ListClassInviteScreen())
+                            : Get.to(ListTeacherInvitedScreen()),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
@@ -146,7 +154,9 @@ class HomeAfterScreen extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(ListClassTeachingScreen()),
+                        onTap: () => controller.userType == '2'
+                            ? Get.to(ListClassTeachingScreen())
+                            : Get.to(ListTeacherSuggested(  )),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
@@ -196,7 +206,7 @@ class HomeAfterScreen extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(ListClassSuggestScreen()),
+                        onTap: () =>controller.userType =='2' ?  Get.to(ListClassSuggestScreen()) : Get.to(ListPostCreatedScreen()),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
@@ -246,7 +256,7 @@ class HomeAfterScreen extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(ListClassSavedScreen()),
+                        onTap: () => controller.userType == '2' ? Get.to(ListClassSavedScreen()) : Get.to(ListTeacherSaved()),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
@@ -277,7 +287,7 @@ class HomeAfterScreen extends StatelessWidget {
                               Text(
                                 controller.userType == '2'
                                     ? 'Lớp đã lưu'
-                                    : 'Tin đã đăng',
+                                    : 'Gia sư đã lưu',
                                 style: AppTextStyles.regular(context,
                                     size: AppDimens.textSize12,
                                     lineHeight: AppDimens.textSize12),
@@ -308,12 +318,15 @@ class HomeAfterScreen extends StatelessWidget {
                               : 'Gia sư gần đây',
                           style: AppTextStyles.regularW500(context,
                               size: AppDimens.textSize24, lineHeight: 21)),
-                      Text(
-                        'xem thêm >>',
-                        style: AppTextStyles.regular(context,
-                            size: AppDimens.textSize14,
-                            color: AppColors.grey747474,
-                            lineHeight: 14),
+                      InkWell(
+                        onTap: () => controller.userType =='2' ? Get.to(ListClassRecentlyScreen()) : Get.to(ListTeacherRecentlyScreen()),
+                        child: Text(
+                          'xem thêm >>',
+                          style: AppTextStyles.regular(context,
+                              size: AppDimens.textSize14,
+                              color: AppColors.grey747474,
+                              lineHeight: 14),
+                        ),
                       )
                     ],
                   ),
@@ -339,14 +352,17 @@ class HomeAfterScreen extends StatelessWidget {
                         : ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => CardTeacherHome(
-                                  image:
-                                      'https://photo2.tinhte.vn/data/attachment-files/2021/01/5309917_118074852_605380860166128_3887117661275060924_n.jpg',
-                                  name: 'Nguyễn Văn Tuấn Anh',
-                                  rate: 4,
-                                  content:
-                                      'Với 2 năm kinh nghiệm giảng dạy cho các học sinh lớp 10.',
-                                ),
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () => Get.to(InformationTeacherScreen()),
+                              child: CardTeacherHome(
+                                    image:
+                                        'https://photo2.tinhte.vn/data/attachment-files/2021/01/5309917_118074852_605380860166128_3887117661275060924_n.jpg',
+                                    name: 'Nguyễn Văn Tuấn Anh',
+                                    rate: 4,
+                                    content:
+                                        'Với 2 năm kinh nghiệm giảng dạy cho các học sinh lớp 10.',
+                                  ),
+                            ),
                             separatorBuilder: (context, index) => SizedBox(
                                   width: AppDimens.space12,
                                 ),
@@ -399,7 +415,8 @@ class HomeAfterScreen extends StatelessWidget {
                               rate: 3,
                               subject: 'Hóa học',
                               address: 'Thanh Xuân, Hà Nội',
-                              image: 'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
+                              image:
+                                  'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
                               saved: false,
                             ),
                             itemCount: 10,
