@@ -19,8 +19,6 @@ class CustomSearchTextField extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Container(
-      width: width*0.6,
-      height: 36,
       // margin: EdgeInsets.only(top:8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

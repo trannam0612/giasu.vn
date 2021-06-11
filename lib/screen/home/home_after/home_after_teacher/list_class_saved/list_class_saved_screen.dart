@@ -9,7 +9,24 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class ListClassSavedScreen extends StatelessWidget {
-  const ListClassSavedScreen({Key key}) : super(key: key);
+  final String title;
+  final String fee;
+  final String subject;
+  final String address;
+  final String classId;
+  final String methodTeach;
+  final String date;
+
+  const ListClassSavedScreen(
+      {Key key,
+        this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
+        this.fee = '300.000 vnđ/giờ',
+        this.subject = 'Hóa học lớp 10',
+        this.address = 'Thanh Xuân, Hà Nội',
+        this.classId = '01234',
+        this.methodTeach = 'Gặp mặt',
+        this.date = '05/07/2019',})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,145 +61,227 @@ class ListClassSavedScreen extends StatelessWidget {
         child: ListView.builder(
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) => Container(
-              margin: EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                border:
-                Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                borderRadius: BorderRadius.circular(AppDimens.space16),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(AppDimens.padding12),
-                width: AppDimens.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppDimens.space16),
-                  color: AppColors.whiteFFFFFF,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn...',
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.regularW500(context,
-                                size: AppDimens.textSize18,
-                                color: AppColors.primary4C5BD4),
-                          ),
-                        ),
-                      ],
+                  margin: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                    borderRadius: BorderRadius.circular(AppDimens.space16),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.all(AppDimens.padding12),
+                    width: AppDimens.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(AppDimens.space16),
+                      color: AppColors.whiteFFFFFF,
                     ),
-                    SizedBox(height: AppDimens.space10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            Expanded(
+                              child: Text(
+                                title,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.regularW500(context,
+                                    size: AppDimens.textSize18,
+                                    color: AppColors.primary4C5BD4),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(Images.ic_money, width: 16, height: 16,),
-                                SizedBox(width: AppDimens.space8,),
-                                Text('300.000 vnđ/giờ', style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(
+                                      Images.ic_money,
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space8,
+                                    ),
+                                    Text(
+                                      fee,
+                                      style: AppTextStyles.regular(
+                                        context,
+                                        size: AppDimens.textSize16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(
+                                      Images.ic_book,
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space8,
+                                    ),
+                                    Text(
+                                      subject,
+                                      style: AppTextStyles.regular(
+                                        context,
+                                        size: AppDimens.textSize16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SvgPicture.asset(
+                                      Images.ic_location,
+                                      width: 16,
+                                      height: 16,
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space8,
+                                    ),
+                                    Text(
+                                      address,
+                                      style: AppTextStyles.regular(
+                                        context,
+                                        size: AppDimens.textSize16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
-                            SizedBox(height: AppDimens.space6,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(Images.ic_book, width: 16, height: 16,),
-                                SizedBox(width: AppDimens.space8,),
-                                Text('Hóa học lớp 10', style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
-                              ],
-                            ),
-                            SizedBox(height: AppDimens.space6,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(Images.ic_location, width: 16, height: 16,),
-                                SizedBox(width: AppDimens.space8,),
-                                Text('Thanh Xuân, Hà Nội', style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Ngày dạy:',
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.grey747474),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space4,
+                                    ),
+                                    Text(
+                                      date,
+                                      style: AppTextStyles.regular(
+                                        context,
+                                        size: AppDimens.textSize16,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Mã lớp:',
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.grey747474),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space6,
+                                    ),
+                                    Text(
+                                      classId,
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hình thức:',
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.grey747474),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space8,
+                                    ),
+                                    Text(
+                                      methodTeach,
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.primary4C5BD4),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(
+                          height: AppDimens.space16,
+                        ),
+                        Row(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Ngày dạy:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                                SizedBox(width: AppDimens.space4,),
-                                Text('05/07/2019', style: AppTextStyles.regular(context, size: AppDimens.textSize16,),),
-                              ],
+                            Spacer(),
+                            SizedBox(
+                              width: 110,
+                              height: 30,
+                              child: CustomButton2(
+                                title: 'Đề nghị dạy',
+                                color: AppColors.primary4C5BD4,
+                                onPressed: () {},
+                                textColor: AppColors.whiteFFFFFF,
+                              ),
                             ),
-                            SizedBox(height: AppDimens.space6,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Mã lớp:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                                SizedBox(width: AppDimens.space6,),
-                                Text('01234', style: AppTextStyles.regular(context, size: AppDimens.textSize16),),
-                              ],
+                            SizedBox(
+                              width: AppDimens.space20,
                             ),
-                            SizedBox(height: AppDimens.space6,),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text('Hình thức:', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.grey747474),),
-                                SizedBox(width: AppDimens.space8,),
-                                Text('Gặp mặt', style: AppTextStyles.regular(context, size: AppDimens.textSize16,color: AppColors.primary4C5BD4),),
-                              ],
-                            ),
+                            SizedBox(
+                              width: 110,
+                              height: 30,
+                              child: CustomButton1(
+                                textColor: AppColors.black,
+                                onPressed: () {},
+                                color: AppColors.grey747474,
+                                title: 'Huỷ lưu',
+                                backColor: AppColors.whiteFFFFFF,
+                              ),
+                            )
                           ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: AppDimens.space16,),
-                    Row(
-                      children: [
-                        Spacer(),
-                        SizedBox(
-                          width: 110,
-                          height: 35,
-                          child: CustomButton2(
-                            title: 'Đề nghị dạy',
-                            color: AppColors.primary4C5BD4,
-                            onPressed: () {
-
-                            },
-                            textColor: AppColors.whiteFFFFFF,
-                          ),
-                        ),
-                        SizedBox(width: AppDimens.space20,),
-                        SizedBox(
-                          width: 110,
-                          height: 35,
-                          child: CustomButton1(
-                            textColor: AppColors.black,
-                            onPressed: () {
-
-                            },
-                            color: AppColors.grey747474,
-                            title: 'Huỷ lưu',
-                            backColor: AppColors.whiteFFFFFF,
-                          ),
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
             itemCount: 5),
       ),
     );

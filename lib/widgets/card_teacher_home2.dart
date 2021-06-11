@@ -73,26 +73,21 @@ class CardTeacherHome2 extends StatelessWidget {
                             SizedBox(
                               height: AppDimens.space6,
                             ),
-                            RatingBar.builder(
+                            RatingBar(
                               initialRating: rate.toDouble(),
                               itemSize: 12,
                               minRating: 1,
-                              direction:
-                              Axis.horizontal,
+                              direction: Axis.horizontal,
                               allowHalfRating: false,
                               itemCount: 5,
                               ignoreGestures: true,
                               itemPadding:
-                              EdgeInsets.symmetric(
-                                  horizontal: 2.0),
-                              itemBuilder:
-                                  (context, _) =>
-                                  SvgPicture.asset(
-                                    Images.ic_star,
-                                    color: Colors.amber,
-                                  ),
-                              unratedColor:
-                              AppColors.greyAAAAAA,
+                              EdgeInsets.symmetric(horizontal: 2.0),
+                              ratingWidget: RatingWidget(
+                                full: SvgPicture.asset(Images.ic_star),
+                                empty: SvgPicture.asset(Images.ic_star_border),
+                              ),
+                              unratedColor: AppColors.greyAAAAAA,
                               onRatingUpdate: (rating) {
                                 print(rating);
                               },
@@ -164,6 +159,11 @@ class CardTeacherHome2 extends StatelessWidget {
                 width: 60,
                 height: 60,
                 fit: BoxFit.cover,
+                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ],
