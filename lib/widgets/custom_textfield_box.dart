@@ -18,6 +18,7 @@ class CustomTextFieldBox extends StatefulWidget {
   final String error;
   final Color colorIcon;
   final bool obligatory;
+  final bool hasTitle;
 
   const CustomTextFieldBox(
       {Key key,
@@ -33,7 +34,7 @@ class CustomTextFieldBox extends StatefulWidget {
       this.colorIcon = AppColors.black12,
       this.isShowIcon = false,
       this.obligatory = false,
-      this.error});
+      this.error, this.hasTitle = true});
 
   @override
   _CustomTextFieldBoxState createState() => _CustomTextFieldBoxState();
@@ -46,7 +47,7 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          RichText(
+          widget.hasTitle ? RichText(
             text: TextSpan(
               text: widget.title,
               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
@@ -57,7 +58,7 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
                 ),
               ],
             ),
-          ),
+          ) : Container(),
           SizedBox(
             height: AppDimens.space4,
           ),
@@ -76,21 +77,21 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
                 hintText: widget.hintText,
                 hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,
                   ),
                 ),
                 border: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,

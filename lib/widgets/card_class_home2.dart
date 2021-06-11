@@ -122,6 +122,7 @@ class CardClassHome2 extends StatelessWidget {
                         style: AppTextStyles.regular(
                           context,
                           size: AppDimens.textSize16,
+                          color: AppColors.secondaryF8971C
                         ),
                       ),
                     ],

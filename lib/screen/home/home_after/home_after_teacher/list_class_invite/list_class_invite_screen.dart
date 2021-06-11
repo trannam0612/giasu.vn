@@ -6,11 +6,29 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
-class ListClassTeachingScreen extends StatelessWidget {
-  const ListClassTeachingScreen({Key key}) : super(key: key);
+class ListClassInviteScreen extends StatelessWidget {
+  final String title;
+  final String fee;
+  final String subject;
+  final String address;
+  final String classId;
+  final String methodTeach;
+  final String date;
+
+  const ListClassInviteScreen(
+      {Key key,
+        this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
+        this.fee = '300.000 vnđ/giờ',
+        this.subject = 'Hóa học lớp 10',
+        this.address = 'Thanh Xuân, Hà Nội',
+        this.classId = '01234',
+        this.methodTeach = 'Gặp mặt',
+        this.date = '05/07/2019',})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +83,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn...',
+                                title,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.regularW500(context,
                                     size: AppDimens.textSize18,
@@ -96,7 +114,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      '300.000 vnđ/giờ',
+                                      fee,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -120,7 +138,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Hóa học lớp 10',
+                                      subject,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -144,7 +162,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Thanh Xuân, Hà Nội',
+                                      address,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -171,7 +189,7 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space4,
                                     ),
                                     Text(
-                                      '05/07/2019',
+                                      date,
                                       style: AppTextStyles.regular(
                                         context,
                                         size: AppDimens.textSize16,
@@ -196,9 +214,9 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space6,
                                     ),
                                     Text(
-                                      '01234',
+                                      classId,
                                       style: AppTextStyles.regular(context,
-                                          size: AppDimens.textSize16,),
+                                          size: AppDimens.textSize16),
                                     ),
                                   ],
                                 ),
@@ -219,12 +237,10 @@ class ListClassTeachingScreen extends StatelessWidget {
                                       width: AppDimens.space8,
                                     ),
                                     Text(
-                                      'Gặp mặt',
-                                      style: AppTextStyles.regular(
-                                        context,
-                                        size: AppDimens.textSize16,
-                                        color: AppColors.primary4C5BD4
-                                      ),
+                                      methodTeach,
+                                      style: AppTextStyles.regular(context,
+                                          size: AppDimens.textSize16,
+                                          color: AppColors.primary4C5BD4),
                                     ),
                                   ],
                                 ),
@@ -232,39 +248,37 @@ class ListClassTeachingScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: AppDimens.space12,),
-                        Center(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: AppDimens.space6,
-                                horizontal: AppDimens.space12),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 0.5, color: AppColors.primary4C5BD4,
+                        SizedBox(
+                          height: AppDimens.space16,
+                        ),
+                        Row(
+                          children: [
+                            Spacer(),
+                            SizedBox(
+                              height: 30,
+                              width: 90,
+                              child: CustomButton2(
+                                title: 'Đồng ý',
+                                color: AppColors.primary4C5BD4,
+                                onPressed: () {},
+                                textColor: AppColors.whiteFFFFFF,
                               ),
-                              borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Trạng thái:',
-                                  style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16,
-                                      color: AppColors.grey747474),
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Text(
-                                  'Đang dạy',
-                                  style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16,
-                                      color: AppColors.secondaryF8971C),
-                                )
-                              ],
+                            SizedBox(
+                              width: AppDimens.space20,
                             ),
-                          ),
+                            SizedBox(
+                              height: 30,
+                              width: 90,
+                              child: CustomButton1(
+                                textColor: AppColors.black,
+                                onPressed: () {},
+                                color: AppColors.grey747474,
+                                title: 'Từ chối',
+                                backColor: AppColors.whiteFFFFFF,
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),
