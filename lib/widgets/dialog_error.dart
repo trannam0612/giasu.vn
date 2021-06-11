@@ -1,75 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class DialogError extends StatelessWidget {
   final String title;
+  final bool richText;
+  final String textButton;
+  final VoidCallback onTap;
 
-  const DialogError(
-      {Key key, this.title = 'Bạn chắc chắn từ chối lời mời này?'})
-      : super(key: key);
+  const DialogError({Key key, this.title, this.richText, this.textButton, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: AppColors.whiteFFFFFF,
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppDimens.space20, vertical: AppDimens.space58),
+        padding: EdgeInsets.all(AppDimens.padding16),
+        // height: AppDimens.height * 0.28,
+        width: AppDimens.width,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space4), color: AppColors.whiteFFFFFF),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(Images.ic_warning),
+            SvgPicture.asset(Images.ic_error),
             SizedBox(
               height: AppDimens.space16,
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppDimens.space40),
-              child: Text(
+            if (richText)
+              RichText(
+                text: TextSpan(
+                  text: 'Lưu ý: ',
+                  style: AppTextStyles.regularW700(context, size: AppDimens.textSize14, color: AppColors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Tất cả các thông tin trên là bắt buộc để sử dụng ',
+                      style:
+                          AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.grey747474),
+                    ),
+                    TextSpan(
+                      text: 'Giasu365.com ',
+                      style:
+                          AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.grey747474),
+                    ),
+                  ],
+                ),
+              )
+            else
+              Text(
                 title,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.regularW400(context,
-                    size: AppDimens.textSize14, color: AppColors.grey686F7A),
+                style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.grey747474),
               ),
+            SizedBox(
+              height: AppDimens.padding20,
+            ),
+            Divider(
+              height: 0,
+              color: AppColors.grey747474,
+              thickness: 1,
             ),
             SizedBox(
-              height: AppDimens.space30,
+              height: AppDimens.padding16,
             ),
-            Row(
-              children: [
-                Spacer(),
-                SizedBox(
-                  width: 90,
-                  height: 25,
-                  child: CustomButton2(
-                    color: AppColors.primary4C5BD4,
-                    title: 'Hủy',
-                    textColor: AppColors.whiteFFFFFF,
-                    onPressed: () {},
-                  ),
+            TextButton(
+                child: Text(
+                  textButton,
+                  style: AppTextStyles.regularW700(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
                 ),
-                SizedBox(
-                  width: AppDimens.space20,
-                ),
-                SizedBox(
-                  width: 90,
-                  height: 25,
-                  child: CustomButton1(
-                    title: 'Đồng Ý',
-                    color: AppColors.grey747474,
-                    textColor: AppColors.black,
-                    backColor: AppColors.whiteFFFFFF,
-                  ),
-                ),
-                Spacer(),
-              ],
-            )
+                onPressed: onTap)
           ],
         ),
       ),
