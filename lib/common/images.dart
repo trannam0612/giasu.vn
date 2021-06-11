@@ -13,6 +13,7 @@ class Images {
   static const String ic_save = _img_ + 'ic_save.svg';
   static const String ic_saved = _img_ + 'ic_saved.svg';
   static const String ic_money = _img_ + 'ic_money.svg';
+  static const String ic_add_camera = _img_ + 'ic_add_camera.svg';
 
 
 
@@ -64,7 +65,7 @@ class Images {
   static const String star = _img_ + 'star.svg';
 
   //PNG
-  static const String img_bg_bottom = _img_ + 'img_bg_bottom.png';
+  static const String img_check_green = _img_ + 'img_check_green.png';
   static const String img_bg_welcom = _img_ + 'img_bg_welcom.png';
   static const String img_bg_welcome = _img_ + 'img_bg_welcome.png';
   static const String img_bg_welcome2 = _img_ + 'img_bg_welcome2.png';
@@ -80,7 +81,8 @@ class Images {
   static const String img_giasu_welcome = _img_ + 'img_giasu_welcome.png';
   static const String img_phuhuynh_welcome = _img_ + 'img_phuhuynh_welcome.png';
   static const String img_confirm_success = _img_ + 'img_confirm_success.png';
-  static const String bg_dialog_star = _img_ + 'bg_dialog_star.png';
   static const String img_check_white = _img_ + 'img_check_white.png';
   static const String img_email_star = _img_ + 'img_email_star.png';
+  static const String img_teacher = _img_ + 'img_teacher.png';
+  static const String img_parent = _img_ + 'img_parent.png';
 }

@@ -31,7 +31,7 @@ class CustomTextField extends StatefulWidget {
       this.title,
       this.isPassword = false,
       this.keyboardType = TextInputType.text,
-      this.colorBorder = AppColors.black12,
+      this.colorBorder = AppColors.grey747474,
       this.iconSuffix,
       this.onChanged,
       this.textEditingController,
@@ -94,21 +94,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 hintText: widget.hintText,
                 hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,
                   ),
                 ),
                 border: new OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     width: 1,
                     color: widget.colorBorder,
