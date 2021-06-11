@@ -17,6 +17,10 @@ class Images {
   static const String ic_star_border = _img_ + 'ic_star_border.svg';
   static const String ic_call = _img_ + 'ic_call.svg';
   static const String ic_mail = _img_ + 'ic_mail.svg';
+  static const String ic_arrow_down = _img_ + 'ic_arrow_down.svg';
+  static const String ic_arrow_left_iphone = _img_ + 'ic_arrow_left_iphone.svg';
+  static const String ic_warning = _img_ + 'ic_warning.svg';
+  static const String ic_success = _img_ + 'ic_success.svg';
 
 
 
@@ -24,7 +28,6 @@ class Images {
   static const String ic_uncheck_blue = _img_ + 'ic_uncheck_blue.svg';
   static const String ic_add_image = _img_ + 'ic_add_image.svg';
   static const String ic_arrow_left = _img_ + 'ic_arrow_left.svg';
-  static const String ic_arrow_down = _img_ + 'ic_arrow_down.svg';
   static const String ic_arrow_ios_right = _img_ + 'ic_arrow_ios_right.svg';
   static const String ic_camera = _img_ + 'ic_camera.svg';
   static const String ic_cancel = _img_ + 'ic_cancel.svg';
@@ -45,13 +48,11 @@ class Images {
   static const String ic_seen_message = _img_ + 'ic_seen_message.svg';
   static const String ic_send = _img_ + 'ic_send.svg';
   static const String ic_user = _img_ + 'ic_user.svg';
-  static const String ic_warning = _img_ + 'ic_warning.svg';
   static const String icon_welcom = _img_ + 'icon_welcom.svg';
   static const String ic_plus = _img_ + 'ic_plus.svg';
   static const String ic_index_page_welcome = _img_ + 'ic_index_page_welcome.svg';
   static const String ic_rectangle = _img_ + 'ic_rectangle.svg';
-  static const String ic_arrow_left_iphone = _img_ + 'ic_arrow_left_iphone.svg';
-  static const String ic_error = _img_ + 'ic_error.svg';
+  static const String ic_error = _img_ + 'ic_warning.svg';
   static const String ic_close = _img_ + 'ic_close.svg';
   static const String ic_assignment = _img_ + 'ic_assignment.svg';
   static const String ic_event = _img_ + 'ic_event.svg';

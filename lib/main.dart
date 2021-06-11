@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_screen.dart';
+import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
+import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';
+import 'package:giasu_vn/search/search_screen.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'common/theme/app_colors.dart';
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       // getPages: AppPages.routes,
-      home: HomeAfterScreen(),
+      home: SearchScreen(),
     );
   }
 }

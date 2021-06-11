@@ -11,4 +11,5 @@ class InformationTeacherController extends GetxController {
     buoiday('Thứ 7', 0, 0, 0),
     buoiday('CN', 0, 0, 0),
   ];
+  bool isShowed = false;
 }

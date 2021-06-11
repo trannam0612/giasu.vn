@@ -159,6 +159,11 @@ class CardTeacherHome2 extends StatelessWidget {
                 width: 60,
                 height: 60,
                 fit: BoxFit.cover,
+                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
           ],
