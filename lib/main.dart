@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       getPages: AppPages.routes,
-      home: ChangePasswordScreen(),
+      home: SearchScreen(),
     );
   }
 }
