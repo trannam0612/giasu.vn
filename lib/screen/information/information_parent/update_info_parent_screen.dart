@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
+import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
 
-class RegisterGiaSuStep2Screen extends StatelessWidget {
+class UpdateInformationParentScreen extends StatelessWidget {
   final f = new DateFormat('dd-MM-yyyy');
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterGiaSuController>(
-        init: RegisterGiaSuController(),
+    return GetBuilder<RegisterPhuHuynhController>(
+        init: RegisterPhuHuynhController(),
         builder: (controller) => GestureDetector(
-            onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
-            child: SafeArea(
-              child: Scaffold(
+              onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+              child: SafeArea(
+                  child: Scaffold(
                 backgroundColor: AppColors.greyf6f6f6,
                 appBar: AppBar(
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
-                    'Đăng ký',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    'Cập nhật thông tin',
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -40,17 +40,18 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                   ),
                 ),
                 body: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Container(
                     padding: EdgeInsets.all(AppDimens.padding16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '2. Thông tin cá nhân (Gia sư)',
+                          '1. Thông tin cá nhân',
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.height * 0.07,
                         ),
                         InkWell(
                           onTap: () {
@@ -90,57 +91,44 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: 4,
-                        ),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Ảnh đại diện ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
-                          error: controller.checkFullName(),
                           textEditingController: controller.fullName,
                           obligatory: true,
-                          onPressed: () {},
+                          error: controller.checkFullName(),
+                          onPressed: () {
+                            // controller.imgFromGallery();
+                          },
                           title: 'Họ tên',
-                          hintText: 'Trần Văn A',
+                          hintText: 'Nhập họ tên',
                           isPassword: false,
-                          iconSuffix: Images.ic_plus,
+                          isShowIcon: false,
+                          iconSuffix: Images.ic_file_upload,
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
-                          textEditingController: controller.phone,
-                          error: controller.checkPhone(),
-                          keyboardType: TextInputType.phone,
+                          keyboardType: TextInputType.number,
                           obligatory: true,
+                          onPressed: () {
+                            controller.changeValuePassword();
+                          },
                           title: 'Số điện thoại',
-                          hintText: '0123456789',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
+                          textEditingController: controller.phone,
+                          hintText: 'Nhập số điện thoại',
+                          error: controller.checkPhone(),
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         DropDownSelect(
                           obligatory: true,
                           title: 'Giới Tính',
                           isTitle: true,
                           hint: 'Chọn Giới Tính',
-                          dropdownValue: controller.selectedGender,
+                          dropdownValue: controller.gender,
                           onChanged: (String value) => controller.onSelectedGender(value),
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
@@ -155,10 +143,11 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
                           onTapTextField: () {
+                            // controller.dateTime.text.isEmpty
                             controller.dateTime.text = f.format(DateTime.now());
                             Get.dialog(DialogTime(
                               onChanged: (DateTime value) {
@@ -177,276 +166,82 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           error: controller.checkDate(),
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        DropDownSelect(
-                          obligatory: true,
-                          title: 'Tình trạng hôn nhân',
-                          isTitle: true,
-                          hint: 'Chọn tình trạng hôn nhân',
-                          dropdownValue: controller.selectedMarriage,
-                          onChanged: (String value) => controller.onSelectedMarriage(value),
-                          list: controller.listMarriage,
-                          borderColor: controller.errorMarriage ? AppColors.redFF0033 : AppColors.grey747474,
-                        ),
-                        controller.errorMarriage
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
-                          textEditingController: controller.provincial,
-                          readOnly: true,
-                          error: controller.checkProvincial(),
                           onTapTextField: () {
                             Get.to(SelectTinhThanh(context));
                           },
-                          obligatory: true,
-                          onPressed: () {},
-                          title: 'Tỉnh, Thành Phố',
-                          hintText: 'Chọn tỉnh, thành phố',
-                          isPassword: false,
+                          readOnly: true,
                           isShowIcon: true,
+                          obligatory: true,
+                          textEditingController: controller.provincial,
+                          onPressed: () {},
+                          title: 'Tỉnh, thành phố',
+                          hintText: 'Chọn tỉnh, thành phố',
                           iconSuffix: Images.ic_arrow_down,
+                          error: controller.checkProvincial(),
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
-                          textEditingController: controller.address,
+                          onTapTextField: () {
+                            Get.to(SelectDistrict(context));
+                          },
+                          readOnly: true,
+                          isShowIcon: true,
                           obligatory: true,
-                          error: controller.checkAddress(),
+                          textEditingController: controller.district,
+                          onPressed: () {},
+                          title: 'Quận, huyện',
+                          hintText: 'Chọn quận, huyện',
+                          iconSuffix: Images.ic_arrow_down,
+                          error: controller.checkDistrict(),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        CustomTextField(
+                          onTapTextField: () {},
+                          isShowIcon: false,
+                          obligatory: true,
+                          textEditingController: controller.address,
                           onPressed: () {},
                           title: 'Địa chỉ',
-                          hintText: 'Nhập địa chỉ cụ thể',
-                          isPassword: false,
-                          isShowIcon: false,
+                          hintText: 'Địa chỉ của bạn',
                           iconSuffix: Images.ic_arrow_down,
+                          error: controller.checkAddress(),
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.height * 0.07,
                         ),
-                        // DropDownSelect(
-                        //   obligatory: true,
-                        //   title: 'Trình độ hiện tại',
-                        //   isTitle: true,
-                        //   hint: 'Chọn trình độ hiện tại',
-                        //   dropdownValue: controller.selectedKieuGS,
-                        //   onChanged: (String value) => controller.onSelectedKieuGS(value),
-                        //   list: controller.listKieuGS,
-                        //   borderColor: controller.errorExp ? AppColors.redFF0033 : AppColors.grey747474,
-                        // ),
-                        // controller.errorExp
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
-                        //         child: Text(
-                        //           'Trường bắt buộc!',
-                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                        //         ),
-                        //       )
-                        //     : Container(),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        CustomTextField(
-                          textEditingController: controller.numberYearExp,
-                          obligatory: true,
-                          keyboardType: TextInputType.number,
-                          error: controller.checkNumberYearExp(),
-                          onPressed: () {},
-                          title: 'Số năm kinh nghiệm',
-                          hintText: 'Số năm kinh nghiệm',
-                          isPassword: false,
-                          isShowIcon: false,
-                          iconSuffix: Images.ic_arrow_down,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        CustomTextField(
-                          textEditingController: controller.titleExp,
-                          obligatory: true,
-                          keyboardType: TextInputType.number,
-                          error: controller.checkTitleExp(),
-                          onPressed: () {},
-                          title: 'Kinh nghiệm giảng dạy',
-                          hintText: 'Tiêu đề',
-                          isPassword: false,
-                          isShowIcon: false,
-                          iconSuffix: Images.ic_arrow_down,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                              flex: 5,
-                              child: CustomTextField(
-                                textEditingController: controller.timeExpStart,
-                                obligatory: false,
-                                keyboardType: TextInputType.number,
-                                error: controller.checkTimeExpStart(),
-                                onPressed: () {},
-                                title: '',
-                                isTitle: false,
-                                hintText: 'Thời gian bắt đầu',
-                                isPassword: false,
-                                isShowIcon: false,
-                                iconSuffix: Images.ic_arrow_down,
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.space16),
+                          child: SizedBox(
+                            width: AppDimens.width,
+                            height: AppDimens.height * 0.07,
+                            child: CustomButton2(
+                              onPressed: () {
+                                controller.checkButton();
+                              },
+                              title: 'Cập nhật',
+                              textColor: AppColors.whiteFFFFFF,
+                              color: AppColors.primary4C5BD4,
                             ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              flex: 5,
-                              child: CustomTextField(
-                                textEditingController: controller.timeExpEnd,
-                                obligatory: false,
-                                keyboardType: TextInputType.number,
-                                error: controller.checkTimeExpEnd(),
-                                onPressed: () {},
-                                title: '',
-                                isTitle: false,
-                                hintText: 'Thời gian kết thúc',
-                                isPassword: false,
-                                isShowIcon: false,
-                                iconSuffix: Images.ic_arrow_down,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
-                        CustomTextFieldBox(
-                          hasTitle: false,
-                          textEditingController: controller.informationExp,
-                          obligatory: false,
-                          error: controller.checkInformationExp(),
-                          onPressed: () {},
-                          title: '',
-                          hintText: 'Mô tả',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        CustomTextField(
-                          textEditingController: controller.school,
-                          obligatory: false,
-                          onPressed: () {},
-                          title: 'Trường học',
-                          hintText: 'Đại học Hà Nội',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        CustomTextField(
-                          textEditingController: controller.prize,
-                          obligatory: false,
-                          onPressed: () {},
-                          title: 'Thành tích bản thân',
-                          hintText: 'Nhập thành tích bản thân',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        // CustomTextField(
-                        //   textEditingController: controller.graduationYear,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Năm tốt nghiệp',
-                        //   hintText: '05/2012',
-                        //   isPassword: false,
-                        //   isShowIcon: true,
-                        //   iconSuffix: Images.ic_date,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        CustomTextField(
-                          textEditingController: controller.company,
-                          obligatory: false,
-                          onPressed: () {},
-                          title: 'Nơi công tác hiện tại (nếu có)',
-                          hintText: 'Nhập nơi công tác hiện tại',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        CustomTextFieldBox(
-                          textEditingController: controller.information,
-                          obligatory: false,
-                          onPressed: () {},
-                          title: 'Mô tả về bản thân',
-                          hintText: 'Nhập mô tả',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        // CustomTextFieldBox(
-                        //   textEditingController: controller.experienceTeaching,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Kinh nghiệm đi dạy',
-                        //   hintText: '',
-                        //   isPassword: false,
-                        //   iconSuffix: Images.ic_plus,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        // CustomTextFieldBox(
-                        //   textEditingController: controller.achievements,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Thành tích',
-                        //   hintText: '',
-                        //   isPassword: false,
-                        //   iconSuffix: Images.ic_plus,
-                        // ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        Center(
-                          child: CustomButton2(
-                            title: 'TIẾP THEO',
-                            onPressed: () {
-                              controller.checkButtonStep2();
-                            },
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-            )));
+              )),
+            ));
   }
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  RegisterGiaSuController registerPhuHuynhController = Get.put(RegisterGiaSuController());
+  RegisterPhuHuynhController registerPhuHuynhController = Get.put(RegisterPhuHuynhController());
   List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
@@ -499,7 +294,7 @@ Widget SelectTinhThanh(BuildContext context) {
 
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
-  RegisterGiaSuController registerPhuHuynhController = Get.put(RegisterGiaSuController());
+  RegisterPhuHuynhController registerPhuHuynhController = Get.put(RegisterPhuHuynhController());
   List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
@@ -554,8 +349,8 @@ DialogImage() {
   BuildContext context = Get.context;
   var width = MediaQuery.of(context).size.width;
   var height = MediaQuery.of(context).size.height;
-  return GetBuilder<RegisterGiaSuController>(
-    init: RegisterGiaSuController(),
+  return GetBuilder<RegisterPhuHuynhController>(
+    init: RegisterPhuHuynhController(),
     builder: (controller) => Dialog(
         insetPadding: EdgeInsets.only(top: 10.0),
         backgroundColor: Colors.transparent,
@@ -578,7 +373,8 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,

@@ -9,17 +9,18 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
+import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 
-class RegisterGiaSuStep3Screen extends StatelessWidget {
+class UpdateInfoTeacherStep2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterGiaSuController>(
-        init: RegisterGiaSuController(),
+    return GetBuilder<UpdateInfoTeacherController>(
+        init: UpdateInfoTeacherController(),
         builder: (controller) => GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
               child: SafeArea(
@@ -56,7 +57,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             obligatory: true,
                             title: 'Kiểu gia sư',
                             isTitle: true,
-                            hint: 'Chọn kiểu gia sư *',
+                            hint: 'Chọn kiểu gia sư',
                             dropdownValue: controller.selectedKieuGS,
                             onChanged: (String value) => controller.onSelectedKieuGS(value),
                             list: controller.listKieuGS,
@@ -701,65 +702,20 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                   ),
                                 )
                               : Container(),
-                          Container(
-                            width: AppDimens.width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Theme(
-                                  child: Checkbox(
-                                    value: controller.valueCheckBox,
-                                    onChanged: (value) {
-                                      controller.changeValueCheckBox();
-                                    },
-                                  ),
-                                  data: ThemeData(
-                                    primarySwatch: Colors.blue,
-                                    unselectedWidgetColor: AppColors.greyAAAAAA, // Your color
-                                  ),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Tôi đã đọc và đồng ý với ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Điều khoản \nsử dụng ',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
-                                      ),
-                                      TextSpan(
-                                        text: 'và ',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.black),
-                                      ),
-                                      TextSpan(
-                                        text: 'Chính sách bảo mật',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                          SizedBox(
+                            height: AppDimens.padding20,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomButton1(
-                                onPressed: () {},
-                                title: 'LÀM LẠI',
-                                textColor: AppColors.primary4C5BD4,
-                                color: AppColors.primary4C5BD4,
-                              ),
-                              SizedBox(
-                                width: AppDimens.space8,
-                              ),
-                              CustomButton2(
-                                onPressed: () {
-                                  controller.checkButtonStep3();
-                                },
-                                title: 'ĐĂNG KÝ',
-                              )
-                            ],
+                          SizedBox(
+                            width: AppDimens.width,
+                            height: AppDimens.height * 0.07,
+                            child: CustomButton2(
+                              onPressed: () {
+                                controller.checkButtonStep3();
+                              },
+                              title: 'Cập nhật',
+                              textColor: AppColors.whiteFFFFFF,
+                              color: AppColors.primary4C5BD4,
+                            ),
                           ),
                         ],
                       ),
@@ -772,8 +728,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
 }
 
 Widget SelectSubjectGSScreen(BuildContext context) {
-  return GetBuilder<RegisterGiaSuController>(
-      init: RegisterGiaSuController(),
+  return GetBuilder<UpdateInfoTeacherController>(
+      init: UpdateInfoTeacherController(),
       builder: (controller) => SafeArea(
             child: Scaffold(
               backgroundColor: AppColors.greyf6f6f6,
@@ -826,8 +782,8 @@ Widget SelectSubjectGSScreen(BuildContext context) {
 }
 
 Widget SelectTopicSubjectGSScreen(BuildContext context) {
-  return GetBuilder<RegisterGiaSuController>(
-      init: RegisterGiaSuController(),
+  return GetBuilder<UpdateInfoTeacherController>(
+      init: UpdateInfoTeacherController(),
       builder: (controller) => SafeArea(
             child: Scaffold(
               backgroundColor: AppColors.greyf6f6f6,
@@ -879,7 +835,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
+  UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
   List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
@@ -904,7 +860,7 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.areaTeaching.text = list[index];
+                  updateInfoTeacherController.areaTeaching.text = list[index];
                   Get.back();
                 },
                 child: SizedBox(
@@ -916,7 +872,7 @@ Widget SelectTinhThanh(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerGiaSuController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      list[index] == updateInfoTeacherController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -931,7 +887,7 @@ Widget SelectTinhThanh(BuildContext context) {
 }
 
 Widget SelectDistrict(BuildContext context) {
-  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
+  UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -955,7 +911,7 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.onSelectQH(registerGiaSuController.listQH[index]);
+                  updateInfoTeacherController.onSelectQH(updateInfoTeacherController.listQH[index]);
                   Get.back();
                 },
                 child: SizedBox(
@@ -963,11 +919,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        registerGiaSuController.listQH[index],
+                        updateInfoTeacherController.listQH[index],
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listQH[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listQH[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -976,7 +932,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: registerGiaSuController.listQH.length),
+          itemCount: updateInfoTeacherController.listQH.length),
     ),
   ));
 }

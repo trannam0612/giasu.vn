@@ -25,7 +25,7 @@ class CustomTextFieldBox extends StatefulWidget {
       this.title,
       this.isPassword = false,
       this.keyboardType,
-      this.colorBorder = AppColors.black12,
+      this.colorBorder = AppColors.grey747474,
       this.iconSuffix,
       this.onChanged,
       this.textEditingController,

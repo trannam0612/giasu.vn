@@ -3,6 +3,7 @@ class Images {
 
   //svg
   static const String ic_search = _img_ + 'ic_search.svg';
+  static const String ic_edit_1 = _img_ + 'ic_edit_1.svg';
   static const String ic_menu = _img_ + 'ic_menu.svg';
   static const String ic_add_friend = _img_ + 'ic_add_friend.svg';
   static const String ic_like = _img_ + 'ic_like.svg';

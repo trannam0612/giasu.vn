@@ -223,7 +223,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                             height: AppDimens.height * 0.07,
                             child: CustomButton2(
                               onPressed: () {
-                                controller.checkButtonStep2();
+                                controller.checkButton();
                               },
                               title: 'Đăng ký',
                               textColor: AppColors.whiteFFFFFF,

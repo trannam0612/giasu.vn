@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
-class RegisterPhuHuynhController extends GetxController {
+class UpdateInformationParentController extends GetxController {
   bool isShowRePassword = true;
   bool isShowPassword = true;
   bool errorEmail = false;
@@ -212,7 +212,7 @@ class RegisterPhuHuynhController extends GetxController {
     update();
   }
 
-  void checkButton() {
+  void checkButtonStep2() {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
@@ -234,7 +234,7 @@ class RegisterPhuHuynhController extends GetxController {
             address.text.isNotEmpty
         ?
         // Get.to(RegisterParentStep2Screen())
-        Utils.showToast('Cập nhật thành công')
+        Utils.showToast('Đăng ký thành công')
         : Get.dialog(DialogError(
             title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
             onTap: () => Get.back(),
