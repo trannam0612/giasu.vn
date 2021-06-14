@@ -30,7 +30,7 @@ class CustomTextField extends StatefulWidget {
       {Key key,
       this.title,
       this.isPassword = false,
-      this.keyboardType = TextInputType.text,
+      this.keyboardType = TextInputType.multiline,
       this.colorBorder = AppColors.grey747474,
       this.iconSuffix,
       this.onChanged,
@@ -82,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               onTap: widget.onTapTextField,
               readOnly: widget.readOnly,
               focusNode: widget.focus,
+              maxLines: null,
               obscureText: widget.isPassword,
               onChanged: (value) {
                 if (widget.onChanged != null) widget.onChanged(value);
@@ -90,6 +91,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
               controller: widget.textEditingController,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppColors.black),
               decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
                 errorText: widget.error,
                 hintText: widget.hintText,
                 hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step2_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
-class RegisterGiaSuController extends GetxController {
+class UpdateInfoTeacherController extends GetxController {
   String valueErrorPassword = '';
   bool isShowPassword = true;
   bool errorShowPassword = false;
@@ -608,28 +609,28 @@ class RegisterGiaSuController extends GetxController {
   }
 
 //Step3
+//
+//   void checkButtonStep1() {
+//     print('checkButton');
+//
+//     errorEmail = true;
+//     errorShowPassword = true;
+//     errorShowRePassword = true;
+//     if (email.text.contains('@') && email.text.contains('.') && passWord.text.length >= 6 && passWord.text.isNotEmpty && passWord.text == rePassWord.text && rePassWord.text.isNotEmpty) {
+//       print('done');
+//       Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
+//     } else {
+//       Get.dialog(DialogError(
+//         title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+//         onTap: () => Get.back(),
+//         textButton: 'Ok',
+//         richText: false,
+//       ));
+//     }
+//     update();
+//   }
 
   void checkButtonStep1() {
-    print('checkButton');
-
-    errorEmail = true;
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    if (email.text.contains('@') && email.text.contains('.') && passWord.text.length >= 6 && passWord.text.isNotEmpty && passWord.text == rePassWord.text && rePassWord.text.isNotEmpty) {
-      print('done');
-      Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
-    } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
-    }
-    update();
-  }
-
-  void checkButtonStep2() {
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
@@ -662,7 +663,7 @@ class RegisterGiaSuController extends GetxController {
         timeExpEnd.text.isNotEmpty &&
         informationExp.text.isNotEmpty &&
         imageAvatar != null) {
-      Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
+      Get.to(UpdateInfoTeacherStep2Screen());
     } else {
       Get.dialog(DialogError(
         title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -682,7 +683,8 @@ class RegisterGiaSuController extends GetxController {
     print(selectedClass);
     print(listSubjectSelectTopic.length);
     print(selectedFormTeaching);
-    print(provincial.text);
+    print(areaTeaching.text);
+    print(errorKieuGS);
     print(listDistrictSelect.length);
     print(valueCheckBox);
     print('oke');
@@ -696,6 +698,7 @@ class RegisterGiaSuController extends GetxController {
     errorSubject = listSubjectSelect.isEmpty ? true : false;
     errorSubjectTopic = listSubjectSelectTopic.isEmpty ? true : false;
     errorDistrict = listDistrictSelect.isEmpty ? true : false;
+    errorKieuGS = selectedKieuGS.isNullOrBlank ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == 1 || e.chieu == 1 || e.toi == 1, orElse: () => null);
@@ -703,49 +706,49 @@ class RegisterGiaSuController extends GetxController {
 
     if (valueButtonLuong) {
       salaryCD.text.isNotEmpty &&
-              listSubjectSelect.isNotEmpty &&
-              !selectedClass.isNullOrBlank &&
-              listSubjectSelectTopic.isNotEmpty &&
-              !selectedFormTeaching.isNullOrBlank &&
-              provincial.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              valueCheckBox &&
-              salaryCD.text.isNotEmpty &&
-              data != null &&
-              !selectedStatusFee.isNullOrBlank
-          // ignore: unnecessary_statements
+          !errorKieuGS &&
+          listSubjectSelect.isNotEmpty &&
+          listSubjectSelectTopic.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          !selectedFormTeaching.isNullOrBlank &&
+          areaTeaching.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          // ignore: deprecated_member_use
+          salaryCD.text.isNotEmpty &&
+          data != null &&
+          !selectedStatusFee.isNullOrBlank
+      // ignore: unnecessary_statements
           ? print('Đăng ký thành công')
-          // registerTeacher()
+      // registerTeacher()
           : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+        onTap: () => Get.back(),
+        textButton: 'Ok',
+        richText: false,
+      ));
     } else {
       salaryUL1.text.isNotEmpty &&
-              salaryUL2.text.isNotEmpty &&
-              listSubjectSelect.isNotEmpty &&
-              !selectedClass.isNullOrBlank &&
-              listSubjectSelectTopic.isNotEmpty &&
-              !selectedFormTeaching.isNullOrBlank &&
-              provincial.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              valueCheckBox &&
-              salaryCD.text.isNotEmpty &&
-              data != null &&
-              !selectedStatusFee.isNullOrBlank
-          // ignore: unnecessary_statements
+          salaryUL2.text.isNotEmpty &&
+          !errorKieuGS &&
+          listSubjectSelect.isNotEmpty &&
+          listSubjectSelectTopic.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          !selectedFormTeaching.isNullOrBlank &&
+          areaTeaching.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          // ignore: deprecated_member_use
+          salaryCD.text.isNotEmpty &&
+          data != null &&
+          !selectedStatusFee.isNullOrBlank
+      // ignore: unnecessary_statements
           ? print('Đăng ký thành công')
-          // registerTeacher()
+      // registerTeacher()
           : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+        onTap: () => Get.back(),
+        textButton: 'Ok',
+        richText: false,
+      ));
     }
 
     update();
