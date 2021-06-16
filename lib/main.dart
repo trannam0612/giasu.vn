@@ -6,6 +6,7 @@ import 'package:giasu_vn/screen/authen/change_password/change_password_screen.da
 import 'package:giasu_vn/screen/authen/forgot/forgot_new_password.dart';
 import 'package:giasu_vn/screen/authen/forgot/forgot_screen.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/otp/otp_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step1_screen.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       getPages: AppPages.routes,
-      home: HomeAfterTeacherScreen(),
+      home: SelectTypeLoginScreen(),
     );
   }
 }

@@ -10,7 +10,7 @@ import 'package:http_parser/http_parser.dart';
 
 //
 class AuthenticationRepositories {
-  Future<ResultData> login(String email, String pass) async {
+  Future<ResultData> loginParent(String email, String pass) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,7 +20,21 @@ class AuthenticationRepositories {
       'password': pass,
     };
 
-    ResultData rest = await httpManager.netFetch(Address.LOGIN, body, header, Options(method: 'post'));
+    ResultData rest = await httpManager.netFetch(Address.LOGIN_PARENT, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+  Future<ResultData> loginTeacher(String email, String pass) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'email': email,
+      'password': pass,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.LOGIN_TEACHER, body, header, Options(method: 'post'));
 
     return rest;
   }

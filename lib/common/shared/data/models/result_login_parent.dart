@@ -56,26 +56,26 @@ class DataData {
   DataData({
     this.id,
     this.email,
-    this.nameTeacher,
+    this.nameParent,
     this.token,
   });
 
   String id;
   String email;
-  String nameTeacher;
+  String nameParent;
   String token;
 
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     id: json["id"] == null ? null : json["id"],
     email: json["email"] == null ? null : json["email"],
-    nameTeacher: json["name_teacher"] == null ? null : json["name_teacher"],
+    nameParent: json["name_parent"] == null ? null : json["name_parent"],
     token: json["token"] == null ? null : json["token"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id == null ? null : id,
     "email": email == null ? null : email,
-    "name_teacher": nameTeacher == null ? null : nameTeacher,
+    "name_teacher": nameParent == null ? null : nameParent,
     "token": token == null ? null : token,
   };
 }

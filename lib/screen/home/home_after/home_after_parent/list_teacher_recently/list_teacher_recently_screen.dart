@@ -7,10 +7,12 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class ListTeacherRecentlyScreen extends StatelessWidget {
+
   final bool saved;
   final String name;
   final int rate;
@@ -33,6 +35,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.put(LoginController());
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.greyf6f6f6,
@@ -59,7 +62,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: loginController.listGSGD.length,
         itemBuilder: (context, index) => Container(
           padding: EdgeInsets.symmetric(
               horizontal: AppDimens.space6, vertical: AppDimens.space6),
@@ -94,7 +97,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name,
+                              loginController.listGSGD[index].ugsName,
                               style: AppTextStyles.regularW500(context,
                                   size: AppDimens.textSize14),
                             ),
@@ -138,7 +141,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
                               width: AppDimens.space6,
                             ),
                             Text(
-                              subject,
+                              loginController.listGSGD[index].asName,
                               style: AppTextStyles.regular(
                                 context,
                                 size: AppDimens.textSize14,
@@ -165,7 +168,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
                                   width: AppDimens.space8,
                                 ),
                                 Text(
-                                  address,
+                                  loginController.listGSGD[index].citName,
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,
@@ -187,7 +190,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  fee,
+                                  '${loginController.listGSGD[index].ugsUnitPrice} vnđ/${loginController.listGSGD[index].ugsMonth}',
                                   style: AppTextStyles.regular(context,
                                       size: AppDimens.textSize14,
                                       color: AppColors.secondaryF8971C),
@@ -251,7 +254,7 @@ class ListTeacherRecentlyScreen extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(80),
                       child: CachedNetworkImage(
-                        imageUrl: image,
+                        imageUrl: loginController.listGSGD[index].ugsAvatar,
                         width: 60,
                         height: 60,
                         fit: BoxFit.cover,

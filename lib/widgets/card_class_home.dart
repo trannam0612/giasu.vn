@@ -16,6 +16,7 @@ class CardClassHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: AppDimens.width * 0.5,
       margin: EdgeInsets.only(
           left: 0, top: 15, right: 0, bottom: 20),
       padding: EdgeInsets.all(AppDimens.space14),
@@ -35,9 +36,11 @@ class CardClassHome extends StatelessWidget {
           ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles.regularW500(context,
                 size: AppDimens.textSize18,
                 color: AppColors.primary4C5BD4),
