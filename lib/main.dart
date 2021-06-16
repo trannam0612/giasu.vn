@@ -11,7 +11,7 @@ import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhu
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step1_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step2_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step3_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
 import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       getPages: AppPages.routes,
-      home: SearchScreen(),
+      home: HomeAfterTeacherScreen(),
     );
   }
 }

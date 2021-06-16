@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class HomeAfterController extends GetxController {
+class HomeAfterTeacherController extends GetxController {
   String userType = '1';
 
 }

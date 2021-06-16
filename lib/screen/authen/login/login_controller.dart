@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_login.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 
 import 'package:sp_util/sp_util.dart';
 
 class LoginController extends GetxController {
-  // AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
-  // TextEditingController email = TextEditingController();
-  // TextEditingController pass = TextEditingController();
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  TextEditingController email = TextEditingController();
+  TextEditingController pass = TextEditingController();
   // ResultListData resultListData = ResultListData();
-  // List<String> listGender = [];
-  // List<String> listProvincial = [];
-  // List<String> listFormTeaching = [];
-  // List<String> listKVday = [];
-  // List<String> listKieuGS = [];
-  // List<String> listLuong = [];
-  // List<String> listClass = [];
-  // List<String> listSubject = [];
-  // bool isShowPass = true;
+  List<String> listGender = [];
+  List<String> listProvincial = [];
+  List<String> listFormTeaching = [];
+  List<String> listKVday = [];
+  List<String> listKieuGS = [];
+  List<String> listLuong = [];
+  List<String> listClass = [];
+  List<String> listSubject = [];
+  bool isShowPass = true;
   //
   // void onInit() {
   //   // called immediately after the widget is allocated memory
@@ -30,29 +36,25 @@ class LoginController extends GetxController {
   //   update();
   // }
   //
-  // Future<void> login() async {
-  //   Get.dialog(DialogLoading());
-  //   ResultData res = await authenticationRepositories.login(email.text, pass.text);
-  //   ResultDataLogin resultDataLogin = resultDataLoginFromJson(res.data);
-  //   if (resultDataLogin.data != null) {
-  //     Get.back();
-  //     print(resultDataLogin.data.accessToken);
-  //     print(resultDataLogin.data.userInfo.epEmail);
-  //     print(resultDataLogin.data.userInfo.epId);
-  //     SpUtil.putString(ConstString.token, resultDataLogin.data.accessToken);
-  //     SpUtil.putString(ConstString.ID_USER, resultDataLogin.data.userInfo.epId);
-  //     SpUtil.putString(ConstString.EMAIL, resultDataLogin.data.userInfo.epEmail);
-  //     SpUtil.putString(ConstString.NAME, resultDataLogin.data.userInfo.epName);
-  //     SpUtil.putString(ConstString.USER_TYPE, resultDataLogin.data.userInfo.userType);
-  //     SpUtil.putString(ConstString.AVATAR, resultDataLogin.data.userInfo.avatar);
-  //     Utils.showToast(resultDataLogin.data.message);
-  //     await Get.toNamed(Routes.NAVIGATION);
-  //   } else {
-  //     Get.back();
-  //     Utils.showToast(resultDataLogin.error.message);
-  //   }
-  //   update();
-  // }
+  Future<void> login() async {
+    ResultData res = await authenticationRepositories.login(email.text, pass.text);
+    ResultLogin resultLogin = resultLoginFromJson(res.data);
+    if (resultLogin.data != null) {
+      print(resultLogin.data.data.token);
+      print(resultLogin.data.data.email);
+      print(resultLogin.data.data.id);
+      SpUtil.putString(ConstString.token, resultLogin.data.data.token);
+      SpUtil.putString(ConstString.ID_USER, resultLogin.data.data.id);
+      SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
+      SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameTeacher);
+      Utils.showToast(resultLogin.data.message);
+      await Get.to(HomeAfterParentScreen());
+    } else {
+      Get.back();
+      Utils.showToast(resultLogin.error.message);
+    }
+    update();
+  }
   //
   // Future<void> getListData() async {
   //   print('getListData');
