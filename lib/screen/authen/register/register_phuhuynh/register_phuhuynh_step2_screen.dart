@@ -194,8 +194,8 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           obligatory: true,
                           textEditingController: controller.district,
                           onPressed: () {},
-                          title: 'Quận, huyện',
-                          hintText: 'Chọn quận, huyện',
+                          title: 'Quận/huyện',
+                          hintText: 'Chọn Quận/huyện',
                           iconSuffix: Images.ic_arrow_down,
                           error: controller.checkDistrict(),
                         ),
@@ -302,7 +302,7 @@ Widget SelectDistrict(BuildContext context) {
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận, Huyện',
+        'Quận/huyện',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(

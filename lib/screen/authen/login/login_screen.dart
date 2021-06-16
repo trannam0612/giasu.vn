@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                             children: [
                               CustomTextField(
                                 onPressed: () {},
-                                // textEditingController: controller.email,
+                                textEditingController: controller.email,
                                 title: 'Email',
                                 hintText: 'giasu365@gmail.com',
                                 isPassword: false,
@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                                 height: AppDimens.space16,
                               ),
                               CustomTextField(
-                                // textEditingController: controller.pass,
+                                textEditingController: controller.pass,
                                 onPressed: () {
                                   // controller.changeShowPass();
                                 },
@@ -99,8 +99,8 @@ class LoginScreen extends StatelessWidget {
                                 height: AppDimens.height * 0.07,
                                 child: CustomButton2(
                                   onPressed: () {
-                                    // controller.login();
-                                    // controller.pass.clear();
+                                    controller.login();
+                                    controller.pass.clear();
                                   },
                                   title: 'ĐĂNG NHẬP',
                                   textColor: AppColors.whiteFFFFFF,

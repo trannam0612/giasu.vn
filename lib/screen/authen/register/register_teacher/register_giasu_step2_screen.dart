@@ -507,7 +507,7 @@ Widget SelectDistrict(BuildContext context) {
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận, Huyện',
+        'Quận/huyện',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
