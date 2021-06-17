@@ -1,14 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_home_after_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_home_after_teacher.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_login_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_login_teacher.dart';
+import 'package:giasu_vn/common/shared/data/models/result_register_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 
@@ -16,6 +20,7 @@ import 'package:sp_util/sp_util.dart';
 
 class LoginController extends GetxController {
   AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  ResultListProvincialSubjectClass resultListProvincialSubjectClass = ResultListProvincialSubjectClass();
   HomeRepositories homeRepositories = HomeRepositories();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -60,6 +65,7 @@ class LoginController extends GetxController {
 
   Future<void> loginTeacher() async {
     ResultData res = await authenticationRepositories.loginTeacher(email.text, pass.text);
+
     ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
     if (resultLoginTeacher.data != null) {
       print(resultLoginTeacher.data.data.token);
@@ -72,10 +78,24 @@ class LoginController extends GetxController {
       Utils.showToast(resultLoginTeacher.data.message);
       homeAfterTeacher(1, 10);
     } else {
-      Get.back();
+      // Get.back();
       Utils.showToast(resultLoginTeacher.error.message);
     }
     update();
+  }
+
+  Future<void> listCitySubject() async {
+    ResultData res = await authenticationRepositories.listCitySubject();
+    resultListProvincialSubjectClass = resultListProvincialSubjectClassFromJson(res.data);
+    if (resultListProvincialSubjectClass.data != null) {
+      Utils.showToast(resultListProvincialSubjectClass.data.message);
+      listDataCity = resultListProvincialSubjectClass.data.dataCity;
+      listDataSubject = resultListProvincialSubjectClass.data.dataSubject;
+      listDataClass = resultListProvincialSubjectClass.data.dataClass;
+      listStringClass = resultListProvincialSubjectClass.data.dataClass.map((e) => e.ctName).toList();
+    } else {
+      Utils.showToast(resultListProvincialSubjectClass.error.message);
+    }
   }
 
   Future<void> homeAfterParent(int currentPage, int limit) async {
@@ -135,6 +155,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     print(userType);
+    listCitySubject();
     super.onInit();
   }
 }

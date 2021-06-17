@@ -48,8 +48,7 @@ class _DropDownSelectState extends State<DropDownSelect> {
                   children: <TextSpan>[
                     TextSpan(
                       text: widget.obligatory ? ' *' : '',
-                      style:
-                          AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                     ),
                   ],
                 ),
@@ -62,18 +61,15 @@ class _DropDownSelectState extends State<DropDownSelect> {
           padding: EdgeInsets.symmetric(horizontal: AppDimens.padding16),
           width: AppDimens.width,
           height: AppDimens.height * 0.07,
-          decoration: BoxDecoration(
-              color: AppColors.whiteFFFFFF,
-              borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: widget.borderColor)),
+          decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: widget.borderColor)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
+              isExpanded: true,
               hint: Text(
                 widget.hint,
                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.grey747474),
               ),
-              style: new TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold
-              ),
+              style: new TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
               icon: SvgPicture.asset(
                 Images.ic_arrow_down,
                 color: AppColors.black12,

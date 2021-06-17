@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -56,7 +57,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             obligatory: true,
                             title: 'Kiểu gia sư',
                             isTitle: true,
-                            hint: 'Chọn kiểu gia sư *',
+                            hint: 'Chọn kiểu gia sư',
                             dropdownValue: controller.selectedKieuGS,
                             onChanged: (String value) => controller.onSelectedKieuGS(value),
                             list: controller.listKieuGS,
@@ -123,7 +124,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      controller.listSubjectSelect[index],
+                                                      controller.listSubjectSelect[index].asName,
                                                       overflow: TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -187,9 +188,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space4,
                           ),
                           InkWell(
-                              onTap: () {
-                                controller.listSubjectSelectTopic.length < 5 ? Get.to(SelectTopicSubjectGSScreen(context)) : null;
-                              },
+                              onTap: controller.listSubjectSelectTopic.length < 5
+                                  ? () {
+                                      controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
+                                      controller.listSubjectSelectTopic.length < 5 ? Get.to(SelectTopicSubjectGSScreen(context)) : null;
+                                    }
+                                  : null,
                               child: Container(
                                   constraints: BoxConstraints(
                                     minHeight: 50,
@@ -223,7 +227,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        controller.listSubjectSelectTopic[index],
+                                                        controller.listSubjectSelectTopic[index].nameSubject,
                                                         overflow: TextOverflow.ellipsis,
                                                         maxLines: 1,
                                                         style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -277,7 +281,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             hint: 'Chọn lớp học giảng dạy',
                             dropdownValue: controller.selectedClass,
                             onChanged: (String value) => controller.onSelectedClass(value),
-                            list: controller.listClass,
+                            list: listStringClass,
                             borderColor: controller.errorClass ? AppColors.redFF0033 : AppColors.grey747474,
                           ),
                           controller.errorClass
@@ -378,7 +382,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 children: [
                                                   SizedBox(
                                                     child: Text(
-                                                      controller.listDistrictSelect[index],
+                                                      controller.listDistrictSelect[index].citName,
                                                       overflow: TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -553,7 +557,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                                height: AppDimens.height * 0.07,
+                                height: AppDimens.height * 0.063,
                                 decoration:
                                     BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
                                 child: DropdownButtonHideUnderline(
@@ -567,11 +571,11 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                       Images.ic_arrow_down,
                                       color: AppColors.black12,
                                     ),
-                                    value: controller.selectedStatusFee,
+                                    value: controller.selectedTime,
                                     onChanged: (value) => controller.onSelectedStatusFee(value),
                                     dropdownColor: AppColors.whiteFFFFFF,
                                     elevation: 10,
-                                    items: controller.listLuong.map((selectedType) {
+                                    items: controller.listLuong.values.map((selectedType) {
                                       return DropdownMenuItem(
                                         child: new Text(
                                           selectedType,
@@ -798,7 +802,8 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                     itemBuilder: (context, index) => InkWell(
                           // ignore: deprecated_member_use
                           onTap: () {
-                            controller.onSelectSubject(controller.listSubject[index]);
+                            controller.onSelectSubject(listDataSubject[index]);
+                            controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
                             Get.back();
                           },
                           child: SizedBox(
@@ -806,11 +811,11 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                             child: Row(
                               children: [
                                 Text(
-                                  controller.listSubject[index],
+                                  listDataSubject[index].asName,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelect.map((e) => e).contains(controller.listSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),
@@ -819,7 +824,7 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                           thickness: 1,
                           color: AppColors.black12,
                         ),
-                    itemCount: controller.listSubject.length),
+                    itemCount: listDataSubject.length),
               ),
             ),
           ));
@@ -851,7 +856,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                     itemBuilder: (context, index) => InkWell(
                           // ignore: deprecated_member_use
                           onTap: () {
-                            controller.onSelectSubjectTopic(controller.listSubjectTopic[index]);
+                            controller.onSelectSubjectTopic(controller.listTopic[index]);
                             Get.back();
                           },
                           child: SizedBox(
@@ -859,11 +864,11 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                             child: Row(
                               children: [
                                 Text(
-                                  controller.listSubjectTopic[index],
+                                  controller.listTopic[index].nameSubject,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e).contains(controller.listSubjectTopic[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),
@@ -872,7 +877,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                           thickness: 1,
                           color: AppColors.black12,
                         ),
-                    itemCount: controller.listSubjectTopic.length),
+                    itemCount: controller.listTopic.length),
               ),
             ),
           ));
@@ -880,7 +885,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
 
 Widget SelectTinhThanh(BuildContext context) {
   RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -904,7 +909,9 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.areaTeaching.text = list[index];
+                  registerGiaSuController.areaTeaching.text = listDataCity[index].citName;
+                  registerGiaSuController.idArea = int.parse(listDataCity[index].citId);
+                  registerGiaSuController.getListDistrict(int.parse(listDataCity[index].citId));
                   Get.back();
                 },
                 child: SizedBox(
@@ -912,11 +919,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerGiaSuController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == registerGiaSuController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -925,7 +932,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
@@ -955,7 +962,7 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.onSelectQH(registerGiaSuController.listQH[index]);
+                  registerGiaSuController.onSelectQH(registerGiaSuController.listDistrict[index]);
                   Get.back();
                 },
                 child: SizedBox(
@@ -963,11 +970,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        registerGiaSuController.listQH[index],
+                        registerGiaSuController.listDistrict[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listQH[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listDistrict[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -976,7 +983,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: registerGiaSuController.listQH.length),
+          itemCount: registerGiaSuController.listDistrict.length),
     ),
   ));
 }

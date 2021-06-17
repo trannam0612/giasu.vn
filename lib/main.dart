@@ -8,6 +8,7 @@ import 'package:giasu_vn/screen/authen/forgot/forgot_screen.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/otp/otp_screen.dart';
+import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step1_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step1_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step2_screen.dart';
@@ -38,7 +39,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: AppColors.primary4C5BD4,
     ));
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       enableLog: true,

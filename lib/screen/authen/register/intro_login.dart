@@ -6,6 +6,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step1_screen.dart';
+import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step1_screen.dart';
 
 class IntroLoginScreen extends StatelessWidget {
   const IntroLoginScreen({Key key}) : super(key: key);
@@ -50,7 +51,7 @@ class IntroLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () => Get.to(RegisterParentStep1Screen()),
+                  onTap: () => Get.to(RegisterGiaSuStep1Screen()),
                   child: Container(
                     decoration: BoxDecoration(
                         color: AppColors.primary4C5BD4,

@@ -19,6 +19,7 @@ class OTPScreen extends StatelessWidget {
   final VoidCallback back;
 
   const OTPScreen({Key key, this.back}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<OTPController>(
@@ -30,12 +31,11 @@ class OTPScreen extends StatelessWidget {
               backgroundColor: AppColors.greyf6f6f6,
               appBar: AppBar(
                 leading: IconButton(
-                  icon: SvgPicture.asset(
-                    Images.ic_arrow_left_iphone,
-                    color: AppColors.grey282828,
-                  ),
-                  onPressed: back
-                ),
+                    icon: SvgPicture.asset(
+                      Images.ic_arrow_left_iphone,
+                      color: AppColors.grey282828,
+                    ),
+                    onPressed: back),
                 elevation: 0,
                 backgroundColor: AppColors.greyf6f6f6,
               ),
@@ -68,8 +68,7 @@ class OTPScreen extends StatelessWidget {
                                         padding: EdgeInsets.all(10),
                                         child: Container(
                                           padding: EdgeInsets.symmetric(horizontal: AppDimens.padding16),
-                                          decoration:
-                                              BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8)), boxShadow: [
+                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8)), boxShadow: [
                                             BoxShadow(
                                               color: Colors.white,
                                               blurRadius: 5,
@@ -125,8 +124,7 @@ class OTPScreen extends StatelessWidget {
                                 children: <TextSpan>[
                                   TextSpan(
                                     text: '(30s) ',
-                                    style: AppTextStyles.regularW400(context,
-                                        size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
+                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
                                   ),
                                   TextSpan(
                                     text: 'mã hãy ấn vào nút ',
@@ -134,8 +132,7 @@ class OTPScreen extends StatelessWidget {
                                   ),
                                   TextSpan(
                                     text: '"Gửi lại"',
-                                    style: AppTextStyles.regularW400(context,
-                                        size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                                   ),
                                 ],
                               ),
@@ -149,7 +146,7 @@ class OTPScreen extends StatelessWidget {
                               height: AppDimens.height * 0.07,
                               child: CustomButton2(
                                 onPressed: () {
-                                  // controller.login();
+                                  controller.checkButtonOTP();
                                   // controller.pass.clear();
                                 },
                                 title: 'Xác nhận',
@@ -178,8 +175,7 @@ class OTPScreen extends StatelessWidget {
                                   child: Text(
                                     'Đăng nhập',
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyles.regularW400(context,
-                                        size: AppDimens.textSize16, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
+                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
                                   ),
                                 ),
                               ],

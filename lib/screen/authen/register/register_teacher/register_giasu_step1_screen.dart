@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -23,8 +24,7 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Đăng ký',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -46,7 +46,7 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
                         ),
                         SizedBox(
-                          height: AppDimens.height*0.07,
+                          height: AppDimens.height * 0.07,
                         ),
                         SizedBox(
                           height: AppDimens.space20,
@@ -65,6 +65,10 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp(' ')),
+                          ],
+                          maxLine: 1,
                           isShowIcon: true,
                           obligatory: true,
                           onPressed: () {
@@ -73,6 +77,7 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                           title: 'Mật khẩu',
                           textEditingController: controller.passWord,
                           hintText: 'Mật khẩu',
+                          keyboardType: TextInputType.text,
                           isPassword: controller.isShowPassword,
                           iconSuffix: controller.isShowPassword ? Images.ic_eye_on : Images.ic_eye_off,
                           error: controller.checkPassword(),
@@ -81,17 +86,19 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          maxLine: 1,
                           isShowIcon: true,
                           obligatory: true,
+                          keyboardType: TextInputType.text,
                           textEditingController: controller.rePassWord,
                           onPressed: () {
                             controller.changeValueRePassword();
                           },
-                          error: controller.checkRePassword(),
                           title: 'Nhập lại mật khẩu',
                           hintText: 'Nhập lại mật khẩu',
                           isPassword: controller.isShowRePassword,
-                          iconSuffix: controller.isShowRePassword ? Images.ic_eye_on : Images.ic_eye_off,
+                          iconSuffix: controller.isShowPassword ? Images.ic_eye_on : Images.ic_eye_off,
+                          error: controller.checkRePassword(),
                         ),
                         SizedBox(
                           height: AppDimens.space40,

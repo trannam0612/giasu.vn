@@ -5,10 +5,12 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
@@ -29,8 +31,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Đăng ký',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -170,7 +171,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           onTapTextField: () {
-                            Get.to(SelectTinhThanh(context));
+                            Get.to(SelectTinhThanhParent(context));
                           },
                           readOnly: true,
                           isShowIcon: true,
@@ -214,6 +215,19 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           error: controller.checkAddress(),
                         ),
                         SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        CustomTextFieldBox(
+                          error: controller.checkInformation(),
+                          textEditingController: controller.information,
+                          obligatory: true,
+                          onPressed: () {},
+                          title: 'Mô tả về bản thân',
+                          hintText: 'Nhập mô tả',
+                          isPassword: false,
+                          iconSuffix: Images.ic_plus,
+                        ),
+                        SizedBox(
                           height: AppDimens.height * 0.07,
                         ),
                         Padding(
@@ -240,9 +254,9 @@ class RegisterParentStep2Screen extends StatelessWidget {
   }
 }
 
-Widget SelectTinhThanh(BuildContext context) {
+Widget SelectTinhThanhParent(BuildContext context) {
   RegisterPhuHuynhController registerPhuHuynhController = Get.put(RegisterPhuHuynhController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -263,10 +277,13 @@ Widget SelectTinhThanh(BuildContext context) {
       padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
       child: ListView.separated(
           physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => GestureDetector(
+          itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.provincial.text = list[index];
+                  registerPhuHuynhController.provincial.text = listDataCity[index].citName;
+                  registerPhuHuynhController.district.clear();
+                  registerPhuHuynhController.idProvincial = int.parse(listDataCity[index].citId);
+                  registerPhuHuynhController.getListDistrict(registerPhuHuynhController.idProvincial);
                   Get.back();
                 },
                 child: SizedBox(
@@ -274,11 +291,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -287,7 +304,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
@@ -295,7 +312,7 @@ Widget SelectTinhThanh(BuildContext context) {
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
   RegisterPhuHuynhController registerPhuHuynhController = Get.put(RegisterPhuHuynhController());
-  List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
+  // List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -316,10 +333,11 @@ Widget SelectDistrict(BuildContext context) {
       padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
       child: ListView.separated(
           physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => GestureDetector(
+          itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.district.text = list[index];
+                  registerPhuHuynhController.district.text = registerPhuHuynhController.listDistrict[index].citName;
+                  registerPhuHuynhController.idDistrict = int.parse(registerPhuHuynhController.listDistrict[index].citId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -327,11 +345,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        registerPhuHuynhController.listDistrict[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerPhuHuynhController.listDistrict[index].citName == registerPhuHuynhController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -340,7 +358,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: registerPhuHuynhController.listDistrict.length),
     ),
   ));
 }
@@ -373,8 +391,7 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,
