@@ -12,13 +12,17 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:intl/intl.dart';
 
 import 'package:sp_util/sp_util.dart';
 
 class LoginController extends GetxController {
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   ResultListProvincialSubjectClass resultListProvincialSubjectClass = ResultListProvincialSubjectClass();
   HomeRepositories homeRepositories = HomeRepositories();
@@ -37,11 +41,7 @@ class LoginController extends GetxController {
   List<String> listLuong = [];
   List<String> listClass = [];
   List<String> listSubject = [];
-  List<DataDsgs> listGSGD = [];
-  List<DataDsgs> listGSPB = [];
-  List<DataDslh> listLHGD = [];
-  List<DataDslh> listLHGDMore = [];
-  List<DataDslh> listLHPB = [];
+
 
   bool isShowPass = true;
 
@@ -57,7 +57,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
       Utils.showToast(resultLogin.data.message);
-      // homeAfterParent(1, 10);
+      homeAfterParentController.homeAfterParent(1, 10);
     } else {
       Get.back();
       Utils.showToast(resultLogin.error.message);
@@ -78,7 +78,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
       Utils.showToast(resultLoginTeacher.data.message);
-      Get.to(HomeAfterTeacherScreen());
+      homeAfterTeacherController.homeAfterTeacher(1, 10);
     } else {
       // Get.back();
       Utils.showToast(resultLoginTeacher.error.message);
@@ -100,32 +100,6 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> homeAfterParent(int currentPage, int limit) async {
-    print('homeAfterParent');
-    print(userType);
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
-    if (resultHomeAfterParent.data != null) {
-      listGSGD = resultHomeAfterParent.data.dataTutorGd.dataDsgsgd;
-      listGSPB = resultHomeAfterParent.data.dataTutorPb.dataDsgspb;
-      Get.to(HomeAfterParentScreen());
-    }
-    update();
-  }
-
-  Future<void> homeAfterTeacher(int currentPage, int limit) async {
-    print('homeAfterTeacher');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-    if (resultHomeAfterTeacher.data != null) {
-      listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
-      listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
-      Get.to(HomeAfterTeacherScreen());
-    }
-    update();
-  }
 
   String timeAgo(int timestamp) {
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);

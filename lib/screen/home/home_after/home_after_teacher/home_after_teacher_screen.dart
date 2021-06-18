@@ -333,7 +333,14 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                   numberSuggest: controller.listLHPB[index].countDnd,
                                   save: controller.listLHPB[index].checkSave,
                                   onTap: () {
-                                    controller.listLHPB[index].checkSave = !controller.listLHPB[index].checkSave;
+                                    print(controller.listLHPB[index].checkSave);
+                                    if(!controller.listLHPB[index].checkSave) {
+                                      controller.listLHPB[index].checkSave = true;
+                                      controller.saveClass(int.parse(controller.listLHPB[index].pftId));
+                                    } else {
+                                      controller.listLHPB[index].checkSave = false;
+                                      controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
+                                    }
                                     controller.update();
                                   },
                                   hasButton: false,

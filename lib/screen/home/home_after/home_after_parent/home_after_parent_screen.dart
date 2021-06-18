@@ -144,7 +144,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterParent.data.gsmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterParent.data.gsmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -183,7 +183,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterParent.data.gsdnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterParent.data.gsdnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -222,7 +222,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterParent.data.tindang})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterParent.data.tindang})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -260,7 +260,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterParent.data.gsdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterParent.data.gsdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -291,16 +291,16 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         itemBuilder: (context, index) => InkWell(
                               onTap: () => Get.to(InformationTeacherScreen()),
                               child: CardTeacherHome(
-                                image: loginController.listGSGD[index].ugsAvatar,
-                                name: loginController.listGSGD[index].ugsName,
+                                image: controller.listGSGD[index].ugsAvatar,
+                                name: controller.listGSGD[index].ugsName,
                                 rate: 4,
-                                content: loginController.listGSGD[index].ugsAboutUs,
+                                content: controller.listGSGD[index].ugsAboutUs,
                               ),
                             ),
                         separatorBuilder: (context, index) => SizedBox(
                               width: AppDimens.space12,
                             ),
-                        itemCount: loginController.listGSGD.length),
+                        itemCount: controller.listGSGD.length),
                   ),
                   Text('Gia sư phổ biến', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                   SizedBox(
@@ -311,14 +311,21 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                     width: AppDimens.width,
                     child: ListView.builder(
                       itemBuilder: (context, index) => CardTeacherHome2(
-                        name: loginController.listGSPB[index].ugsName,
+                        name: controller.listGSPB[index].ugsName,
                         rate: 3,
-                        subject: loginController.listGSPB[index].asName,
-                        address: loginController.listGSPB[index].citName,
-                        image: loginController.listGSPB[index].ugsAvatar,
-                        saved: loginController.listGSPB[index].checkSave,
+                        subject: controller.listGSPB[index].asName,
+                        address: controller.listGSPB[index].citName,
+                        image: controller.listGSPB[index].ugsAvatar,
+                        saved: controller.listGSPB[index].checkSave,
+                        onTap: () {
+                          if(!controller.listGSPB[index].checkSave) {
+                            controller.listGSPB[index].checkSave = true;
+                            controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
+                            controller.update();
+                          }
+                        },
                       ),
-                      itemCount: loginController.listGSPB.length,
+                      itemCount: controller.listGSPB.length,
                     ),
                   )
                 ],

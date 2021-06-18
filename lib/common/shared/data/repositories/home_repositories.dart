@@ -143,7 +143,7 @@ class HomeRepositories {
     };
     Map<String, dynamic> body = {'token': token, 'id_lop': idLop};
 
-    ResultData rest = await httpManager.netFetch(Address.REFUSE_INVITE_TEACH, body, header, Options(method: 'post'));
+    ResultData rest = await httpManager.netFetch(Address.DELETE_CLASS_ACCEPTED, body, header, Options(method: 'post'));
 
     return rest;
   }
@@ -156,6 +156,54 @@ class HomeRepositories {
     Map<String, dynamic> body = {'token': token, 'current_page': currentPage, 'limit': limit};
 
     ResultData rest = await httpManager.netFetch(Address.CLASS_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> saveClass(String token, int idClass) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_class': idClass};
+
+    ResultData rest = await httpManager.netFetch(Address.SAVE_CLASS, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> deleteClassSaved(String token, int idClass) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_lop': idClass};
+
+    ResultData rest = await httpManager.netFetch(Address.DELETE_CLASS_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> offerTeach(String token, int idClass) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_lop': idClass};
+
+    ResultData rest = await httpManager.netFetch(Address.OFFER_TEACH, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> saveTutor(String token, int idGS) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS};
+
+    ResultData rest = await httpManager.netFetch(Address.SAVE_TUTOR, body, header, Options(method: 'post'));
 
     return rest;
   }

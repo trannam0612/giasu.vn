@@ -94,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                                 child: CustomButton2(
                                   onPressed: () {
                                     controller.userType =='1' ? controller.loginParent() : controller.loginTeacher();
-                                    controller.pass.clear();
+                                    // controller.pass.clear();
                                   },
                                   title: 'ĐĂNG NHẬP',
                                   textColor: AppColors.whiteFFFFFF,

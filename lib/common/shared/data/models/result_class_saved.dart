@@ -104,8 +104,8 @@ class ListLdl {
   String pftMonth;
   String dayPost;
   String scDate;
-  String checkSave;
-  String checkOffer;
+  bool checkSave;
+  bool checkOffer;
 
   factory ListLdl.fromJson(Map<String, dynamic> json) => ListLdl(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
