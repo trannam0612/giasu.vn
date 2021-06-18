@@ -11,9 +11,15 @@ import 'package:sp_util/sp_util.dart';
 class HomeAfterParentController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultHomeAfterParent resultHomeAfterParent = ResultHomeAfterParent();
+  bool checkSave;
 
   @override
   void onInit() {
     super.onInit();
+
+    void changeValueSave() {
+      checkSave = !checkSave;
+      update();
+    }
   }
 }

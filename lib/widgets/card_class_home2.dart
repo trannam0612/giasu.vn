@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../common/images.dart';
@@ -27,20 +28,10 @@ class CardClassHome2 extends StatelessWidget {
   final bool save;
   final bool hasButton;
   final bool hasButtonSave;
+  final VoidCallback onTap;
 
   const CardClassHome2(
-      {Key key,
-      this.title,
-      this.time,
-      this.fee,
-      this.subject,
-      this.address,
-      this.classId,
-      this.methodTeach,
-      this.numberSuggest,
-      this.save,
-      this.hasButton,
-      this.hasButtonSave = true})
+      {Key key, this.title, this.time, this.fee, this.subject, this.address, this.classId, this.methodTeach, this.numberSuggest, this.save, this.hasButton, this.hasButtonSave = true, this.onTap})
       : super(key: key);
 
   @override
@@ -48,17 +39,14 @@ class CardClassHome2 extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppDimens.padding12),
       width: AppDimens.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppDimens.space16),
-          color: AppColors.whiteFFFFFF,
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withOpacity(0.25),
-              spreadRadius: 0,
-              blurRadius: 4 ,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ]),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space16), color: AppColors.whiteFFFFFF, boxShadow: [
+        BoxShadow(
+          color: AppColors.black.withOpacity(0.25),
+          spreadRadius: 0,
+          blurRadius: 4,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ]),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,23 +56,24 @@ class CardClassHome2 extends StatelessWidget {
                 child: Text(
                   title,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.regularW500(context,
-                      size: AppDimens.textSize18,
-                      color: AppColors.primary4C5BD4),
+                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
                 ),
               ),
               hasButtonSave
-                  ? save
-                      ? SvgPicture.asset(
-                          Images.ic_saved,
-                          width: 20,
-                          height: 20,
-                        )
-                      : SvgPicture.asset(
-                          Images.ic_save,
-                          width: 20,
-                          height: 20,
-                        )
+                  ? InkWell(
+                onTap: onTap,
+                      child: save
+                          ? SvgPicture.asset(
+                              Images.ic_saved,
+                              width: 20,
+                              height: 20,
+                            )
+                          : SvgPicture.asset(
+                              Images.ic_save,
+                              width: 20,
+                              height: 20,
+                            ),
+                    )
                   : Container(),
             ],
           ),
@@ -93,8 +82,7 @@ class CardClassHome2 extends StatelessWidget {
           ),
           Text(
             time,
-            style: AppTextStyles.regular(context,
-                size: AppDimens.textSize16, color: AppColors.greyAAAAAA),
+            style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.greyAAAAAA),
           ),
           SizedBox(
             height: AppDimens.space6,
@@ -119,11 +107,7 @@ class CardClassHome2 extends StatelessWidget {
                       ),
                       Text(
                         fee,
-                        style: AppTextStyles.regular(
-                          context,
-                          size: AppDimens.textSize16,
-                          color: AppColors.secondaryF8971C
-                        ),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
                       ),
                     ],
                   ),
@@ -186,9 +170,7 @@ class CardClassHome2 extends StatelessWidget {
                     children: [
                       Text(
                         'Mã lớp:',
-                        style: AppTextStyles.regular(context,
-                            size: AppDimens.textSize16,
-                            color: AppColors.grey747474),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space4,
@@ -211,18 +193,14 @@ class CardClassHome2 extends StatelessWidget {
                     children: [
                       Text(
                         'Hình thức dạy:',
-                        style: AppTextStyles.regular(context,
-                            size: AppDimens.textSize16,
-                            color: AppColors.grey747474),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space6,
                       ),
                       Text(
                         methodTeach,
-                        style: AppTextStyles.regular(context,
-                            size: AppDimens.textSize16,
-                            color: AppColors.green5DC22D),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.green5DC22D),
                       ),
                     ],
                   ),
@@ -235,9 +213,7 @@ class CardClassHome2 extends StatelessWidget {
                     children: [
                       Text(
                         'Đề nghị dạy:',
-                        style: AppTextStyles.regular(context,
-                            size: AppDimens.textSize16,
-                            color: AppColors.grey747474),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space8,

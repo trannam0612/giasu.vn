@@ -1,0 +1,26 @@
+import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_home_after_teacher.dart';
+import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
+import 'package:sp_util/sp_util.dart';
+
+class ListClassRecentlyController extends GetxController {
+ HomeRepositories homeRepositories = HomeRepositories();
+ ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
+ List<DataDslh>listLHGDMore = [];
+ Future<void> recentlyClass(int currentPage, int limit) async {
+   print('recentlyClass');
+   String token = SpUtil.getString(ConstString.token);
+   ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+   resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
+   if (resultHomeAfterTeacher.data != null) {
+     listLHGDMore = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
+   }
+   else {
+     Utils.showToast('Trống!');
+   }
+   update();
+ }
+}

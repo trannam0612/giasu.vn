@@ -31,9 +31,21 @@ import '../../../../common/theme/app_dimens.dart';
 import '../../../../common/theme/app_text_style.dart';
 import '../../../../widgets/custom_search_textfield.dart';
 
-class HomeAfterTeacherScreen extends StatelessWidget {
+class HomeAfterTeacherScreen extends StatefulWidget {
   const HomeAfterTeacherScreen({Key key}) : super(key: key);
 
+  @override
+  _HomeAfterTeacherScreenState createState() => _HomeAfterTeacherScreenState();
+}
+
+class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    homeAfterTeacherController.homeAfterTeacher(1,10);
+  }
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
@@ -131,7 +143,7 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterTeacher.data.lmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.lmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -170,13 +182,13 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterTeacher.data.lnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.lnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
                       ),
                       InkWell(
-                        onTap: () => controller.userType == '2' ? Get.to(ListClassSuggestScreen()) : Get.to(ListPostCreatedScreen()),
+                        onTap: () => Get.to(ListClassSuggestScreen()),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
@@ -209,7 +221,7 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterTeacher.data.ldnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.ldnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -247,7 +259,7 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${loginController.resultHomeAfterTeacher.data.ldl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.ldl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -278,16 +290,16 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                           itemBuilder: (context, index) => InkWell(
                                 onTap: () => Get.to(InformationClassScreen()),
                                 child: CardClassHome(
-                                  title: loginController.listLHGD[index].pftSummary,
-                                  subject: loginController.listLHGD[index].asName,
-                                  address: loginController.listLHGD[index].citName,
-                                  time: '1 phút trước.',
+                                  title: controller.listLHGD[index].pftSummary,
+                                  subject: controller.listLHGD[index].asName,
+                                  address: controller.listLHGD[index].citName,
+                                  time: controller.timeAgo(int.parse(controller.listLHGD[index].dayPost)),
                                 ),
                               ),
                           separatorBuilder: (context, index) => SizedBox(
                                 width: AppDimens.space10,
                               ),
-                          itemCount: loginController.listLHGD.length)),
+                          itemCount: controller.listLHGD.length)),
                   Text('Lớp học phổ biến', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                   SizedBox(
                     height: AppDimens.space14,
@@ -304,19 +316,20 @@ class HomeAfterTeacherScreen extends StatelessWidget {
                                 ),
                                 margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
                                 child: CardClassHome2(
-                                  title: loginController.listLHPB[index].pftSummary,
-                                  time: '2 giờ trước',
-                                  fee: '${loginController.listLHPB[index].pftPrice} vnđ/${loginController.listLHPB[index].pftMonth}',
-                                  subject: loginController.listLHPB[index].asName,
-                                  address: loginController.listLHPB[index].citName,
-                                  classId: loginController.listLHPB[index].pftId,
-                                  methodTeach: loginController.listLHPB[index].pftForm,
-                                  numberSuggest: '02',
-                                  save: false,
+                                  title: controller.listLHPB[index].pftSummary,
+                                  time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
+                                  fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
+                                  subject: controller.listLHPB[index].asDetailName,
+                                  address: controller.listLHPB[index].citName,
+                                  classId: controller.listLHPB[index].pftId,
+                                  methodTeach: controller.listLHPB[index].pftForm,
+                                  numberSuggest: controller.listLHPB[index].countDnd,
+                                  save: controller.listLHPB[index].checkSave,
+                                  onTap: () => controller.changeValueSave(),
                                   hasButton: false,
                                 ),
                               ),
-                          itemCount: loginController.listLHPB.length))
+                          itemCount: controller.listLHPB.length))
                 ],
               ),
             ),
