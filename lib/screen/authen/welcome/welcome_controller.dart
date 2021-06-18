@@ -7,4 +7,5 @@ import 'package:sp_util/sp_util.dart';
 
 class WelcomeController extends GetxController {
 
+
 }

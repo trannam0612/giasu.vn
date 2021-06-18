@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
@@ -24,7 +25,9 @@ class CustomTextField extends StatefulWidget {
   final bool obligatory;
   final bool readOnly;
   final int maxLength;
+  final int maxLine;
   final FocusNode focus;
+  final List<TextInputFormatter> inputFormatters;
 
   const CustomTextField(
       {Key key,
@@ -46,7 +49,9 @@ class CustomTextField extends StatefulWidget {
       this.focus,
       this.readOnly = false,
       this.onTapTextField,
-      this.maxLength});
+      this.maxLength,
+      this.maxLine = null,
+      this.inputFormatters});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -67,8 +72,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     children: <TextSpan>[
                       TextSpan(
                         text: widget.obligatory ? ' *' : '',
-                        style:
-                            AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                       ),
                     ],
                   ),
@@ -78,11 +82,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
             height: AppDimens.space4,
           ),
           TextFormField(
+              inputFormatters: widget.inputFormatters,
               maxLength: widget.maxLength,
               onTap: widget.onTapTextField,
               readOnly: widget.readOnly,
               focusNode: widget.focus,
-              maxLines: null,
+              maxLines: widget.maxLine,
               obscureText: widget.isPassword,
               onChanged: (value) {
                 if (widget.onChanged != null) widget.onChanged(value);

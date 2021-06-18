@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class RegisterGiaSuController extends GetxController {
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  ResultListDistrict resultListDistrict = ResultListDistrict();
+  ResultListTopic resultListTopic = ResultListTopic();
   String valueErrorPassword = '';
   bool isShowPassword = true;
   bool errorShowPassword = false;
@@ -57,16 +68,17 @@ class RegisterGiaSuController extends GetxController {
   bool errorClass = false;
   bool errorSubject = false;
   bool errorFormTeaching = false;
-  bool errorStatusFee = false;
+  bool errorStatusTime = false;
   bool errorSubjectTopic = false;
   bool errorArea = false;
   bool valueButtonLuong = false;
   int idClass = 0;
   int idLuong = 0;
   int idFormTeaching = 0;
+  int idMariage;
   String valueArea;
 
-  int idValueArea;
+  int idArea;
 
   int idSubject;
 
@@ -95,20 +107,27 @@ class RegisterGiaSuController extends GetxController {
   String selectedLuong;
   bool valueCheckBox = false;
   bool errorKieuGS = false;
-  String selectedStatusFee = 'Giờ';
-
-  List<String> listSubjectSelect = [];
-  List<String> listDistrictSelect = [];
-  List<String> listKieuGS = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
+  String selectedTime = 'Giờ';
+  List<ListDistrict> listDistrict = [];
+  List<ListSubjectTag> listTopic = [];
+  List<DataSubject> listSubjectSelect = [];
+  List<ListDistrict> listDistrictSelect = [];
+  List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
+  List<String> listMarriage = ['Đã kết hôn', 'Cô đơn'];
   List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
-  List<String> listFormTeaching = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
+  List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
   List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
-  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
-  List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
+  List<String> listGender = ['Nam', 'Nữ'];
+
+  // List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
+  Map<int, String> listLuong = {
+    1: 'Giờ',
+    2: 'Ngày',
+    3: 'Tháng',
+  };
 
   //Step1
   TextEditingController passWord = TextEditingController();
@@ -133,6 +152,7 @@ class RegisterGiaSuController extends GetxController {
   TextEditingController school = TextEditingController();
   TextEditingController prize = TextEditingController();
   TextEditingController graduationYear = TextEditingController();
+  TextEditingController specialized = TextEditingController();
   TextEditingController company = TextEditingController();
   TextEditingController information = TextEditingController();
   TextEditingController experienceTeaching = TextEditingController();
@@ -361,8 +381,10 @@ class RegisterGiaSuController extends GetxController {
     print('checkPassword');
     if (errorShowPassword && passWord.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 6) {
-      return 'Mật khẩu tối thiểu 6 kí tự!';
+    } else if (errorShowPassword && passWord.text.length < 8) {
+      return 'Mật khẩu tối thiểu 8 kí tự!';
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text)) {
+      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
   }
@@ -442,22 +464,19 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectedGender(String value) {
     selectedGender = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachGioiTinh.length; i++) {
-    //   if (loginController.resultListData.data.danhSachGioiTinh[i].sexName == value) {
-    //     idGender = loginController.resultListData.data.danhSachGioiTinh[i].sexId;
-    //   }
-    // }
+    idGender = value == "Nam" ? 1 : 2;
     errorGender = false;
     update();
   }
 
   void onSelectedClass(String value) {
     selectedClass = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachLopHocSeDay.length; i++) {
-    //   if (loginController.resultListData.data.danhSachLopHocSeDay[i].levelClassName == value) {
-    //     idClass = loginController.resultListData.data.danhSachLopHocSeDay[i].levelClassId;
-    //   }
-    // }
+    for (int i = 0; i < listDataClass.length; i++) {
+      if (listDataClass[i].ctName == value) {
+        idClass = int.parse(listDataClass[i].ctId);
+      }
+    }
+
     errorClass = false;
     update();
   }
@@ -469,6 +488,7 @@ class RegisterGiaSuController extends GetxController {
     //     idFormTeaching = loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodId;
     //   }
     // }
+    idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2;
     errorFormTeaching = false;
     update();
   }
@@ -484,9 +504,16 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  int idTime;
+
   void onSelectedStatusFee(String value) {
-    selectedStatusFee = value;
-    errorStatusFee = false;
+    selectedTime = value;
+    listLuong.forEach((key, values) {
+      if (values == value) {
+        idTime = key;
+      }
+    });
+    errorStatusTime = false;
     update();
   }
 
@@ -505,12 +532,27 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectedKieuGS(String value) {
     selectedKieuGS = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachKieuGiaSu.length; i++) {
-    //   if (loginController.resultListData.data.danhSachKieuGiaSu[i].nameType == value) {
-    //     idExp = loginController.resultListData.data.danhSachKieuGiaSu[i].typeId;
-    //   }
-    // }
+    idExp = selectedKieuGS == 'Sinh viên'
+        ? 1
+        : selectedKieuGS == 'Người đi làm'
+            ? 2
+            : 3;
     errorKieuGS = false;
+    update();
+  }
+
+  Future<void> getListTopic(String idTopic) async {
+    listTopic = [];
+    print('getListTopic');
+    print(listSubjectSelect.join(','));
+    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+    resultListTopic = resultListTopicFromJson(res.data);
+    if (resultListTopic.data != null) {
+      listTopic = resultListTopic.data.listSubjectTag;
+      Utils.showToast(resultListTopic.data.message);
+    } else {
+      Utils.showToast(resultListTopic.error.message);
+    }
     update();
   }
 
@@ -521,6 +563,7 @@ class RegisterGiaSuController extends GetxController {
     //     idExp = loginController.resultListData.data.danhSachKieuGiaSu[i].typeId;
     //   }
     // }
+    idMariage = selectedMarriage == value ? 0 : 1;
     errorMarriage = false;
     update();
   }
@@ -572,7 +615,7 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  void onSelectQH(String value) {
+  void onSelectQH(ListDistrict value) {
     print('onSelectQH');
     if (listDistrictSelect.map((e) => e).contains(value)) {
       listDistrictSelect.remove(value);
@@ -583,7 +626,7 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  void onSelectSubject(String value) {
+  void onSelectSubject(DataSubject value) {
     print('onSelectSubject');
     if (!listSubjectSelect.map((e) => e).contains(value)) {
       listSubjectSelect.add(value);
@@ -594,9 +637,9 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  List<String> listSubjectSelectTopic = [];
+  List<ListSubjectTag> listSubjectSelectTopic = [];
 
-  void onSelectSubjectTopic(String value) {
+  void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
     if (!listSubjectSelectTopic.map((e) => e).contains(value)) {
       listSubjectSelectTopic.add(value);
@@ -615,7 +658,13 @@ class RegisterGiaSuController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    if (email.text.contains('@') && email.text.contains('.') && passWord.text.length >= 6 && passWord.text.isNotEmpty && passWord.text == rePassWord.text && rePassWord.text.isNotEmpty) {
+    if (email.text.contains('@') &&
+        email.text.contains('.') &&
+        passWord.text.length >= 8 &&
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text) &&
+        passWord.text.isNotEmpty &&
+        passWord.text == rePassWord.text &&
+        rePassWord.text.isNotEmpty) {
       print('done');
       Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
     } else {
@@ -678,15 +727,6 @@ class RegisterGiaSuController extends GetxController {
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
-    print(listSubjectSelect.length);
-    print(selectedClass);
-    print(listSubjectSelectTopic.length);
-    print(selectedFormTeaching);
-    print(provincial.text);
-    print(listDistrictSelect.length);
-    print(valueCheckBox);
-    print('oke');
-
     errorSalaryCD = true;
     errorSalaryUL1 = true;
     errorSalaryUL2 = true;
@@ -713,9 +753,9 @@ class RegisterGiaSuController extends GetxController {
               valueCheckBox &&
               salaryCD.text.isNotEmpty &&
               data != null &&
-              !selectedStatusFee.isNullOrBlank
+              !selectedTime.isNullOrBlank
           // ignore: unnecessary_statements
-          ? print('Đăng ký thành công')
+          ? registerTeacher()
           // registerTeacher()
           : Get.dialog(DialogError(
               title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -736,9 +776,9 @@ class RegisterGiaSuController extends GetxController {
               valueCheckBox &&
               salaryCD.text.isNotEmpty &&
               data != null &&
-              !selectedStatusFee.isNullOrBlank
+              !selectedTime.isNullOrBlank
           // ignore: unnecessary_statements
-          ? print('Đăng ký thành công')
+          ? registerTeacher()
           // registerTeacher()
           : Get.dialog(DialogError(
               title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -747,6 +787,68 @@ class RegisterGiaSuController extends GetxController {
               richText: false,
             ));
     }
+
+    update();
+  }
+
+  Future<void> getListDistrict(int idCity) async {
+    listDistrict = [];
+    ResultData res = await authenticationRepositories.listDistrict(idCity);
+    resultListDistrict = resultListDistrictFromJson(res.data);
+    if (resultListDistrict.data != null) {
+      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      Utils.showToast(resultListDistrict.data.message);
+    } else {
+      Utils.showToast(resultListDistrict.error.message);
+    }
+    update();
+  }
+
+  Future<void> registerTeacher() async {
+    // Get.dialog(DialogLoading());
+    final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+
+    ResultData res = await authenticationRepositories.registerTeacher(
+        phone.text,
+        email.text,
+        passWord.text,
+        rePassWord.text,
+        avatar,
+        fullName.text,
+        idGender,
+        dateTime.text,
+        idMariage,
+        // tutorStyle,
+        idExp,
+        // classTeach,
+        idClass,
+        school.text,
+        // graduationYear, năm tốt nghiệp
+        graduationYear.text,
+        // specialized, Chuyên ngành
+        specialized.text,
+        address.text,
+        company.text,
+        information.text,
+        prize.text,
+        int.parse(numberYearExp.text),
+        titleExp.text,
+        timeExpStart.text,
+        timeExpEnd.text,
+        informationExp.text,
+        // asId, id môn học
+        int.parse(listSubjectSelect.map((e) => e.asId).join(',')),
+        listSubjectSelectTopic.map((e) => e.idSubject).join(','),
+        idFormTeaching,
+        int.parse(salaryCD.text),
+        idTime,
+        // int.parse(salaryUL1.text),
+        // int.parse(salaryUL2.text),
+        500000,
+        100000,
+        idArea,
+        listDistrictSelect.map((e) => e.citId).join(','),
+        test.join(','));
 
     update();
   }
@@ -803,83 +905,6 @@ class RegisterGiaSuController extends GetxController {
 //     }
 //   }
 // String emailOTP;
-//   Future<void> registerTeacher() async {
-//     Get.dialog(DialogLoading());
-//     print(listQH.join(',').toString());
-//     print(listQH.map((e) => e.districtId));
-//     String idDistrict = listQH.map((e) => e.districtId).toString();
-//     print(idDistrict);
-//
-//     ResultData res = await authenticationRepositories.registerTeacher(
-//       fullName.text,
-//       email.text,
-//       passWord.text,
-//       rePassWord.text,
-//       imageAvatar,
-//       phone.text,
-//       dateTime.text,
-//       idGender,
-//       idProvincial,
-//       //Quận huyện
-//       listQH.map((e) => e.districtId).toString(),
-//       address.text,
-//       //Kinh nghiệm
-//       idExp,
-//       school.text,
-//       specialized.text,
-//       graduationYear.text,
-//       company.text,
-//       information.text,
-//       experienceTeaching.text,
-//       achievements.text,
-//       listSubject.map((e) => e.idSubject).toString(),
-//       idClass,
-//       listSubjectTopic.map((e) => e.topicId).toString(),
-//       idFormTeaching,
-//       idValueArea,
-//       salaryCD.text,
-//       salaryUL1.text,
-//       salaryUL2.text,
-//       listbuoiday[0].sang,
-//       listbuoiday[0].chieu,
-//       listbuoiday[0].toi,
-//       listbuoiday[1].sang,
-//       listbuoiday[1].chieu,
-//       listbuoiday[1].toi,
-//       listbuoiday[2].sang,
-//       listbuoiday[2].chieu,
-//       listbuoiday[2].toi,
-//       listbuoiday[3].sang,
-//       listbuoiday[3].chieu,
-//       listbuoiday[3].toi,
-//       listbuoiday[4].sang,
-//       listbuoiday[4].chieu,
-//       listbuoiday[4].toi,
-//       listbuoiday[5].sang,
-//       listbuoiday[5].chieu,
-//       listbuoiday[5].toi,
-//       listbuoiday[6].sang,
-//       listbuoiday[6].chieu,
-//       listbuoiday[6].toi,
-//     );
-//     resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
-//     if (resultRegisterTeacher.data != null) {
-//       Get.back();
-//       print(200);
-//       emailOTP = resultRegisterTeacher.data.refreshToken.userEmail;
-//       Utils.showToast(resultRegisterTeacher.data.message);
-//       SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.accessToken);
-//       Get.to(ConfirmRegisterScreen(
-//         email: emailOTP,
-//       ));
-//       print(res.data);
-//     } else {
-//       Get.back();
-//       Utils.showToast(resultRegisterTeacher.error.message);
-//       print('Lỗi');
-//     }
-//     update();
-//   }
-//
+
 //   ResultRegisterTeacher resultRegisterTeacher = ResultRegisterTeacher();
 }

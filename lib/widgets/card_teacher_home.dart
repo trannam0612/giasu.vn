@@ -38,6 +38,7 @@ class CardTeacherHome extends StatelessWidget {
             ),
           ]),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -96,6 +97,7 @@ class CardTeacherHome extends StatelessWidget {
           ),
           Text(
             content,
+            textAlign: TextAlign.left,
             style: AppTextStyles.regularW400(context,
                 size: AppDimens.textSize14, color: AppColors.grey747474),
             maxLines: 2,

@@ -342,7 +342,7 @@ class HomeBeforeScreen extends StatelessWidget {
                                     classId: '01234',
                                     methodTeach: 'Gặp mặt',
                                     numberSuggest: '02',
-                                    save: false,
+                                    save: true,
                                     hasButton: false,
                                   ),
                                 ),

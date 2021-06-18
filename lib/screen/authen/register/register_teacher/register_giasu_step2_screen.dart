@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -273,7 +274,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         CustomTextField(
                           textEditingController: controller.titleExp,
                           obligatory: true,
-                          keyboardType: TextInputType.number,
+                          // keyboardType: TextInputType.number,
                           error: controller.checkTitleExp(),
                           onPressed: () {},
                           title: 'Kinh nghiệm giảng dạy',
@@ -349,6 +350,30 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           onPressed: () {},
                           title: 'Trường học',
                           hintText: 'Đại học Hà Nội',
+                          isPassword: false,
+                          iconSuffix: Images.ic_plus,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
+                        CustomTextField(
+                          textEditingController: controller.graduationYear,
+                          obligatory: false,
+                          onPressed: () {},
+                          title: 'Năm tốt nghiệp',
+                          hintText: 'Nhập năm tốt nghiệp',
+                          isPassword: false,
+                          iconSuffix: Images.ic_plus,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
+                        CustomTextField(
+                          textEditingController: controller.specialized,
+                          obligatory: false,
+                          onPressed: () {},
+                          title: 'Chuyên ngành',
+                          hintText: 'Nhập chuyên ngành',
                           isPassword: false,
                           iconSuffix: Images.ic_plus,
                         ),
@@ -446,8 +471,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  RegisterGiaSuController registerPhuHuynhController = Get.put(RegisterGiaSuController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -471,7 +496,7 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.provincial.text = list[index];
+                  registerGiaSuController.provincial.text = listDataCity[index].citName;
                   Get.back();
                 },
                 child: SizedBox(
@@ -479,11 +504,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == registerGiaSuController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -492,14 +517,14 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
 
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
-  RegisterGiaSuController registerPhuHuynhController = Get.put(RegisterGiaSuController());
+  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
   List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
@@ -507,7 +532,7 @@ Widget SelectDistrict(BuildContext context) {
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận, Huyện',
+        'Quận/huyện',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
@@ -524,7 +549,7 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.district.text = list[index];
+                  registerGiaSuController.district.text = list[index];
                   Get.back();
                 },
                 child: SizedBox(
@@ -536,7 +561,7 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      list[index] == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),

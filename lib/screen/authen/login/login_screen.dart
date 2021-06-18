@@ -32,27 +32,21 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Container(
                     // height: AppDimens.height*0.8,
-                    padding: EdgeInsets.all(AppDimens.padding16),
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space50),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Align(
-                          child: Text(
-                            'Chào mừng đến với',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                          ),
-                          alignment: Alignment.topLeft,
+                        Text(
+                          'Chào mừng đến với',
+                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        Align(
-                          child: Image.asset(
-                            Images.img_logo_giasu365,
-                            color: AppColors.primary4C5BD4,
-                            height: AppDimens.width * 0.14,
-                          ),
-                          alignment: Alignment.topLeft,
+                        Image.asset(
+                          Images.img_logo_giasu365,
+                          color: AppColors.primary4C5BD4,
+                          height: AppDimens.width * 0.14,
                         ),
                         SizedBox(
                           height: AppDimens.height * 0.05,
@@ -70,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                             children: [
                               CustomTextField(
                                 onPressed: () {},
-                                // textEditingController: controller.email,
+                                textEditingController: controller.email,
                                 title: 'Email',
                                 hintText: 'giasu365@gmail.com',
                                 isPassword: false,
@@ -80,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                                 height: AppDimens.space16,
                               ),
                               CustomTextField(
-                                // textEditingController: controller.pass,
+                                textEditingController: controller.pass,
                                 onPressed: () {
                                   // controller.changeShowPass();
                                 },
@@ -96,11 +90,11 @@ class LoginScreen extends StatelessWidget {
                               ),
                               SizedBox(
                                 width: AppDimens.width,
-                                height: AppDimens.height * 0.07,
+                                height: AppDimens.height * 0.06,
                                 child: CustomButton2(
                                   onPressed: () {
-                                    // controller.login();
-                                    // controller.pass.clear();
+                                    controller.userType =='1' ? controller.loginParent() : controller.loginTeacher();
+                                    controller.pass.clear();
                                   },
                                   title: 'ĐĂNG NHẬP',
                                   textColor: AppColors.whiteFFFFFF,
