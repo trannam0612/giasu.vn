@@ -175,4 +175,4 @@ class LoginController extends GetxController {
     listCitySubject();
     super.onInit();
   }
-}}
+}
