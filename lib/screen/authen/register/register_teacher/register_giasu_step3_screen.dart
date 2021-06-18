@@ -868,7 +868,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),

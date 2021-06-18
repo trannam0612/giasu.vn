@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_email_forgot.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ForgotController extends GetxController {
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   TextEditingController email = TextEditingController();
   TextEditingController otpUser = TextEditingController();
   TextEditingController passWord = TextEditingController();
@@ -12,9 +17,13 @@ class ForgotController extends GetxController {
   bool errorShowRePassword = false;
   bool isShowRePassword = true;
   bool isShowPassword = true;
+  bool errorEmail = false;
 
   @override
   void onInit() {
+    email.addListener(() {
+      update();
+    });
     passWord.addListener(() {
       update();
     });
@@ -72,23 +81,40 @@ class ForgotController extends GetxController {
     update();
   }
 
-// Future<void> emailForgetPassword() async {
-//   await Future.delayed(Duration(milliseconds: 1));
-//   Get.dialog(DialogLoading());
-//   ResultData res = await authenticationRepositories.emailForgetPassword(email.text);
-//   ResultEmailForgetPassword resultEmailForgetPassword = resultEmailForgetPasswordFromJson(res.data);
-//   if(resultEmailForgetPassword.data != null)
-//   {
-//     Get.back();
-//     SpUtil.putString(ConstString.token,
-//         resultEmailForgetPassword.data.accessToken);
-//     Utils.showToast('Đã gửi lại Mail kích hoạt. Vui lòng kiểm tra Email');
-//     Get.toNamed(Routes.CONFIRMOTPFORGOT);
-//   }
-//   else {
-//     print(resultEmailForgetPassword.error.message);
-//   }
-// }
+  String checkEmail() {
+    if (errorEmail && email.text.isEmpty) {
+      return 'Trường bắt buộc!';
+    } else if (errorEmail && !email.text.contains('@') && !email.text.contains('.')) {
+      return 'Email không hợp lệ!';
+    } else if (errorEmail && !email.text.contains('.')) {
+      return 'Email không hợp lệ!';
+    } else {
+      return null;
+    }
+  }
+
+  void checkButtonSendEmail() {
+    errorEmail = true;
+    email.text.isNotEmpty ? emailForgotPassword() : Utils.showToast('Email không được để trống!');
+    update();
+  }
+
+  Future<void> emailForgotPassword() async {
+    // await Future.delayed(Duration(milliseconds: 1));
+    // Get.dialog(DialogLoading());
+    ResultData res = await authenticationRepositories.mailForgotPassword(email.text);
+    ResultEmailForgot resultEmailForgot = resultEmailForgotFromJson(res.data);
+    if (resultEmailForgot.data != null) {
+      Get.back();
+      // SpUtil.putString(ConstString.token, resultEmailForgetPassword.data.accessToken);
+      Utils.showToast(resultEmailForgot.data.message);
+      // Get.toNamed(Routes.CONFIRMOTPFORGOT);
+    } else {
+      email.clear();
+      Utils.showToast(resultEmailForgot.error.message);
+    }
+    update();
+  }
 // Future<void> confirmOtpForgot() async {
 //   String token = SpUtil.getString(ConstString.token);
 //   print(token);

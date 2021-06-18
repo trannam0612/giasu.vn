@@ -359,6 +359,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         CustomTextField(
                           textEditingController: controller.graduationYear,
                           obligatory: false,
+                          keyboardType: TextInputType.number,
                           onPressed: () {},
                           title: 'Năm tốt nghiệp',
                           hintText: 'Nhập năm tốt nghiệp',

@@ -91,12 +91,22 @@ class AuthenticationRepositories {
     return rest;
   }
 
+  Future<ResultData> mailForgotPassword(String email) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {"email": email};
+    ResultData rest = await httpManager.netFetch(Address.mail_forgot_password, body, header, Options(method: 'post'));
+    return rest;
+  }
+
   Future<ResultData> registerTeacher(
       String phone,
       String email,
       String newPass,
       String retypePassword,
-      File avatar,
+      // File avatar,
       String name,
       int gender,
       String birthDay,
@@ -115,13 +125,13 @@ class AuthenticationRepositories {
       String yearStart,
       String yearEnd,
       String jobDescription,
-      int asId,
+      String asId,
       String asDetail,
       int formality,
-      int unitPrice,
+      String unitPrice,
       int time,
-      int salaryStart,
-      int salaryEnd,
+      String salaryStart,
+      String salaryEnd,
       int city,
       String county,
       String lichday) async {
@@ -129,17 +139,17 @@ class AuthenticationRepositories {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    String fileName = avatar.path.split('/').last;
+    // String fileName = avatar.path.split('/').last;
     Map<String, dynamic> body = {
       'ugs_phone': phone,
       'ugs_email': email,
       'ugs_password': newPass,
       'ugs_retype_password': retypePassword,
-      'ugs_avatar': await MultipartFile.fromFile(
-        avatar.path,
-        filename: fileName,
-        contentType: new MediaType("image", "jpeg"),
-      ),
+      // 'ugs_avatar': await MultipartFile.fromFile(
+      //   avatar.path,
+      //   filename: fileName,
+      //   contentType: new MediaType("image", "jpeg"),
+      // ),
       'ugs_name': name,
       'ugs_gender': gender,
       'ugs_birthday': birthDay,

@@ -168,11 +168,13 @@ class LoginController extends GetxController {
 //   }
 //   update();
 // }
-    @override
-    void onInit() {
-      print(userType);
-      listCitySubject();
-      super.onInit();
-    }
+
+  }
+
+  @override
+  void onInit() {
+    print(userType);
+    listCitySubject();
+    super.onInit();
   }
 }

@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/screen/authen/register/intro_login.dart';
@@ -106,6 +107,19 @@ class SelectTypeLoginScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: AppDimens.space32,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.email_forgot);
+                  },
+                  child: Text(
+                    'Quên mật khẩu ?',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474, fontStyle: FontStyle.italic),
+                  ),
+                ),
+                SizedBox(
+                  height: AppDimens.space16,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

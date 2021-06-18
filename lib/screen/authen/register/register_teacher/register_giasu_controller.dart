@@ -113,7 +113,7 @@ class RegisterGiaSuController extends GetxController {
   List<DataSubject> listSubjectSelect = [];
   List<ListDistrict> listDistrictSelect = [];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
-  List<String> listMarriage = ['Đã kết hôn', 'Cô đơn'];
+  List<String> listMarriage = ['Chưa kết hôn', 'Đã kết hôn'];
   List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
@@ -504,7 +504,7 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  int idTime;
+  int idTime = 1;
 
   void onSelectedStatusFee(String value) {
     selectedTime = value;
@@ -576,10 +576,16 @@ class RegisterGiaSuController extends GetxController {
 
   String checkPhone() {
     print('checkPassword');
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phone.text.length < 6) {
-      return 'Số điện thoại không hợp lệ!';
+    }
+    // else if (errorPhone && phone.text.length != 10) {
+    //   return 'Số điện thoại không hợp lệ!';
+    // }
+    else if (errorPhone && !regExp.hasMatch(phone.text)) {
+      return 'Số điện thoại sai định dạng!';
     }
     return null;
   }
@@ -641,7 +647,7 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
-    if (!listSubjectSelectTopic.map((e) => e).contains(value)) {
+    if (!listSubjectSelectTopic.map((e) => e.idSubject).contains(value.idSubject)) {
       listSubjectSelectTopic.add(value);
     } else {
       listSubjectSelectTopic.remove(value);
@@ -679,6 +685,8 @@ class RegisterGiaSuController extends GetxController {
   }
 
   void checkButtonStep2() {
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
@@ -699,6 +707,7 @@ class RegisterGiaSuController extends GetxController {
     print('checkNullButton');
     if (fullName.text.isNotEmpty &&
         phone.text.isNotEmpty &&
+        regExp.hasMatch(phone.text) &&
         dateTime.text.isNotEmpty &&
         errorGender == false &&
         errorMarriage == false &&
@@ -742,6 +751,7 @@ class RegisterGiaSuController extends GetxController {
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
+      print('TH1');
       salaryCD.text.isNotEmpty &&
               listSubjectSelect.isNotEmpty &&
               !selectedClass.isNullOrBlank &&
@@ -764,6 +774,7 @@ class RegisterGiaSuController extends GetxController {
               richText: false,
             ));
     } else {
+      print('TH2');
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               listSubjectSelect.isNotEmpty &&
@@ -813,7 +824,7 @@ class RegisterGiaSuController extends GetxController {
         email.text,
         passWord.text,
         rePassWord.text,
-        avatar,
+        // avatar,
         fullName.text,
         idGender,
         dateTime.text,
@@ -837,18 +848,18 @@ class RegisterGiaSuController extends GetxController {
         timeExpEnd.text,
         informationExp.text,
         // asId, id môn học
-        int.parse(listSubjectSelect.map((e) => e.asId).join(',')),
+        listSubjectSelect.map((e) => e.asId).join(','),
         listSubjectSelectTopic.map((e) => e.idSubject).join(','),
         idFormTeaching,
-        int.parse(salaryCD.text),
+        salaryCD.text,
         idTime,
-        // int.parse(salaryUL1.text),
-        // int.parse(salaryUL2.text),
-        500000,
-        100000,
+        salaryUL1.text,
+        salaryUL2.text,
         idArea,
         listDistrictSelect.map((e) => e.citId).join(','),
         test.join(','));
+
+
 
     update();
   }
