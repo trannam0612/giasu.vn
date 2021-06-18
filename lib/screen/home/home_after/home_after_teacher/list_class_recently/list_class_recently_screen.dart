@@ -6,6 +6,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_controller.dart';
 import 'package:intl/intl.dart';
 
 class ListClassRecentlyScreen extends StatefulWidget {
@@ -50,27 +51,28 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
   }
   ScrollController _controller = ScrollController();
   LoginController loginController = Get.put(LoginController());
+  ListClassRecentlyController listClassRecentlyController = Get.put(ListClassRecentlyController());
   int i = 1;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loginController.recentlyClass(1, 10);
+    listClassRecentlyController.recentlyClass(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         // homeAfterController.homeParent();
         i++;
         print(i);
-        loginController.recentlyClass(i, 10);
+        listClassRecentlyController.recentlyClass(i, 10);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoginController>(
-      init: LoginController(),
+    return GetBuilder<ListClassRecentlyController>(
+      init: ListClassRecentlyController(),
       builder:(controller) =>  Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
@@ -148,7 +150,7 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                                         width: AppDimens.space8,
                                       ),
                                       Text(
-                                        '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGD[index].pftMonth}',
+                                        '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGDMore[index].pftMonth}',
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize16,

@@ -82,33 +82,6 @@ class LoginController extends GetxController {
   }
 
 
-
-  Future<void> homeAfterTeacher(int currentPage, int limit) async {
-    print('homeAfterTeacher');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-    if (resultHomeAfterTeacher.data != null) {
-      listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
-      listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
-      Get.to(HomeAfterTeacherScreen());
-    }
-    update();
-  }
-
-  Future<void> recentlyClass(int currentPage, int limit) async {
-    print('recentlyClass');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-    if (resultHomeAfterTeacher.data != null) {
-      listLHGDMore = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
-    }
-    else {
-      Utils.showToast('Trống!');
-    }
-    update();
-  }
   String timeAgo(int timestamp) {
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
     var now = new DateTime.now();
