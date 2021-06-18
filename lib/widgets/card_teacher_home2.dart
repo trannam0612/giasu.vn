@@ -13,8 +13,8 @@ class CardTeacherHome2 extends StatelessWidget {
   final int rate;
   final String subject;
   final String address;
-  final bool saved;
-  const CardTeacherHome2({Key key, this.name, this.image, this.rate, this.subject, this.address, this.saved = false}) : super(key: key);
+  final String saved;
+  const CardTeacherHome2({Key key, this.name, this.image, this.rate, this.subject, this.address, this.saved = '0'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class CardTeacherHome2 extends StatelessWidget {
                             ),
                           ],
                         ),
-                        saved ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
+                        saved =='1' ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
                       ],
                     ),
                     SizedBox(

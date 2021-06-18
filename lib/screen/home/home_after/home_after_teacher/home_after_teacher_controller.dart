@@ -1,8 +1,18 @@
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_home_after_teacher.dart';
+import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:intl/intl.dart';
+import 'package:sp_util/sp_util.dart';
 
 class HomeAfterTeacherController extends GetxController {
+  HomeRepositories homeRepositories = HomeRepositories();
+  ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
+  bool checkSave =true;
   String userType = '1';
+  List<DataDslh> listLHGD = [];
+  List<DataDslh> listLHPB = [];
   String timeAgo(int timestamp) {
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
     var now = new DateTime.now();
@@ -17,6 +27,24 @@ class HomeAfterTeacherController extends GetxController {
     if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "giờ" : "giờ"} trước";
     if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
     return "vừa xong";
+  }
+
+  void changeValueSave() {
+    checkSave = !checkSave;
+    print(checkSave);
+    update();
+  }
+
+  Future<void> homeAfterTeacher(int currentPage, int limit) async {
+    print('homeAfterTeacher');
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
+    if (resultHomeAfterTeacher.data != null) {
+      listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
+      listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
+    }
+    update();
   }
 
 }

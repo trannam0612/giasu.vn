@@ -37,7 +37,9 @@ class Data {
     this.ldnd,
     this.ldl,
     this.dataClassGd,
+    this.paningLhgd,
     this.dataClassPb,
+    this.paningLhpb,
   });
 
   bool result;
@@ -46,8 +48,10 @@ class Data {
   String lnd;
   String ldnd;
   String ldl;
-  DataClass dataClassGd;
-  DataClass dataClassPb;
+  DataClassGd dataClassGd;
+  PaningLh paningLhgd;
+  DataClassPb dataClassPb;
+  PaningLh paningLhpb;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     result: json["result"] == null ? null : json["result"],
@@ -56,8 +60,10 @@ class Data {
     lnd: json["lnd"] == null ? null : json["lnd"],
     ldnd: json["ldnd"] == null ? null : json["ldnd"],
     ldl: json["ldl"] == null ? null : json["ldl"],
-    dataClassGd: json["dataClassGD"] == null ? null : DataClass.fromJson(json["dataClassGD"]),
-    dataClassPb: json["dataClassPB"] == null ? null : DataClass.fromJson(json["dataClassPB"]),
+    dataClassGd: json["dataClassGD"] == null ? null : DataClassGd.fromJson(json["dataClassGD"]),
+    paningLhgd: json["paning_lhgd"] == null ? null : PaningLh.fromJson(json["paning_lhgd"]),
+    dataClassPb: json["dataClassPB"] == null ? null : DataClassPb.fromJson(json["dataClassPB"]),
+    paningLhpb: json["paning_lhpb"] == null ? null : PaningLh.fromJson(json["paning_lhpb"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -68,39 +74,25 @@ class Data {
     "ldnd": ldnd == null ? null : ldnd,
     "ldl": ldl == null ? null : ldl,
     "dataClassGD": dataClassGd == null ? null : dataClassGd.toJson(),
+    "paning_lhgd": paningLhgd == null ? null : paningLhgd.toJson(),
     "dataClassPB": dataClassPb == null ? null : dataClassPb.toJson(),
+    "paning_lhpb": paningLhpb == null ? null : paningLhpb.toJson(),
   };
 }
 
-class DataClass {
-  DataClass({
+class DataClassGd {
+  DataClassGd({
     this.dataDslhgd,
-    this.currentPage,
-    this.limit,
-    this.total,
-    this.dataDslhpb,
   });
 
   List<DataDslh> dataDslhgd;
-  String currentPage;
-  int limit;
-  int total;
-  List<DataDslh> dataDslhpb;
 
-  factory DataClass.fromJson(Map<String, dynamic> json) => DataClass(
+  factory DataClassGd.fromJson(Map<String, dynamic> json) => DataClassGd(
     dataDslhgd: json["dataDSLHGD"] == null ? null : List<DataDslh>.from(json["dataDSLHGD"].map((x) => DataDslh.fromJson(x))),
-    currentPage: json["current_page"] == null ? null : json["current_page"],
-    limit: json["limit"] == null ? null : json["limit"],
-    total: json["total"] == null ? null : json["total"],
-    dataDslhpb: json["dataDSLHPB"] == null ? null : List<DataDslh>.from(json["dataDSLHPB"].map((x) => DataDslh.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "dataDSLHGD": dataDslhgd == null ? null : List<dynamic>.from(dataDslhgd.map((x) => x.toJson())),
-    "current_page": currentPage == null ? null : currentPage,
-    "limit": limit == null ? null : limit,
-    "total": total == null ? null : total,
-    "dataDSLHPB": dataDslhpb == null ? null : List<dynamic>.from(dataDslhpb.map((x) => x.toJson())),
   };
 }
 
@@ -120,6 +112,8 @@ class DataDslh {
     this.pftPrice,
     this.pftMonth,
     this.dayPost,
+    this.checkSave,
+    this.countDnd,
   });
 
   String pftId;
@@ -136,6 +130,8 @@ class DataDslh {
   String pftPrice;
   String pftMonth;
   String dayPost;
+  bool checkSave;
+  String countDnd;
 
   factory DataDslh.fromJson(Map<String, dynamic> json) => DataDslh(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -152,6 +148,8 @@ class DataDslh {
     pftPrice: json["pft_price"] == null ? null : json["pft_price"],
     pftMonth: json["pft_month"] == null ? null : json["pft_month"],
     dayPost: json["day_post"] == null ? null : json["day_post"],
+    checkSave: json["check_save"] == null ? null : json["check_save"],
+    countDnd: json["count_dnd"] == null ? null : json["count_dnd"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -169,5 +167,47 @@ class DataDslh {
     "pft_price": pftPrice == null ? null : pftPrice,
     "pft_month": pftMonth == null ? null : pftMonth,
     "day_post": dayPost == null ? null : dayPost,
+    "check_save": checkSave == null ? null : checkSave,
+    "count_dnd": countDnd == null ? null : countDnd,
+  };
+}
+
+class DataClassPb {
+  DataClassPb({
+    this.dataDslhpb,
+  });
+
+  List<DataDslh> dataDslhpb;
+
+  factory DataClassPb.fromJson(Map<String, dynamic> json) => DataClassPb(
+    dataDslhpb: json["dataDSLHPB"] == null ? null : List<DataDslh>.from(json["dataDSLHPB"].map((x) => DataDslh.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "dataDSLHPB": dataDslhpb == null ? null : List<dynamic>.from(dataDslhpb.map((x) => x.toJson())),
+  };
+}
+
+class PaningLh {
+  PaningLh({
+    this.currentPage,
+    this.limit,
+    this.total,
+  });
+
+  String currentPage;
+  int limit;
+  int total;
+
+  factory PaningLh.fromJson(Map<String, dynamic> json) => PaningLh(
+    currentPage: json["current_page"] == null ? null : json["current_page"],
+    limit: json["limit"] == null ? null : json["limit"],
+    total: json["total"] == null ? null : json["total"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "current_page": currentPage == null ? null : currentPage,
+    "limit": limit == null ? null : limit,
+    "total": total == null ? null : total,
   };
 }

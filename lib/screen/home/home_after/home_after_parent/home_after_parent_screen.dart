@@ -316,7 +316,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         subject: loginController.listGSPB[index].asName,
                         address: loginController.listGSPB[index].citName,
                         image: loginController.listGSPB[index].ugsAvatar,
-                        saved: false,
+                        saved: loginController.listGSPB[index].checkSave,
                       ),
                       itemCount: loginController.listGSPB.length,
                     ),
