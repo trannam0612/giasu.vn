@@ -529,13 +529,13 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Sáng',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == "0" ? "1" : "0";
                                                   controller.update();
                                                   // controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].sang == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].sang == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].sang == 1 ? false : true,
+                                                color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                               ),
                                               SizedBox(
                                                 width: AppDimens.padding16,
@@ -544,13 +544,13 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Chiều',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == "0" ? "1" : "0";
                                                   controller.update();
                                                   // controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].chieu == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].chieu == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].chieu == 1 ? false : true,
+                                                color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                               ),
                                               SizedBox(
                                                 width: AppDimens.padding16,
@@ -559,12 +559,12 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Tối',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == "0" ? "1" : "0";
                                                   controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].toi == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].toi == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].toi == 1 ? false : true,
+                                                color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
                                               ),
                                             ],
                                           ),

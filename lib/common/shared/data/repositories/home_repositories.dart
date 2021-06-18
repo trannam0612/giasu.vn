@@ -159,4 +159,9 @@ class HomeRepositories {
 
     return rest;
   }
+
+  Future<ResultData> detailClass(int idClass) async {
+    ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
+    return rest;
+  }
 }
