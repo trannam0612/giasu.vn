@@ -38,13 +38,13 @@ class RegisterGiaSuController extends GetxController {
 
   // List<String> listGender = ['Khác', 'Nam', 'Nữ'];
   List<buoiday> listbuoiday = [
-    buoiday('Thứ 2', 0, 0, 0),
-    buoiday('Thứ 3', 0, 0, 0),
-    buoiday('Thứ 4', 0, 0, 0),
-    buoiday('Thứ 5', 0, 0, 0),
-    buoiday('Thứ 6', 0, 0, 0),
-    buoiday('Thứ 7', 0, 0, 0),
-    buoiday('CN', 0, 0, 0),
+    buoiday('Thứ 2', '1', "0", "0"),
+    buoiday('Thứ 3', "0", "0", "0"),
+    buoiday('Thứ 4', "0", "0", "0"),
+    buoiday('Thứ 5', "0", "0", "0"),
+    buoiday('Thứ 6', "0", "0", "0"),
+    buoiday('Thứ 7', "0", "0", "0"),
+    buoiday('CN', "0", "0", "0"),
   ];
 
   //Step1

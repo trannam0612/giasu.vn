@@ -17,6 +17,9 @@ class Address {
   static const String REFUSE_INVITE_TEACH = BASE_URL+"/refuse_invite.php";
   static const String DELETE_CLASS_ACCEPTED = BASE_URL+"/delete_class_accepted.php";
   static const String DELETE_CLASS_OFFERED = BASE_URL+"/delete_class_offered.php";
+  static String detailClass(int idClass) {
+    return '$BASE_URL/detail_class.php?pft_id=${idClass}';
+  }
 
 //AUTHEN
   static const String verify_register = BASE_URL + "/verify_register.php";

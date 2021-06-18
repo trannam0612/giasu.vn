@@ -1,10 +1,10 @@
 class buoiday {
   String thu;
-  int sang;
-  int chieu;
-  int toi;
+  String sang;
+  String chieu;
+  String toi;
 
-  buoiday(String thu, int sang, int chieu, int toi) {
+  buoiday(String thu, String sang, String chieu, String toi) {
     this.thu = thu;
     this.sang = sang;
     this.chieu = chieu;

@@ -27,13 +27,13 @@ class PostController extends GetxController {
   List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
 
   List<buoiday> listbuoiday = [
-    buoiday('Thứ 2', 0, 0, 0),
-    buoiday('Thứ 3', 0, 0, 0),
-    buoiday('Thứ 4', 0, 0, 0),
-    buoiday('Thứ 5', 0, 0, 0),
-    buoiday('Thứ 6', 0, 0, 0),
-    buoiday('Thứ 7', 0, 0, 0),
-    buoiday('CN', 0, 0, 0),
+    buoiday('Thứ 2', '1', "0", "0"),
+    buoiday('Thứ 3', "0", "0", "0"),
+    buoiday('Thứ 4', "0", "0", "0"),
+    buoiday('Thứ 5', "0", "0", "0"),
+    buoiday('Thứ 6', "0", "0", "0"),
+    buoiday('Thứ 7', "0", "0", "0"),
+    buoiday('CN', "0", "0", "0"),
   ];
 
   // Future<void> getDataQH(int id) async {
