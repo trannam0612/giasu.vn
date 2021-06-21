@@ -56,7 +56,10 @@ class SelectTypeLoginScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         SpUtil.putString(ConstString.USER_TYPE, '2');
+                        controller.userType = '2';
+                        print(SpUtil.getString(ConstString.USER_TYPE));
                         Get.to(LoginScreen());
+                        controller.update();
                       },
                       child: Container(
                         width: AppDimens.width * 0.35,
@@ -82,8 +85,9 @@ class SelectTypeLoginScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         SpUtil.putString(ConstString.USER_TYPE, '1');
-
+                        controller.userType = '1';
                         Get.to(LoginScreen());
+                        controller.update();
                       },
                       child: Container(
                         width: AppDimens.width * 0.35,

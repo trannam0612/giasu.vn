@@ -127,7 +127,7 @@ class DataDsgs {
   String ugsAboutUs;
   String ugsUnitPrice;
   String ugsMonth;
-  String checkSave;
+  bool checkSave;
 
   factory DataDsgs.fromJson(Map<String, dynamic> json) => DataDsgs(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],

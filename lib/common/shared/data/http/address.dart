@@ -17,6 +17,11 @@ class Address {
   static const String REFUSE_INVITE_TEACH = BASE_URL + "/refuse_invite.php";
   static const String DELETE_CLASS_ACCEPTED = BASE_URL + "/delete_class_accepted.php";
   static const String DELETE_CLASS_OFFERED = BASE_URL + "/delete_class_offered.php";
+  static const String SAVE_TEACH = BASE_URL + "/save_teach.php";
+  static const String SAVE_CLASS = BASE_URL + "/save_class.php";
+  static const String DELETE_CLASS_SAVED = BASE_URL + "/delete_class_saved.php";
+  static const String OFFER_TEACH = BASE_URL + "/offer_teach.php";
+  static const String SAVE_TUTOR = BASE_URL + "/save_tutor.php";
 
   static String detailClass(int idClass) {
     return '$BASE_URL/detail_class.php?pft_id=${idClass}';
@@ -28,6 +33,7 @@ class Address {
   static const String REGISTER_PARENT = BASE_URL + "/register_parent.php";
   static const String REGISTER_TEACHER = BASE_URL + "/register_tutor.php";
   static const String send_back_otp = BASE_URL + "/send_back_otp.php";
+
 
   //forgot
   static const String mail_forgot_password = BASE_URL + "/mail_forgot_password.php";

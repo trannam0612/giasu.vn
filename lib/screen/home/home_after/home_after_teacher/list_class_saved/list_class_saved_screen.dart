@@ -6,6 +6,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_saved/list_class_saved_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -19,16 +20,16 @@ class ListClassSavedScreen extends StatefulWidget {
   final String methodTeach;
   final String date;
 
-  const ListClassSavedScreen(
-      {Key key,
-        this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
-        this.fee = '300.000 vnđ/giờ',
-        this.subject = 'Hóa học lớp 10',
-        this.address = 'Thanh Xuân, Hà Nội',
-        this.classId = '01234',
-        this.methodTeach = 'Gặp mặt',
-        this.date = '05/07/2019',})
-      : super(key: key);
+  const ListClassSavedScreen({
+    Key key,
+    this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
+    this.fee = '300.000 vnđ/giờ',
+    this.subject = 'Hóa học lớp 10',
+    this.address = 'Thanh Xuân, Hà Nội',
+    this.classId = '01234',
+    this.methodTeach = 'Gặp mặt',
+    this.date = '05/07/2019',
+  }) : super(key: key);
 
   @override
   _ListClassSavedScreenState createState() => _ListClassSavedScreenState();
@@ -38,7 +39,9 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
   ScrollController _controller = ScrollController();
   LoginController loginController = Get.put(LoginController());
   ListClassSavedController listClassSavedController = Get.put(ListClassSavedController());
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   int i = 1;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -53,19 +56,17 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ListClassSavedController>(
       init: ListClassSavedController(),
-      builder: (controller) =>  Scaffold(
+      builder: (controller) => Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
             'Lớp bạn đã lưu',
-            style: AppTextStyles.regularW500(context,
-                size: AppDimens.textSize24,
-                lineHeight: AppDimens.textSize28,
-                color: AppColors.whiteFFFFFF),
+            style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
           elevation: 0,
@@ -82,16 +83,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: AppDimens.space16, vertical: AppDimens.space6),
+          padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space6),
           width: AppDimens.width,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) => Container(
                     margin: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                      border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
                       borderRadius: BorderRadius.circular(AppDimens.space16),
                     ),
                     child: Container(
@@ -110,9 +109,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                 child: Text(
                                   controller.listLDL[index].pftSummary,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.regularW500(context,
-                                      size: AppDimens.textSize18,
-                                      color: AppColors.primary4C5BD4),
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
                                 ),
                               ),
                             ],
@@ -206,15 +203,13 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Ngày lưu:',
-                                        style: AppTextStyles.regular(context,
-                                            size: AppDimens.textSize16,
-                                            color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space4,
                                       ),
                                       Text(
-                                        loginController.timeAgo(int.parse(controller.listLDL[index].scDate)),
+                                        controller.listLDL[index].scDate,
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize16,
@@ -231,17 +226,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Mã lớp:',
-                                        style: AppTextStyles.regular(context,
-                                            size: AppDimens.textSize16,
-                                            color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space6,
                                       ),
                                       Text(
                                         controller.listLDL[index].pftId,
-                                        style: AppTextStyles.regular(context,
-                                            size: AppDimens.textSize16),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16),
                                       ),
                                     ],
                                   ),
@@ -254,18 +246,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Hình thức:',
-                                        style: AppTextStyles.regular(context,
-                                            size: AppDimens.textSize16,
-                                            color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space8,
                                       ),
                                       Text(
                                         controller.listLDL[index].pftForm,
-                                        style: AppTextStyles.regular(context,
-                                            size: AppDimens.textSize16,
-                                            color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                       ),
                                     ],
                                   ),
@@ -282,12 +270,26 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                               SizedBox(
                                 width: 110,
                                 height: 30,
-                                child: CustomButton2(
-                                  title: 'Đề nghị dạy',
-                                  color: AppColors.primary4C5BD4,
-                                  onPressed: () {},
-                                  textColor: AppColors.whiteFFFFFF,
-                                ),
+                                child: controller.listLDL[index].checkOffer
+                                    ? CustomButton1(
+                                        textColor: AppColors.greyC4C4C4,
+                                        onPressed: () {
+
+                                        },
+                                        color: AppColors.grey747474,
+                                        title: 'Đã đề nghị',
+                                        backColor: AppColors.whiteFFFFFF,
+                                      )
+                                    : CustomButton2(
+                                        title: 'Đề nghị dạy',
+                                        color: AppColors.primary4C5BD4,
+                                        onPressed: () {
+                                          controller.offerTeach(int.parse(controller.listLDL[index].pftId));
+                                          controller.listLDL[index].checkOffer = true;
+                                          controller.update();
+                                        },
+                                        textColor: AppColors.whiteFFFFFF,
+                                      ),
                               ),
                               SizedBox(
                                 width: AppDimens.space20,
@@ -297,7 +299,11 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                 height: 30,
                                 child: CustomButton1(
                                   textColor: AppColors.black,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    homeAfterTeacherController.deleteClassSaved(int.parse(controller.listLDL[index].pftId));
+                                    controller.listLDL.remove(controller.listLDL[index]);
+                                    controller.update();
+                                  },
                                   color: AppColors.grey747474,
                                   title: 'Huỷ lưu',
                                   backColor: AppColors.whiteFFFFFF,

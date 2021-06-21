@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_class_saved.dart';
+import 'package:giasu_vn/common/shared/data/models/result_offer_teach.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:sp_util/sp_util.dart';
@@ -9,6 +10,8 @@ import 'package:sp_util/sp_util.dart';
 class ListClassSavedController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultClassSaved resultClassSaved = ResultClassSaved();
+  ResultOfferTeach resultOfferTeach = ResultOfferTeach();
+
   List<ListLdl> listLDL = [];
 
   Future<void> classSaved(int currentPage, int limit) async {
@@ -22,6 +25,17 @@ class ListClassSavedController extends GetxController {
       }
     } else {
       Utils.showToast('Trống!');
+    }
+    update();
+  }
+  Future<void> offerTeach(int idClass) async {
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.offerTeach(token, idClass);
+    resultOfferTeach = resultOfferTeachFromJson(res.data);
+    if (resultOfferTeach.data != null) {
+      Utils.showToast('Đã đề nghị');
+    } else {
+      Utils.showToast(resultOfferTeach.error.message);
     }
     update();
   }

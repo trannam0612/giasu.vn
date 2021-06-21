@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_delete_class_saved.dart';
 import 'package:giasu_vn/common/shared/data/models/result_detail_class.dart';
 import 'package:giasu_vn/common/shared/data/models/result_home_after_teacher.dart';
+import 'package:giasu_vn/common/shared/data/models/result_save_class.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +18,8 @@ class HomeAfterTeacherController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
   ResultDetailClass resultDetailClass = ResultDetailClass();
+  ResultSaveClass resultSaveClass = ResultSaveClass();
+  ResultDeleteClassSaved resultDeleteClassSaved = ResultDeleteClassSaved();
   bool checkSave = true;
   String userType = '1';
   List<DataDslh> listLHGD = [];
@@ -51,6 +57,7 @@ class HomeAfterTeacherController extends GetxController {
       listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
       listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
       Get.back();
+      Get.to(HomeAfterTeacherScreen());
     } else {
       Utils.showToast('Danh sách trống!');
     }
@@ -62,17 +69,45 @@ class HomeAfterTeacherController extends GetxController {
     Get.dialog(DialogLoading());
     ResultData res = await homeRepositories.detailClass(idClass);
     resultDetailClass = resultDetailClassFromJson(res.data);
-    if(resultDetailClass.data != null) {
+    if (resultDetailClass.data != null) {
       Get.back();
       Get.to(InformationClassScreen());
     }
+    update();
+  }
+
+  Future<void> saveClass(int idClass) async {
+    // await Future.delayed(Duration(milliseconds: 1));
+    // Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.saveClass(token, idClass);
+    resultSaveClass = resultSaveClassFromJson(res.data);
+    if (resultSaveClass.data != null) {
+      Utils.showToast('Đã lưu');
+    }
+    else {
+      Utils.showToast(resultSaveClass.error.message);
+    }
+    update();
+  }Future<void> deleteClassSaved(int idClass) async {
+    // await Future.delayed(Duration(milliseconds: 1));
+    // Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.deleteClassSaved(token, idClass);
+    resultDeleteClassSaved = resultDeleteClassSavedFromJson(res.data);
+    if (resultDeleteClassSaved.data != null) {
+      Utils.showToast('Đã bỏ lưu');
+    }
+    else {
+      Utils.showToast(resultDeleteClassSaved.error.message);
+    }
+    update();
   }
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    homeAfterTeacher(1, 10);
     update();
   }
 }
