@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_email_forgot.dart';
+import 'package:giasu_vn/common/shared/data/models/result_new_password_forgot.dart';
+import 'package:giasu_vn/common/shared/data/models/result_verify_forgot.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ForgotController extends GetxController {
@@ -22,6 +27,9 @@ class ForgotController extends GetxController {
   @override
   void onInit() {
     email.addListener(() {
+      update();
+    });
+    otpUser.addListener(() {
       update();
     });
     passWord.addListener(() {
@@ -50,8 +58,10 @@ class ForgotController extends GetxController {
     print('checkPassword');
     if (errorShowPassword && passWord.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 6) {
-      return 'Mật khẩu tối thiểu 6 kí tự!';
+    } else if (errorShowPassword && passWord.text.length < 8) {
+      return 'Mật khẩu tối thiểu 8 kí tự!';
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
   }
@@ -66,14 +76,61 @@ class ForgotController extends GetxController {
     return null;
   }
 
+  void checkButtonOTP() {
+    print('checkButtonOTP');
+    if (otpUser.text.isNotEmpty) {
+      verifyForgotPassword();
+    } else {
+      Utils.showToast('OTP không được để trống!');
+      otpUser.clear();
+    }
+    update();
+  }
+
+  Future<void> verifyForgotPassword() async {
+    Get.dialog(DialogLoading());
+    String tokenForgot = SpUtil.getString(ConstString.token_forgot);
+    ResultData res = await authenticationRepositories.verifyForgotPassword(tokenForgot, otpUser.text);
+    ResultVerifyForgot resultVerifyForgot = resultVerifyForgotFromJson(res.data);
+    if (resultVerifyForgot.data != null) {
+      Get.back();
+      Utils.showToast(resultVerifyForgot.data.message);
+      Get.toNamed(Routes.new_password_forgot);
+    } else {
+      Get.back();
+
+      Utils.showToast(resultVerifyForgot.error.message);
+      otpUser.clear();
+    }
+    update();
+  }
+
+  Future<void> newPasswordForgot() async {
+    Get.dialog(DialogLoading());
+    String tokenForgot = SpUtil.getString(ConstString.token_forgot);
+    ResultData res = await authenticationRepositories.newPasswordForgot(tokenForgot, passWord.text, rePassWord.text);
+    ResultNewPasswordForgot resultNewPasswordForgot = resultNewPasswordForgotFromJson(res.data);
+    if (resultNewPasswordForgot.data != null) {
+      Get.back();
+      Utils.showToast(resultNewPasswordForgot.data.message);
+      Get.offAllNamed(Routes.LOGIN);
+    } else {
+      Get.back();
+      Utils.showToast(resultNewPasswordForgot.error.message);
+      passWord.clear();
+      rePassWord.clear();
+    }
+    update();
+  }
+
   void checkButton() {
     errorShowPassword = true;
     errorShowRePassword = true;
-    passWord.text.length >= 6 && rePassWord.text == passWord.text
-        ? print('oke')
+    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+        ? newPasswordForgot()
         // Get.to(RegisterParentStep2Screen())
         : Get.dialog(DialogError(
-            title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+            title: 'Tất cả các thông tin trên là bắt buộc.',
             onTap: () => Get.back(),
             textButton: 'Ok',
             richText: false,
@@ -101,15 +158,16 @@ class ForgotController extends GetxController {
 
   Future<void> emailForgotPassword() async {
     // await Future.delayed(Duration(milliseconds: 1));
-    // Get.dialog(DialogLoading());
+    Get.dialog(DialogLoading());
     ResultData res = await authenticationRepositories.mailForgotPassword(email.text);
     ResultEmailForgot resultEmailForgot = resultEmailForgotFromJson(res.data);
     if (resultEmailForgot.data != null) {
       Get.back();
-      // SpUtil.putString(ConstString.token, resultEmailForgetPassword.data.accessToken);
+      SpUtil.putString(ConstString.token_forgot, resultEmailForgot.data.dataUser.token);
       Utils.showToast(resultEmailForgot.data.message);
-      // Get.toNamed(Routes.CONFIRMOTPFORGOT);
+      Get.toNamed(Routes.verify_forgot);
     } else {
+      Get.back();
       email.clear();
       Utils.showToast(resultEmailForgot.error.message);
     }

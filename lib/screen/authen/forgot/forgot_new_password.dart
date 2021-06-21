@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -47,6 +48,10 @@ class ForgotNewPasswordScreen extends StatelessWidget {
                       height: AppDimens.height * 0.1,
                     ),
                     CustomTextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(' ')),
+                      ],
+                      maxLine: 1,
                       isShowIcon: true,
                       obligatory: true,
                       onPressed: () {
@@ -63,6 +68,10 @@ class ForgotNewPasswordScreen extends StatelessWidget {
                       height: AppDimens.space20,
                     ),
                     CustomTextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(' ')),
+                      ],
+                      maxLine: 1,
                       isShowIcon: true,
                       obligatory: true,
                       textEditingController: controller.rePassWord,

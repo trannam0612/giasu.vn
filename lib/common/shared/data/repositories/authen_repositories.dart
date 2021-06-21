@@ -91,6 +91,64 @@ class AuthenticationRepositories {
     return rest;
   }
 
+  Future<ResultData> newPasswordForgot(
+    String token,
+    String password,
+    String retypePassword,
+  ) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      "token": token,
+      "password": password,
+      "retype_password": retypePassword,
+    };
+    ResultData rest = await httpManager.netFetch(Address.forgot_password, body, header, Options(method: 'post'));
+    return rest;
+  }
+
+  Future<ResultData> changePassword(
+    String token,
+    String oldPassword,
+    String newPassword,
+    String renewPassword,
+  ) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      "token": token,
+      "old_password": oldPassword,
+      "new_password": newPassword,
+      "renew_password": renewPassword,
+    };
+    ResultData rest = await httpManager.netFetch(Address.change_password, body, header, Options(method: 'post'));
+    return rest;
+  }
+
+  Future<ResultData> verifyForgotPassword(String token, String otp) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {"token": token, "otp_user": otp};
+    ResultData rest = await httpManager.netFetch(Address.verify_password, body, header, Options(method: 'post'));
+    return rest;
+  }
+
+  Future<ResultData> reSendOTPRegister(String email) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {"email": email};
+    ResultData rest = await httpManager.netFetch(Address.send_back_otp, body, header, Options(method: 'post'));
+    return rest;
+  }
+
   Future<ResultData> mailForgotPassword(String email) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
@@ -19,6 +20,7 @@ class CustomTextFieldBox extends StatefulWidget {
   final Color colorIcon;
   final bool obligatory;
   final bool hasTitle;
+  final List<TextInputFormatter> inputFormatters;
 
   const CustomTextFieldBox(
       {Key key,
@@ -34,7 +36,7 @@ class CustomTextFieldBox extends StatefulWidget {
       this.colorIcon = AppColors.black12,
       this.isShowIcon = false,
       this.obligatory = false,
-      this.error, this.hasTitle = true});
+      this.error, this.hasTitle = true, this.inputFormatters});
 
   @override
   _CustomTextFieldBoxState createState() => _CustomTextFieldBoxState();
@@ -63,6 +65,7 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
             height: AppDimens.space4,
           ),
           TextFormField(
+              inputFormatters: widget.inputFormatters,
               autofocus: false,
               maxLines: 5,
               obscureText: widget.isPassword,

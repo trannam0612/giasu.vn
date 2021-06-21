@@ -18,6 +18,7 @@ import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step2_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';

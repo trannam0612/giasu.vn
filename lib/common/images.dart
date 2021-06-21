@@ -23,6 +23,7 @@ class Images {
   static const String ic_arrow_left_iphone = _img_ + 'ic_arrow_left_iphone.svg';
   static const String ic_warning = _img_ + 'ic_warning.svg';
   static const String ic_success = _img_ + 'ic_success.svg';
+  static const String ic_setting = _img_ + 'ic_setting.svg';
 
 
 
@@ -45,7 +46,7 @@ class Images {
   static const String ic_intersex = _img_ + 'ic_intersex.svg';
   static const String ic_map = _img_ + 'ic_map.svg';
   static const String ic_message = _img_ + 'ic_message.svg';
-  static const String ic_notifications = _img_ + 'ic_notifications.svg';
+  static const String ic_notification = _img_ + 'ic_notification.svg';
   static const String ic_notifications_2 = _img_ + 'ic_notifications_2.svg';
   static const String ic_seen_message = _img_ + 'ic_seen_message.svg';
   static const String ic_send = _img_ + 'ic_send.svg';

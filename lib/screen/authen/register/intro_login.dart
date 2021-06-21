@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step1_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step1_screen.dart';
+import 'package:sp_util/sp_util.dart';
 
 class IntroLoginScreen extends StatelessWidget {
   const IntroLoginScreen({Key key}) : super(key: key);
@@ -51,12 +53,13 @@ class IntroLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () => Get.to(RegisterGiaSuStep1Screen()),
+                  onTap: () {
+                    Get.to(RegisterGiaSuStep1Screen());
+                    SpUtil.putString(ConstString.USER_TYPE, '2');
+                  },
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.primary4C5BD4,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(AppDimens.space10), bottomRight: Radius.circular(AppDimens.space10))),
+                    decoration:
+                        BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(AppDimens.space10), bottomRight: Radius.circular(AppDimens.space10))),
                     child: Column(
                       children: [
                         Image.asset(
@@ -75,12 +78,13 @@ class IntroLoginScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Get.to(RegisterParentStep1Screen()),
+                  onTap: () {
+                    Get.to(RegisterParentStep1Screen());
+                    SpUtil.putString(ConstString.USER_TYPE, '1');
+                  },
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.primary4C5BD4,
-                        borderRadius:
-                            BorderRadius.only(bottomLeft: Radius.circular(AppDimens.space10), bottomRight: Radius.circular(AppDimens.space10))),
+                    decoration:
+                        BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(AppDimens.space10), bottomRight: Radius.circular(AppDimens.space10))),
                     child: Column(
                       children: [
                         Image.asset(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
+import 'package:giasu_vn/common/shared/data/models/result_register_teacher.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
@@ -38,7 +40,7 @@ class RegisterGiaSuController extends GetxController {
 
   // List<String> listGender = ['Khác', 'Nam', 'Nữ'];
   List<buoiday> listbuoiday = [
-    buoiday('Thứ 2', '1', "0", "0"),
+    buoiday('Thứ 2', '0', "0", "0"),
     buoiday('Thứ 3', "0", "0", "0"),
     buoiday('Thứ 4', "0", "0", "0"),
     buoiday('Thứ 5', "0", "0", "0"),
@@ -383,7 +385,7 @@ class RegisterGiaSuController extends GetxController {
       return 'Trường bắt buộc!';
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text)) {
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
       return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
@@ -667,7 +669,7 @@ class RegisterGiaSuController extends GetxController {
     if (email.text.contains('@') &&
         email.text.contains('.') &&
         passWord.text.length >= 8 &&
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text) &&
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
         passWord.text.isNotEmpty &&
         passWord.text == rePassWord.text &&
         rePassWord.text.isNotEmpty) {
@@ -747,7 +749,7 @@ class RegisterGiaSuController extends GetxController {
     errorDistrict = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == 1 || e.chieu == 1 || e.toi == 1, orElse: () => null);
+    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
@@ -858,9 +860,15 @@ class RegisterGiaSuController extends GetxController {
         idArea,
         listDistrictSelect.map((e) => e.citId).join(','),
         test.join(','));
-
-
-
+    ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
+    if (resultRegisterTeacher.data != null) {
+      Utils.showToast(resultRegisterTeacher.data.message);
+      SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
+      SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+      Get.toNamed(Routes.verify_register);
+    } else {
+      Utils.showToast(resultRegisterTeacher.error.message);
+    }
     update();
   }
 

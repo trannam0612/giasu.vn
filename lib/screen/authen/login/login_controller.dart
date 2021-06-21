@@ -12,8 +12,10 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:intl/intl.dart';
 
 import 'package:sp_util/sp_util.dart';
@@ -46,9 +48,11 @@ class LoginController extends GetxController {
   bool isShowPass = true;
 
   Future<void> loginParent() async {
+    Get.dialog(DialogLoading());
     ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
     ResultLogin resultLogin = resultLoginFromJson(res.data);
     if (resultLogin.data != null) {
+      Get.back();
       print(resultLogin.data.data.token);
       print(resultLogin.data.data.email);
       print(resultLogin.data.data.id);
@@ -57,6 +61,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
       Utils.showToast(resultLogin.data.message);
+      Get.toNamed(Routes.navigation);
       // homeAfterParent(1, 10);
     } else {
       Get.back();
@@ -66,10 +71,14 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginTeacher() async {
+    Get.dialog(DialogLoading());
+
     ResultData res = await authenticationRepositories.loginTeacher(email.text, pass.text);
 
     ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
     if (resultLoginTeacher.data != null) {
+      Get.back();
+
       print(resultLoginTeacher.data.data.token);
       print(resultLoginTeacher.data.data.email);
       print(resultLoginTeacher.data.data.id);
@@ -78,9 +87,9 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
       Utils.showToast(resultLoginTeacher.data.message);
-      Get.to(HomeAfterTeacherScreen());
+      Get.toNamed(Routes.navigation);
     } else {
-      // Get.back();
+      Get.back();
       Utils.showToast(resultLoginTeacher.error.message);
     }
     update();

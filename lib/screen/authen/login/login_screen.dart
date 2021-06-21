@@ -93,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                                 height: AppDimens.height * 0.06,
                                 child: CustomButton2(
                                   onPressed: () {
-                                    controller.userType =='1' ? controller.loginParent() : controller.loginTeacher();
+                                    controller.userType == '1' ? controller.loginParent() : controller.loginTeacher();
                                     controller.pass.clear();
                                   },
                                   title: 'ĐĂNG NHẬP',
@@ -107,12 +107,12 @@ class LoginScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   // Get.toNamed(Routes.FORGOT);
+                                  Get.toNamed(Routes.email_forgot);
                                 },
                                 child: Text(
                                   'Quên mật khẩu ?',
                                   textAlign: TextAlign.center,
-                                  style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, color: AppColors.grey747474, fontStyle: FontStyle.italic),
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474, fontStyle: FontStyle.italic),
                                 ),
                               ),
                               SizedBox(
@@ -136,8 +136,7 @@ class LoginScreen extends StatelessWidget {
                                     child: Text(
                                       'Đăng ký',
                                       textAlign: TextAlign.center,
-                                      style: AppTextStyles.regularW400(context,
-                                          size: AppDimens.textSize16, color: AppColors.secondaryF8971C, fontStyle: FontStyle.italic),
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C, fontStyle: FontStyle.italic),
                                     ),
                                   ),
                                 ],

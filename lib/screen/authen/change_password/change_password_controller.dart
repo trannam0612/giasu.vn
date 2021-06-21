@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_change_password.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:giasu_vn/widgets/dialog_password.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'dialog_change_success.dart';
 
 class ChangePasswordController extends GetxController {
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   TextEditingController oldPassWord = TextEditingController();
   TextEditingController otpUser = TextEditingController();
   TextEditingController passWord = TextEditingController();
@@ -63,8 +70,10 @@ class ChangePasswordController extends GetxController {
     print('checkPassword');
     if (errorShowPassword && passWord.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 6) {
-      return 'Mật khẩu tối thiểu 6 kí tự!';
+    } else if (errorShowPassword && passWord.text.length < 8) {
+      return 'Mật khẩu tối thiểu 8 kí tự!';
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
   }
@@ -83,8 +92,8 @@ class ChangePasswordController extends GetxController {
     errorShowPassword = true;
     errorShowRePassword = true;
     errorShowOldPassword = true;
-    oldPassWord.text.isNotEmpty && passWord.text.length >= 6 && rePassWord.text == passWord.text
-        ? Get.dialog(DialogPassword())
+    oldPassWord.text.isNotEmpty && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+        ? changePassword()
         // Get.to(RegisterParentStep2Screen())
         : Get.dialog(DialogError(
             title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -93,5 +102,23 @@ class ChangePasswordController extends GetxController {
             richText: false,
           ));
     update();
+  }
+
+  Future<void> changePassword() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await authenticationRepositories.changePassword(token, oldPassWord.text, passWord.text, rePassWord.text);
+    ResultChangePassword resultChangePassword = resultChangePasswordFromJson(res.data);
+    if (resultChangePassword.data != null) {
+      Get.back();
+      Get.dialog(DialogPassword());
+      Utils.showToast(resultChangePassword.data.message);
+    } else {
+      Get.back();
+      passWord.clear();
+      rePassWord.clear();
+      oldPassWord.clear();
+      Utils.showToast(resultChangePassword.error.message);
+    }
   }
 }

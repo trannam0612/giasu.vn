@@ -5,7 +5,9 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
+import 'package:giasu_vn/screen/information/information_parent/update_info_parent_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
@@ -18,8 +20,8 @@ class UpdateInformationParentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPhuHuynhController>(
-        init: RegisterPhuHuynhController(),
+    return GetBuilder<UpdateInformationParentController>(
+        init: UpdateInformationParentController(),
         builder: (controller) => GestureDetector(
               onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
               child: SafeArea(
@@ -29,8 +31,7 @@ class UpdateInformationParentScreen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Cập nhật thông tin',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -148,7 +149,7 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         CustomTextField(
                           onTapTextField: () {
                             // controller.dateTime.text.isEmpty
-                            controller.dateTime.text = f.format(DateTime.now());
+                            // controller.dateTime.text = f.format(DateTime.now());
                             Get.dialog(DialogTime(
                               onChanged: (DateTime value) {
                                 controller.dateTime.text = f.format(value);
@@ -185,23 +186,23 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
-                          onTapTextField: () {
-                            Get.to(SelectDistrict(context));
-                          },
-                          readOnly: true,
-                          isShowIcon: true,
-                          obligatory: true,
-                          textEditingController: controller.district,
-                          onPressed: () {},
-                          title: 'Quận, huyện',
-                          hintText: 'Chọn quận, huyện',
-                          iconSuffix: Images.ic_arrow_down,
-                          error: controller.checkDistrict(),
-                        ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
+                        // CustomTextField(
+                        //   onTapTextField: () {
+                        //     Get.to(SelectDistrict(context));
+                        //   },
+                        //   readOnly: true,
+                        //   isShowIcon: true,
+                        //   obligatory: true,
+                        //   textEditingController: controller.district,
+                        //   onPressed: () {},
+                        //   title: 'Quận, huyện',
+                        //   hintText: 'Chọn quận, huyện',
+                        //   iconSuffix: Images.ic_arrow_down,
+                        //   error: controller.checkDistrict(),
+                        // ),
+                        // SizedBox(
+                        //   height: AppDimens.space10,
+                        // ),
                         CustomTextField(
                           onTapTextField: () {},
                           isShowIcon: false,
@@ -241,8 +242,8 @@ class UpdateInformationParentScreen extends StatelessWidget {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  RegisterPhuHuynhController registerPhuHuynhController = Get.put(RegisterPhuHuynhController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  UpdateInformationParentController updateInformationParentController = Get.put(UpdateInformationParentController());
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -266,7 +267,8 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.provincial.text = list[index];
+                  updateInformationParentController.provincial.text = listDataCity[index].citName;
+                  updateInformationParentController.idProvincial = int.parse(listDataCity[index].citId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -274,11 +276,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == updateInformationParentController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -287,7 +289,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
@@ -349,8 +351,8 @@ DialogImage() {
   BuildContext context = Get.context;
   var width = MediaQuery.of(context).size.width;
   var height = MediaQuery.of(context).size.height;
-  return GetBuilder<RegisterPhuHuynhController>(
-    init: RegisterPhuHuynhController(),
+  return GetBuilder<UpdateInformationParentController>(
+    init: UpdateInformationParentController(),
     builder: (controller) => Dialog(
         insetPadding: EdgeInsets.only(top: 10.0),
         backgroundColor: Colors.transparent,
@@ -373,8 +375,7 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,
