@@ -208,6 +208,66 @@ class HomeRepositories {
     return rest;
   }
 
+  Future<ResultData> deleteTutorSaved(String token, int idGS) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS};
+
+    ResultData rest = await httpManager.netFetch(Address.DELETE_TUTOR_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> refuseOffer(String token, int idGS, int idLop) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS, 'id_lop': idLop};
+
+    ResultData rest = await httpManager.netFetch(Address.REFUSE_OFFER, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> acceptOffer(String token, int idGS, int idLop) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS, 'id_lop': idLop};
+
+    ResultData rest = await httpManager.netFetch(Address.ACCEPT_OFFER, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> tutorDeleteOffer(String token, int idGS, int idLop) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS, 'id_lop': idLop};
+
+    ResultData rest = await httpManager.netFetch(Address.TUTOR_DELETE_OFFER, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> inviteTeach(String token, int idLop, int idGS) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_lop': idLop, 'id_gs': idGS};
+
+    ResultData rest = await httpManager.netFetch(Address.INVITE_TEACH, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
   Future<ResultData> detailClass(int idClass) async {
     ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
     return rest;

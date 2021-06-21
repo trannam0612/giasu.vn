@@ -22,6 +22,11 @@ class Address {
   static const String DELETE_CLASS_SAVED = BASE_URL + "/delete_class_saved.php";
   static const String OFFER_TEACH = BASE_URL + "/offer_teach.php";
   static const String SAVE_TUTOR = BASE_URL + "/save_tutor.php";
+  static const String REFUSE_OFFER = BASE_URL + "/refuse_offer.php";
+  static const String ACCEPT_OFFER = BASE_URL + "/accept_offer.php";
+  static const String TUTOR_DELETE_OFFER = BASE_URL + "/tutor_delete_offer.php";
+  static const String DELETE_TUTOR_SAVED = BASE_URL + "/delete_tutor_saved.php";
+  static const String INVITE_TEACH = BASE_URL + "/invite_teach.php";
 
   static String detailClass(int idClass) {
     return '$BASE_URL/detail_class.php?pft_id=${idClass}';
