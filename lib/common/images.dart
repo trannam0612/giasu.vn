@@ -24,6 +24,8 @@ class Images {
   static const String ic_warning = _img_ + 'ic_warning.svg';
   static const String ic_success = _img_ + 'ic_success.svg';
   static const String ic_setting = _img_ + 'ic_setting.svg';
+  static const String ic_teaching = _img_ + 'teaching.svg';
+  static const String ic_tutor = _img_ + 'tutor.svg';
 
 
 

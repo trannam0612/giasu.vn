@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_invited/list_teacher_invited_controller.dart';
 
 class ListTeacherInvitedScreen extends StatefulWidget {
@@ -36,6 +37,7 @@ class ListTeacherInvitedScreen extends StatefulWidget {
 class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
   ScrollController _controller = ScrollController();
   ListTeacherInvitedController listTeacherInvitedController = Get.put(ListTeacherInvitedController());
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   int i = 1;
 
   @override
@@ -146,7 +148,18 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                         ),
                                       ],
                                     ),
-                                    controller.listGSMD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
+                                    InkWell(child: controller.listGSMD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
+                                    onTap: () {
+                                      if (!controller.listGSMD[index].checkSave) {
+                                        controller.listGSMD[index].checkSave = true;
+                                        homeAfterParentController.saveTutor(int.parse(controller.listGSMD[index].ugsId));
+                                        controller.update();
+                                      } else {
+                                        controller.listGSMD[index].checkSave = false;
+                                        homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSMD[index].ugsId));
+                                        controller.update();
+                                      }
+                                    },)
                                   ],
                                 ),
                                 SizedBox(
@@ -185,12 +198,15 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                     SizedBox(
                                       width: AppDimens.space6,
                                     ),
-                                    Text(
-                                      controller.listGSMD[index].asDetailName.join(', '),
-                                      overflow: TextOverflow.fade,
-                                      style: AppTextStyles.regular(
-                                        context,
-                                        size: AppDimens.textSize14,
+                                    Expanded(
+                                      child: Text(
+                                        controller.listGSMD[index].asDetailName.join(', '),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyles.regular(
+                                          context,
+                                          size: AppDimens.textSize14,
+                                        ),
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ],

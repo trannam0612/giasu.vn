@@ -66,7 +66,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
-            'Lớp bạn đã lưu',
+            'Tin đã đăng',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
