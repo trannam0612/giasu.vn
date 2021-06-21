@@ -259,13 +259,15 @@ class RegisterPhuHuynhController extends GetxController {
 
   Future<void> registerParent() async {
     ResultData res = await authenticationRepositories.registerParent(
-        email.text, passWord.text, rePassWord.text, fullName.text, phone.text, idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
+        email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text, idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
     resultRegisterParent = resultRegisterParentFromJson(res.data);
     if (resultRegisterParent.data != null) {
       SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
       SpUtil.putString(ConstString.EMAIL, resultRegisterParent.data.dataUser.email);
       Utils.showToast(resultRegisterParent.data.message);
-      Get.to(OTPScreen());
+      Get.to(OTPScreen(
+        back: () => Get.back(),
+      ));
     } else {
       Utils.showToast(resultRegisterParent.data.message);
     }

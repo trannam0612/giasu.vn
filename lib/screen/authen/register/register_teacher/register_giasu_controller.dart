@@ -78,6 +78,7 @@ class RegisterGiaSuController extends GetxController {
   int idLuong = 0;
   int idFormTeaching = 0;
   int idMariage;
+  int idDistrict;
   String valueArea;
 
   int idArea;
@@ -817,6 +818,14 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  String checkDistrict() {
+    print('checkProvincial');
+    if (errorDistrict && district.text.isEmpty) {
+      return 'Trường bắt buộc!';
+    }
+    return null;
+  }
+
   Future<void> registerTeacher() async {
     // Get.dialog(DialogLoading());
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
@@ -826,7 +835,7 @@ class RegisterGiaSuController extends GetxController {
         email.text,
         passWord.text,
         rePassWord.text,
-        // avatar,
+        avatar,
         fullName.text,
         idGender,
         dateTime.text,
@@ -840,6 +849,8 @@ class RegisterGiaSuController extends GetxController {
         graduationYear.text,
         // specialized, Chuyên ngành
         specialized.text,
+        idProvincial,
+        idDistrict,
         address.text,
         company.text,
         information.text,

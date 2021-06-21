@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -58,23 +59,36 @@ class UpdateInformationParentScreen extends StatelessWidget {
                           onTap: () {
                             Get.dialog(DialogImage());
                           },
-                          child: controller.avatar == null
-                              ? Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    padding: EdgeInsets.all(30),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppDimens.space100),
-                                        border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
-                                    child: SvgPicture.asset(Images.ic_add_camera),
-                                  ),
-                                )
+                          child: controller.urlAvatar == ''
+                              ? controller.avatar == null
+                                  ? Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        padding: EdgeInsets.all(30),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(AppDimens.space100),
+                                            border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
+                                        child: SvgPicture.asset(Images.ic_add_camera),
+                                      ),
+                                    )
+                                  : Align(
+                                      alignment: Alignment.center,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: Image.file(
+                                          controller.avatar,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    )
                               : Align(
                                   alignment: Alignment.center,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    child: Image.file(
-                                      controller.avatar,
+                                    child: CachedNetworkImage(
+                                      imageUrl: controller.urlAvatar,
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.fill,
@@ -443,7 +457,7 @@ DialogImage() {
                             // controller.avatar = controller.imageAvatar;
                             controller.changeAvatar();
                             controller.errorImage = false;
-                            // controller.uploadAvatar();
+                            controller.checkAvatar();
                             Get.back();
                           },
                           title: 'Cập nhật',

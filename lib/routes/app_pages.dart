@@ -52,7 +52,12 @@ class AppPages {
     GetPage(name: Routes.email_forgot, page: () => ForgotScreen(), binding: ForgotBinding()),
     GetPage(name: Routes.verify_forgot, page: () => OTPForgotScreen(), binding: ForgotBinding()),
     GetPage(name: Routes.new_password_forgot, page: () => ForgotNewPasswordScreen(), binding: ForgotBinding()),
-    GetPage(name: Routes.verify_register, page: () => OTPScreen(), binding: OTPBinding()),
+    GetPage(
+        name: Routes.verify_register,
+        page: () => OTPScreen(
+              back: () => Get.back(),
+            ),
+        binding: OTPBinding()),
     GetPage(name: Routes.select_type_login, page: () => SelectTypeLoginScreen(), binding: LoginBinding()),
     //   GetPage(name: Routes.WELCOME, page: () => WelcomeScreen(), binding: WelcomeBinding()),
     //   //authen

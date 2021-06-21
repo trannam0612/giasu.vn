@@ -217,8 +217,26 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           isShowIcon: true,
                           iconSuffix: Images.ic_arrow_down,
                         ),
+
                         SizedBox(
                           height: AppDimens.space20,
+                        ),
+                        CustomTextField(
+                          onTapTextField: () {
+                            Get.to(SelectDistrict(context));
+                          },
+                          readOnly: true,
+                          isShowIcon: true,
+                          obligatory: true,
+                          textEditingController: controller.district,
+                          onPressed: () {},
+                          title: 'Quận/huyện',
+                          hintText: 'Chọn Quận/huyện',
+                          iconSuffix: Images.ic_arrow_down,
+                          error: controller.checkDistrict(),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
                         ),
                         CustomTextField(
                           textEditingController: controller.address,
@@ -498,6 +516,9 @@ Widget SelectTinhThanh(BuildContext context) {
                 // ignore: deprecated_member_use
                 onTap: () {
                   registerGiaSuController.provincial.text = listDataCity[index].citName;
+                  registerGiaSuController.idProvincial = int.parse(listDataCity[index].citId);
+                  registerGiaSuController.district.clear();
+                  registerGiaSuController.getListDistrict(registerGiaSuController.idProvincial);
                   Get.back();
                 },
                 child: SizedBox(
@@ -526,7 +547,7 @@ Widget SelectTinhThanh(BuildContext context) {
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
   RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
-  List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
+  // List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -550,7 +571,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.district.text = list[index];
+                  registerGiaSuController.district.text = registerGiaSuController.listDistrict[index].citName;
+                  registerGiaSuController.idDistrict = int.parse(registerGiaSuController.listDistrict[index].citId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -558,11 +580,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        registerGiaSuController.listDistrict[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerGiaSuController.listDistrict[index].citName == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -571,7 +593,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: registerGiaSuController.listDistrict.length),
     ),
   ));
 }

@@ -71,6 +71,10 @@ class InfoTutor {
     this.ugsSchool,
     this.ugsGraduationYear,
     this.ugsSpecialized,
+    this.ugsCityGs,
+    this.citNameGs,
+    this.ugsCountyGs,
+    this.citDetailGs,
     this.ugsAddress,
     this.ugsWorkplace,
     this.ugsAboutUs,
@@ -92,6 +96,7 @@ class InfoTutor {
     this.citName,
     this.citDetailId,
     this.citDetail,
+    this.ugsFormality,
   });
 
   String ugsId;
@@ -107,11 +112,15 @@ class InfoTutor {
   String ugsSchool;
   String ugsGraduationYear;
   String ugsSpecialized;
+  String ugsCityGs;
+  dynamic citNameGs;
+  String ugsCountyGs;
+  dynamic citDetailGs;
   String ugsAddress;
   String ugsWorkplace;
   String ugsAboutUs;
   String ugsAchievements;
-  dynamic ugsExperence;
+  String ugsExperence;
   String ugsTitle;
   String ugsYearStart;
   String ugsYearEnd;
@@ -128,6 +137,7 @@ class InfoTutor {
   String citName;
   String citDetailId;
   List<String> citDetail;
+  String ugsFormality;
 
   factory InfoTutor.fromJson(Map<String, dynamic> json) => InfoTutor(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
@@ -143,11 +153,15 @@ class InfoTutor {
     ugsSchool: json["ugs_school"] == null ? null : json["ugs_school"],
     ugsGraduationYear: json["ugs_graduation_year"] == null ? null : json["ugs_graduation_year"],
     ugsSpecialized: json["ugs_specialized"] == null ? null : json["ugs_specialized"],
+    ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
+    citNameGs: json["cit_name_gs"],
+    ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
+    citDetailGs: json["cit_detail_gs"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
     ugsWorkplace: json["ugs_workplace"] == null ? null : json["ugs_workplace"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
     ugsAchievements: json["ugs_achievements"] == null ? null : json["ugs_achievements"],
-    ugsExperence: json["ugs_experence"],
+    ugsExperence: json["ugs_experence"] == null ? null : json["ugs_experence"],
     ugsTitle: json["ugs_title"] == null ? null : json["ugs_title"],
     ugsYearStart: json["ugs_year_start"] == null ? null : json["ugs_year_start"],
     ugsYearEnd: json["ugs_year_end"] == null ? null : json["ugs_year_end"],
@@ -164,6 +178,7 @@ class InfoTutor {
     citName: json["cit_name"] == null ? null : json["cit_name"],
     citDetailId: json["cit_detail_id"] == null ? null : json["cit_detail_id"],
     citDetail: json["cit_detail"] == null ? null : List<String>.from(json["cit_detail"].map((x) => x)),
+    ugsFormality: json["ugs_formality"] == null ? null : json["ugs_formality"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -180,11 +195,15 @@ class InfoTutor {
     "ugs_school": ugsSchool == null ? null : ugsSchool,
     "ugs_graduation_year": ugsGraduationYear == null ? null : ugsGraduationYear,
     "ugs_specialized": ugsSpecialized == null ? null : ugsSpecialized,
+    "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
+    "cit_name_gs": citNameGs,
+    "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
+    "cit_detail_gs": citDetailGs,
     "ugs_address": ugsAddress == null ? null : ugsAddress,
     "ugs_workplace": ugsWorkplace == null ? null : ugsWorkplace,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
     "ugs_achievements": ugsAchievements == null ? null : ugsAchievements,
-    "ugs_experence": ugsExperence,
+    "ugs_experence": ugsExperence == null ? null : ugsExperence,
     "ugs_title": ugsTitle == null ? null : ugsTitle,
     "ugs_year_start": ugsYearStart == null ? null : ugsYearStart,
     "ugs_year_end": ugsYearEnd == null ? null : ugsYearEnd,
@@ -201,6 +220,7 @@ class InfoTutor {
     "cit_name": citName == null ? null : citName,
     "cit_detail_id": citDetailId == null ? null : citDetailId,
     "cit_detail": citDetail == null ? null : List<dynamic>.from(citDetail.map((x) => x)),
+    "ugs_formality": ugsFormality == null ? null : ugsFormality,
   };
 }
 

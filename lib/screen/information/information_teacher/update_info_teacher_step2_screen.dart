@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -29,7 +30,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                   appBar: AppBar(
                     backgroundColor: AppColors.primary4C5BD4,
                     title: Text(
-                      'Đăng ký',
+                      'Cập nhật thông tin',
                       style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                     ),
                     leading: IconButton(
@@ -278,7 +279,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                             hint: 'Chọn lớp học giảng dạy',
                             dropdownValue: controller.selectedClass,
                             onChanged: (String value) => controller.onSelectedClass(value),
-                            list: controller.listClass,
+                            list: listDataClass.map((e) => e.ctName).toList(),
                             borderColor: controller.errorClass ? AppColors.redFF0033 : AppColors.grey747474,
                           ),
                           controller.errorClass

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
-import 'package:giasu_vn/common/shared/data/models/get_info_teaacher.dart';
+import 'package:giasu_vn/common/shared/data/models/result_get_info_teaacher.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
+import 'package:giasu_vn/common/shared/data/models/result_update_avatar.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
@@ -17,6 +20,8 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdateInfoTeacherController extends GetxController {
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  ResultListDistrict resultListDistrict = ResultListDistrict();
   UserRepositories userRepositories = UserRepositories();
   String valueErrorPassword = '';
   bool isShowPassword = true;
@@ -33,6 +38,7 @@ class UpdateInfoTeacherController extends GetxController {
   DateTime valueDate = DateTime.now();
   final f = new DateFormat('dd-MM-yyyy');
   final picker = ImagePicker();
+  List<ListDistrict> listDistrict = [];
 
   // List<String> listGender = ['Khác', 'Nam', 'Nữ'];
   List<buoiday> listbuoiday = [
@@ -72,6 +78,7 @@ class UpdateInfoTeacherController extends GetxController {
   bool valueButtonLuong = false;
   int idClass = 0;
   int idLuong = 0;
+  int idDistrict = 0;
   int idFormTeaching = 0;
   String valueArea;
 
@@ -111,7 +118,7 @@ class UpdateInfoTeacherController extends GetxController {
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Đã kết hôn', 'Chưa kết hôn'];
   List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
-  List<String> listFormTeaching = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
+  List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
   List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
@@ -157,19 +164,33 @@ class UpdateInfoTeacherController extends GetxController {
   TextEditingController salaryUL2 = TextEditingController();
 
   String valueProvincial;
+  String urlAvatar = '';
   int idValueProvincial;
 
-  // void onSelectTopicSubject(DanhSachMonHocChiTietTheoMonHoc value) {
-  //   print('onSelectSubject');
-  //   errorSubjectTopic = false;
-  //   if (listSubjectTopic.map((e) => e.nameTopic).contains(value.nameTopic)) {
-  //     listSubjectTopic.remove(value);
-  //   } else {
-  //     listSubjectTopic.add(value);
-  //   }
-  //
-  //   update();
-  // }
+  void checkAvatar() {
+    if (avatar == null) {
+      errorImage = true;
+      Utils.showToast('Bạn chưa chọn ảnh đại diện!');
+    } else {
+      updateAvatar();
+    }
+    update();
+  }
+
+  Future<void> updateAvatar() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.updateAvatar(token, avatar);
+    ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+    if (resultUpdateAvatar.data != null) {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.error.message);
+    }
+    update();
+  }
 
   @override
   void onInit() {
@@ -616,6 +637,19 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
+  Future<void> getListDistrict(int idCity) async {
+    listDistrict = [];
+    ResultData res = await authenticationRepositories.listDistrict(idCity);
+    resultListDistrict = resultListDistrictFromJson(res.data);
+    if (resultListDistrict.data != null) {
+      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      Utils.showToast(resultListDistrict.data.message);
+    } else {
+      Utils.showToast(resultListDistrict.error.message);
+    }
+    update();
+  }
+
 //Step3
 //
 //   void checkButtonStep1() {
@@ -644,6 +678,7 @@ class UpdateInfoTeacherController extends GetxController {
     errorImage = true;
     errorDateTime = true;
     errorProvincial = true;
+    errorDistrict = true;
     errorAddress = true;
     errorNumberYearExp = true;
     errorTitleExp = true;
@@ -663,6 +698,7 @@ class UpdateInfoTeacherController extends GetxController {
         errorGender == false &&
         errorMarriage == false &&
         provincial.text.isNotEmpty &&
+        district.text.isNotEmpty &&
         address.text.isNotEmpty &&
         numberYearExp.text.isNotEmpty &&
         numberYearExp.text != '0' &&
@@ -762,6 +798,14 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
+  String checkDistrict() {
+    print('checkProvincial');
+    if (errorDistrict && district.text.isEmpty) {
+      return 'Trường bắt buộc!';
+    }
+    return null;
+  }
+
   Future<void> getInfoTeacher() async {
     Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
@@ -770,13 +814,14 @@ class UpdateInfoTeacherController extends GetxController {
     if (resultGetInfoTeacher.data != null) {
       Get.back();
       Utils.showToast(resultGetInfoTeacher.data.message);
+      urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
       print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
       fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
       phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
       selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender;
       dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
       selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
-      provincial.text = resultGetInfoTeacher.data.infoTutor.citName;
+      provincial.text = resultGetInfoTeacher.data.infoTutor.citNameGs;
       address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
       numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
       titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;

@@ -5,7 +5,10 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_post_created/list_post_created_controller.dart';
+import 'package:giasu_vn/screen/post/post_screen.dart';
+import 'package:giasu_vn/screen/post/update_post/update_post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
@@ -35,6 +38,7 @@ class ListPostCreatedScreen extends StatefulWidget {
 
 class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
   ScrollController _controller = ScrollController();
+  UpdatePostController updatePostController = Get.put(UpdatePostController());
   ListPostCreatedController listPostCreatedController = Get.put(ListPostCreatedController());
   int i = 1;
 
@@ -276,7 +280,10 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                     child: CustomButton2(
                                       title: 'Chỉnh sửa',
                                       color: AppColors.primary4C5BD4,
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
+                                        // Get.to(PostScreen());
+                                      },
                                       textColor: AppColors.whiteFFFFFF,
                                     ),
                                   ),

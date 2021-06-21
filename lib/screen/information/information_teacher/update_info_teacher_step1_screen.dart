@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -57,23 +59,36 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           onTap: () {
                             Get.dialog(DialogImage());
                           },
-                          child: controller.avatar == null
-                              ? Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    padding: EdgeInsets.all(30),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppDimens.space100),
-                                        border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
-                                    child: SvgPicture.asset(Images.ic_add_camera),
-                                  ),
-                                )
+                          child: controller.urlAvatar == ''
+                              ? controller.avatar == null
+                                  ? Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        padding: EdgeInsets.all(30),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(AppDimens.space100),
+                                            border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
+                                        child: SvgPicture.asset(Images.ic_add_camera),
+                                      ),
+                                    )
+                                  : Align(
+                                      alignment: Alignment.center,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: Image.file(
+                                          controller.avatar,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    )
                               : Align(
                                   alignment: Alignment.center,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-                                    child: Image.file(
-                                      controller.avatar,
+                                    child: CachedNetworkImage(
+                                      imageUrl: controller.urlAvatar,
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.fill,
@@ -216,6 +231,23 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           isPassword: false,
                           isShowIcon: true,
                           iconSuffix: Images.ic_arrow_down,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
+                        CustomTextField(
+                          onTapTextField: () {
+                            Get.to(SelectDistrict(context));
+                          },
+                          readOnly: true,
+                          isShowIcon: true,
+                          obligatory: true,
+                          textEditingController: controller.district,
+                          onPressed: () {},
+                          title: 'Quận/huyện',
+                          hintText: 'Chọn Quận/huyện',
+                          iconSuffix: Images.ic_arrow_down,
+                          error: controller.checkDistrict(),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
@@ -445,7 +477,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
 
 Widget SelectTinhThanh(BuildContext context) {
   UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -469,7 +501,10 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  updateInfoTeacherController.provincial.text = list[index];
+                  updateInfoTeacherController.provincial.text = listDataCity[index].citName;
+                  updateInfoTeacherController.idProvincial = int.parse(listDataCity[index].citId);
+                  updateInfoTeacherController.district.clear();
+                  updateInfoTeacherController.getListDistrict(updateInfoTeacherController.idProvincial);
                   Get.back();
                 },
                 child: SizedBox(
@@ -477,11 +512,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == updateInfoTeacherController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == updateInfoTeacherController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -490,7 +525,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
@@ -498,14 +533,14 @@ Widget SelectTinhThanh(BuildContext context) {
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
   UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
-  List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
+  // List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận, Huyện',
+        'Quận/huyện',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
@@ -522,7 +557,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  updateInfoTeacherController.district.text = list[index];
+                  updateInfoTeacherController.district.text = updateInfoTeacherController.listDistrict[index].citName;
+                  updateInfoTeacherController.idDistrict = int.parse(updateInfoTeacherController.listDistrict[index].citId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -530,11 +566,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        updateInfoTeacherController.listDistrict[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == updateInfoTeacherController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updateInfoTeacherController.listDistrict[index].citName == updateInfoTeacherController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -543,7 +579,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: updateInfoTeacherController.listDistrict.length),
     ),
   ));
 }
@@ -644,7 +680,7 @@ DialogImage() {
                             // controller.avatar = controller.imageAvatar;
                             controller.changeAvatar();
                             controller.errorImage = false;
-                            // controller.uploadAvatar();
+                            controller.checkAvatar();
                             Get.back();
                           },
                           title: 'Cập nhật',

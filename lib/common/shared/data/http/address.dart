@@ -34,7 +34,6 @@ class Address {
   static const String REGISTER_TEACHER = BASE_URL + "/register_tutor.php";
   static const String send_back_otp = BASE_URL + "/send_back_otp.php";
 
-
   //forgot
   static const String mail_forgot_password = BASE_URL + "/mail_forgot_password.php";
   static const String verify_password = BASE_URL + "/verify_password.php";
@@ -48,10 +47,15 @@ class Address {
 
 //POST
   static const String created_class_post = BASE_URL + "/created_class_post.php";
+  static const String update_class_post = BASE_URL + "/update_class_post.php";
+
 //User
+  static const String update_avatar = BASE_URL + "/update_avatar.php";
+  static const String add_avatar = BASE_URL + "/add_avatar.php";
   static const String get_info_parent = BASE_URL + "/info_parent.php";
   static const String update_info_parent = BASE_URL + "/update_info_parent.php";
   static const String get_info_teacher = BASE_URL + "/info_tutor.php";
+  static const String update_info_tutor = BASE_URL + "/update_info_tutor.php";
 
   // static const String detail_city = BASE_URL + "/detail_city.php?ugs_city=1111";
   static String detail_city(int idCity) {

@@ -57,15 +57,22 @@ class AuthenticationRepositories {
   }
 
   Future<ResultData> registerParent(
-      String email, String newPass, String retypePassword, String name, String phone, int gender, String birthDay, int city, int county, String address, String aboutUs) async {
+      String email, String newPass, String retypePassword, File avatar, String name, String phone, int gender, String birthDay, int city, int county, String address, String aboutUs) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
+    String fileName = avatar.path.split('/').last;
+
     Map<String, dynamic> body = {
       'ugs_email': email,
       'ugs_password': newPass,
       'ugs_retype_password': retypePassword,
+      'ugs_avatar': await MultipartFile.fromFile(
+        avatar.path,
+        filename: fileName,
+        contentType: new MediaType("image", "jpeg"),
+      ),
       'ugs_name': name,
       'ugs_phone': phone,
       'ugs_gender': gender,
@@ -76,7 +83,7 @@ class AuthenticationRepositories {
       'ugs_about_us': aboutUs,
     };
 
-    ResultData rest = await httpManager.netFetch(Address.REGISTER_PARENT, body, header, Options(method: 'post'));
+    ResultData rest = await httpManager.netFetch(Address.REGISTER_PARENT, body, null, Options(method: 'post'), isFormData: true);
 
     return rest;
   }
@@ -164,7 +171,7 @@ class AuthenticationRepositories {
       String email,
       String newPass,
       String retypePassword,
-      // File avatar,
+      File avatar,
       String name,
       int gender,
       String birthDay,
@@ -174,6 +181,8 @@ class AuthenticationRepositories {
       String school,
       String graduationYear,
       String specialized,
+      int cityGs,
+      int countyGs,
       String address,
       String workplace,
       String aboutUs,
@@ -197,17 +206,17 @@ class AuthenticationRepositories {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    // String fileName = avatar.path.split('/').last;
+    String fileName = avatar.path.split('/').last;
     Map<String, dynamic> body = {
       'ugs_phone': phone,
       'ugs_email': email,
       'ugs_password': newPass,
       'ugs_retype_password': retypePassword,
-      // 'ugs_avatar': await MultipartFile.fromFile(
-      //   avatar.path,
-      //   filename: fileName,
-      //   contentType: new MediaType("image", "jpeg"),
-      // ),
+      'ugs_avatar': await MultipartFile.fromFile(
+        avatar.path,
+        filename: fileName,
+        contentType: new MediaType("image", "jpeg"),
+      ),
       'ugs_name': name,
       'ugs_gender': gender,
       'ugs_birthday': birthDay,
@@ -217,6 +226,8 @@ class AuthenticationRepositories {
       'ugs_school': school,
       'ugs_graduation_year': graduationYear,
       'ugs_specialized': specialized,
+      'ugs_city_gs': cityGs,
+      'ugs_county_gs': countyGs,
       'ugs_address': address,
       'ugs_workplace': workplace,
       'ugs_about_us': aboutUs,
@@ -238,7 +249,7 @@ class AuthenticationRepositories {
       'lichday': lichday,
     };
 
-    ResultData rest = await httpManager.netFetch(Address.REGISTER_TEACHER, body, header, Options(method: 'post'));
+    ResultData rest = await httpManager.netFetch(Address.REGISTER_TEACHER, body, null, Options(method: 'post'), isFormData: true);
 
     return rest;
   }

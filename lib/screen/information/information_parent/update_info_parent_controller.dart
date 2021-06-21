@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_parent.dart';
+import 'package:giasu_vn/common/shared/data/models/result_update_avatar.dart';
 import 'package:giasu_vn/common/shared/data/models/result_update_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
@@ -36,6 +37,7 @@ class UpdateInformationParentController extends GetxController {
   File imageAvatar;
   File imageInfor;
   File avatar;
+  String urlAvatar = '';
   int idGender;
   int idProvincial;
   TextEditingController email = TextEditingController();
@@ -217,6 +219,7 @@ class UpdateInformationParentController extends GetxController {
     if (resultGetInfoParent.data != null) {
       Get.back();
       Utils.showToast(resultGetInfoParent.data.message);
+      urlAvatar = resultGetInfoParent.data.data.ugsAvatar;
       fullName.text = resultGetInfoParent.data.data.ugsName;
       phone.text = resultGetInfoParent.data.data.ugsPhone;
       gender = resultGetInfoParent.data.data.ugsGender;
@@ -227,6 +230,31 @@ class UpdateInformationParentController extends GetxController {
     } else {
       Get.back();
       Utils.showToast(resultGetInfoParent.error.message);
+    }
+    update();
+  }
+
+  void checkAvatar() {
+    if (avatar == null) {
+      errorImage = true;
+      Utils.showToast('Bạn chưa chọn ảnh đại diện!');
+    } else {
+      updateAvatar();
+    }
+    update();
+  }
+
+  Future<void> updateAvatar() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.updateAvatar(token, avatar);
+    ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+    if (resultUpdateAvatar.data != null) {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.error.message);
     }
     update();
   }
