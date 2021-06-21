@@ -150,7 +150,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(ListTeacherSuggested()),
+                        onTap: () => Get.to(ListTeacherSuggestedScreen()),
                         child: Container(
                           width: width * 0.2,
                           height: height * 0.13,
