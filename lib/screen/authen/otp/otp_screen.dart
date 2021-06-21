@@ -97,48 +97,28 @@ class OTPScreen extends StatelessWidget {
                                             enableInteractiveSelection: false,
                                           ),
                                         )))),
+                            controller.seconds.value == 0
+                                ? SizedBox(
+                                    height: AppDimens.space16,
+                                  )
+                                : Container(),
+
+                            Obx(
+                              () => controller.seconds.value == 0
+                                  ? InkWell(
+                                      onTap: () {
+                                        controller.startTimer();
+                                        controller.reSendOTPRegister();
+                                      },
+                                      child: Text(
+                                        'Gửi lại',
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                      ),
+                                    )
+                                  : Container(),
+                            ),
                             SizedBox(
                               height: AppDimens.space16,
-                            ),
-                            SizedBox(
-                              width: AppDimens.width * 0.3,
-                              height: AppDimens.height * 0.07,
-                              child: CustomButton2(
-                                onPressed: () {
-                                  // controller.login();
-                                  // controller.pass.clear();
-                                },
-                                title: 'Gửi lại',
-                                textColor: AppColors.whiteFFFFFF,
-                                color: AppColors.primary4C5BD4,
-                              ),
-                            ),
-                            SizedBox(
-                              height: AppDimens.space32,
-                            ),
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Vui lòng kiểm tra Email để nhận mã OTP.\n nếu bạn chưa nhận được sau đây ',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '(30s) ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
-                                  ),
-                                  TextSpan(
-                                    text: 'mã hãy ấn vào nút ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                                  ),
-                                  TextSpan(
-                                    text: '"Gửi lại"',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: AppDimens.height * 0.1,
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -154,14 +134,60 @@ class OTPScreen extends StatelessWidget {
                                 color: AppColors.primary4C5BD4,
                               ),
                             ),
+                            // SizedBox(
+                            //   width: AppDimens.width * 0.3,
+                            //   height: AppDimens.height * 0.07,
+                            //   child: CustomButton2(
+                            //     onPressed: () {
+                            //       controller.startTimer();
+                            //       controller.reSendOTPRegister();
+                            //     },
+                            //     title: 'Xác nhận',
+                            //     textColor: AppColors.whiteFFFFFF,
+                            //     color: AppColors.primary4C5BD4,
+                            //   ),
+                            // ),
+
                             SizedBox(
-                              height: AppDimens.space20,
+                              height: AppDimens.space16,
                             ),
+                            Obx(
+                              () => RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  text: 'Vui lòng kiểm tra Email để nhận mã OTP.\n nếu bạn chưa nhận được mã sau',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                  children: <TextSpan>[
+                                    controller.seconds.value != 0
+                                        ? TextSpan(
+                                            text: ' ${controller.seconds.value}s ',
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
+                                          )
+                                        : TextSpan(
+                                            text: ' ',
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                          ),
+                                    TextSpan(
+                                      text: ' hãy ấn vào nút ',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                    ),
+                                    TextSpan(
+                                      text: '"Gửi lại"',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: AppDimens.height * 0.05,
+                            ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Bạn chưa có tài khoản?',
+                                  'Bạn đã có tài khoản?',
                                   textAlign: TextAlign.center,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.black),
                                 ),

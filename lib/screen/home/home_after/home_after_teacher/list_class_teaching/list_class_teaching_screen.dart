@@ -86,7 +86,10 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
           padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space6),
           width: AppDimens.width,
           child: controller.listPHDND.length != 0
-              ? ListView.builder(
+              ? ListView.separated(
+            separatorBuilder: (context, index) => SizedBox(
+              height: AppDimens.space6,
+            ),
                   physics: BouncingScrollPhysics(),
                   controller: _controller,
                   scrollDirection: Axis.vertical,

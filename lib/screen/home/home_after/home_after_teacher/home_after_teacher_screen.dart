@@ -23,6 +23,7 @@ import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
 import 'package:giasu_vn/widgets/card_teacher_home2.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../../../common/images.dart';
@@ -40,12 +41,14 @@ class HomeAfterTeacherScreen extends StatefulWidget {
 
 class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
   HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    homeAfterTeacherController.homeAfterTeacher(1,10);
+    // homeAfterTeacherController.homeAfterTeacher(1, 10);
   }
+
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
@@ -78,7 +81,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                         width: 100,
                         height: 45,
                       ),
-                      SizedBox(height: 40, width : width*0.6,child: CustomSearchTextField()),
+                      SizedBox(height: 40, width: width * 0.6, child: CustomSearchTextField()),
                     ],
                   ),
                   SizedBox(
@@ -143,7 +146,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${controller.resultHomeAfterTeacher.data.lmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.lmd})',
+                                  style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -182,7 +186,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${controller.resultHomeAfterTeacher.data.lnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.lnd})',
+                                  style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -221,7 +226,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${controller.resultHomeAfterTeacher.data.ldnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.ldnd})',
+                                  style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -259,7 +265,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                               SizedBox(
                                 height: AppDimens.space4,
                               ),
-                              Text('(${controller.resultHomeAfterTeacher.data.ldl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                              Text('(${controller.resultHomeAfterTeacher.data.ldl})',
+                                  style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                             ],
                           ),
                         ),
@@ -288,7 +295,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => InkWell(
-                                onTap: () => Get.to(InformationClassScreen()),
+                                onTap: () => controller.detailClass(int.parse(controller.listLHGD[index].pftId)),
                                 child: CardClassHome(
                                   title: controller.listLHGD[index].pftSummary,
                                   subject: controller.listLHGD[index].asName,
@@ -325,7 +332,17 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                   methodTeach: controller.listLHPB[index].pftForm,
                                   numberSuggest: controller.listLHPB[index].countDnd,
                                   save: controller.listLHPB[index].checkSave,
-                                  onTap: () => controller.changeValueSave(),
+                                  onTap: () {
+                                    print(controller.listLHPB[index].checkSave);
+                                    if(!controller.listLHPB[index].checkSave) {
+                                      controller.listLHPB[index].checkSave = true;
+                                      controller.saveClass(int.parse(controller.listLHPB[index].pftId));
+                                    } else {
+                                      controller.listLHPB[index].checkSave = false;
+                                      controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
+                                    }
+                                    controller.update();
+                                  },
                                   hasButton: false,
                                 ),
                               ),

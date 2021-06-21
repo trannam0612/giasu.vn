@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/post/post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -49,6 +52,9 @@ class PostScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                          ],
                           textEditingController: controller.title,
                           obligatory: true,
                           error: controller.checkTitle(),
@@ -63,6 +69,9 @@ class PostScreen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextFieldBox(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                          ],
                           textEditingController: controller.contentTitle,
                           obligatory: true,
                           error: controller.checkContentTitle(),
@@ -81,10 +90,10 @@ class PostScreen extends StatelessWidget {
                           title: 'Yêu cầu gia sư',
                           list: controller.listKieuGS,
                           onChanged: (String value) => controller.onSelectedKieuGS(value),
-                          dropdownValue: controller.selectedRequestGS,
-                          borderColor: controller.errorRequestGS ? AppColors.redFF0033 : AppColors.grey747474,
+                          dropdownValue: controller.selectedKieuGS,
+                          borderColor: controller.errorKieuGS ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        controller.errorRequestGS
+                        controller.errorKieuGS
                             ? Text(
                                 'Trường bắt buộc!',
                                 style: AppTextStyles.regularW500(context, size: AppDimens.textSize12, color: AppColors.redEB5757),
@@ -115,7 +124,7 @@ class PostScreen extends StatelessWidget {
                           hint: 'Chọn môn học',
                           obligatory: true,
                           title: 'Môn học',
-                          list: controller.listSubject,
+                          list: listDataSubject.map((e) => e.asName).toList(),
                           onChanged: (String value) => controller.onSelectedSubject(value),
                           dropdownValue: controller.selectedSubject,
                           borderColor: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474,
@@ -133,7 +142,7 @@ class PostScreen extends StatelessWidget {
                           hint: 'Chọn môn học chi tiết',
                           obligatory: true,
                           title: 'Môn học chi tiết',
-                          list: controller.listSubjectTopic,
+                          list: controller.listTopic.map((e) => e.nameSubject).toList(),
                           onChanged: (String value) => controller.onSelectedTopicSubject(value),
                           dropdownValue: controller.selectedTopicSubject,
                           borderColor: controller.errorTopicSubject ? AppColors.redFF0033 : AppColors.grey747474,
@@ -151,12 +160,12 @@ class PostScreen extends StatelessWidget {
                           hint: 'Chọn lớp',
                           obligatory: true,
                           title: 'Dạy lớp',
-                          list: controller.listClass,
-                          onChanged: (String value) => controller.onSelectedClassTeaching(value),
-                          dropdownValue: controller.selectedClassTeaching,
-                          borderColor: controller.errorClassTeaching ? AppColors.redFF0033 : AppColors.grey747474,
+                          list: listStringClass,
+                          onChanged: (String value) => controller.onSelectedClass(value),
+                          dropdownValue: controller.selectedClass,
+                          borderColor: controller.errorClass ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        controller.errorClassTeaching
+                        controller.errorClass
                             ? Text(
                                 'Trường bắt buộc!',
                                 style: AppTextStyles.regularW500(context, size: AppDimens.textSize12, color: AppColors.redEB5757),
@@ -249,113 +258,116 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space4,
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: AppDimens.height * 0.06,
-                                child: TextButton(
-                                  onPressed: () {
-                                    controller.changValueButtonLuong();
-                                  },
-                                  child: Text(
-                                    'Cố định',
-                                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: controller.valueButtonLuong ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
-                                    padding: EdgeInsets.all(AppDimens.space8),
-                                    onPrimary: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
-                                      borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: AppDimens.padding8,
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                height: AppDimens.height * 0.06,
-                                child: TextButton(
-                                  onPressed: () {
-                                    controller.changValueButtonLuong();
-                                  },
-                                  child: Text(
-                                    'Ước lượng',
-                                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
-                                    padding: EdgeInsets.all(AppDimens.space8),
-                                    onPrimary: Colors.white,
-                                    shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: AppColors.primary4C5BD4), borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppDimens.space8,
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: SizedBox(
+                        //         height: AppDimens.height * 0.06,
+                        //         child: TextButton(
+                        //           onPressed: () {
+                        //             controller.changValueButtonLuong();
+                        //           },
+                        //           child: Text(
+                        //             'Cố định',
+                        //             style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //           style: ElevatedButton.styleFrom(
+                        //             primary: controller.valueButtonLuong ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
+                        //             padding: EdgeInsets.all(AppDimens.space8),
+                        //             onPrimary: Colors.white,
+                        //             shape: RoundedRectangleBorder(
+                        //               side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
+                        //               borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10)),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: AppDimens.padding8,
+                        //     ),
+                        //     Expanded(
+                        //       child: SizedBox(
+                        //         height: AppDimens.height * 0.06,
+                        //         child: TextButton(
+                        //           onPressed: () {
+                        //             controller.changValueButtonLuong();
+                        //           },
+                        //           child: Text(
+                        //             'Ước lượng',
+                        //             style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //           style: ElevatedButton.styleFrom(
+                        //             primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
+                        //             padding: EdgeInsets.all(AppDimens.space8),
+                        //             onPrimary: Colors.white,
+                        //             shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: AppColors.primary4C5BD4), borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(
+                        //   height: AppDimens.space8,
+                        // ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
-                                child: controller.valueButtonLuong
-                                    ? CustomTextField(
-                                        error: controller.checkSalaryCD(),
-                                        textEditingController: controller.salaryCD,
-                                        obligatory: false,
-                                        isTitle: false,
-                                        keyboardType: TextInputType.number,
-                                        onPressed: () {},
-                                        title: '',
-                                        hintText: '1.000.000VNĐ',
-                                        isPassword: false,
-                                      )
-                                    : Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            child: CustomTextField(
-                                              error: controller.checkSalaryUL1(),
-                                              textEditingController: controller.salaryUL1,
-                                              obligatory: false,
-                                              isTitle: false,
-                                              onPressed: () {},
-                                              title: '',
-                                              keyboardType: TextInputType.number,
-                                              hintText: '1.000.000VNĐ',
-                                              isPassword: false,
-                                            ),
-                                          ),
-                                          Text(
-                                            '~',
-                                            style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
-                                          ),
-                                          Expanded(
-                                            child: CustomTextField(
-                                              error: controller.checkSalaryUL2(),
-                                              textEditingController: controller.salaryUL2,
-                                              obligatory: false,
-                                              isTitle: false,
-                                              keyboardType: TextInputType.number,
-                                              onPressed: () {},
-                                              title: '',
-                                              hintText: '6.000.000VNĐ',
-                                              isPassword: false,
-                                            ),
-                                          ),
-                                        ],
-                                      )),
+                              child:
+                                  // controller.valueButtonLuong
+                                  //     ?
+                                  CustomTextField(
+                                error: controller.checkSalaryCD(),
+                                textEditingController: controller.salaryCD,
+                                obligatory: false,
+                                isTitle: false,
+                                keyboardType: TextInputType.number,
+                                onPressed: () {},
+                                title: '',
+                                hintText: '1.000.000VNĐ',
+                                isPassword: false,
+                              ),
+                              // : Row(
+                              //     mainAxisAlignment: MainAxisAlignment.center,
+                              //     crossAxisAlignment: CrossAxisAlignment.center,
+                              //     children: [
+                              //       Expanded(
+                              //         child: CustomTextField(
+                              //           error: controller.checkSalaryUL1(),
+                              //           textEditingController: controller.salaryUL1,
+                              //           obligatory: false,
+                              //           isTitle: false,
+                              //           onPressed: () {},
+                              //           title: '',
+                              //           keyboardType: TextInputType.number,
+                              //           hintText: '1.000.000VNĐ',
+                              //           isPassword: false,
+                              //         ),
+                              //       ),
+                              //       Text(
+                              //         '~',
+                              //         style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
+                              //       ),
+                              //       Expanded(
+                              //         child: CustomTextField(
+                              //           error: controller.checkSalaryUL2(),
+                              //           textEditingController: controller.salaryUL2,
+                              //           obligatory: false,
+                              //           isTitle: false,
+                              //           keyboardType: TextInputType.number,
+                              //           onPressed: () {},
+                              //           title: '',
+                              //           hintText: '6.000.000VNĐ',
+                              //           isPassword: false,
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   )),
+                            ),
                             SizedBox(
                               width: AppDimens.smallPadding10,
                             ),
@@ -399,29 +411,29 @@ class PostScreen extends StatelessWidget {
                           height: AppDimens.space8,
                         ),
                         Text(
-                          'Lưu ý : Học phí tính VNĐ/  ',
+                          'Lưu ý : Học phí tính VNĐ/ ${controller.selectedStatusFee}  ',
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        // CustomTextField(
-                        //   textEditingController: controller.phoneEditingController,
-                        //   obligatory: true,
-                        //   error: controller.checkPhone(),
-                        //   keyboardType: TextInputType.phone,
-                        //   onPressed: () {
-                        //     // Get.dialog(DialogFee());
-                        //   },
-                        //   title: 'Điện thoại liên hệ',
-                        //   hintText: '',
-                        //   isPassword: false,
-                        //   isShowIcon: false,
-                        //   iconSuffix: Images.ic_arrow_down,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
+                        CustomTextField(
+                          textEditingController: controller.phone,
+                          obligatory: true,
+                          error: controller.checkPhone(),
+                          keyboardType: TextInputType.phone,
+                          onPressed: () {
+                            // Get.dialog(DialogFee());
+                          },
+                          title: 'Điện thoại liên hệ',
+                          hintText: '',
+                          isPassword: false,
+                          isShowIcon: false,
+                          iconSuffix: Images.ic_arrow_down,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
                         CustomTextField(
                           textEditingController: controller.provincial,
                           readOnly: true,
@@ -529,13 +541,13 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Sáng',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == "0" ? "1" : "0";
                                                   controller.update();
                                                   // controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].sang == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].sang == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].sang == 1 ? false : true,
+                                                color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                               ),
                                               SizedBox(
                                                 width: AppDimens.padding16,
@@ -544,13 +556,13 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Chiều',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == "0" ? "1" : "0";
                                                   controller.update();
                                                   // controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].chieu == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].chieu == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].chieu == 1 ? false : true,
+                                                color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                               ),
                                               SizedBox(
                                                 width: AppDimens.padding16,
@@ -559,12 +571,12 @@ class PostScreen extends StatelessWidget {
                                                 title: 'Tối',
                                                 onPressed: () {
                                                   controller.errorbuoiday = false;
-                                                  controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == 0 ? 1 : 0;
+                                                  controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == "0" ? "1" : "0";
                                                   controller.update();
                                                 },
-                                                color: controller.listbuoiday[index].toi == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                textColor: controller.listbuoiday[index].toi == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                hasSide: controller.listbuoiday[index].toi == 1 ? false : true,
+                                                color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
                                               ),
                                             ],
                                           ),
@@ -586,7 +598,6 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-
                         SizedBox(
                           height: AppDimens.padding16,
                         ),
@@ -615,8 +626,8 @@ class PostScreen extends StatelessWidget {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  PostController registerPhuHuynhController = Get.put(PostController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  PostController postController = Get.put(PostController());
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -640,7 +651,10 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.provincial.text = list[index];
+                  postController.provincial.text = listDataCity[index].citName;
+                  postController.idProvincial = int.parse(listDataCity[index].citId);
+                  postController.getListDistrict(int.parse(listDataCity[index].citId));
+
                   Get.back();
                 },
                 child: SizedBox(
@@ -648,11 +662,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == postController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -661,14 +675,14 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
 
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
-  PostController registerPhuHuynhController = Get.put(PostController());
+  PostController postController = Get.put(PostController());
   List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
@@ -693,7 +707,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerPhuHuynhController.district.text = list[index];
+                  postController.district.text = postController.listDistrict[index].citName;
+                  postController.idDistrict = int.parse(postController.listDistrict[index].citId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -701,11 +716,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        postController.listDistrict[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == registerPhuHuynhController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      postController.listDistrict[index].citName == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -714,7 +729,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: postController.listDistrict.length),
     ),
   ));
 }

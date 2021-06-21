@@ -16,10 +16,17 @@ class ListClassRecentlyController extends GetxController {
    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
    if (resultHomeAfterTeacher.data != null) {
-     listLHGDMore = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
+     if(resultHomeAfterTeacher.data.dataClassPb.dataDslhpb.isNotEmpty) {
+       for (int i = 0; i < resultHomeAfterTeacher.data.dataClassGd.dataDslhgd.length; i++) {
+         listLHGDMore.add(resultHomeAfterTeacher.data.dataClassGd.dataDslhgd[i]);
+       }
+     }
+     else {
+       Utils.showToast('Đã hết!');
+     }
    }
    else {
-     Utils.showToast('Trống!');
+
    }
    update();
  }

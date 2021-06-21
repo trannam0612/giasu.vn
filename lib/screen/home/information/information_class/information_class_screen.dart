@@ -6,6 +6,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -16,6 +17,7 @@ class InformationClassScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
     return GetBuilder<InformationClassController>(
       init: InformationClassController(),
       builder: (controller) => Scaffold(
@@ -23,10 +25,7 @@ class InformationClassScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'Chi tiết lớp học',
-            style: AppTextStyles.regularW500(context,
-                size: AppDimens.textSize24,
-                lineHeight: AppDimens.textSize28,
-                color: AppColors.whiteFFFFFF),
+            style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
           elevation: 0,
@@ -49,21 +48,16 @@ class InformationClassScreen extends StatelessWidget {
               children: [
                 Center(
                   child: Text(
-                    'Tìm gia sư hóa học cho học sinh lớp 10 mất gốc Hoá',
+                    homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftSummary,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20,
-                        lineHeight: AppDimens.textSize22,
-                        color: AppColors.primary4C5BD4),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, lineHeight: AppDimens.textSize22, color: AppColors.primary4C5BD4),
                   ),
                 ),
                 SizedBox(
                   height: AppDimens.space14,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: AppDimens.space10,
-                      horizontal: AppDimens.space20),
+                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.whiteFFFFFF,
@@ -76,12 +70,16 @@ class InformationClassScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Text(
-                    'Cần gia sư có kinh nghiệm trên 2 năm, học sinh đang học lớp 10 bị mất kiến thức gốc, yêu cầu gia sư giảng dạy từ cơ bản đến nâng cao. Học viên mất tập trung khi học.Trả học phí sau cuối mỗi buổi dạy.',
-                    style: AppTextStyles.regularW400(context,
-                        size: AppDimens.textSize16,
-                        lineHeight: AppDimens.textSize18),
-                    textAlign: TextAlign.center,
+                  child: Container(
+                    width: AppDimens.width,
+                    height: AppDimens.width * 0.2,
+                    child: Center(
+                      child: Text(
+                        homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftDetail,
+                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.textSize18),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -89,9 +87,7 @@ class InformationClassScreen extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppDimens.space6,
-                        horizontal: AppDimens.space12),
+                    padding: EdgeInsets.symmetric(vertical: AppDimens.space6, horizontal: AppDimens.space12),
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 0.5,
@@ -104,18 +100,14 @@ class InformationClassScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Trạng thái:',
-                          style: AppTextStyles.regularW400(context,
-                              size: AppDimens.textSize16,
-                              color: AppColors.grey747474),
+                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                         ),
                         SizedBox(
                           width: AppDimens.space6,
                         ),
                         Text(
-                          'Đang tìm gia sư',
-                          style: AppTextStyles.regularW400(context,
-                              size: AppDimens.textSize16,
-                              color: AppColors.secondaryF8971C),
+                          homeAfterTeacherController.resultDetailClass.data.data.dataInfo.status,
+                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
                         )
                       ],
                     ),
@@ -141,22 +133,17 @@ class InformationClassScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Địa điểm:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              'Thanh Xuân, Hà Nội',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              '${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.ctyDetailName}, ${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.cityName}',
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -166,22 +153,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Học Phí:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '300.000 vnđ/giờ',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              '${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftPrice} vnđ/${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftMonth}',
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -191,22 +173,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Môn học:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              'Hóa học',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.asName,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -216,22 +193,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Yêu cầu gia sư:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
                               'Sinh viên',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -241,22 +213,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Giới tính:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              'Nữ',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftGender,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -269,8 +236,7 @@ class InformationClassScreen extends StatelessWidget {
                 ),
                 Text(
                   'Thông tin lớp học',
-                  style: AppTextStyles.regularW500(context,
-                      size: AppDimens.textSize20),
+                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                 ),
                 SizedBox(
                   height: AppDimens.space10,
@@ -292,22 +258,17 @@ class InformationClassScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Mã lớp:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '1234',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftId,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -317,22 +278,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Hình thức:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              'Gặp mặt',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftForm,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -342,22 +298,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Dạy lớp:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '10',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.ctName,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -367,22 +318,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Số buổi:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '10',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftNbLesson,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -392,22 +338,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Số giờ:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '3',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftTime,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -417,22 +358,17 @@ class InformationClassScreen extends StatelessWidget {
                         color: AppColors.greyAAAAAA,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppDimens.padding14,
-                            vertical: AppDimens.padding8),
+                        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'Số lượng học sinh:',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.grey747474),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '3',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16),
+                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftNbStudent,
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
                         ),
@@ -444,8 +380,7 @@ class InformationClassScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(AppDimens.space10),
                   child: Text(
                     'Số buổi có thể học',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                 ),
                 Container(
@@ -463,14 +398,12 @@ class InformationClassScreen extends StatelessWidget {
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppDimens.padding20),
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: AppDimens.smallPadding10),
+                          padding: EdgeInsets.symmetric(vertical: AppDimens.smallPadding10),
                           child: ListView.separated(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
@@ -480,10 +413,7 @@ class InformationClassScreen extends StatelessWidget {
                                       Text(
                                         controller.listbuoiday[index].thu,
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regularW400(
-                                            context,
-                                            size: AppDimens.textSize14,
-                                            color: AppColors.black),
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.black),
                                       ),
                                       Spacer(),
                                       CustomButton3(
@@ -492,21 +422,9 @@ class InformationClassScreen extends StatelessWidget {
                                           // controller.listbuoiday[index].sang = controller.listbuoiday[index].sang;
                                           // controller.update();
                                         },
-                                        color: controller
-                                                    .listbuoiday[index].sang ==
-                                                1
-                                            ? AppColors.secondaryF8971C
-                                            : AppColors.whiteFFFFFF,
-                                        textColor: controller
-                                                    .listbuoiday[index].sang ==
-                                                1
-                                            ? AppColors.whiteFFFFFF
-                                            : AppColors.grey747474,
-                                        hasSide: controller
-                                                    .listbuoiday[index].sang ==
-                                                1
-                                            ? false
-                                            : true,
+                                        color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                        textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                        hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                       ),
                                       SizedBox(
                                         width: AppDimens.padding20,
@@ -517,21 +435,9 @@ class InformationClassScreen extends StatelessWidget {
                                           // controller.listbuoiday[index].chieu = !controller.listbuoiday[index].chieu;
                                           // controller.update();
                                         },
-                                        color: controller
-                                                    .listbuoiday[index].chieu ==
-                                                1
-                                            ? AppColors.secondaryF8971C
-                                            : AppColors.whiteFFFFFF,
-                                        textColor: controller
-                                                    .listbuoiday[index].chieu ==
-                                                1
-                                            ? AppColors.whiteFFFFFF
-                                            : AppColors.grey747474,
-                                        hasSide: controller
-                                                    .listbuoiday[index].chieu ==
-                                                1
-                                            ? false
-                                            : true,
+                                        color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                        textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                        hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                       ),
                                       SizedBox(
                                         width: AppDimens.padding20,
@@ -542,21 +448,9 @@ class InformationClassScreen extends StatelessWidget {
                                           // controller.listbuoiday[index].toi = !controller.listbuoiday[index].toi;
                                           // controller.update();
                                         },
-                                        color:
-                                            controller.listbuoiday[index].toi ==
-                                                    1
-                                                ? AppColors.secondaryF8971C
-                                                : AppColors.whiteFFFFFF,
-                                        textColor:
-                                            controller.listbuoiday[index].toi ==
-                                                    1
-                                                ? AppColors.whiteFFFFFF
-                                                : AppColors.grey747474,
-                                        hasSide:
-                                            controller.listbuoiday[index].toi ==
-                                                    1
-                                                ? false
-                                                : true,
+                                        color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                        textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                        hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
                                       ),
                                     ],
                                   ),

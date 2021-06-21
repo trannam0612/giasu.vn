@@ -2,20 +2,30 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_get_info_parent.dart';
+import 'package:giasu_vn/common/shared/data/models/result_update_avatar.dart';
+import 'package:giasu_vn/common/shared/data/models/result_update_info_parent.dart';
+import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
+import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdateInformationParentController extends GetxController {
+  UserRepositories userRepositories = UserRepositories();
   bool isShowRePassword = true;
   bool isShowPassword = true;
   bool errorEmail = false;
   bool errorShowPassword = false;
   bool errorShowRePassword = false;
   bool errorGender = false;
+  bool errorInformation = false;
 
   bool errorName = false;
   bool errorPhone = false;
@@ -27,6 +37,9 @@ class UpdateInformationParentController extends GetxController {
   File imageAvatar;
   File imageInfor;
   File avatar;
+  String urlAvatar = '';
+  int idGender;
+  int idProvincial;
   TextEditingController email = TextEditingController();
   TextEditingController passWord = TextEditingController();
   TextEditingController rePassWord = TextEditingController();
@@ -40,7 +53,7 @@ class UpdateInformationParentController extends GetxController {
   TextEditingController district = TextEditingController();
   TextEditingController address = TextEditingController();
   String gender;
-  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
+  List<String> listGender = ['Nam', 'Nữ'];
 
   @override
   void onInit() {
@@ -101,6 +114,7 @@ class UpdateInformationParentController extends GetxController {
     //     idGender = loginController.resultListData.data.danhSachGioiTinh[i].sexId;
     //   }
     // }
+    idGender = value == "Nam" ? 1 : 2;
     errorGender = false;
     update();
   }
@@ -197,22 +211,67 @@ class UpdateInformationParentController extends GetxController {
     update();
   }
 
-  void checkButtonStep1() {
-    errorEmail = true;
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    email.text.isNotEmpty && passWord.text.length >= 6 && rePassWord.text == passWord.text
-        ? Get.to(RegisterParentStep2Screen())
-        : Get.dialog(DialogError(
-            title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-            onTap: () => Get.back(),
-            textButton: 'Ok',
-            richText: false,
-          ));
+  Future<void> getInfoParent() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.getInfoParent(token);
+    ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
+    if (resultGetInfoParent.data != null) {
+      Get.back();
+      Utils.showToast(resultGetInfoParent.data.message);
+      urlAvatar = resultGetInfoParent.data.data.ugsAvatar;
+      fullName.text = resultGetInfoParent.data.data.ugsName;
+      phone.text = resultGetInfoParent.data.data.ugsPhone;
+      gender = resultGetInfoParent.data.data.ugsGender;
+      dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
+      provincial.text = resultGetInfoParent.data.data.citName;
+      address.text = resultGetInfoParent.data.data.ugsAddress;
+      Get.to(UpdateInformationParentScreen());
+    } else {
+      Get.back();
+      Utils.showToast(resultGetInfoParent.error.message);
+    }
     update();
   }
 
-  void checkButtonStep2() {
+  void checkAvatar() {
+    if (avatar == null) {
+      errorImage = true;
+      Utils.showToast('Bạn chưa chọn ảnh đại diện!');
+    } else {
+      updateAvatar();
+    }
+    update();
+  }
+
+  Future<void> updateAvatar() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.updateAvatar(token, avatar);
+    ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+    if (resultUpdateAvatar.data != null) {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultUpdateAvatar.error.message);
+    }
+    update();
+  }
+
+  Future<void> updateInfoParent() async {
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.updateInfoParent(token, fullName.text, idGender, dateTime.text, idProvincial, address.text);
+    ResultUpdateInfoParent resultUpdateInfoParent = resultUpdateInfoParentFromJson(res.data);
+    if (resultUpdateInfoParent.data != null) {
+      Utils.showToast(resultUpdateInfoParent.data.message);
+    } else {
+      Utils.showToast(resultUpdateInfoParent.error.message);
+    }
+    update();
+  }
+
+  void checkButton() {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
@@ -222,19 +281,15 @@ class UpdateInformationParentController extends GetxController {
     errorProvincial = true;
     errorDistrict = true;
     errorAddress = true;
+    errorInformation = true;
     errorGender = gender.isNullOrBlank ? true : false;
     errorImage = avatar.isNullOrBlank ? true : false;
     // print()
-    fullName.text.isNotEmpty &&
-            phone.text.isNotEmpty &&
-            errorGender == false &&
-            dateTime.text.isNotEmpty &&
-            provincial.text.isNotEmpty &&
-            district.text.isNotEmpty &&
-            address.text.isNotEmpty
+    fullName.text.isNotEmpty && phone.text.isNotEmpty && errorGender == false && dateTime.text.isNotEmpty && provincial.text.isNotEmpty && address.text.isNotEmpty
         ?
         // Get.to(RegisterParentStep2Screen())
-        Utils.showToast('Đăng ký thành công')
+        updateInfoParent()
+        // registerParent()
         : Get.dialog(DialogError(
             title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
             onTap: () => Get.back(),

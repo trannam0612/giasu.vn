@@ -139,7 +139,7 @@ class RegisterPhuHuynhController extends GetxController {
       return 'Trường bắt buộc!';
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text)) {
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
       return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
@@ -233,7 +233,7 @@ class RegisterPhuHuynhController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    email.text.isNotEmpty && passWord.text.length >= 8 && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+    email.text.isNotEmpty && passWord.text.length >= 8 && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
         ? Get.to(RegisterParentStep2Screen())
         : Get.dialog(DialogError(
             title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -259,12 +259,15 @@ class RegisterPhuHuynhController extends GetxController {
 
   Future<void> registerParent() async {
     ResultData res = await authenticationRepositories.registerParent(
-        email.text, passWord.text, rePassWord.text, fullName.text, phone.text, idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
+        email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text, idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
     resultRegisterParent = resultRegisterParentFromJson(res.data);
     if (resultRegisterParent.data != null) {
       SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
+      SpUtil.putString(ConstString.EMAIL, resultRegisterParent.data.dataUser.email);
       Utils.showToast(resultRegisterParent.data.message);
-      Get.to(OTPScreen());
+      Get.to(OTPScreen(
+        back: () => Get.back(),
+      ));
     } else {
       Utils.showToast(resultRegisterParent.data.message);
     }

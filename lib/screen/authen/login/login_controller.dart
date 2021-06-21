@@ -12,13 +12,19 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:intl/intl.dart';
 
 import 'package:sp_util/sp_util.dart';
 
 class LoginController extends GetxController {
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   ResultListProvincialSubjectClass resultListProvincialSubjectClass = ResultListProvincialSubjectClass();
   HomeRepositories homeRepositories = HomeRepositories();
@@ -37,18 +43,15 @@ class LoginController extends GetxController {
   List<String> listLuong = [];
   List<String> listClass = [];
   List<String> listSubject = [];
-  List<DataDsgs> listGSGD = [];
-  List<DataDsgs> listGSPB = [];
-  List<DataDslh> listLHGD = [];
-  List<DataDslh> listLHGDMore = [];
-  List<DataDslh> listLHPB = [];
 
   bool isShowPass = true;
 
   Future<void> loginParent() async {
+    Get.dialog(DialogLoading());
     ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
     ResultLogin resultLogin = resultLoginFromJson(res.data);
     if (resultLogin.data != null) {
+      Get.back();
       print(resultLogin.data.data.token);
       print(resultLogin.data.data.email);
       print(resultLogin.data.data.id);
@@ -57,6 +60,8 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
       Utils.showToast(resultLogin.data.message);
+      homeAfterParentController.homeAfterParent(1, 10);
+
       // homeAfterParent(1, 10);
     } else {
       Get.back();
@@ -66,10 +71,14 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginTeacher() async {
+    Get.dialog(DialogLoading());
+
     ResultData res = await authenticationRepositories.loginTeacher(email.text, pass.text);
 
     ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
     if (resultLoginTeacher.data != null) {
+      Get.back();
+
       print(resultLoginTeacher.data.data.token);
       print(resultLoginTeacher.data.data.email);
       print(resultLoginTeacher.data.data.id);
@@ -78,9 +87,10 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
       Utils.showToast(resultLoginTeacher.data.message);
-      Get.to(HomeAfterTeacherScreen());
+      homeAfterTeacherController.homeAfterTeacher(1, 10);
+      // Get.toNamed(Routes.navigation);
     } else {
-      // Get.back();
+      Get.back();
       Utils.showToast(resultLoginTeacher.error.message);
     }
     update();
@@ -100,46 +110,20 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> homeAfterParent(int currentPage, int limit) async {
-    print('homeAfterParent');
-    print(userType);
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
-    if (resultHomeAfterParent.data != null) {
-      listGSGD = resultHomeAfterParent.data.dataTutorGd.dataDsgsgd;
-      listGSPB = resultHomeAfterParent.data.dataTutorPb.dataDsgspb;
-      Get.to(HomeAfterParentScreen());
-    }
-    update();
+  String timeAgo(int timestamp) {
+    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
+    var now = new DateTime.now();
+    var format = new DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    var time = DateTime.parse(format.format(date));
+    var diff = now.difference(time);
+    if (diff.inDays > 365) return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "năm" : "năm"} trước";
+    if (diff.inDays > 30) return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "tháng" : "tháng"} trước";
+    if (diff.inDays > 7) return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "tuần" : "tuần"} trước";
+    if (diff.inDays > 0) return "${diff.inDays} ${diff.inDays == 1 ? "ngày" : "ngày"} trước";
+    if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "giờ" : "giờ"} trước";
+    if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
+    return "vừa xong";
   }
-
-  Future<void> homeAfterTeacher(int currentPage, int limit) async {
-    print('homeAfterTeacher');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-    if (resultHomeAfterTeacher.data != null) {
-      listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
-      listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
-      Get.to(HomeAfterTeacherScreen());
-    }
-    update();
-
-    String timeAgo(int timestamp) {
-      var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
-      var now = new DateTime.now();
-      var format = new DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-      var time = DateTime.parse(format.format(date));
-      var diff = now.difference(time);
-      if (diff.inDays > 365) return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "năm" : "năm"} trước";
-      if (diff.inDays > 30) return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "tháng" : "tháng"} trước";
-      if (diff.inDays > 7) return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "tuần" : "tuần"} trước";
-      if (diff.inDays > 0) return "${diff.inDays} ${diff.inDays == 1 ? "ngày" : "ngày"} trước";
-      if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "giờ" : "giờ"} trước";
-      if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
-      return "vừa xong";
-    }
 
 //
 // Future<void> getListData() async {
@@ -168,11 +152,10 @@ class LoginController extends GetxController {
 //   }
 //   update();
 // }
-    @override
-    void onInit() {
-      print(userType);
-      listCitySubject();
-      super.onInit();
-    }
+  @override
+  void onInit() {
+    print(userType);
+    listCitySubject();
+    super.onInit();
   }
 }

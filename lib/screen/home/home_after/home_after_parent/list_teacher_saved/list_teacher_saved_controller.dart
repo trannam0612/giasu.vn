@@ -11,7 +11,7 @@ class ListTeacherSavedController extends GetxController {
   ResultTutorSaved resultTutorSaved = ResultTutorSaved();
   List<ListGsdl> listGSDL = [];
   Future<void> tutorSaved(int loadMore, int limit) async {
-    print('invitedTutor');
+    print('tutorSaved');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);

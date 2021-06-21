@@ -56,6 +56,7 @@ class ForgotScreen extends StatelessWidget {
                       height: AppDimens.height * 0.05,
                     ),
                     CustomTextField(
+                      error: controller.checkEmail(),
                       textEditingController: controller.email,
                       title: 'Email',
                       isTitle: true,
@@ -72,8 +73,7 @@ class ForgotScreen extends StatelessWidget {
                       child: CustomButton2(
                         hasRadius: true,
                         onPressed: () {
-                          // controller.login();
-                          // controller.pass.clear();
+                          controller.checkButtonSendEmail();
                         },
                         title: 'Gửi về Email',
                         textColor: AppColors.whiteFFFFFF,
@@ -90,11 +90,7 @@ class ForgotScreen extends StatelessWidget {
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Đăng nhập',
-                            style: AppTextStyles.regularW400(context,
-                                size: AppDimens.textSize16,
-                                lineHeight: AppDimens.space18,
-                                color: AppColors.primary4C5BD4,
-                                fontStyle: FontStyle.italic),
+                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
                           ),
                         ],
                       ),

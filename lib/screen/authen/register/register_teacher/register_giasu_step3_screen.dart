@@ -648,13 +648,13 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                   title: 'Sáng',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == '0' ? "1" : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].sang == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].sang == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].sang == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -663,13 +663,13 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                   title: 'Chiều',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == "0" ? "1" : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].chieu == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].chieu == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].chieu == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -678,12 +678,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                   title: 'Tối',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == "0" ? "1" : "0";
                                                     controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].toi == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].toi == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].toi == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
                                                 ),
                                               ],
                                             ),
@@ -868,7 +868,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),

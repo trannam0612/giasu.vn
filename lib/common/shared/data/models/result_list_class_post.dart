@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final resultListClassPost = resultListClassPostFromJson(jsonString);
+//     final resultListClassPosted = resultListClassPostedFromJson(jsonString);
 
 import 'dart:convert';
 
-ResultListClassPost resultListClassPostFromJson(String str) => ResultListClassPost.fromJson(json.decode(str));
+ResultListClassPosted resultListClassPostedFromJson(String str) => ResultListClassPosted.fromJson(json.decode(str));
 
-String resultListClassPostToJson(ResultListClassPost data) => json.encode(data.toJson());
+String resultListClassPostedToJson(ResultListClassPosted data) => json.encode(data.toJson());
 
-class ResultListClassPost {
-  ResultListClassPost({
+class ResultListClassPosted {
+  ResultListClassPosted({
     this.data,
     this.error,
   });
@@ -17,7 +17,7 @@ class ResultListClassPost {
   Data data;
   Error error;
 
-  factory ResultListClassPost.fromJson(Map<String, dynamic> json) => ResultListClassPost(
+  factory ResultListClassPosted.fromJson(Map<String, dynamic> json) => ResultListClassPosted(
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
     error: json["error"] == null ? null : Error.fromJson(json["error"]),
   );

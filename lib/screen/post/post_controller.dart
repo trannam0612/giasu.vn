@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_create_post.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
+import 'package:giasu_vn/common/shared/data/repositories/post_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,173 +18,42 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class PostController extends GetxController {
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  PostRepositories postRepositories = PostRepositories();
+  ResultListTopic resultListTopic = ResultListTopic();
+  List<ListDistrict> listDistrict = [];
+  ResultListDistrict resultListDistrict = ResultListDistrict();
   int idProvincial;
   int idDistrict;
   int idFormTeaching;
+  int idExp;
 
   List<String> listDay = ['1', '2', '3', '4', '5', '6', '7'];
   List<String> listTime = ['1,5', '2', '2,5', '3'];
-  List<String> listKieuGS = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
+  List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
-  List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
-  List<String> listFormTeaching = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
+  List<ListSubjectTag> listTopic = [];
+  List<String> listStringTopic = [];
+  List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
   List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
-  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
-  List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
+  List<String> listGender = ['Nam', 'Nữ'];
+  List<String> listLuong = ['Giờ', 'Tháng'];
 
   List<buoiday> listbuoiday = [
-    buoiday('Thứ 2', 0, 0, 0),
-    buoiday('Thứ 3', 0, 0, 0),
-    buoiday('Thứ 4', 0, 0, 0),
-    buoiday('Thứ 5', 0, 0, 0),
-    buoiday('Thứ 6', 0, 0, 0),
-    buoiday('Thứ 7', 0, 0, 0),
-    buoiday('CN', 0, 0, 0),
+    buoiday('Thứ 2', '0', "0", "0"),
+    buoiday('Thứ 3', "0", "0", "0"),
+    buoiday('Thứ 4', "0", "0", "0"),
+    buoiday('Thứ 5', "0", "0", "0"),
+    buoiday('Thứ 6', "0", "0", "0"),
+    buoiday('Thứ 7', "0", "0", "0"),
+    buoiday('CN', "0", "0", "0"),
   ];
-
-  // Future<void> getDataQH(int id) async {
-  //   print('getDataQH');
-  //
-  //   ResultData res = await authenticationRepositories.getListDataQH(id);
-  //   resultListDataQh = resultListDataQhFromJson(res.data);
-  //   if (resultListDataQh.data != null) {
-  //     resultListDataQh.data.danhSachQuanHuyenTheoTinhThanh.forEach((element) {
-  //       if (element.districtId.toString() == resultDetailClass.data.districtId) {
-  //         districtEditingController.text = element.districtName;
-  //       }
-  //     });
-  //     // districtEditingController.text = resultListDataQh.data.danhSachQuanHuyenTheoTinhThanh[0].districtName;
-  //     print(200);
-  //   } else {
-  //     print('error');
-  //   }
-  //   update();
-  // }
-
-  // void getData() {
-  //   loginController.resultListData.data.danhSachThanhPho.forEach((element) async {
-  //     if (element.citName == resultDetailClass.data.citName) {
-  //       idProvincial = element.citId;
-  //       getDataQH(idProvincial);
-  //     }
-  //   });
-  //
-  //   titleEditingController.text = resultDetailClass.data.className;
-  //   selectedRequestGS = resultDetailClass.data.nametype;
-  //   selectedGender = resultDetailClass.data.userName;
-  //   selectedSubject = resultDetailClass.data.subject;
-  //
-  //   for (int i = 0; i < loginController.resultListData.data.danhSachMonHoc.length; i++) {
-  //     if (selectedSubject == loginController.resultListData.data.danhSachMonHoc[i].subject) {
-  //       idSubject = loginController.resultListData.data.danhSachMonHoc[i].idSubject;
-  //     }
-  //   }
-  //   listDataTopicSubject(idSubject.toString());
-  //   selectedTopicSubject = resultDetailClass.data.nameTopic;
-  //
-  //   loginController.resultListData.data.danhSachLopHocSeDay.forEach((element) {
-  //     if (element.levelClassId.toString() == resultDetailClass.data.levelClassId) {
-  //       selectedClassTeaching = element.levelClassName;
-  //     }
-  //   });
-  //
-  //   numberStudentEditingController.text = resultDetailClass.data.studentNumber;
-  //
-  //   resultDetailClass.data.studyForDay == '1'
-  //       ? selectedTimeTeaching = listTime[0]
-  //       : resultDetailClass.data.studyForDay == '2'
-  //       ? selectedTimeTeaching = listTime[1]
-  //       : resultDetailClass.data.studyForDay == '3'
-  //       ? selectedTimeTeaching = listTime[2]
-  //       : selectedTimeTeaching = listTime[3];
-  //
-  //   listDay.forEach((element) {
-  //     if (element == resultDetailClass.data.studyForWeek) {
-  //       print('element');
-  //       print(element);
-  //       selectedDayTeaching = element;
-  //     }
-  //   });
-  //   print('resultDetailClass.data.methodTeach');
-  //   print(resultDetailClass.data.methodTeach);
-  //   print(selectMethodTeach);
-  //   selectMethodTeach = resultDetailClass.data.methodTeach;
-  //   feeEditingController.text = resultDetailClass.data.fee;
-  //   phoneEditingController.text = resultDetailClass.data.phoneContact;
-  //   provincialEditingController.text = resultDetailClass.data.citName;
-  //
-  //   addressEditingController.text = resultDetailClass.data.address;
-  //   listbuoiday[0].sang = resultDetailClass.data.mondayMorning;
-  //   listbuoiday[0].chieu = resultDetailClass.data.mondayAfternoon;
-  //   listbuoiday[0].toi = resultDetailClass.data.mondayEverning;
-  //   listbuoiday[1].sang = resultDetailClass.data.tuesdayMorning;
-  //   listbuoiday[1].chieu = resultDetailClass.data.tuesdayAfternoon;
-  //   listbuoiday[1].toi = resultDetailClass.data.tuesdayEverning;
-  //   listbuoiday[2].sang = resultDetailClass.data.wednesdayMorning;
-  //   listbuoiday[2].chieu = resultDetailClass.data.wednesdayAfternoon;
-  //   listbuoiday[2].toi = resultDetailClass.data.wednesdayEverning;
-  //   listbuoiday[3].sang = resultDetailClass.data.thursdayMorning;
-  //   listbuoiday[3].chieu = resultDetailClass.data.thursdayAfternoon;
-  //   listbuoiday[3].toi = resultDetailClass.data.thursdayEverning;
-  //   listbuoiday[4].sang = resultDetailClass.data.fridayMorning;
-  //   listbuoiday[4].chieu = resultDetailClass.data.fridayAfternoon;
-  //   listbuoiday[4].toi = resultDetailClass.data.fridayEverning;
-  //   listbuoiday[5].sang = resultDetailClass.data.saturdayMorning;
-  //   listbuoiday[5].chieu = resultDetailClass.data.saturdayAfternoon;
-  //   listbuoiday[5].toi = resultDetailClass.data.saturdayEverning;
-  //   listbuoiday[6].sang = resultDetailClass.data.sundayMorning;
-  //   listbuoiday[6].chieu = resultDetailClass.data.sundayAfternoon;
-  //   listbuoiday[6].toi = resultDetailClass.data.sundayEverning;
-  //   classDescription.text = resultDetailClass.data.classDescribe;
-  //
-  //   loginController.resultListData.data.danhSachKieuGiaSu.forEach((element) {
-  //     if (element.nameType == selectedRequestGS) {
-  //       idFormTeaching = element.typeId;
-  //     }
-  //   });
-  //   loginController.resultListData.data.danhSachGioiTinh.forEach((element) {
-  //     if (element.sexName == selectedGender) {
-  //       idGender = element.sexId;
-  //     }
-  //   });
-  //   loginController.resultListData.data.danhSachKieuGiaSu.forEach((element) {
-  //     if (element.nameType == selectedRequestGS) {
-  //       idMethodTeach = element.typeId;
-  //     }
-  //   });
-  //   idTime = int.parse(resultDetailClass.data.studyForDay);
-  //   print('resultDetailClass.data.levelClassId');
-  //   print(resultDetailClass.data.levelClassId);
-  //   // idClass = resultDetailClass.data.levelClassId;
-  //   classId = int.parse(resultDetailClass.data.classId);
-  //   idDistrict = int.parse(resultDetailClass.data.districtId);
-  // }
 
   int classId;
 
-  // Future<void> getDetailClass(int idClass) async {
-  //   Get.dialog(DialogLoading());
-  //   print('detailClass()');
-  //   String token = SpUtil.getString(ConstString.token);
-  //   ResultData res = await homeRepositories.detailClass(token, idClass);
-  //   resultDetailClass = resultDetailClassFromJson(res.data);
-  //   if (resultDetailClass.data != null) {
-  //     Get.back();
-  //     Utils.showToast(resultDetailClass.data.message);
-  //     getData();
-  //     await Get.offAndToNamed(Routes.UPDATE_POST);
-  //     // Get.off(UpdatePostScreen());
-  //   } else {
-  //     Get.back();
-  //     Utils.showToast(resultDetailClass.error.message);
-  //   }
-  //   update();
-  // }
-
-  String selectedRequestGS;
+  String selectedKieuGS;
 
   String selectedGender;
 
@@ -185,7 +63,7 @@ class PostController extends GetxController {
 
   String selectedInforSubject;
 
-  String selectedClassTeaching;
+  String selectedClass;
 
   String selectedTimeTeaching;
 
@@ -200,7 +78,7 @@ class PostController extends GetxController {
   TextEditingController title = TextEditingController();
   TextEditingController numberStudent = TextEditingController();
   TextEditingController contentTitle = TextEditingController();
-  TextEditingController phoneEditingController = TextEditingController();
+  TextEditingController phone = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController provincial = TextEditingController();
   TextEditingController district = TextEditingController();
@@ -209,11 +87,11 @@ class PostController extends GetxController {
   TextEditingController salaryUL1 = TextEditingController();
   TextEditingController salaryUL2 = TextEditingController();
   bool errorTitle = false;
-  bool errorRequestGS = false;
+  bool errorKieuGS = false;
   bool errorGender = false;
   bool errorSubject = false;
   bool errorTopicSubject = false;
-  bool errorClassTeaching = false;
+  bool errorClass = false;
   bool errorNumberStudent = false;
   bool errorTimeTeaching = false;
   bool errorDayTeaching = false;
@@ -227,7 +105,6 @@ class PostController extends GetxController {
   bool errorClassDescription = false;
   bool errorbuoiday = false;
   bool errorImage = false;
-  bool errorBuoiDay = false;
   int idGender;
   int idMethodTeach;
   int idSubject;
@@ -247,7 +124,7 @@ class PostController extends GetxController {
     contentTitle.addListener(() {
       update();
     });
-    phoneEditingController.addListener(() {
+    phone.addListener(() {
       update();
     });
     address.addListener(() {
@@ -277,6 +154,21 @@ class PostController extends GetxController {
 
   bool valueButtonLuong = false;
 
+  Future<void> getListTopic(String idTopic) async {
+    listTopic = [];
+    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+    resultListTopic = resultListTopicFromJson(res.data);
+    if (resultListTopic.data != null) {
+      listTopic = resultListTopic.data.listSubjectTag;
+      selectedTopicSubject = listTopic[0].nameSubject;
+      idTopicSubject = int.parse(listTopic[0].idSubject);
+      Utils.showToast(resultListTopic.data.message);
+    } else {
+      Utils.showToast(resultListTopic.error.message);
+    }
+    update();
+  }
+
   void changValueButtonLuong() {
     valueButtonLuong = !valueButtonLuong;
     if (valueButtonLuong) {
@@ -293,9 +185,11 @@ class PostController extends GetxController {
   bool errorSalaryUL2 = false;
   bool errorStatusFee = false;
   String selectedStatusFee = 'Giờ';
+  String valueStatusFee = 'time';
 
   void onSelectedStatusFee(String value) {
     selectedStatusFee = value;
+    valueStatusFee = value == "Giờ" ? 'time' : 'month';
     errorStatusFee = false;
     update();
   }
@@ -304,6 +198,8 @@ class PostController extends GetxController {
     print('checkSalaryCD');
     if (errorSalaryCD && salaryCD.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryCD && int.parse(salaryCD.text) <= 0) {
+      return 'Học phí không hợp lệ!';
     }
     return null;
   }
@@ -326,46 +222,44 @@ class PostController extends GetxController {
 
   void onSelectedGender(String value) {
     selectedGender = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachGioiTinh.length; i++) {
-    //   if (value == loginController.resultListData.data.danhSachGioiTinh[i].sexName) {
-    //     idGender = loginController.resultListData.data.danhSachGioiTinh[i].sexId;
-    //   }
-    // }
+    idGender = value == "Nam" ? 1 : 2;
     errorGender = false;
     update();
   }
 
   void onSelectedSubject(String value) {
     selectedSubject = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachMonHoc.length; i++) {
-    //   if (value == loginController.resultListData.data.danhSachMonHoc[i].subject) {
-    //     idSubject = loginController.resultListData.data.danhSachMonHoc[i].idSubject;
-    //   }
-    // }
-    // listDataTopicSubject(idSubject.toString());
+    for (int i = 0; i < listDataSubject.length; i++) {
+      if (value == listDataSubject[i].asName) {
+        idSubject = int.parse(listDataSubject[i].asId);
+      }
+    }
+
+    getListTopic(idSubject.toString());
     errorSubject = false;
     update();
   }
 
   void onSelectedTopicSubject(String value) {
     selectedTopicSubject = value;
-    // for (int i = 0; i < resultDataTopic.data.danhSachMonHocChiTietTheoMonHoc.length; i++) {
-    //   if (value == resultDataTopic.data.danhSachMonHocChiTietTheoMonHoc[i].nameTopic) {
-    //     idTopicSubject = resultDataTopic.data.danhSachMonHocChiTietTheoMonHoc[i].topicId;
-    //   }
-    // }
+    for (int i = 0; i < listTopic.length; i++) {
+      if (value == listTopic[i].nameSubject) {
+        idTopicSubject = int.parse(listTopic[i].idSubject);
+      }
+    }
     errorTopicSubject = false;
     update();
   }
 
-  void onSelectedClassTeaching(String value) {
-    selectedClassTeaching = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachLopHocSeDay.length; i++) {
-    //   if (value == loginController.resultListData.data.danhSachLopHocSeDay[i].levelClassName)
-    //     idClass = loginController.resultListData.data.danhSachLopHocSeDay[i].levelClassId;
-    // }
-    errorClassTeaching = false;
-    print(idClass);
+  void onSelectedClass(String value) {
+    selectedClass = value;
+    for (int i = 0; i < listDataClass.length; i++) {
+      if (listDataClass[i].ctName == value) {
+        idClass = int.parse(listDataClass[i].ctId);
+      }
+    }
+
+    errorClass = false;
     update();
   }
 
@@ -395,154 +289,22 @@ class PostController extends GetxController {
     //     idMethodTeach = loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodId;
     //   }
     // }
+    idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2;
     errorMethodTeach = false;
     print(idMethodTeach);
     update();
   }
 
   void onSelectedKieuGS(String value) {
-    selectedRequestGS = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachKieuGiaSu.length; i++) {
-    //   if (loginController.resultListData.data.danhSachKieuGiaSu[i].nameType == value) {
-    //     idFormTeaching = loginController.resultListData.data.danhSachKieuGiaSu[i].typeId;
-    //   }
-    // }
-    errorRequestGS = false;
+    selectedKieuGS = value;
+    idExp = selectedKieuGS == 'Sinh viên'
+        ? 1
+        : selectedKieuGS == 'Người đi làm'
+            ? 2
+            : 3;
+    errorKieuGS = false;
     update();
   }
-
-  // Future<void> listDataTopicSubject(String id) async {
-  //   listTopicSubject = [];
-  //   print('listDataTopicSubject');
-  //   ResultData res = await authenticationRepositories.listDataTopicSubject(id);
-  //   resultDataTopic = resultDataTopicFromJson(res.data);
-  //   if (res.data != null) {
-  //     //Utils.showToast(resultDataTopic.data.message);
-  //     listTopicSubject = resultDataTopic.data.danhSachMonHocChiTietTheoMonHoc.map((e) => e.nameTopic).toList();
-  //     selectedTopicSubject = listTopicSubject[0];
-  //     idTopicSubject = resultDataTopic.data.danhSachMonHocChiTietTheoMonHoc[0].topicId;
-  //     print(200);
-  //   } else {
-  //     Utils.showToast(resultDataTopic.error.message);
-  //     print('error');
-  //   }
-  //   update();
-  // }
-  //
-  // Future<void> createPost() async {
-  //   String token = SpUtil.getString(ConstString.token);
-  //   ResultData res = await postRepositories.createPost(
-  //       token,
-  //       titleEditingController.text,
-  //       idFormTeaching,
-  //       idGender,
-  //       idSubject,
-  //       idTopicSubject,
-  //       idClass,
-  //       int.parse(numberStudentEditingController.text),
-  //       idTime,
-  //       int.parse(selectedDayTeaching),
-  //       idMethodTeach,
-  //       feeEditingController.text,
-  //       //phone
-  //       phoneEditingController.text,
-  //       idProvincial,
-  //       idDistrict,
-  //       addressEditingController.text,
-  //       listbuoiday[0].sang,
-  //       listbuoiday[0].chieu,
-  //       listbuoiday[0].toi,
-  //       listbuoiday[1].sang,
-  //       listbuoiday[1].chieu,
-  //       listbuoiday[1].toi,
-  //       listbuoiday[2].sang,
-  //       listbuoiday[2].chieu,
-  //       listbuoiday[2].toi,
-  //       listbuoiday[3].sang,
-  //       listbuoiday[3].chieu,
-  //       listbuoiday[3].toi,
-  //       listbuoiday[4].sang,
-  //       listbuoiday[4].chieu,
-  //       listbuoiday[4].toi,
-  //       listbuoiday[5].sang,
-  //       listbuoiday[5].chieu,
-  //       listbuoiday[5].toi,
-  //       listbuoiday[6].sang,
-  //       listbuoiday[6].chieu,
-  //       listbuoiday[6].toi,
-  //       classDescription.text);
-  //   ResultDataCreatePost resultDataCreatePost = resultDataCreatePostFromJson(res.data);
-  //   if (resultDataCreatePost.data != null) {
-  //     Utils.showToast(resultDataCreatePost.data.message);
-  //     Get.dialog(DialogSuccess(
-  //         title: 'Tạo tin đăng thành công',
-  //         titleButton: 'Xác nhân',
-  //         subTitle: true,
-  //         onTap: () {
-  //           Get.offAllNamed(Routes.LIST_POST);
-  //         }));
-  //   } else {
-  //     Utils.showToast(resultDataCreatePost.error.message);
-  //   }
-  // }
-  //
-  // Future<void> updatePost() async {
-  //   String token = SpUtil.getString(ConstString.token);
-  //   ResultData res = await postRepositories.updatePost(
-  //       token,
-  //       titleEditingController.text,
-  //       classId,
-  //       idFormTeaching,
-  //       idGender,
-  //       idSubject,
-  //       idTopicSubject,
-  //       idClass,
-  //       int.parse(numberStudentEditingController.text),
-  //       idTime,
-  //       int.parse(selectedDayTeaching),
-  //       idMethodTeach,
-  //       feeEditingController.text,
-  //       //phone
-  //       phoneEditingController.text,
-  //       idProvincial,
-  //       idDistrict,
-  //       addressEditingController.text,
-  //       listbuoiday[0].sang,
-  //       listbuoiday[0].chieu,
-  //       listbuoiday[0].toi,
-  //       listbuoiday[1].sang,
-  //       listbuoiday[1].chieu,
-  //       listbuoiday[1].toi,
-  //       listbuoiday[2].sang,
-  //       listbuoiday[2].chieu,
-  //       listbuoiday[2].toi,
-  //       listbuoiday[3].sang,
-  //       listbuoiday[3].chieu,
-  //       listbuoiday[3].toi,
-  //       listbuoiday[4].sang,
-  //       listbuoiday[4].chieu,
-  //       listbuoiday[4].toi,
-  //       listbuoiday[5].sang,
-  //       listbuoiday[5].chieu,
-  //       listbuoiday[5].toi,
-  //       listbuoiday[6].sang,
-  //       listbuoiday[6].chieu,
-  //       listbuoiday[6].toi,
-  //       classDescription.text);
-  //   ResultDataCreatePost resultDataCreatePost = resultDataCreatePostFromJson(res.data);
-  //   if (resultDataCreatePost.data != null) {
-  //     Utils.showToast(resultDataCreatePost.data.message);
-  //     Get.dialog(DialogSuccess(
-  //         title: 'Tạo tin đăng thành công',
-  //         titleButton: 'Xác nhân',
-  //         subTitle: true,
-  //         onTap: () {
-  //           Get.offAndToNamed(Routes.LIST_POST);
-  //         }));
-  //   } else {
-  //     Utils.showToast(resultDataCreatePost.error.message);
-  //   }
-  // }
 
   String checkTitle() {
     if (errorTitle && title.text.isEmpty) {
@@ -559,10 +321,17 @@ class PostController extends GetxController {
   }
 
   String checkPhone() {
-    if (errorPhone && phoneEditingController.text.isEmpty) {
+    print('checkPassword');
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
+    if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phoneEditingController.text.length < 10) {
-      return 'Số điện thoại không hợp lệ!';
+    }
+    // else if (errorPhone && phone.text.length != 10) {
+    //   return 'Số điện thoại không hợp lệ!';
+    // }
+    else if (errorPhone && !regExp.hasMatch(phone.text)) {
+      return 'Số điện thoại sai định dạng!';
     }
     return null;
   }
@@ -610,6 +379,8 @@ class PostController extends GetxController {
 
   void checkButton() {
     print('checkButton');
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
     errorTitle = true;
     errorNumberStudent = true;
     errorContentTitle = true;
@@ -623,25 +394,28 @@ class PostController extends GetxController {
     errorSalaryUL1 = true;
     errorSalaryUL2 = true;
     // ignore: deprecated_member_use
-    errorRequestGS = selectedRequestGS.isNull ? true : false;
+    errorKieuGS = selectedKieuGS.isNull ? true : false;
     errorGender = selectedGender.isNull ? true : false;
     errorSubject = selectedSubject.isNull ? true : false;
     errorTopicSubject = selectedTopicSubject.isNull ? true : false;
-    errorClassTeaching = selectedTopicSubject.isNull ? true : false;
+    errorClass = selectedSubject.isNull ? true : false;
     errorTimeTeaching = selectedTimeTeaching.isNull ? true : false;
     errorDayTeaching = selectedDayTeaching.isNull ? true : false;
     errorMethodTeach = selectMethodTeach.isNull ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == 1 || e.chieu == 1 || e.toi == 1, orElse: () => null);
+    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorbuoiday = data == null ? true : false;
     if (contentTitle.text.isNotEmpty &&
         title.text.isNotEmpty &&
-        errorRequestGS == false &&
+        errorKieuGS == false &&
+        regExp.hasMatch(phone.text) &&
         errorGender == false &&
         errorSubject == false &&
-        errorTopicSubject == false &&
-        errorClassTeaching == false &&
+        // errorTopicSubject == false &&
+        errorClass == false &&
         numberStudent.text.isNotEmpty &&
         numberStudent.text != '0' &&
+        salaryCD.text.isNotEmpty &&
+        salaryCD.text != '0' &&
         errorTimeTeaching == false &&
         errorDayTeaching == false &&
         errorMethodTeach == false &&
@@ -650,7 +424,7 @@ class PostController extends GetxController {
         address.text.isNotEmpty &&
         data != null) {
       print('Đúng');
-      // createPost();
+      createPost();
     } else {
       print('Sai');
       Get.dialog(DialogError(
@@ -661,5 +435,50 @@ class PostController extends GetxController {
       ));
     }
     update();
+  }
+
+  Future<void> getListDistrict(int idCity) async {
+    listDistrict = [];
+    ResultData res = await authenticationRepositories.listDistrict(idCity);
+    resultListDistrict = resultListDistrictFromJson(res.data);
+    if (resultListDistrict.data != null) {
+      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      Utils.showToast(resultListDistrict.data.message);
+    } else {
+      Utils.showToast(resultListDistrict.error.message);
+    }
+    update();
+  }
+
+  Future<void> createPost() async {
+    final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await postRepositories.createPost(
+        token,
+        title.text,
+        idFormTeaching,
+        // time,l
+        idTime,
+        int.parse(numberStudent.text),
+        int.parse(selectedDayTeaching),
+        idGender,
+        phone.text,
+        address.text,
+        salaryCD.text,
+        valueStatusFee,
+        contentTitle.text,
+        idSubject,
+        idClass,
+        idTopicSubject,
+        idProvincial,
+        idDistrict,
+        idExp,
+        test.join(','));
+    ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
+    if (resultCreatePost.data != null) {
+      Utils.showToast(resultCreatePost.data.message);
+    } else {
+      Utils.showToast(resultCreatePost.error.message);
+    }
   }
 }

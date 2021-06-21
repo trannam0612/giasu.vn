@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
+import 'package:giasu_vn/common/shared/data/models/result_register_teacher.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
@@ -38,13 +40,13 @@ class RegisterGiaSuController extends GetxController {
 
   // List<String> listGender = ['Khác', 'Nam', 'Nữ'];
   List<buoiday> listbuoiday = [
-    buoiday('Thứ 2', 0, 0, 0),
-    buoiday('Thứ 3', 0, 0, 0),
-    buoiday('Thứ 4', 0, 0, 0),
-    buoiday('Thứ 5', 0, 0, 0),
-    buoiday('Thứ 6', 0, 0, 0),
-    buoiday('Thứ 7', 0, 0, 0),
-    buoiday('CN', 0, 0, 0),
+    buoiday('Thứ 2', '0', "0", "0"),
+    buoiday('Thứ 3', "0", "0", "0"),
+    buoiday('Thứ 4', "0", "0", "0"),
+    buoiday('Thứ 5', "0", "0", "0"),
+    buoiday('Thứ 6', "0", "0", "0"),
+    buoiday('Thứ 7', "0", "0", "0"),
+    buoiday('CN', "0", "0", "0"),
   ];
 
   //Step1
@@ -76,6 +78,7 @@ class RegisterGiaSuController extends GetxController {
   int idLuong = 0;
   int idFormTeaching = 0;
   int idMariage;
+  int idDistrict;
   String valueArea;
 
   int idArea;
@@ -113,7 +116,7 @@ class RegisterGiaSuController extends GetxController {
   List<DataSubject> listSubjectSelect = [];
   List<ListDistrict> listDistrictSelect = [];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
-  List<String> listMarriage = ['Đã kết hôn', 'Cô đơn'];
+  List<String> listMarriage = ['Chưa kết hôn', 'Đã kết hôn'];
   List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
@@ -383,7 +386,7 @@ class RegisterGiaSuController extends GetxController {
       return 'Trường bắt buộc!';
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text)) {
+    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
       return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
     }
     return null;
@@ -504,7 +507,7 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  int idTime;
+  int idTime = 1;
 
   void onSelectedStatusFee(String value) {
     selectedTime = value;
@@ -576,10 +579,16 @@ class RegisterGiaSuController extends GetxController {
 
   String checkPhone() {
     print('checkPassword');
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phone.text.length < 6) {
-      return 'Số điện thoại không hợp lệ!';
+    }
+    // else if (errorPhone && phone.text.length != 10) {
+    //   return 'Số điện thoại không hợp lệ!';
+    // }
+    else if (errorPhone && !regExp.hasMatch(phone.text)) {
+      return 'Số điện thoại sai định dạng!';
     }
     return null;
   }
@@ -641,7 +650,7 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
-    if (!listSubjectSelectTopic.map((e) => e).contains(value)) {
+    if (!listSubjectSelectTopic.map((e) => e.idSubject).contains(value.idSubject)) {
       listSubjectSelectTopic.add(value);
     } else {
       listSubjectSelectTopic.remove(value);
@@ -661,7 +670,7 @@ class RegisterGiaSuController extends GetxController {
     if (email.text.contains('@') &&
         email.text.contains('.') &&
         passWord.text.length >= 8 &&
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])').hasMatch(passWord.text) &&
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
         passWord.text.isNotEmpty &&
         passWord.text == rePassWord.text &&
         rePassWord.text.isNotEmpty) {
@@ -679,6 +688,8 @@ class RegisterGiaSuController extends GetxController {
   }
 
   void checkButtonStep2() {
+    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    RegExp regExp = new RegExp(pattern);
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
@@ -699,6 +710,7 @@ class RegisterGiaSuController extends GetxController {
     print('checkNullButton');
     if (fullName.text.isNotEmpty &&
         phone.text.isNotEmpty &&
+        regExp.hasMatch(phone.text) &&
         dateTime.text.isNotEmpty &&
         errorGender == false &&
         errorMarriage == false &&
@@ -738,10 +750,11 @@ class RegisterGiaSuController extends GetxController {
     errorDistrict = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == 1 || e.chieu == 1 || e.toi == 1, orElse: () => null);
+    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
+      print('TH1');
       salaryCD.text.isNotEmpty &&
               listSubjectSelect.isNotEmpty &&
               !selectedClass.isNullOrBlank &&
@@ -764,6 +777,7 @@ class RegisterGiaSuController extends GetxController {
               richText: false,
             ));
     } else {
+      print('TH2');
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               listSubjectSelect.isNotEmpty &&
@@ -804,6 +818,14 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  String checkDistrict() {
+    print('checkProvincial');
+    if (errorDistrict && district.text.isEmpty) {
+      return 'Trường bắt buộc!';
+    }
+    return null;
+  }
+
   Future<void> registerTeacher() async {
     // Get.dialog(DialogLoading());
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
@@ -827,6 +849,8 @@ class RegisterGiaSuController extends GetxController {
         graduationYear.text,
         // specialized, Chuyên ngành
         specialized.text,
+        idProvincial,
+        idDistrict,
         address.text,
         company.text,
         information.text,
@@ -837,19 +861,25 @@ class RegisterGiaSuController extends GetxController {
         timeExpEnd.text,
         informationExp.text,
         // asId, id môn học
-        int.parse(listSubjectSelect.map((e) => e.asId).join(',')),
+        listSubjectSelect.map((e) => e.asId).join(','),
         listSubjectSelectTopic.map((e) => e.idSubject).join(','),
         idFormTeaching,
-        int.parse(salaryCD.text),
+        salaryCD.text,
         idTime,
-        // int.parse(salaryUL1.text),
-        // int.parse(salaryUL2.text),
-        500000,
-        100000,
+        salaryUL1.text,
+        salaryUL2.text,
         idArea,
         listDistrictSelect.map((e) => e.citId).join(','),
         test.join(','));
-
+    ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
+    if (resultRegisterTeacher.data != null) {
+      Utils.showToast(resultRegisterTeacher.data.message);
+      SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
+      SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+      Get.toNamed(Routes.verify_register);
+    } else {
+      Utils.showToast(resultRegisterTeacher.error.message);
+    }
     update();
   }
 

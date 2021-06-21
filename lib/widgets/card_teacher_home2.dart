@@ -13,62 +13,45 @@ class CardTeacherHome2 extends StatelessWidget {
   final int rate;
   final String subject;
   final String address;
-  final String saved;
-  const CardTeacherHome2({Key key, this.name, this.image, this.rate, this.subject, this.address, this.saved = '0'}) : super(key: key);
+  final bool saved;
+  final VoidCallback onTap;
+
+  const CardTeacherHome2({Key key, this.name, this.image, this.rate, this.subject, this.address, this.saved, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppDimens.space6,
-          vertical: AppDimens.space6),
+      padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
       child: SizedBox(
-        height: height*0.115,
+        height: height * 0.115,
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
             Positioned.fill(
               left: 30,
               child: Container(
-                padding: EdgeInsets.only(
-                    left: AppDimens.space48,
-                    top: AppDimens.space16,
-                    right: AppDimens.space16,
-                    bottom: AppDimens.space16),
-                decoration: BoxDecoration(
-                    borderRadius:
-                    BorderRadius.circular(10),
-                    color: AppColors.whiteFFFFFF,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.black
-                            .withOpacity(0.25),
-                        spreadRadius: 0,
-                        blurRadius: 4,
-                        offset: Offset(0,
-                            3), // changes position of shadow
-                      ),
-                    ]),
+                padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
+                  BoxShadow(
+                    color: AppColors.black.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 4,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ]),
                 child: Column(
                   children: [
                     Row(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      mainAxisAlignment:
-                      MainAxisAlignment
-                          .spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               name,
-                              style: AppTextStyles
-                                  .regularW500(context,
-                                  size: AppDimens
-                                      .textSize14),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                             ),
                             SizedBox(
                               height: AppDimens.space6,
@@ -81,8 +64,7 @@ class CardTeacherHome2 extends StatelessWidget {
                               allowHalfRating: false,
                               itemCount: 5,
                               ignoreGestures: true,
-                              itemPadding:
-                              EdgeInsets.symmetric(horizontal: 2.0),
+                              itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
                               ratingWidget: RatingWidget(
                                 full: SvgPicture.asset(Images.ic_star),
                                 empty: SvgPicture.asset(Images.ic_star_border),
@@ -94,7 +76,10 @@ class CardTeacherHome2 extends StatelessWidget {
                             ),
                           ],
                         ),
-                        saved =='1' ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
+                        InkWell(
+                          onTap: onTap,
+                          child: saved ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
+                        )
                       ],
                     ),
                     SizedBox(
@@ -154,14 +139,12 @@ class CardTeacherHome2 extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(80),
               child: CachedNetworkImage(
-                imageUrl:
-                image,
+                imageUrl: image,
                 width: 60,
                 height: 60,
                 fit: BoxFit.cover,
                 progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                  child: CircularProgressIndicator(
-                      value: downloadProgress.progress),
+                  child: CircularProgressIndicator(value: downloadProgress.progress),
                 ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),

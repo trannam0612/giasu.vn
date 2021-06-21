@@ -15,9 +15,11 @@ import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_step3_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/checkbox_list_class.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step2_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';

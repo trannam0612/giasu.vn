@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -29,7 +30,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                   appBar: AppBar(
                     backgroundColor: AppColors.primary4C5BD4,
                     title: Text(
-                      'Đăng ký',
+                      'Cập nhật thông tin',
                       style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                     ),
                     leading: IconButton(
@@ -278,7 +279,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                             hint: 'Chọn lớp học giảng dạy',
                             dropdownValue: controller.selectedClass,
                             onChanged: (String value) => controller.onSelectedClass(value),
-                            list: controller.listClass,
+                            list: listDataClass.map((e) => e.ctName).toList(),
                             borderColor: controller.errorClass ? AppColors.redFF0033 : AppColors.grey747474,
                           ),
                           controller.errorClass
@@ -645,13 +646,13 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                   title: 'Sáng',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == "0" ? "1" : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].sang == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].sang == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].sang == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -660,13 +661,13 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                   title: 'Chiều',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == "0" ? "1" : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].chieu == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].chieu == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].chieu == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -675,12 +676,12 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                   title: 'Tối',
                                                   onPressed: () {
                                                     controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == 0 ? 1 : 0;
+                                                    controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == "0" ? "1" : "0";
                                                     controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].toi == 1 ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].toi == 1 ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].toi == 1 ? false : true,
+                                                  color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
                                                 ),
                                               ],
                                             ),
