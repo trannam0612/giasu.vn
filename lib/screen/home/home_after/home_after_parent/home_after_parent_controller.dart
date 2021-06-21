@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/shared/data/models/result_save_tutor.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -36,7 +37,8 @@ class HomeAfterParentController extends GetxController {
     if (resultHomeAfterParent.data != null) {
       listGSGD = resultHomeAfterParent.data.dataTutorGd.dataDsgsgd;
       listGSPB = resultHomeAfterParent.data.dataTutorPb.dataDsgspb;
-      Get.to(HomeAfterParentScreen());
+      // Get.to(HomeAfterParentScreen());
+      Get.toNamed(Routes.navigation);
     }
     update();
   }Future<void> saveTutor(int idGS) async {

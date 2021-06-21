@@ -44,7 +44,6 @@ class LoginController extends GetxController {
   List<String> listClass = [];
   List<String> listSubject = [];
 
-
   bool isShowPass = true;
 
   Future<void> loginParent() async {
@@ -61,7 +60,8 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
       Utils.showToast(resultLogin.data.message);
-      Get.toNamed(Routes.navigation);
+      homeAfterParentController.homeAfterParent(1, 10);
+
       // homeAfterParent(1, 10);
     } else {
       Get.back();
@@ -87,7 +87,8 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
       Utils.showToast(resultLoginTeacher.data.message);
-      Get.toNamed(Routes.navigation);
+      homeAfterTeacherController.homeAfterTeacher(1, 10);
+      // Get.toNamed(Routes.navigation);
     } else {
       Get.back();
       Utils.showToast(resultLoginTeacher.error.message);
@@ -108,7 +109,6 @@ class LoginController extends GetxController {
       Utils.showToast(resultListProvincialSubjectClass.error.message);
     }
   }
-
 
   String timeAgo(int timestamp) {
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);

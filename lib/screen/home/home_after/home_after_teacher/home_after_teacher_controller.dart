@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/shared/data/models/result_home_after_teacher.dar
 import 'package:giasu_vn/common/shared/data/models/result_save_class.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
@@ -57,7 +58,8 @@ class HomeAfterTeacherController extends GetxController {
       listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
       listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
       Get.back();
-      Get.to(HomeAfterTeacherScreen());
+      Get.toNamed(Routes.navigation);
+      // Get.to(HomeAfterTeacherScreen());
     } else {
       Utils.showToast('Danh sách trống!');
     }

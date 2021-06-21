@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
 import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
@@ -15,6 +17,7 @@ class NavigationController extends GetxController {
   String token;
 
   Rx<Widget> currentPage = Rx<Widget>(HomeBeforeScreen());
+  // Rx<Widget> currentPage;
 
   @override
   void onInit() {
@@ -24,7 +27,7 @@ class NavigationController extends GetxController {
     // TODO: implement onInit
     userType = SpUtil.getString(ConstString.USER_TYPE);
 
-    currentPage.value = HomeBeforeScreen();
+    currentPage.value = userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
     super.onInit();
     update();
   }
@@ -36,8 +39,8 @@ class NavigationController extends GetxController {
     switch (index) {
       case 0:
         // if (token != '') {
-          pageIndex.value = 0;
-          currentPage.value = HomeBeforeScreen();
+        pageIndex.value = 0;
+        currentPage.value = userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
         // } else {
         //   Get.dialog(DialogError2(
         //     button1: 'Đăng nhập',
@@ -50,8 +53,8 @@ class NavigationController extends GetxController {
         break;
       case 1:
         // if (token != '') {
-          pageIndex.value = 1;
-          currentPage.value = PostScreen();
+        pageIndex.value = 1;
+        currentPage.value = PostScreen();
         // } else {
         //   Get.dialog(DialogError2(
         //     button1: 'Đăng nhập',
@@ -67,8 +70,8 @@ class NavigationController extends GetxController {
         break;
       case 3:
         // if (token != '') {
-          pageIndex.value = 3;
-          currentPage.value = SettingsScreen();
+        pageIndex.value = 3;
+        currentPage.value = SettingsScreen();
         // } else {
         //   Get.dialog(DialogError2(
         //     button1: 'Đăng nhập',
@@ -78,7 +81,6 @@ class NavigationController extends GetxController {
         //   ));
         // }
         break;
-
     }
     update();
   }
