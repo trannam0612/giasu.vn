@@ -4,7 +4,7 @@ import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_class_offered.dart';
 import 'package:giasu_vn/common/shared/data/models/result_delete_class_offered.dart';
 import 'package:giasu_vn/common/shared/data/models/result_offer_teach.dart';
-import 'package:giasu_vn/common/shared/data/models/result_offered_teach.dart';
+// import 'package:giasu_vn/common/shared/data/models/result_offered_teach.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:sp_util/sp_util.dart';
