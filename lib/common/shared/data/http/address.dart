@@ -51,6 +51,7 @@ class Address {
 //User
   static const String get_info_parent = BASE_URL + "/info_parent.php";
   static const String update_info_parent = BASE_URL + "/update_info_parent.php";
+  static const String get_info_teacher = BASE_URL + "/info_tutor.php";
 
   // static const String detail_city = BASE_URL + "/detail_city.php?ugs_city=1111";
   static String detail_city(int idCity) {

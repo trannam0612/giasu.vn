@@ -36,4 +36,18 @@ class UserRepositories {
 
     return rest;
   }
+
+  Future<ResultData> getInfoTeacher(String token) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'token': token,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.get_info_teacher, body, header, Options(method: 'post'));
+
+    return rest;
+  }
 }

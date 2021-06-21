@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/get_info_teaacher.dart';
+import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step2_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdateInfoTeacherController extends GetxController {
+  UserRepositories userRepositories = UserRepositories();
   String valueErrorPassword = '';
   bool isShowPassword = true;
   bool errorShowPassword = false;
@@ -100,8 +108,8 @@ class UpdateInfoTeacherController extends GetxController {
 
   List<String> listSubjectSelect = [];
   List<String> listDistrictSelect = [];
-  List<String> listKieuGS = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
+  List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
+  List<String> listMarriage = ['Đã kết hôn', 'Chưa kết hôn'];
   List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
   List<String> listFormTeaching = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
@@ -706,183 +714,115 @@ class UpdateInfoTeacherController extends GetxController {
 
     if (valueButtonLuong) {
       salaryCD.text.isNotEmpty &&
-          !errorKieuGS &&
-          listSubjectSelect.isNotEmpty &&
-          listSubjectSelectTopic.isNotEmpty &&
-          !selectedClass.isNullOrBlank &&
-          !selectedFormTeaching.isNullOrBlank &&
-          areaTeaching.text.isNotEmpty &&
-          listDistrictSelect.isNotEmpty &&
-          // ignore: deprecated_member_use
-          salaryCD.text.isNotEmpty &&
-          data != null &&
-          !selectedStatusFee.isNullOrBlank
-      // ignore: unnecessary_statements
+              !errorKieuGS &&
+              listSubjectSelect.isNotEmpty &&
+              listSubjectSelectTopic.isNotEmpty &&
+              !selectedClass.isNullOrBlank &&
+              !selectedFormTeaching.isNullOrBlank &&
+              areaTeaching.text.isNotEmpty &&
+              listDistrictSelect.isNotEmpty &&
+              // ignore: deprecated_member_use
+              salaryCD.text.isNotEmpty &&
+              data != null &&
+              !selectedStatusFee.isNullOrBlank
+          // ignore: unnecessary_statements
           ? print('Đăng ký thành công')
-      // registerTeacher()
+          // registerTeacher()
           : Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+              onTap: () => Get.back(),
+              textButton: 'Ok',
+              richText: false,
+            ));
     } else {
       salaryUL1.text.isNotEmpty &&
-          salaryUL2.text.isNotEmpty &&
-          !errorKieuGS &&
-          listSubjectSelect.isNotEmpty &&
-          listSubjectSelectTopic.isNotEmpty &&
-          !selectedClass.isNullOrBlank &&
-          !selectedFormTeaching.isNullOrBlank &&
-          areaTeaching.text.isNotEmpty &&
-          listDistrictSelect.isNotEmpty &&
-          // ignore: deprecated_member_use
-          salaryCD.text.isNotEmpty &&
-          data != null &&
-          !selectedStatusFee.isNullOrBlank
-      // ignore: unnecessary_statements
+              salaryUL2.text.isNotEmpty &&
+              !errorKieuGS &&
+              listSubjectSelect.isNotEmpty &&
+              listSubjectSelectTopic.isNotEmpty &&
+              !selectedClass.isNullOrBlank &&
+              !selectedFormTeaching.isNullOrBlank &&
+              areaTeaching.text.isNotEmpty &&
+              listDistrictSelect.isNotEmpty &&
+              // ignore: deprecated_member_use
+              salaryCD.text.isNotEmpty &&
+              data != null &&
+              !selectedStatusFee.isNullOrBlank
+          // ignore: unnecessary_statements
           ? print('Đăng ký thành công')
-      // registerTeacher()
+          // registerTeacher()
           : Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+              onTap: () => Get.back(),
+              textButton: 'Ok',
+              richText: false,
+            ));
     }
 
     update();
   }
 
-// Future<void> getDataQH(int id) async {
-//   print('getDataQH');
-//
-//   ResultData res = await authenticationRepositories.getListDataQH(id);
-//   listDataQh = resultListDataQhFromJson(res.data);
-//   if (res.data != null) {
-//     print(200);
-//   } else {
-//     print('error');
-//   }
-// }
+  Future<void> getInfoTeacher() async {
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await userRepositories.getInfoTeacher(token);
+    ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+    if (resultGetInfoTeacher.data != null) {
+      Get.back();
+      Utils.showToast(resultGetInfoTeacher.data.message);
+      print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
+      fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
+      phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
+      selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender;
+      dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
+      selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
+      provincial.text = resultGetInfoTeacher.data.infoTutor.citName;
+      address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
+      numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
+      titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
+      timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
+      timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
+      informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
+      school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
+      prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;
+      company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
+      information.text = resultGetInfoTeacher.data.infoTutor.ugsAboutUs;
+      selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
+      listSubjectSelect = resultGetInfoTeacher.data.infoTutor.asDetail;
+      listSubjectSelectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
+      selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
+      selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ctName;
+      areaTeaching.text = resultGetInfoTeacher.data.infoTutor.citName;
+      listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
 
-//   Future<void> listDataTopicSubject(String id) async {
-//     print('listDataTopicSubject');
-//     ResultData res = await authenticationRepositories.listDataTopicSubject(id);
-//     resultDataTopic = resultDataTopicFromJson(res.data);
-//     if (res.data != null) {
-//       Get.to(SelectTopicSubjectGSScreen());
-//       print(200);
-//     } else {
-//       print('error');
-//     }
-//   }
-//
-//   ResultResendOtp resultResendOtp = ResultResendOtp();
-//
-//   Future<void> reSendOtp() async {
-//     await Future.delayed(Duration(milliseconds: 1));
-//     Get.dialog(DialogLoading());
-//     ResultData res = await authenticationRepositories.resendOtp(resultRegisterTeacher.data.refreshToken.userEmail);
-//     resultResendOtp = resultResendOtpFromJson(res.data);
-//     if (resultResendOtp.data != null) {
-//       Get.back();
-//       SpUtil.putString(ConstString.token, resultResendOtp.data.accessToken);
-//       Utils.showToast(resultResendOtp.data.message);
-//     } else {
-//       Utils.showToast(resultResendOtp.error.message);
-//     }
-//     update();
-//   }
-//
-//   Future<void> uploadAvatar() async {
-//     print('uploadAvatar');
-//
-//     ResultData res = await authenticationRepositories.uploadAvatar(avatar);
-//     if (res.data != null) {
-//       print(200);
-//     } else {
-//       print('error');
-//     }
-//   }
-// String emailOTP;
-//   Future<void> registerTeacher() async {
-//     Get.dialog(DialogLoading());
-//     print(listQH.join(',').toString());
-//     print(listQH.map((e) => e.districtId));
-//     String idDistrict = listQH.map((e) => e.districtId).toString();
-//     print(idDistrict);
-//
-//     ResultData res = await authenticationRepositories.registerTeacher(
-//       fullName.text,
-//       email.text,
-//       passWord.text,
-//       rePassWord.text,
-//       imageAvatar,
-//       phone.text,
-//       dateTime.text,
-//       idGender,
-//       idProvincial,
-//       //Quận huyện
-//       listQH.map((e) => e.districtId).toString(),
-//       address.text,
-//       //Kinh nghiệm
-//       idExp,
-//       school.text,
-//       specialized.text,
-//       graduationYear.text,
-//       company.text,
-//       information.text,
-//       experienceTeaching.text,
-//       achievements.text,
-//       listSubject.map((e) => e.idSubject).toString(),
-//       idClass,
-//       listSubjectTopic.map((e) => e.topicId).toString(),
-//       idFormTeaching,
-//       idValueArea,
-//       salaryCD.text,
-//       salaryUL1.text,
-//       salaryUL2.text,
-//       listbuoiday[0].sang,
-//       listbuoiday[0].chieu,
-//       listbuoiday[0].toi,
-//       listbuoiday[1].sang,
-//       listbuoiday[1].chieu,
-//       listbuoiday[1].toi,
-//       listbuoiday[2].sang,
-//       listbuoiday[2].chieu,
-//       listbuoiday[2].toi,
-//       listbuoiday[3].sang,
-//       listbuoiday[3].chieu,
-//       listbuoiday[3].toi,
-//       listbuoiday[4].sang,
-//       listbuoiday[4].chieu,
-//       listbuoiday[4].toi,
-//       listbuoiday[5].sang,
-//       listbuoiday[5].chieu,
-//       listbuoiday[5].toi,
-//       listbuoiday[6].sang,
-//       listbuoiday[6].chieu,
-//       listbuoiday[6].toi,
-//     );
-//     resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
-//     if (resultRegisterTeacher.data != null) {
-//       Get.back();
-//       print(200);
-//       emailOTP = resultRegisterTeacher.data.refreshToken.userEmail;
-//       Utils.showToast(resultRegisterTeacher.data.message);
-//       SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.accessToken);
-//       Get.to(ConfirmRegisterScreen(
-//         email: emailOTP,
-//       ));
-//       print(res.data);
-//     } else {
-//       Get.back();
-//       Utils.showToast(resultRegisterTeacher.error.message);
-//       print('Lỗi');
-//     }
-//     update();
-//   }
-//
-//   ResultRegisterTeacher resultRegisterTeacher = ResultRegisterTeacher();
+      listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
+      listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
+      listbuoiday[0].toi = resultGetInfoTeacher.data.lichday.tt2;
+      listbuoiday[1].sang = resultGetInfoTeacher.data.lichday.st3;
+      listbuoiday[1].chieu = resultGetInfoTeacher.data.lichday.ct3;
+      listbuoiday[1].toi = resultGetInfoTeacher.data.lichday.tt3;
+      listbuoiday[2].sang = resultGetInfoTeacher.data.lichday.st4;
+      listbuoiday[2].chieu = resultGetInfoTeacher.data.lichday.ct4;
+      listbuoiday[2].toi = resultGetInfoTeacher.data.lichday.tt4;
+      listbuoiday[3].sang = resultGetInfoTeacher.data.lichday.st5;
+      listbuoiday[3].chieu = resultGetInfoTeacher.data.lichday.ct5;
+      listbuoiday[3].toi = resultGetInfoTeacher.data.lichday.tt5;
+      listbuoiday[4].sang = resultGetInfoTeacher.data.lichday.st6;
+      listbuoiday[4].chieu = resultGetInfoTeacher.data.lichday.ct6;
+      listbuoiday[4].toi = resultGetInfoTeacher.data.lichday.tt6;
+      listbuoiday[5].sang = resultGetInfoTeacher.data.lichday.st7;
+      listbuoiday[5].chieu = resultGetInfoTeacher.data.lichday.ct7;
+      listbuoiday[5].toi = resultGetInfoTeacher.data.lichday.tt7;
+      listbuoiday[6].sang = resultGetInfoTeacher.data.lichday.scn;
+      listbuoiday[6].chieu = resultGetInfoTeacher.data.lichday.ccn;
+      listbuoiday[6].toi = resultGetInfoTeacher.data.lichday.tcn;
+      // provincial.text = resultGetInfoTeacher.data.data.citName;
+      // address.text = resultGetInfoTeacher.data.data.ugsAddress;
+      Get.to(UpdateInfoTeacherStep1Screen());
+    } else {
+      Get.back();
+      Utils.showToast(resultGetInfoTeacher.error.message);
+    }
+    update();
+  }
 }

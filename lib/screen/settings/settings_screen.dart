@@ -10,12 +10,14 @@ import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_controller.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
+import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_controller.dart';
 import 'package:sp_util/sp_util.dart';
 
 class SettingsScreen extends StatelessWidget {
   UpdateInformationParentController updateInformationParentController = Get.put(UpdateInformationParentController());
+  UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
 
   SettingsScreen({Key key}) : super(key: key);
 
@@ -40,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     // controller.user == '1' ? Get.to(UpdateInformationParentScreen()) : Get.to(UpdateInfoTeacherStep1Screen());
-                    controller.user == '1' ? updateInformationParentController.getInfoParent() : print('UpdateInfoTeacherStep1Screen');
+                    controller.user == '1' ? updateInformationParentController.getInfoParent() : updateInfoTeacherController.getInfoTeacher();
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space20, vertical: AppDimens.space30),
