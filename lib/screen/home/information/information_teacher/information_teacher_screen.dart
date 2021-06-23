@@ -255,12 +255,13 @@ class InformationTeacherScreen extends StatelessWidget {
                     height: AppDimens.space6,
                   ),
                   Container(
+                    height: AppDimens.height *0.2,
                     padding: EdgeInsets.all(AppDimens.space14),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: AppColors.whiteFFFFFF),
                     child: Text(
-                      'Mình học Chuyên Anh của trường THPT chuyên Phan Bội Châu Nghệ An , đạt học sinh giỏi tỉnh môn tiếng anh. Thi ielts được 6.0 năm lớp 11. Hiện đang là sinh viên năm ba khoa kiểm toán chất lượng cao(học 30% bằng tiếng anh) trường đại học Kinh tế quốc dân. Đã có 3 năm dạy kèm cho học sinh lớp 10.Thi ielts được 6.0 năm lớp 11. Hiện đang là sinh viên năm ba khoa kiểm toán chất lượng cao(học 30% bằng tiếng anh) trường đại học Kinh tế quốc dân. Đã có 3 năm dạy kèm cho học sinh lớp 10.',
+                      controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
                       style: AppTextStyles.regularW400(context,
                           size: AppDimens.textSize14,
                           color: AppColors.grey747474,
@@ -300,7 +301,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Nam',
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsGender,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -325,7 +326,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                '22/12/1993',
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsBrithday,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
