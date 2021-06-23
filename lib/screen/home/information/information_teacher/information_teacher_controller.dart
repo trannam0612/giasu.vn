@@ -1,17 +1,21 @@
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_detail_teacher.dart';
 import 'package:giasu_vn/common/shared/data/models/result_invite_teach.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_class_post.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class InformationTeacherController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultListClassPosted resultListClassPosted = ResultListClassPosted();
   ResultInviteTeach resultInviteTeach = ResultInviteTeach();
+  ResultDetailTeacher resultDetailTeacher = ResultDetailTeacher();
   List<ListClass> listPostCreated = [];
   List<buoiday> listbuoiday = [
     buoiday('Thứ 2', '1', "0", "0"),
@@ -24,6 +28,7 @@ class InformationTeacherController extends GetxController {
   ];
   bool isShowed = false;
   String idClass;
+
 
   Future<void> classPosted(int currentPage, int limit) async {
     print('classPosted');
@@ -47,6 +52,7 @@ class InformationTeacherController extends GetxController {
     }
     update();
   }
+
   Future<void> inviteTeach(int idLop, int idGS) async {
     print('refuseOffer');
     // await Future.delayed(Duration(milliseconds: 1));
@@ -62,5 +68,45 @@ class InformationTeacherController extends GetxController {
       Utils.showToast(resultInviteTeach.error.message);
     }
     update();
+  }
+  Future<void> detailTeacher(String token, int idLop, int check) async {
+    await Future.delayed(Duration(milliseconds: 1));
+    Get.dialog(DialogLoading());
+    ResultData res = await homeRepositories.detailTutor(token, idLop);
+    resultDetailTeacher = resultDetailTeacherFromJson(res.data);
+    if (resultDetailTeacher.data != null) {
+      Get.back();
+      Get.to(InformationTeacherScreen());
+    }
+    else {
+      Utils.showToast(resultDetailTeacher.error.message);
+    }
+    update();
+  }
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    listbuoiday[0].sang = resultDetailTeacher.data.data.lichday.st2;
+    listbuoiday[0].chieu = resultDetailTeacher.data.data.lichday.ct2;
+    listbuoiday[0].toi = resultDetailTeacher.data.data.lichday.tt2;
+    listbuoiday[1].sang = resultDetailTeacher.data.data.lichday.st3;
+    listbuoiday[1].chieu = resultDetailTeacher.data.data.lichday.ct3;
+    listbuoiday[1].toi = resultDetailTeacher.data.data.lichday.tt3;
+    listbuoiday[2].sang = resultDetailTeacher.data.data.lichday.st4;
+    listbuoiday[2].chieu = resultDetailTeacher.data.data.lichday.ct4;
+    listbuoiday[2].toi = resultDetailTeacher.data.data.lichday.tt4;
+    listbuoiday[3].sang = resultDetailTeacher.data.data.lichday.st5;
+    listbuoiday[3].chieu = resultDetailTeacher.data.data.lichday.ct5;
+    listbuoiday[3].toi = resultDetailTeacher.data.data.lichday.tt5;
+    listbuoiday[4].sang = resultDetailTeacher.data.data.lichday.st6;
+    listbuoiday[4].chieu = resultDetailTeacher.data.data.lichday.ct6;
+    listbuoiday[4].toi = resultDetailTeacher.data.data.lichday.tt6;
+    listbuoiday[5].sang = resultDetailTeacher.data.data.lichday.st7;
+    listbuoiday[5].chieu = resultDetailTeacher.data.data.lichday.ct7;
+    listbuoiday[5].toi = resultDetailTeacher.data.data.lichday.tt7;
+    listbuoiday[6].sang = resultDetailTeacher.data.data.lichday.scn;
+    listbuoiday[6].chieu = resultDetailTeacher.data.data.lichday.ccn;
+    listbuoiday[6].toi = resultDetailTeacher.data.data.lichday.tcn;
   }
 }

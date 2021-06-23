@@ -76,6 +76,18 @@ class HomeRepositories {
     return rest;
   }
 
+  Future<ResultData> parentSaved(String token, int currentPage, int limit) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'current_page': currentPage, 'limit': limit};
+
+    ResultData rest = await httpManager.netFetch(Address.PARENT_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
   Future<ResultData> acceptInviteTeach(String token, int idLop) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
@@ -156,6 +168,30 @@ class HomeRepositories {
     Map<String, dynamic> body = {'token': token, 'current_page': currentPage, 'limit': limit};
 
     ResultData rest = await httpManager.netFetch(Address.CLASS_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> tutorFromFilterPoint(String token, int currentPage, int limit) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'current_page': currentPage, 'limit': limit};
+
+    ResultData rest = await httpManager.netFetch(Address.TUTOR_FROM_FILTER_POINT, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> tutorTeaching(String token, int currentPage, int limit) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'current_page': currentPage, 'limit': limit};
+
+    ResultData rest = await httpManager.netFetch(Address.TUTOR_TEACHING, body, header, Options(method: 'post'));
 
     return rest;
   }
@@ -270,6 +306,11 @@ class HomeRepositories {
 
   Future<ResultData> detailClass(int idClass) async {
     ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
+    return rest;
+  }
+
+  Future<ResultData> detailTutor(String token, int idGS) async {
+    ResultData rest = await httpManager.netFetch(Address.detailTutor(token, idGS), null, null, Options(method: 'get'));
     return rest;
   }
 }

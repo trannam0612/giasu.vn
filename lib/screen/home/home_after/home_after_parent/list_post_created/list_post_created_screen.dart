@@ -120,7 +120,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                           Text(
                             controller.listClassPosted[index].pftSummary,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                           ),
                           SizedBox(
                             height: AppDimens.space6,
@@ -145,7 +145,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                       ),
                                       Text(
                                         '${controller.listClassPosted[index].pftPrice}vnđ/${controller.listClassPosted[index].pftMonth}',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],
                                   ),
@@ -168,7 +168,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                         controller.listClassPosted[index].asNameDetail,
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -192,7 +192,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                         '${controller.listClassPosted[index].ctyDetail}, ${controller.listClassPosted[index].citName} ',
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -208,7 +208,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                     children: [
                                       Text(
                                         'Ngày đăng:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space4,
@@ -217,7 +217,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                         controller.listClassPosted[index].dayPost,
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -231,14 +231,14 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                     children: [
                                       Text(
                                         'Mã lớp:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space6,
                                       ),
                                       Text(
                                         controller.listClassPosted[index].pftId,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14),
                                       ),
                                     ],
                                   ),
@@ -251,14 +251,14 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                     children: [
                                       Text(
                                         'Hình thức:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space8,
                                       ),
                                       Text(
                                         controller.listClassPosted[index].pftForm,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
                                       ),
                                     ],
                                   ),

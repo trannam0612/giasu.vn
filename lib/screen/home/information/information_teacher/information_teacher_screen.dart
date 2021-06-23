@@ -65,7 +65,7 @@ class InformationTeacherScreen extends StatelessWidget {
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       imageUrl:
-                          'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
+                          controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
                       width: 85,
                       height: 85,
                       progressIndicatorBuilder: (context, url, downloadProgress) => Center(
@@ -79,7 +79,7 @@ class InformationTeacherScreen extends StatelessWidget {
                     height: AppDimens.space16,
                   ),
                   Text(
-                    'Nguyễn Văn Tuấn Anh',
+                    controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                     style: AppTextStyles.regularW700(context,
                         size: AppDimens.textSize20,
                         color: AppColors.whiteFFFFFF,
@@ -142,7 +142,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  'Hóa học lớp 10',
+                                  controller.resultDetailTeacher.data.data.dataInfo.asDetail,
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,

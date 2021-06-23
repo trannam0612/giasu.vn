@@ -55,19 +55,10 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    String timeAgo(int timestamp) {
-      var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
-      var now = new DateTime.now();
-      var format = new DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-      var time = DateTime.parse(format.format(date));
-      var diff = now.difference(time);
-      if (diff.inDays > 365) return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "năm" : "năm"} trước";
-      if (diff.inDays > 30) return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "tháng" : "tháng"} trước";
-      if (diff.inDays > 7) return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "tuần" : "tuần"} trước";
-      if (diff.inDays > 0) return "${diff.inDays} ${diff.inDays == 1 ? "ngày" : "ngày"} trước";
-      if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "giờ" : "giờ"} trước";
-      if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
-      return "vừa xong";
+    String convertDate(int timestamp) {
+      final df = new DateFormat('dd-MM-yyyy');
+      return df.format(new DateTime.fromMillisecondsSinceEpoch(timestamp*1000));
+
     }
     return GetBuilder<ListClassSuggestController>(
       init: ListClassSuggestController(),
@@ -145,7 +136,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                     controller.listLDDN[index].pftSummary,
                                     overflow: TextOverflow.ellipsis,
                                     style: AppTextStyles.regularW500(context,
-                                        size: AppDimens.textSize18,
+                                        size: AppDimens.textSize16,
                                         color: AppColors.primary4C5BD4),
                                   ),
                                 ),
@@ -176,7 +167,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                           '${controller.listLDDN[index].pftPrice} vnđ/${controller.listLDDN[index].pftMonth}',
                                           style: AppTextStyles.regular(
                                             context,
-                                            size: AppDimens.textSize16,
+                                            size: AppDimens.textSize14,
                                           ),
                                         ),
                                       ],
@@ -200,7 +191,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                           controller.listLDDN[index].asDetailName,
                                           style: AppTextStyles.regular(
                                             context,
-                                            size: AppDimens.textSize16,
+                                            size: AppDimens.textSize14,
                                           ),
                                         ),
                                       ],
@@ -224,7 +215,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                           '${controller.listLDDN[index].ctyDetail}, ${controller.listLDDN[index].citName}',
                                           style: AppTextStyles.regular(
                                             context,
-                                            size: AppDimens.textSize16,
+                                            size: AppDimens.textSize14,
                                           ),
                                         ),
                                       ],
@@ -241,17 +232,17 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                         Text(
                                           'Ngày đ/n:',
                                           style: AppTextStyles.regular(context,
-                                              size: AppDimens.textSize16,
+                                              size: AppDimens.textSize14,
                                               color: AppColors.grey747474),
                                         ),
                                         SizedBox(
                                           width: AppDimens.space4,
                                         ),
                                         Text(
-                                          timeAgo(controller.listLDDN[index].otDate),
+                                          convertDate(controller.listLDDN[index].otDate),
                                           style: AppTextStyles.regular(
                                             context,
-                                            size: AppDimens.textSize16,
+                                            size: AppDimens.textSize14,
                                           ),
                                         ),
                                       ],
@@ -266,7 +257,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                         Text(
                                           'Mã lớp:',
                                           style: AppTextStyles.regular(context,
-                                              size: AppDimens.textSize16,
+                                              size: AppDimens.textSize14,
                                               color: AppColors.grey747474),
                                         ),
                                         SizedBox(
@@ -276,7 +267,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                           controller.listLDDN[index].pftId,
                                           style: AppTextStyles.regular(
                                             context,
-                                            size: AppDimens.textSize16,
+                                            size: AppDimens.textSize14,
                                           ),
                                         ),
                                       ],
@@ -291,7 +282,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                         Text(
                                           'Hình thức:',
                                           style: AppTextStyles.regular(context,
-                                              size: AppDimens.textSize16,
+                                              size: AppDimens.textSize14,
                                               color: AppColors.grey747474),
                                         ),
                                         SizedBox(
@@ -300,7 +291,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                         Text(
                                             controller.listLDDN[index].pftForm,
                                           style: AppTextStyles.regular(context,
-                                              size: AppDimens.textSize16,
+                                              size: AppDimens.textSize14,
                                               color: AppColors.primary4C5BD4),
                                         ),
                                       ],
@@ -330,7 +321,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                     Text(
                                       'Trạng thái:',
                                       style: AppTextStyles.regularW400(context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                           color: AppColors.grey747474),
                                     ),
                                     SizedBox(
@@ -339,7 +330,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                     Text(
                                         controller.listLDDN[index].otStatus,
                                       style: AppTextStyles.regularW400(context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                           color: AppColors.secondaryF8971C),
                                     )
                                   ],

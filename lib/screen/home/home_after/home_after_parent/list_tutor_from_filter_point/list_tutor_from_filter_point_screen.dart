@@ -8,68 +8,47 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_saved/list_teacher_saved_controller.dart';
-import 'package:giasu_vn/screen/home/information/information_teacher/checkbox_list_class.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_from_filter_point/list_tutor_from_filter_point_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
-class ListTeacherSaved extends StatefulWidget {
-  final bool saved;
-  final String name;
-  final int rate;
-  final String date;
-  final String subject;
-  final String fee;
-  final String image;
-
-  const ListTeacherSaved(
-      {Key key,
-      this.saved = false,
-      this.name = 'Nguyễn Văn Tuấn Anh',
-      this.rate = 3,
-      this.date = '10/05/2020',
-      this.subject = 'Hóa học lớp 10',
-      this.fee = '300.000 vnđ/giờ',
-      this.image = 'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg'})
-      : super(key: key);
+class ListTutorFromFilterPointScreen extends StatefulWidget {
+  const ListTutorFromFilterPointScreen({Key key}) : super(key: key);
 
   @override
-  _ListTeacherSavedState createState() => _ListTeacherSavedState();
+  _ListTutorFromFilterPointScreenState createState() => _ListTutorFromFilterPointScreenState();
 }
 
-class _ListTeacherSavedState extends State<ListTeacherSaved> {
+class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPointScreen> {
+  ListTutorFromFilterPointController listTutorFromFilterPointController = Get.put(ListTutorFromFilterPointController());
   ScrollController _controller = ScrollController();
-  ListTeacherSavedController listTeacherSavedController = Get.put(ListTeacherSavedController());
-  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   int i = 1;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    listTeacherSavedController.listGSDL = [];
-    listTeacherSavedController.tutorSaved(1, 10);
+    listTutorFromFilterPointController.listGSTDL = [];
+    listTutorFromFilterPointController.tutorFromFilterPoint(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         // homeAfterController.homeParent();
         i++;
         print(i);
-        listTeacherSavedController.tutorSaved(i, 10);
+        listTutorFromFilterPointController.tutorFromFilterPoint(i, 10);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    return GetBuilder<ListTeacherSavedController>(
-      init: ListTeacherSavedController(),
-      builder:(controller) =>  Scaffold(
+    return GetBuilder<ListTutorFromFilterPointController>(
+      init: ListTutorFromFilterPointController(),
+      builder: (controller) => Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
-            'Gia sư đã lưu',
+            'Gia sư từ điểm lọc',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
@@ -86,10 +65,15 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
             },
           ),
         ),
-        body: ListView.builder(
+        body: controller.listGSTDL.isEmpty ? Center(
+          child: Text(
+            'Danh sách trống',
+            style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, color: AppColors.grey747474),
+          ),
+        ) :  ListView.builder(
           physics: BouncingScrollPhysics(),
           controller: _controller,
-          itemCount: controller.listGSDL.length,
+          itemCount: controller.listGSTDL.length,
           itemBuilder: (context, index) => Slidable(
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.15,
@@ -101,9 +85,9 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                   color: AppColors.redEB5757,
                   icon: Icons.delete_outline,
                   onTap: () {
-                    homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDL[index].ugsTeach));
-                    controller.listGSDL.remove(controller.listGSDL[index]);
-                    controller.update();
+                    // homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDL[index].ugsTeach));
+                    // controller.listGSDL.remove(controller.listGSDL[index]);
+                    // controller.update();
                   },
                 ),
               ),
@@ -111,7 +95,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
-                height: height * 0.19,
+                height: AppDimens.height * 0.165,
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
@@ -128,42 +112,36 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                           ),
                         ]),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                     controller.listGSDL[index].ugsName,
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space6,
-                                    ),
-                                    RatingBar(
-                                      initialRating: widget.rate.toDouble(),
-                                      itemSize: 12,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: false,
-                                      itemCount: 5,
-                                      ignoreGestures: true,
-                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                                      ratingWidget: RatingWidget(
-                                        full: SvgPicture.asset(Images.ic_star),
-                                        empty: SvgPicture.asset(Images.ic_star_border),
-                                      ),
-                                      unratedColor: AppColors.greyAAAAAA,
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
-                                    ),
-                                  ],
+                                Text(
+                                  controller.listGSTDL[index].ugsName,
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                                 ),
-                                widget.saved ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                RatingBar(
+                                  initialRating: 3,
+                                  itemSize: 12,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: false,
+                                  itemCount: 5,
+                                  ignoreGestures: true,
+                                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                  ratingWidget: RatingWidget(
+                                    full: SvgPicture.asset(Images.ic_star),
+                                    empty: SvgPicture.asset(Images.ic_star_border),
+                                  ),
+                                  unratedColor: AppColors.greyAAAAAA,
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
                               ],
                             ),
                             SizedBox(
@@ -172,44 +150,17 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                             Row(
                               children: [
                                 Text(
-                                  'Ngày lưu:',
+                                  'Ngày xem hồ sơ:',
                                   style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                 ),
                                 SizedBox(
                                   width: AppDimens.space4,
                                 ),
                                 Text(
-                                  widget.date,
+                                  controller.listGSTDL[index].suStatus,
                                   style: AppTextStyles.regularW400(
                                     context,
                                     size: AppDimens.textSize14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: AppDimens.space6,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_book,
-                                  width: 16,
-                                  height: 16,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    controller.listGSDL[index].asDetailName.join(', '),
-                                    style: AppTextStyles.regular(
-                                      context,
-                                      size: AppDimens.textSize14,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
@@ -225,35 +176,30 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset(
-                                      Images.ic_money,
-                                      color: AppColors.secondaryF8971C,
-                                      width: 16,
-                                      height: 16,
+                                    Text(
+                                      'Điểm lọc:',
+                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                     ),
                                     SizedBox(
                                       width: AppDimens.space6,
                                     ),
                                     Text(
-                                      "${controller.listGSDL[index].ugsUnitPrice}vnđ/${controller.listGSDL[index].ugsMonth}",
-                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                      controller.listGSTDL[index].suStatus,
+                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.redFF0033),
                                     ),
                                   ],
                                 ),
                                 SizedBox(
                                   width: 95,
                                   height: 30,
-                                  child: CustomButton2(
-                                    title: 'Mời dạy',
+                                  child: CustomButton1(
+
+                                    backColor: AppColors.whiteFFFFFF,
+                                    title: 'Xoá',
                                     color: AppColors.primary4C5BD4,
                                     onPressed: () {
-                                      Get.dialog(CheckboxListClass(
-                                        name: controller.listGSDL[index].ugsName,
-                                        imageUrl: controller.listGSDL[index].ugsAvatar,
-                                        idGS: controller.listGSDL[index].ugsTeach,
-                                      ));
                                     },
-                                    textColor: AppColors.whiteFFFFFF,
+                                    textColor: AppColors.secondaryF8971C,
                                   ),
                                 ),
                               ],
@@ -279,7 +225,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(80),
                           child: CachedNetworkImage(
-                            imageUrl: controller.listGSDL[index].ugsAvatar,
+                            imageUrl: controller.listGSTDL[index].ugsAvatar,
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,

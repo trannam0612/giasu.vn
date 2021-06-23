@@ -18,8 +18,8 @@ class HomeAfterParentController extends GetxController {
   ResultSaveTutor resultSaveTutor = ResultSaveTutor();
   ResultDeleteTutorSaved resultDeleteTutorSaved = ResultDeleteTutorSaved();
   bool checkSave;
-  List<DataDsgs> listGSGD = [];
-  List<DataDsgs> listGSPB = [];
+  List<DataDsgsgd> listGSGD = [];
+  List<DataDsgspb> listGSPB = [];
 
   @override
   void onInit() {
@@ -37,8 +37,8 @@ class HomeAfterParentController extends GetxController {
     ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
     resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
     if (resultHomeAfterParent.data != null) {
-      listGSGD = resultHomeAfterParent.data.dataTutorGd.dataDsgsgd;
-      listGSPB = resultHomeAfterParent.data.dataTutorPb.dataDsgspb;
+      listGSGD = resultHomeAfterParent.data.dataDsgsgd;
+      listGSPB = resultHomeAfterParent.data.dataDsgspb;
       // Get.to(HomeAfterParentScreen());
       Get.toNamed(Routes.navigation);
     }

@@ -16,9 +16,9 @@ class ListClassRecentlyController extends GetxController {
    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
    if (resultHomeAfterTeacher.data != null) {
-     if(resultHomeAfterTeacher.data.dataClassPb.dataDslhpb.isNotEmpty) {
-       for (int i = 0; i < resultHomeAfterTeacher.data.dataClassGd.dataDslhgd.length; i++) {
-         listLHGDMore.add(resultHomeAfterTeacher.data.dataClassGd.dataDslhgd[i]);
+     if(resultHomeAfterTeacher.data.dataDslhpb.isNotEmpty) {
+       for (int i = 0; i < resultHomeAfterTeacher.data.dataDslhgd.length; i++) {
+         listLHGDMore.add(resultHomeAfterTeacher.data.dataDslhgd[i]);
        }
      }
      else {

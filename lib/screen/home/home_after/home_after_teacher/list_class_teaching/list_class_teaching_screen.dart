@@ -134,7 +134,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                         child: Text(
                                           controller.listPHDND[index].pftSummary,
                                           overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                         ),
                                       ),
                                     ],
@@ -161,10 +161,10 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                '${controller.listPHDND[index].pftPrice}/${controller.listPHDND[index].pftMonth}',
+                                                '${controller.listPHDND[index].pftPrice}vnđ/${controller.listPHDND[index].pftMonth}',
                                                 style: AppTextStyles.regular(
                                                   context,
-                                                  size: AppDimens.textSize16,
+                                                  size: AppDimens.textSize14,
                                                 ),
                                               ),
                                             ],
@@ -188,7 +188,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 controller.listPHDND[index].asDetailName,
                                                 style: AppTextStyles.regular(
                                                   context,
-                                                  size: AppDimens.textSize16,
+                                                  size: AppDimens.textSize14,
                                                 ),
                                               ),
                                             ],
@@ -212,7 +212,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 "${controller.listPHDND[index].ctyDetail}, ${controller.listPHDND[index].citName}",
                                                 style: AppTextStyles.regular(
                                                   context,
-                                                  size: AppDimens.textSize16,
+                                                  size: AppDimens.textSize14,
                                                 ),
                                               ),
                                             ],
@@ -228,7 +228,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                             children: [
                                               Text(
                                                 'Ngày dạy:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space4,
@@ -237,7 +237,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 controller.listPHDND[index].receivedDate,
                                                 style: AppTextStyles.regular(
                                                   context,
-                                                  size: AppDimens.textSize16,
+                                                  size: AppDimens.textSize14,
                                                 ),
                                               ),
                                             ],
@@ -251,7 +251,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                             children: [
                                               Text(
                                                 'Mã lớp:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space6,
@@ -260,7 +260,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 controller.listPHDND[index].itClassCode,
                                                 style: AppTextStyles.regular(
                                                   context,
-                                                  size: AppDimens.textSize16,
+                                                  size: AppDimens.textSize14,
                                                 ),
                                               ),
                                             ],
@@ -274,14 +274,14 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                             children: [
                                               Text(
                                                 'Hình thức:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
                                                 controller.listPHDND[index].pftForm,
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
                                               ),
                                             ],
                                           ),
@@ -307,14 +307,14 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                         children: [
                                           Text(
                                             'Trạng thái:',
-                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                           ),
                                           SizedBox(
                                             width: AppDimens.space6,
                                           ),
                                           Text(
                                             controller.listPHDND[index].status,
-                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                           )
                                         ],
                                       ),

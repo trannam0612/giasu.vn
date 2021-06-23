@@ -27,9 +27,15 @@ class Address {
   static const String TUTOR_DELETE_OFFER = BASE_URL + "/tutor_delete_offer.php";
   static const String DELETE_TUTOR_SAVED = BASE_URL + "/delete_tutor_saved.php";
   static const String INVITE_TEACH = BASE_URL + "/invite_teach.php";
+  static const String TUTOR_FROM_FILTER_POINT = BASE_URL + "/tutor_from_filter_point.php";
+  static const String TUTOR_TEACHING = BASE_URL + "/tutor_is_teaching.php";
 
   static String detailClass(int idClass) {
     return '$BASE_URL/detail_class.php?pft_id=${idClass}';
+  }
+
+  static String detailTutor(String token, int idGS) {
+    return '$BASE_URL/detail_tutor.php?token=${token}?id_gs=${idGS}';
   }
 
 //AUTHEN

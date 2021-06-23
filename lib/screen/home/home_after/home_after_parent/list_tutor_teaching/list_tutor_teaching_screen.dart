@@ -1,46 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/screen/authen/login/login_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_teaching/list_tutor_teaching_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
-class ListTeacherRecentlyScreen extends StatefulWidget {
-  final bool saved;
-  final String name;
-  final int rate;
-  final String address;
-  final String subject;
-  final String fee;
-  final String image;
-
-  const ListTeacherRecentlyScreen(
-      {Key key,
-      this.saved = false,
-      this.name = 'Nguyễn Văn Tuấn Anh',
-      this.rate = 3,
-      this.subject = 'Hóa học lớp 10',
-      this.fee = '300.000 vnđ/giờ',
-      this.image = 'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
-      this.address = 'Thanh Xuân, Hà Nội'})
-      : super(key: key);
+class ListTutorTeachingScreen extends StatefulWidget {
+  const ListTutorTeachingScreen({Key key}) : super(key: key);
 
   @override
-  _ListTeacherRecentlyScreenState createState() => _ListTeacherRecentlyScreenState();
+  _ListTutorTeachingScreenState createState() => _ListTutorTeachingScreenState();
 }
 
-class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
-  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
-  ListTeacherRecentlyController listTeacherRecentlyController = Get.put(ListTeacherRecentlyController());
+class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
+  ListTutorTeachingController listTutorTeachingController = Get.put(ListTutorTeachingController());
   ScrollController _controller = ScrollController();
   int i = 1;
 
@@ -48,28 +28,28 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    listTeacherRecentlyController.listTeacherRecently(1, 10);
+    listTutorTeachingController.listGSDD = [];
+    listTutorTeachingController.tutorTeaching(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         // homeAfterController.homeParent();
         i++;
         print(i);
-        listTeacherRecentlyController.listTeacherRecently(i, 10);
+        listTutorTeachingController.tutorTeaching(i, 10);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.put(LoginController());
     var height = MediaQuery.of(context).size.height;
-    return GetBuilder<ListTeacherRecentlyController>(
-      init: ListTeacherRecentlyController(),
+    return GetBuilder<ListTutorTeachingController>(
+      init: ListTutorTeachingController(),
       builder: (controller) => Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
-            'Gia sư gần đây',
+            'Gia sư đang dạy',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
@@ -86,7 +66,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
             },
           ),
         ),
-        body: controller.listGSGDMore.isEmpty
+        body: controller.listGSDD.isEmpty
             ? Center(
                 child: Text(
                   'Danh sách trống',
@@ -96,11 +76,11 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
             : ListView.builder(
                 physics: BouncingScrollPhysics(),
                 controller: _controller,
-                itemCount: controller.listGSGDMore.length,
+                itemCount: controller.listGSDD.length,
                 itemBuilder: (context, index) => Container(
                   padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                   child: SizedBox(
-                    height: height * 0.23,
+                    height: height * 0.21,
                     child: Stack(
                       alignment: Alignment.topLeft,
                       children: [
@@ -123,14 +103,14 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.listGSGDMore[index].ugsName,
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                      controller.listGSDD[index].ugsName,
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                                     ),
                                     SizedBox(
                                       height: AppDimens.space6,
                                     ),
                                     RatingBar(
-                                      initialRating: widget.rate.toDouble(),
+                                      initialRating: 3,
                                       itemSize: 12,
                                       minRating: 1,
                                       direction: Axis.horizontal,
@@ -150,23 +130,27 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: AppDimens.space12,
+                                  height: AppDimens.space16,
+                                ),
+                                Text(
+                                  controller.listGSDD[index].pftSummary,
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
                                 ),
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset(
-                                      Images.ic_book,
-                                      width: 16,
-                                      height: 16,
+                                    Text(
+                                      'Ngày bắt đầu dạy:',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                     ),
                                     SizedBox(
-                                      width: AppDimens.space6,
+                                      width: AppDimens.space4,
                                     ),
                                     Text(
-                                      controller.listGSGDMore[index].asDetailName.join(', '),
-                                      style: AppTextStyles.regular(
+                                      controller.listGSDD[index].receivedDate,
+                                      style: AppTextStyles.regularW400(
                                         context,
                                         size: AppDimens.textSize14,
                                       ),
@@ -177,97 +161,77 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                   height: AppDimens.space6,
                                 ),
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    SvgPicture.asset(
-                                      Images.ic_location,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space8,
-                                    ),
-                                    Text(
-                                      '${controller.listGSGDMore[index].cityDetailNameGs}, ${controller.listGSGDMore[index].cityNameGs}',
-                                      style: AppTextStyles.regular(
-                                        context,
-                                        size: AppDimens.textSize14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset(
-                                      Images.ic_money,
-                                      color: AppColors.secondaryF8971C,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space6,
-                                    ),
-                                    Text(
-                                      '${controller.listGSGDMore[index].ugsUnitPrice}vnđ/${controller.listGSGDMore[index].ugsMonth}',
-                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: AppDimens.space10,
-                                    ),
-                                    Row(
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Spacer(),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 95,
-                                          child: CustomButton2(
-                                            title: 'Đề nghị dạy',
-                                            color: AppColors.primary4C5BD4,
-                                            onPressed: () {},
-                                            textColor: AppColors.whiteFFFFFF,
-                                          ),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            SvgPicture.asset(
+                                              Images.ic_book,
+                                              width: 16,
+                                              height: 16,
+                                            ),
+                                            SizedBox(
+                                              width: AppDimens.space6,
+                                            ),
+                                            Text(
+                                              controller.listGSDD[index].asName,
+                                              style: AppTextStyles.regular(
+                                                context,
+                                                size: AppDimens.textSize14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
                                         ),
                                         SizedBox(
-                                          width: AppDimens.space20,
+                                          height: AppDimens.space6,
                                         ),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 95,
-                                          child: controller.listGSGDMore[index].checkSave
-                                              ? CustomButton2(
-                                                  title: 'Đã lưu',
-                                                  color: AppColors.primary4C5BD4,
-                                                  onPressed: () {},
-                                                  textColor: AppColors.whiteFFFFFF,
-                                                )
-                                              : CustomButton1(
-                                                  textColor: AppColors.secondaryF8971C,
-                                                  onPressed: () {},
-                                                  color: AppColors.secondaryF8971C,
-                                                  title: 'Lưu',
-                                                  backColor: AppColors.whiteFFFFFF,
-                                                ),
-                                        )
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            SvgPicture.asset(
+                                              Images.ic_money,
+                                              color: AppColors.secondaryF8971C,
+                                              width: 16,
+                                              height: 16,
+                                            ),
+                                            SizedBox(
+                                              width: AppDimens.space6,
+                                            ),
+                                            Text(
+                                              "${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}",
+                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
+                                    SizedBox(
+                                      width: 95,
+                                      height: 30,
+                                      child: CustomButton1(
+                                        backColor: AppColors.whiteFFFFFF,
+                                        title: controller.listGSDD[index].otStatus,
+                                        color: AppColors.primary4C5BD4,
+                                        textColor: AppColors.secondaryF8971C,
+                                      ),
+                                    ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),
                         ),
                         Positioned(
-                          top: 5,
+                          top: 10,
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50),
@@ -283,7 +247,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(80),
                               child: CachedNetworkImage(
-                                imageUrl: controller.listGSGDMore[index].ugsAvatar,
+                                imageUrl: 'https://newsmd1fr.keeng.net/tiin/archive/images/20201018/222252_dsc_8457_2.jpg',
                                 width: 60,
                                 height: 60,
                                 fit: BoxFit.cover,

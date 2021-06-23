@@ -36,9 +36,10 @@ class Data {
     this.lnd,
     this.ldnd,
     this.ldl,
-    this.dataClassGd,
+    this.phdl,
+    this.dataDslhgd,
     this.paningLhgd,
-    this.dataClassPb,
+    this.dataDslhpb,
     this.paningLhpb,
   });
 
@@ -48,9 +49,10 @@ class Data {
   String lnd;
   String ldnd;
   String ldl;
-  DataClassGd dataClassGd;
+  String phdl;
+  List<DataDslh> dataDslhgd;
   PaningLh paningLhgd;
-  DataClassPb dataClassPb;
+  List<DataDslh> dataDslhpb;
   PaningLh paningLhpb;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -60,9 +62,10 @@ class Data {
     lnd: json["lnd"] == null ? null : json["lnd"],
     ldnd: json["ldnd"] == null ? null : json["ldnd"],
     ldl: json["ldl"] == null ? null : json["ldl"],
-    dataClassGd: json["dataClassGD"] == null ? null : DataClassGd.fromJson(json["dataClassGD"]),
+    phdl: json["phdl"] == null ? null : json["phdl"],
+    dataDslhgd: json["dataDSLHGD"] == null ? null : List<DataDslh>.from(json["dataDSLHGD"].map((x) => DataDslh.fromJson(x))),
     paningLhgd: json["paning_lhgd"] == null ? null : PaningLh.fromJson(json["paning_lhgd"]),
-    dataClassPb: json["dataClassPB"] == null ? null : DataClassPb.fromJson(json["dataClassPB"]),
+    dataDslhpb: json["dataDSLHPB"] == null ? null : List<DataDslh>.from(json["dataDSLHPB"].map((x) => DataDslh.fromJson(x))),
     paningLhpb: json["paning_lhpb"] == null ? null : PaningLh.fromJson(json["paning_lhpb"]),
   );
 
@@ -73,26 +76,11 @@ class Data {
     "lnd": lnd == null ? null : lnd,
     "ldnd": ldnd == null ? null : ldnd,
     "ldl": ldl == null ? null : ldl,
-    "dataClassGD": dataClassGd == null ? null : dataClassGd.toJson(),
-    "paning_lhgd": paningLhgd == null ? null : paningLhgd.toJson(),
-    "dataClassPB": dataClassPb == null ? null : dataClassPb.toJson(),
-    "paning_lhpb": paningLhpb == null ? null : paningLhpb.toJson(),
-  };
-}
-
-class DataClassGd {
-  DataClassGd({
-    this.dataDslhgd,
-  });
-
-  List<DataDslh> dataDslhgd;
-
-  factory DataClassGd.fromJson(Map<String, dynamic> json) => DataClassGd(
-    dataDslhgd: json["dataDSLHGD"] == null ? null : List<DataDslh>.from(json["dataDSLHGD"].map((x) => DataDslh.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
+    "phdl": phdl == null ? null : phdl,
     "dataDSLHGD": dataDslhgd == null ? null : List<dynamic>.from(dataDslhgd.map((x) => x.toJson())),
+    "paning_lhgd": paningLhgd == null ? null : paningLhgd.toJson(),
+    "dataDSLHPB": dataDslhpb == null ? null : List<dynamic>.from(dataDslhpb.map((x) => x.toJson())),
+    "paning_lhpb": paningLhpb == null ? null : paningLhpb.toJson(),
   };
 }
 
@@ -104,6 +92,7 @@ class DataDslh {
     this.cityId,
     this.citName,
     this.cityDetail,
+    this.ctyDetail,
     this.asId,
     this.asName,
     this.asDetail,
@@ -122,6 +111,7 @@ class DataDslh {
   String cityId;
   String citName;
   String cityDetail;
+  String ctyDetail;
   String asId;
   String asName;
   String asDetail;
@@ -140,6 +130,7 @@ class DataDslh {
     cityId: json["city_id"] == null ? null : json["city_id"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     cityDetail: json["city_detail"] == null ? null : json["city_detail"],
+    ctyDetail: json["cty_detail"] == null ? null : json["cty_detail"],
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
@@ -159,6 +150,7 @@ class DataDslh {
     "city_id": cityId == null ? null : cityId,
     "cit_name": citName == null ? null : citName,
     "city_detail": cityDetail == null ? null : cityDetail,
+    "cty_detail": ctyDetail == null ? null : ctyDetail,
     "as_id": asId == null ? null : asId,
     "as_name": asName == null ? null : asName,
     "as_detail": asDetail == null ? null : asDetail,
@@ -169,22 +161,6 @@ class DataDslh {
     "day_post": dayPost == null ? null : dayPost,
     "check_save": checkSave == null ? null : checkSave,
     "count_dnd": countDnd == null ? null : countDnd,
-  };
-}
-
-class DataClassPb {
-  DataClassPb({
-    this.dataDslhpb,
-  });
-
-  List<DataDslh> dataDslhpb;
-
-  factory DataClassPb.fromJson(Map<String, dynamic> json) => DataClassPb(
-    dataDslhpb: json["dataDSLHPB"] == null ? null : List<DataDslh>.from(json["dataDSLHPB"].map((x) => DataDslh.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "dataDSLHPB": dataDslhpb == null ? null : List<dynamic>.from(dataDslhpb.map((x) => x.toJson())),
   };
 }
 

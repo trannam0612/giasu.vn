@@ -36,9 +36,11 @@ class Data {
     this.gsdnd,
     this.tindang,
     this.gsdl,
-    this.dataTutorGd,
+    this.gsdd,
+    this.gstdl,
+    this.dataDsgsgd,
     this.paningGsgd,
-    this.dataTutorPb,
+    this.dataDsgspb,
     this.paningGspb,
   });
 
@@ -48,9 +50,11 @@ class Data {
   String gsdnd;
   String tindang;
   String gsdl;
-  DataTutorGd dataTutorGd;
+  String gsdd;
+  String gstdl;
+  List<DataDsgsgd> dataDsgsgd;
   PaningGs paningGsgd;
-  DataTutorPb dataTutorPb;
+  List<DataDsgspb> dataDsgspb;
   PaningGs paningGspb;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -60,9 +64,11 @@ class Data {
     gsdnd: json["gsdnd"] == null ? null : json["gsdnd"],
     tindang: json["tindang"] == null ? null : json["tindang"],
     gsdl: json["gsdl"] == null ? null : json["gsdl"],
-    dataTutorGd: json["dataTutorGD"] == null ? null : DataTutorGd.fromJson(json["dataTutorGD"]),
+    gsdd: json["gsdd"] == null ? null : json["gsdd"],
+    gstdl: json["gstdl"] == null ? null : json["gstdl"],
+    dataDsgsgd: json["dataDSGSGD"] == null ? null : List<DataDsgsgd>.from(json["dataDSGSGD"].map((x) => DataDsgsgd.fromJson(x))),
     paningGsgd: json["paning_gsgd"] == null ? null : PaningGs.fromJson(json["paning_gsgd"]),
-    dataTutorPb: json["dataTutorPB"] == null ? null : DataTutorPb.fromJson(json["dataTutorPB"]),
+    dataDsgspb: json["dataDSGSPB"] == null ? null : List<DataDsgspb>.from(json["dataDSGSPB"].map((x) => DataDsgspb.fromJson(x))),
     paningGspb: json["paning_gspb"] == null ? null : PaningGs.fromJson(json["paning_gspb"]),
   );
 
@@ -73,31 +79,109 @@ class Data {
     "gsdnd": gsdnd == null ? null : gsdnd,
     "tindang": tindang == null ? null : tindang,
     "gsdl": gsdl == null ? null : gsdl,
-    "dataTutorGD": dataTutorGd == null ? null : dataTutorGd.toJson(),
+    "gsdd": gsdd == null ? null : gsdd,
+    "gstdl": gstdl == null ? null : gstdl,
+    "dataDSGSGD": dataDsgsgd == null ? null : List<dynamic>.from(dataDsgsgd.map((x) => x.toJson())),
     "paning_gsgd": paningGsgd == null ? null : paningGsgd.toJson(),
-    "dataTutorPB": dataTutorPb == null ? null : dataTutorPb.toJson(),
+    "dataDSGSPB": dataDsgspb == null ? null : List<dynamic>.from(dataDsgspb.map((x) => x.toJson())),
     "paning_gspb": paningGspb == null ? null : paningGspb.toJson(),
   };
 }
 
-class DataTutorGd {
-  DataTutorGd({
-    this.dataDsgsgd,
+class DataDsgsgd {
+  DataDsgsgd({
+    this.ugsId,
+    this.ugsAvatar,
+    this.ugsName,
+    this.linkDetailTutor,
+    this.asId,
+    this.asIdName,
+    this.asDetail,
+    this.asDetailName,
+    this.ugsCity,
+    this.citName,
+    this.ugsCounty,
+    this.cityDetailName,
+    this.ugsCityGs,
+    this.cityNameGs,
+    this.ugsCountyGs,
+    this.cityDetailNameGs,
+    this.ugsAboutUs,
+    this.ugsUnitPrice,
+    this.ugsMonth,
+    this.checkSave,
   });
 
-  List<DataDsgs> dataDsgsgd;
+  String ugsId;
+  String ugsAvatar;
+  String ugsName;
+  String linkDetailTutor;
+  String asId;
+  List<String> asIdName;
+  String asDetail;
+  List<String> asDetailName;
+  String ugsCity;
+  String citName;
+  String ugsCounty;
+  List<String> cityDetailName;
+  String ugsCityGs;
+  dynamic cityNameGs;
+  String ugsCountyGs;
+  dynamic cityDetailNameGs;
+  String ugsAboutUs;
+  String ugsUnitPrice;
+  String ugsMonth;
+  bool checkSave;
 
-  factory DataTutorGd.fromJson(Map<String, dynamic> json) => DataTutorGd(
-    dataDsgsgd: json["dataDSGSGD"] == null ? null : List<DataDsgs>.from(json["dataDSGSGD"].map((x) => DataDsgs.fromJson(x))),
+  factory DataDsgsgd.fromJson(Map<String, dynamic> json) => DataDsgsgd(
+    ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
+    ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
+    ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
+    linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
+    asId: json["as_id"] == null ? null : json["as_id"],
+    asIdName: json["as_id_name"] == null ? null : List<String>.from(json["as_id_name"].map((x) => x)),
+    asDetail: json["as_detail"] == null ? null : json["as_detail"],
+    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
+    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
+    citName: json["cit_name"] == null ? null : json["cit_name"],
+    ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
+    cityDetailName: json["city_detail_name"] == null ? null : List<String>.from(json["city_detail_name"].map((x) => x)),
+    ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
+    cityNameGs: json["city_name_gs"],
+    ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
+    cityDetailNameGs: json["city_detail_name_gs"],
+    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
+    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
+    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    checkSave: json["check_save"] == null ? null : json["check_save"],
   );
 
   Map<String, dynamic> toJson() => {
-    "dataDSGSGD": dataDsgsgd == null ? null : List<dynamic>.from(dataDsgsgd.map((x) => x.toJson())),
+    "ugs_id": ugsId == null ? null : ugsId,
+    "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
+    "ugs_name": ugsName == null ? null : ugsName,
+    "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
+    "as_id": asId == null ? null : asId,
+    "as_id_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
+    "as_detail": asDetail == null ? null : asDetail,
+    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
+    "ugs_city": ugsCity == null ? null : ugsCity,
+    "cit_name": citName == null ? null : citName,
+    "ugs_county": ugsCounty == null ? null : ugsCounty,
+    "city_detail_name": cityDetailName == null ? null : List<dynamic>.from(cityDetailName.map((x) => x)),
+    "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
+    "city_name_gs": cityNameGs,
+    "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
+    "city_detail_name_gs": cityDetailNameGs,
+    "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
+    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
+    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "check_save": checkSave == null ? null : checkSave,
   };
 }
 
-class DataDsgs {
-  DataDsgs({
+class DataDsgspb {
+  DataDsgspb({
     this.ugsId,
     this.ugsAvatar,
     this.ugsName,
@@ -129,7 +213,7 @@ class DataDsgs {
   String ugsMonth;
   bool checkSave;
 
-  factory DataDsgs.fromJson(Map<String, dynamic> json) => DataDsgs(
+  factory DataDsgspb.fromJson(Map<String, dynamic> json) => DataDsgspb(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
     ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
@@ -161,22 +245,6 @@ class DataDsgs {
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
     "ugs_month": ugsMonth == null ? null : ugsMonth,
     "check_save": checkSave == null ? null : checkSave,
-  };
-}
-
-class DataTutorPb {
-  DataTutorPb({
-    this.dataDsgspb,
-  });
-
-  List<DataDsgs> dataDsgspb;
-
-  factory DataTutorPb.fromJson(Map<String, dynamic> json) => DataTutorPb(
-    dataDsgspb: json["dataDSGSPB"] == null ? null : List<DataDsgs>.from(json["dataDSGSPB"].map((x) => DataDsgs.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "dataDSGSPB": dataDsgspb == null ? null : List<dynamic>.from(dataDsgspb.map((x) => x.toJson())),
   };
 }
 

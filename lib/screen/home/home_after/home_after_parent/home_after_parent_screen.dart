@@ -16,6 +16,8 @@ import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_i
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_saved/list_teacher_saved_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_from_filter_point/list_tutor_from_filter_point_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_teaching/list_tutor_teaching_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_invite/list_class_invite_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_screen.dart';
@@ -274,7 +276,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         ),
                         SizedBox(width: AppDimens.space10,),
                         InkWell(
-                          onTap: () => Get.to(ListTeacherSaved()),
+                          onTap: () => Get.to(ListTutorTeachingScreen()),
                           child: Container(
                             width: width * 0.2,
                             height: height * 0.13,
@@ -307,14 +309,14 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gsdd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
                         SizedBox(width: AppDimens.space10,),
                         InkWell(
-                          onTap: () => Get.to(ListTeacherSaved()),
+                          onTap: () => Get.to(ListTutorFromFilterPointScreen()),
                           child: Container(
                             width: width * 0.2,
                             height: height * 0.13,
@@ -347,7 +349,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gstdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),

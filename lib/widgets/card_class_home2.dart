@@ -56,7 +56,7 @@ class CardClassHome2 extends StatelessWidget {
                 child: Text(
                   title,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                 ),
               ),
               hasButtonSave
@@ -82,7 +82,7 @@ class CardClassHome2 extends StatelessWidget {
           ),
           Text(
             time,
-            style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.greyAAAAAA),
+            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
           ),
           SizedBox(
             height: AppDimens.space6,
@@ -107,7 +107,7 @@ class CardClassHome2 extends StatelessWidget {
                       ),
                       Text(
                         fee,
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                       ),
                     ],
                   ),
@@ -130,7 +130,7 @@ class CardClassHome2 extends StatelessWidget {
                         subject,
                         style: AppTextStyles.regular(
                           context,
-                          size: AppDimens.textSize16,
+                          size: AppDimens.textSize14,
                         ),
                       ),
                     ],
@@ -154,7 +154,7 @@ class CardClassHome2 extends StatelessWidget {
                         address,
                         style: AppTextStyles.regular(
                           context,
-                          size: AppDimens.textSize16,
+                          size: AppDimens.textSize14,
                         ),
                       ),
                     ],
@@ -170,7 +170,7 @@ class CardClassHome2 extends StatelessWidget {
                     children: [
                       Text(
                         'Mã lớp:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space4,
@@ -179,7 +179,7 @@ class CardClassHome2 extends StatelessWidget {
                         classId,
                         style: AppTextStyles.regular(
                           context,
-                          size: AppDimens.textSize16,
+                          size: AppDimens.textSize14,
                         ),
                       ),
                     ],
@@ -192,15 +192,15 @@ class CardClassHome2 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Hình thức dạy:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                        'Hình thức:',
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space6,
                       ),
                       Text(
                         methodTeach,
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.green5DC22D),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.green5DC22D),
                       ),
                     ],
                   ),
@@ -213,7 +213,7 @@ class CardClassHome2 extends StatelessWidget {
                     children: [
                       Text(
                         'Đề nghị dạy:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                       ),
                       SizedBox(
                         width: AppDimens.space8,
@@ -222,7 +222,7 @@ class CardClassHome2 extends StatelessWidget {
                         numberSuggest,
                         style: AppTextStyles.regular(
                           context,
-                          size: AppDimens.textSize16,
+                          size: AppDimens.textSize14,
                         ),
                       ),
                     ],
@@ -260,7 +260,7 @@ class CardClassHome2 extends StatelessWidget {
                     ),
                   ],
                 )
-              : Container()
+              : Container(),
         ],
       ),
     );

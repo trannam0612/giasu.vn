@@ -49,6 +49,11 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
     if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
     return "vừa xong";
   }
+  String convertDate(int timestamp) {
+    final df = new DateFormat('dd-MM-yyyy');
+    return df.format(new DateTime.fromMillisecondsSinceEpoch(timestamp*1000));
+
+  }
   ScrollController _controller = ScrollController();
   LoginController loginController = Get.put(LoginController());
   ListClassRecentlyController listClassRecentlyController = Get.put(ListClassRecentlyController());
@@ -224,7 +229,7 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                                         width: AppDimens.space4,
                                       ),
                                       Text(
-                                        timeAgo(int.parse(controller.listLHGDMore[index].dayPost)),
+                                        convertDate(int.parse(controller.listLHGDMore[index].dayPost)),
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize16,

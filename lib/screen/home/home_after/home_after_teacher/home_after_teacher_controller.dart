@@ -55,8 +55,8 @@ class HomeAfterTeacherController extends GetxController {
     ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
     resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
     if (resultHomeAfterTeacher.data != null) {
-      listLHGD = resultHomeAfterTeacher.data.dataClassGd.dataDslhgd;
-      listLHPB = resultHomeAfterTeacher.data.dataClassPb.dataDslhpb;
+      listLHGD = resultHomeAfterTeacher.data.dataDslhgd;
+      listLHPB = resultHomeAfterTeacher.data.dataDslhpb;
       Get.back();
       Get.toNamed(Routes.navigation);
       // Get.to(HomeAfterTeacherScreen());

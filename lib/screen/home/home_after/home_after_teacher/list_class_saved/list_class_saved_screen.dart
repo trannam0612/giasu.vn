@@ -109,7 +109,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                 child: Text(
                                   controller.listLDL[index].pftSummary,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                 ),
                               ),
                             ],
@@ -139,7 +139,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                         '${controller.listLDL[index].pftPrice} vnđ/${controller.listLDL[index].pftMonth}',
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -163,7 +163,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                         controller.listLDL[index].asDetailName,
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -184,10 +184,10 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                         width: AppDimens.space8,
                                       ),
                                       Text(
-                                        '${controller.listLDL[index].ctyDetail},${controller.listLDL[index].citName}',
+                                        '${controller.listLDL[index].ctyDetail}, ${controller.listLDL[index].citName}',
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -203,7 +203,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Ngày lưu:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space4,
@@ -212,7 +212,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                         controller.listLDL[index].scDate,
                                         style: AppTextStyles.regular(
                                           context,
-                                          size: AppDimens.textSize16,
+                                          size: AppDimens.textSize14,
                                         ),
                                       ),
                                     ],
@@ -226,14 +226,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Mã lớp:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space6,
                                       ),
                                       Text(
                                         controller.listLDL[index].pftId,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14),
                                       ),
                                     ],
                                   ),
@@ -246,14 +246,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     children: [
                                       Text(
                                         'Hình thức:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                       ),
                                       SizedBox(
                                         width: AppDimens.space8,
                                       ),
                                       Text(
                                         controller.listLDL[index].pftForm,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
                                       ),
                                     ],
                                   ),
