@@ -35,7 +35,7 @@ class Address {
   }
 
   static String detailTutor(String token, int idGS) {
-    return '$BASE_URL/detail_tutor.php?token=${token}?id_gs=${idGS}';
+    return '$BASE_URL/detail_tutor.php?token=${token}&id_gs=${idGS}';
   }
 
 //AUTHEN

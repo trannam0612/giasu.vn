@@ -90,144 +90,153 @@ class CardClassHome2 extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        Images.ic_money,
-                        width: 16,
-                        height: 16,
-                      ),
-                      SizedBox(
-                        width: AppDimens.space8,
-                      ),
-                      Text(
-                        fee,
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppDimens.space6,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        Images.ic_book,
-                        width: 16,
-                        height: 16,
-                      ),
-                      SizedBox(
-                        width: AppDimens.space8,
-                      ),
-                      Text(
-                        subject,
-                        style: AppTextStyles.regular(
-                          context,
-                          size: AppDimens.textSize14,
+              Flexible(
+                flex: 7,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          Images.ic_money,
+                          width: 16,
+                          height: 16,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppDimens.space6,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        Images.ic_location,
-                        width: 16,
-                        height: 16,
-                      ),
-                      SizedBox(
-                        width: AppDimens.space8,
-                      ),
-                      Text(
-                        address,
-                        style: AppTextStyles.regular(
-                          context,
-                          size: AppDimens.textSize14,
+                        SizedBox(
+                          width: AppDimens.space8,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Text(
+                          fee,
+                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppDimens.space6,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          Images.ic_book,
+                          width: 16,
+                          height: 16,
+                        ),
+                        SizedBox(
+                          width: AppDimens.space8,
+                        ),
+                        Text(
+                          subject,
+                          style: AppTextStyles.regular(
+                            context,
+                            size: AppDimens.textSize14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppDimens.space6,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          Images.ic_location,
+                          width: 16,
+                          height: 16,
+                        ),
+                        SizedBox(
+                          width: AppDimens.space8,
+                        ),
+                        Expanded(
+                          child: Text(
+                            address,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.regular(
+                              context,
+                              size: AppDimens.textSize14,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Mã lớp:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
-                      ),
-                      SizedBox(
-                        width: AppDimens.space4,
-                      ),
-                      Text(
-                        classId,
-                        style: AppTextStyles.regular(
-                          context,
-                          size: AppDimens.textSize14,
+              Flexible(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Mã lớp:',
+                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppDimens.space6,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Hình thức:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
-                      ),
-                      SizedBox(
-                        width: AppDimens.space6,
-                      ),
-                      Text(
-                        methodTeach,
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.green5DC22D),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppDimens.space6,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Đề nghị dạy:',
-                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
-                      ),
-                      SizedBox(
-                        width: AppDimens.space8,
-                      ),
-                      Text(
-                        numberSuggest,
-                        style: AppTextStyles.regular(
-                          context,
-                          size: AppDimens.textSize14,
+                        SizedBox(
+                          width: AppDimens.space4,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Text(
+                          classId,
+                          style: AppTextStyles.regular(
+                            context,
+                            size: AppDimens.textSize14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppDimens.space6,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hình thức:',
+                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                        ),
+                        SizedBox(
+                          width: AppDimens.space6,
+                        ),
+                        Text(
+                          methodTeach,
+                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.green5DC22D),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: AppDimens.space6,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Đề nghị dạy:',
+                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                        ),
+                        SizedBox(
+                          width: AppDimens.space8,
+                        ),
+                        Text(
+                          numberSuggest,
+                          style: AppTextStyles.regular(
+                            context,
+                            size: AppDimens.textSize14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

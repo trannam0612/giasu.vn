@@ -29,7 +29,6 @@ class InformationTeacherController extends GetxController {
   bool isShowed = false;
   String idClass;
 
-
   Future<void> classPosted(int currentPage, int limit) async {
     print('classPosted');
     // await Future.delayed(Duration(milliseconds: 1));
@@ -69,20 +68,22 @@ class InformationTeacherController extends GetxController {
     }
     update();
   }
-  Future<void> detailTeacher(String token, int idLop, int check) async {
+
+  Future<void> detailTeacher(int idGS, int check) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    ResultData res = await homeRepositories.detailTutor(token, idLop);
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.detailTutor(token, idGS);
     resultDetailTeacher = resultDetailTeacherFromJson(res.data);
     if (resultDetailTeacher.data != null) {
       Get.back();
       Get.to(InformationTeacherScreen());
-    }
-    else {
+    } else {
       Utils.showToast(resultDetailTeacher.error.message);
     }
     update();
   }
+
   @override
   void onInit() {
     // TODO: implement onInit

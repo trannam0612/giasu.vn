@@ -103,10 +103,14 @@ class DataInfo {
     this.ugsDayNow,
     this.ugsExperienceYear,
     this.ugsFormality,
-    this.citName,
-    this.citDetail,
-    this.asName,
+    this.ugsCity,
+    this.cityName,
+    this.ugsCounty,
+    this.cityCouName,
+    this.asId,
+    this.asIdName,
     this.asDetail,
+    this.asDetailName,
     this.ctName,
     this.ugsTitle,
     this.ugsYearStart,
@@ -130,10 +134,14 @@ class DataInfo {
   String ugsDayNow;
   String ugsExperienceYear;
   String ugsFormality;
-  String citName;
-  String citDetail;
-  String asName;
+  String ugsCity;
+  List<String> cityName;
+  String ugsCounty;
+  List<String> cityCouName;
+  String asId;
+  List<String> asIdName;
   String asDetail;
+  List<String> asDetailName;
   String ctName;
   String ugsTitle;
   String ugsYearStart;
@@ -157,10 +165,14 @@ class DataInfo {
     ugsDayNow: json["ugs_day_now"] == null ? null : json["ugs_day_now"],
     ugsExperienceYear: json["ugs_experience_year"] == null ? null : json["ugs_experience_year"],
     ugsFormality: json["ugs_formality"] == null ? null : json["ugs_formality"],
-    citName: json["cit_name"] == null ? null : json["cit_name"],
-    citDetail: json["cit_detail"] == null ? null : json["cit_detail"],
-    asName: json["as_name"] == null ? null : json["as_name"],
+    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
+    cityName: json["city__name"] == null ? null : List<String>.from(json["city__name"].map((x) => x)),
+    ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
+    cityCouName: json["city_cou_name"] == null ? null : List<String>.from(json["city_cou_name"].map((x) => x)),
+    asId: json["as_id"] == null ? null : json["as_id"],
+    asIdName: json["as_id_name"] == null ? null : List<String>.from(json["as_id_name"].map((x) => x)),
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
+    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
     ctName: json["ct_name"] == null ? null : json["ct_name"],
     ugsTitle: json["ugs_title"] == null ? null : json["ugs_title"],
     ugsYearStart: json["ugs_year_start"] == null ? null : json["ugs_year_start"],
@@ -185,10 +197,14 @@ class DataInfo {
     "ugs_day_now": ugsDayNow == null ? null : ugsDayNow,
     "ugs_experience_year": ugsExperienceYear == null ? null : ugsExperienceYear,
     "ugs_formality": ugsFormality == null ? null : ugsFormality,
-    "cit_name": citName == null ? null : citName,
-    "cit_detail": citDetail == null ? null : citDetail,
-    "as_name": asName == null ? null : asName,
+    "ugs_city": ugsCity == null ? null : ugsCity,
+    "city__name": cityName == null ? null : List<dynamic>.from(cityName.map((x) => x)),
+    "ugs_county": ugsCounty == null ? null : ugsCounty,
+    "city_cou_name": cityCouName == null ? null : List<dynamic>.from(cityCouName.map((x) => x)),
+    "as_id": asId == null ? null : asId,
+    "as_id_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
     "as_detail": asDetail == null ? null : asDetail,
+    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
     "ct_name": ctName == null ? null : ctName,
     "ugs_title": ugsTitle == null ? null : ugsTitle,
     "ugs_year_start": ugsYearStart == null ? null : ugsYearStart,
