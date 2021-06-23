@@ -61,6 +61,7 @@ class HomeAfterTeacherController extends GetxController {
       Get.toNamed(Routes.navigation);
       // Get.to(HomeAfterTeacherScreen());
     } else {
+      Get.back();
       Utils.showToast('Danh sách trống!');
     }
     update();

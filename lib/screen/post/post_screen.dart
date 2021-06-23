@@ -654,7 +654,7 @@ Widget SelectTinhThanh(BuildContext context) {
                   postController.provincial.text = listDataCity[index].citName;
                   postController.idProvincial = int.parse(listDataCity[index].citId);
                   postController.getListDistrict(int.parse(listDataCity[index].citId));
-
+                  postController.district.clear();
                   Get.back();
                 },
                 child: SizedBox(

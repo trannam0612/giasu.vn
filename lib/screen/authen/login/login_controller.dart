@@ -61,7 +61,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
       Utils.showToast(resultLogin.data.message);
       homeAfterParentController.homeAfterParent(1, 10);
-      Get.toNamed(Routes.navigation);
+      // Get.toNamed(Routes.navigation);
       // homeAfterParent(1, 10);
     } else {
       Get.back();
@@ -88,7 +88,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
       Utils.showToast(resultLoginTeacher.data.message);
       homeAfterTeacherController.homeAfterTeacher(1, 10);
-      Get.toNamed(Routes.navigation);
+      // Get.toNamed(Routes.navigation);
     } else {
       Get.back();
       Utils.showToast(resultLoginTeacher.error.message);

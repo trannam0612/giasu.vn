@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/authen/change_password/change_password_screen.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_controller.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
@@ -191,11 +192,14 @@ class SettingsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(AppDimens.space16),
-                        child: Text(
-                          'Đổi mật khẩu',
-                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                      InkWell(
+                        onTap: () => Get.to(ChangePasswordScreen()),
+                        child: Container(
+                          padding: EdgeInsets.all(AppDimens.space16),
+                          child: Text(
+                            'Đổi mật khẩu',
+                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                          ),
                         ),
                       ),
                       InkWell(

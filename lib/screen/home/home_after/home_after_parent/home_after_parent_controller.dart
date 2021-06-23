@@ -10,6 +10,7 @@ import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart'
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class HomeAfterParentController extends GetxController {
@@ -33,10 +34,12 @@ class HomeAfterParentController extends GetxController {
 
   Future<void> homeAfterParent(int currentPage, int limit) async {
     print('homeAfterParent');
+    Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
     resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
     if (resultHomeAfterParent.data != null) {
+      Get.back();
       listGSGD = resultHomeAfterParent.data.dataDsgsgd;
       listGSPB = resultHomeAfterParent.data.dataDsgspb;
       // Get.to(HomeAfterParentScreen());
@@ -56,7 +59,9 @@ class HomeAfterParentController extends GetxController {
       Utils.showToast(resultSaveTutor.error.message);
     }
     update();
-  }Future<void> deleteTutorSaved(int idGS) async {
+  }
+
+  Future<void> deleteTutorSaved(int idGS) async {
     print('homeAfterParent');
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.deleteTutorSaved(token, idGS);

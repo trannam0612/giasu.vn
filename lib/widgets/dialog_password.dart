@@ -44,6 +44,7 @@ class DialogPassword extends StatelessWidget {
             InkWell(
               onTap: () {
                 Get.back();
+                Get.back();
               },
               child: Text(
                 'Đồng ý',
