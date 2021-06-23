@@ -15,7 +15,8 @@ import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 
 class InformationTeacherScreen extends StatelessWidget {
-  const InformationTeacherScreen({Key key}) : super(key: key);
+  final int check;
+  const InformationTeacherScreen({Key key, this.check}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +352,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Định Công, Hoàng Mai ,Hà Nội',
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -376,7 +377,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Chưa kết hôn',
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsMarriage,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -418,7 +419,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Giảng viên',
+                                controller.resultDetailTeacher.data.data.dataInfo.nametype,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -443,9 +444,34 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Hóa học',
+                                controller.resultDetailTeacher.data.data.dataInfo.asDetail,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.25,
+                          color: AppColors.greyAAAAAA,
+                        ),Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppDimens.padding14,
+                              vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Khu vực giảng dạy:',
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.textSize16,
+                                    color: AppColors.grey747474),
+                              ),
+                              Text(
+                                controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n'),
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.textSize16),
+                                textAlign: TextAlign.right,
                               ),
                             ],
                           ),
@@ -468,7 +494,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Lớp 10',
+                                controller.resultDetailTeacher.data.data.dataInfo.ctName,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -493,7 +519,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                     color: AppColors.grey747474),
                               ),
                               Text(
-                                'Gặp mặt',
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
                                 style: AppTextStyles.regularW400(context,
                                     size: AppDimens.textSize16),
                               ),
@@ -560,18 +586,18 @@ class InformationTeacherScreen extends StatelessWidget {
                                           },
                                           color: controller.listbuoiday[index]
                                                       .sang ==
-                                                  1
+                                                  '1'
                                               ? AppColors.secondaryF8971C
                                               : AppColors.whiteFFFFFF,
                                           textColor: controller
                                                       .listbuoiday[index]
                                                       .sang ==
-                                                  1
+                                                  '1'
                                               ? AppColors.whiteFFFFFF
                                               : AppColors.grey747474,
                                           hasSide: controller.listbuoiday[index]
                                                       .sang ==
-                                                  1
+                                                  '1'
                                               ? false
                                               : true,
                                         ),
@@ -586,18 +612,18 @@ class InformationTeacherScreen extends StatelessWidget {
                                           },
                                           color: controller.listbuoiday[index]
                                                       .chieu ==
-                                                  1
+                                                  '1'
                                               ? AppColors.secondaryF8971C
                                               : AppColors.whiteFFFFFF,
                                           textColor: controller
                                                       .listbuoiday[index]
                                                       .chieu ==
-                                                  1
+                                                  '1'
                                               ? AppColors.whiteFFFFFF
                                               : AppColors.grey747474,
                                           hasSide: controller.listbuoiday[index]
                                                       .chieu ==
-                                                  1
+                                                  '1'
                                               ? false
                                               : true,
                                         ),
@@ -612,17 +638,17 @@ class InformationTeacherScreen extends StatelessWidget {
                                           },
                                           color: controller
                                                       .listbuoiday[index].toi ==
-                                                  1
+                                                  '1'
                                               ? AppColors.secondaryF8971C
                                               : AppColors.whiteFFFFFF,
                                           textColor: controller
                                                       .listbuoiday[index].toi ==
-                                                  1
+                                                  '1'
                                               ? AppColors.whiteFFFFFF
                                               : AppColors.grey747474,
                                           hasSide: controller
                                                       .listbuoiday[index].toi ==
-                                                  1
+                                                  '1'
                                               ? false
                                               : true,
                                         ),
@@ -711,7 +737,7 @@ class InformationTeacherScreen extends StatelessWidget {
                         ),
                         ListView.separated(
                           shrinkWrap: true,
-                          itemCount: 5,
+                          itemCount: 1,
                           itemBuilder: (context, index) => Container(
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space16),
                             child: Row(

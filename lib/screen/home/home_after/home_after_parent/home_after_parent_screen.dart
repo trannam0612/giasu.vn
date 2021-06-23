@@ -25,6 +25,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_sa
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_suggest/list_class_suggest_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
@@ -42,6 +43,7 @@ class HomeAfterParentScreen extends StatefulWidget {
 }
 
 class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
   HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   LoginController loginController = Get.put(LoginController());
   @override
@@ -110,7 +112,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                     height: AppDimens.space10,
                   ),
                   Container(
-                    height: height * 0.16,
+                    height: height * 0.17,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
@@ -380,7 +382,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => InkWell(
-                              onTap: () => Get.to(InformationTeacherScreen()),
+                              onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSGD[index].ugsId), 0),
                               child: CardTeacherHome(
                                 image: controller.listGSGD[index].ugsAvatar,
                                 name: controller.listGSGD[index].ugsName,
