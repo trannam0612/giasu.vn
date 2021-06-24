@@ -88,7 +88,7 @@ class ListGsdd {
   String linkDetailClass;
   String asId;
   String asName;
-  String receivedDate;
+  bool receivedDate;
   String pftPrice;
   String pftMonth;
   String otStatus;
@@ -127,23 +127,19 @@ class ListGsdd {
 class Error {
   Error({
     this.result,
-    this.code,
     this.message,
   });
 
   bool result;
-  int code;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
     result: json["result"] == null ? null : json["result"],
-    code: json["code"] == null ? null : json["code"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
     "result": result == null ? null : result,
-    "code": code == null ? null : code,
     "message": message == null ? null : message,
   };
 }

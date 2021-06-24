@@ -9,6 +9,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_teaching/list_tutor_teaching_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
@@ -21,6 +22,7 @@ class ListTutorTeachingScreen extends StatefulWidget {
 
 class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
   ListTutorTeachingController listTutorTeachingController = Get.put(ListTutorTeachingController());
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
   ScrollController _controller = ScrollController();
   int i = 1;
 
@@ -77,189 +79,192 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                 physics: BouncingScrollPhysics(),
                 controller: _controller,
                 itemCount: controller.listGSDD.length,
-                itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
-                  child: SizedBox(
-                    height: height * 0.21,
-                    child: Stack(
-                      alignment: Alignment.topLeft,
-                      children: [
-                        Positioned.fill(
-                          left: 30,
-                          child: Container(
-                            padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
-                              BoxShadow(
-                                color: AppColors.black.withOpacity(0.25),
-                                spreadRadius: 0,
-                                blurRadius: 4,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      controller.listGSDD[index].ugsName,
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space6,
-                                    ),
-                                    RatingBar(
-                                      initialRating: 3,
-                                      itemSize: 12,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: false,
-                                      itemCount: 5,
-                                      ignoreGestures: true,
-                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                                      ratingWidget: RatingWidget(
-                                        full: SvgPicture.asset(Images.ic_star),
-                                        empty: SvgPicture.asset(Images.ic_star_border),
-                                      ),
-                                      unratedColor: AppColors.greyAAAAAA,
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space16,
-                                ),
-                                Text(
-                                  controller.listGSDD[index].pftSummary,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Ngày bắt đầu dạy:',
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space4,
-                                    ),
-                                    Text(
-                                      controller.listGSDD[index].receivedDate,
-                                      style: AppTextStyles.regularW400(
-                                        context,
-                                        size: AppDimens.textSize14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            SvgPicture.asset(
-                                              Images.ic_book,
-                                              width: 16,
-                                              height: 16,
-                                            ),
-                                            SizedBox(
-                                              width: AppDimens.space6,
-                                            ),
-                                            Text(
-                                              controller.listGSDD[index].asName,
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: AppDimens.space6,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            SvgPicture.asset(
-                                              Images.ic_money,
-                                              color: AppColors.secondaryF8971C,
-                                              width: 16,
-                                              height: 16,
-                                            ),
-                                            SizedBox(
-                                              width: AppDimens.space6,
-                                            ),
-                                            Text(
-                                              "${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}",
-                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 95,
-                                      height: 30,
-                                      child: CustomButton1(
-                                        backColor: AppColors.whiteFFFFFF,
-                                        title: controller.listGSDD[index].otStatus,
-                                        color: AppColors.primary4C5BD4,
-                                        textColor: AppColors.secondaryF8971C,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 10,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              boxShadow: [
+                itemBuilder: (context, index) => InkWell(
+                  onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSDD[index].ugsId), 0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
+                    child: SizedBox(
+                      height: height * 0.21,
+                      child: Stack(
+                        alignment: Alignment.topLeft,
+                        children: [
+                          Positioned.fill(
+                            left: 30,
+                            child: Container(
+                              padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
                                 BoxShadow(
                                   color: AppColors.black.withOpacity(0.25),
                                   spreadRadius: 0,
-                                  blurRadius: 3,
+                                  blurRadius: 4,
                                   offset: Offset(0, 3), // changes position of shadow
                                 ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
-                              child: CachedNetworkImage(
-                                imageUrl: 'https://newsmd1fr.keeng.net/tiin/archive/images/20201018/222252_dsc_8457_2.jpg',
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(value: downloadProgress.progress),
-                                ),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        controller.listGSDD[index].ugsName,
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space6,
+                                      ),
+                                      RatingBar(
+                                        initialRating: 3,
+                                        itemSize: 12,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: false,
+                                        itemCount: 5,
+                                        ignoreGestures: true,
+                                        itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                        ratingWidget: RatingWidget(
+                                          full: SvgPicture.asset(Images.ic_star),
+                                          empty: SvgPicture.asset(Images.ic_star_border),
+                                        ),
+                                        unratedColor: AppColors.greyAAAAAA,
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space16,
+                                  ),
+                                  Text(
+                                    controller.listGSDD[index].pftSummary,
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space6,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Ngày bắt đầu dạy:',
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                                      ),
+                                      SizedBox(
+                                        width: AppDimens.space4,
+                                      ),
+                                      Text(
+                                        '15/08/2000',
+                                        style: AppTextStyles.regularW400(
+                                          context,
+                                          size: AppDimens.textSize14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space6,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SvgPicture.asset(
+                                                Images.ic_book,
+                                                width: 16,
+                                                height: 16,
+                                              ),
+                                              SizedBox(
+                                                width: AppDimens.space6,
+                                              ),
+                                              Text(
+                                                controller.listGSDD[index].asName,
+                                                style: AppTextStyles.regular(
+                                                  context,
+                                                  size: AppDimens.textSize14,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: AppDimens.space6,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SvgPicture.asset(
+                                                Images.ic_money,
+                                                color: AppColors.secondaryF8971C,
+                                                width: 16,
+                                                height: 16,
+                                              ),
+                                              SizedBox(
+                                                width: AppDimens.space6,
+                                              ),
+                                              Text(
+                                                "${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}",
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 95,
+                                        height: 30,
+                                        child: CustomButton1(
+                                          backColor: AppColors.whiteFFFFFF,
+                                          title: controller.listGSDD[index].otStatus,
+                                          color: AppColors.primary4C5BD4,
+                                          textColor: AppColors.secondaryF8971C,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            top: 10,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.black.withOpacity(0.25),
+                                    spreadRadius: 0,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(80),
+                                child: CachedNetworkImage(
+                                  imageUrl: 'https://newsmd1fr.keeng.net/tiin/archive/images/20201018/222252_dsc_8457_2.jpg',
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(value: downloadProgress.progress),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
