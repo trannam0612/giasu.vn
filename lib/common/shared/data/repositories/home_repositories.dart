@@ -304,8 +304,44 @@ class HomeRepositories {
     return rest;
   }
 
-  Future<ResultData> detailClass(int idClass) async {
-    ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
+  Future<ResultData> deleteParentSaved(String token, int idPH) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_ph': idPH};
+
+    ResultData rest = await httpManager.netFetch(Address.DELETE_PARENT_SAVED, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> deleteTutorPointFree(String token, int idGS) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS};
+
+    ResultData rest = await httpManager.netFetch(Address.DELETE_TUTOR_POINT_FREE, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> minusPoint(String token, int idGS) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': token, 'id_gs': idGS};
+
+    ResultData rest = await httpManager.netFetch(Address.MINUS_POINT, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> detailClass(String token, int idClass) async {
+    ResultData rest = await httpManager.netFetch(Address.detailClass(token, idClass), null, null, Options(method: 'get'));
     return rest;
   }
 

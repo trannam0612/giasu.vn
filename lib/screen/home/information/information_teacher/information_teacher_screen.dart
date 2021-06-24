@@ -16,6 +16,7 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:giasu_vn/widgets/dialog_watch_teacher.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'checkbox_list_class.dart';
@@ -176,81 +177,94 @@ class InformationTeacherScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: SvgPicture.asset(
-                                    Images.ic_call,
-                                    width: 18,
+                        InkWell(
+                          onTap: () => Get.dialog(DialogWatchTeacher(
+                            teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                            nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                            ontap: () {
+                              controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                              controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
+                              Get.back();
+                              controller.update();
+
+                            },
+                          )),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
                                     height: 18,
-                                    color: AppColors.grey747474,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                    ? Text(
-                                        controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
-                                      )
-                                    : Container(
-                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                        child: Text(
-                                          'sử dụng 1 điểm để xem',
-                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: AppDimens.space6,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 18,
-                                  width: 18,
-                                  child: SvgPicture.asset(
-                                    Images.ic_mail,
                                     width: 18,
-                                    height: 18,
-                                    color: AppColors.grey747474,
+                                    child: SvgPicture.asset(
+                                      Images.ic_call,
+                                      width: 18,
+                                      height: 18,
+                                      color: AppColors.grey747474,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                    ? Container(
-                                      width: AppDimens.width*0.3,
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Text(
-                                            controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                  SizedBox(
+                                    width: AppDimens.space6,
+                                  ),
+                                  controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                      ? Text(
+                                          controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
+                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                        )
+                                      : Container(
+                                          padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                          child: Text(
+                                            'sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
                                           ),
-                                      ),
-                                    )
-                                    : Container(
-                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                        child: Text(
-                                          'sử dụng 1 điểm để xem',
-                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
                                         ),
-                                      ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              SizedBox(
+                                height: AppDimens.space6,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 18,
+                                    width: 18,
+                                    child: SvgPicture.asset(
+                                      Images.ic_mail,
+                                      width: 18,
+                                      height: 18,
+                                      color: AppColors.grey747474,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: AppDimens.space6,
+                                  ),
+                                  controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                      ? Container(
+                                        width: AppDimens.width*0.3,
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                              controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
+                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                            ),
+                                        ),
+                                      )
+                                      : Container(
+                                          padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                          child: Text(
+                                            'sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

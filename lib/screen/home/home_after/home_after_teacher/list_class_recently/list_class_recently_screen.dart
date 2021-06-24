@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:intl/intl.dart';
 
 class ListClassRecentlyScreen extends StatefulWidget {
@@ -57,6 +58,7 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
   ScrollController _controller = ScrollController();
   LoginController loginController = Get.put(LoginController());
   ListClassRecentlyController listClassRecentlyController = Get.put(ListClassRecentlyController());
+  InformationClassController informationClassController = Get.put(InformationClassController());
   int i = 1;
 
   @override
@@ -100,191 +102,203 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space6),
+          padding: EdgeInsets.symmetric(horizontal: AppDimens.space14, vertical: AppDimens.space6),
           width: AppDimens.width,
           child: controller.listLHGDMore.isNotEmpty ? ListView.builder(
             physics: BouncingScrollPhysics(),
               controller: _controller,
               scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) => Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                      borderRadius: BorderRadius.circular(AppDimens.space16),
-                    ),
-                    child: Container(
-                      padding: EdgeInsets.all(AppDimens.padding12),
-                      width: AppDimens.width,
+              itemBuilder: (context, index) => InkWell(
+                onTap: () => informationClassController.detailClass(int.parse(controller.listLHGDMore[index].pftId), 0),
+                child: Container(
+                      margin: EdgeInsets.only(bottom: 10, right: 1),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppDimens.space16),
-                        color: AppColors.whiteFFFFFF,
+                        border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                        borderRadius: BorderRadius.circular(AppDimens.space14),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  controller.listLHGDMore[index].pftSummary,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                      child: Container(
+                        padding: EdgeInsets.all(AppDimens.padding12),
+                        width: AppDimens.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space14),
+                          color: AppColors.whiteFFFFFF,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    controller.listLHGDMore[index].pftSummary,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: AppDimens.space10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                              ],
+                            ),
+                            SizedBox(
+                              height: AppDimens.space10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  flex: 7,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      SvgPicture.asset(
-                                        Images.ic_money,
-                                        width: 16,
-                                        height: 16,
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Images.ic_money,
+                                            width: 14,
+                                            height: 14,
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space8,
+                                          ),
+                                          Text(
+                                            '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGDMore[index].pftMonth}',
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(
-                                        width: AppDimens.space8,
+                                        height: AppDimens.space6,
                                       ),
-                                      Text(
-                                        '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGDMore[index].pftMonth}',
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize16,
-                                        ),
-                                        overflow: TextOverflow.fade,
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Images.ic_book,
+                                            width: 14,
+                                            height: 14,
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space8,
+                                          ),
+                                          Text(
+                                            controller.listLHGDMore[index].asDetailName,
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space6,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Images.ic_location,
+                                            width: 14,
+                                            height: 14,
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space8,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              '${controller.listLHGDMore[index].ctyDetail}, ${controller.listLHGDMore[index].citName}',
+                                              style: AppTextStyles.regular(
+                                                context,
+                                                size: AppDimens.textSize14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                ),
+                                Flexible(
+                                  flex: 6,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      SvgPicture.asset(
-                                        Images.ic_book,
-                                        width: 16,
-                                        height: 16,
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Ngày đăng:',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space4,
+                                          ),
+                                          Text(
+                                            convertDate(int.parse(controller.listLHGDMore[index].dayPost)),
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(
-                                        width: AppDimens.space8,
+                                        height: AppDimens.space6,
                                       ),
-                                      Text(
-                                        controller.listLHGDMore[index].asDetailName,
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize16,
-                                        ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Mã lớp:',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space6,
+                                          ),
+                                          Text(
+                                            controller.listLHGDMore[index].pftId,
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space6,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Hình thức:',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space8,
+                                          ),
+                                          Text(
+                                            controller.listLHGDMore[index].pftForm,
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        Images.ic_location,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space8,
-                                      ),
-                                      Text(
-                                        '${controller.listLHGDMore[index].citName}',
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Ngày đăng:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space4,
-                                      ),
-                                      Text(
-                                        convertDate(int.parse(controller.listLHGDMore[index].dayPost)),
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Mã lớp:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space6,
-                                      ),
-                                      Text(
-                                        controller.listLHGDMore[index].pftId,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Hình thức:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space8,
-                                      ),
-                                      Text(
-                                        controller.listLHGDMore[index].pftForm,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
+              ),
               itemCount: controller.listLHGDMore.length) : Center(
             child: Text('Danh sách trống', style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, color: AppColors.grey747474),),
           ),

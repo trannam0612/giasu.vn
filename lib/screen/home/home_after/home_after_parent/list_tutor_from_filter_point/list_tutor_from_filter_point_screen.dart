@@ -76,173 +76,157 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
           physics: BouncingScrollPhysics(),
           controller: _controller,
           itemCount: controller.listGSTDL.length,
-          itemBuilder: (context, index) => Slidable(
-            actionPane: SlidableDrawerActionPane(),
-            actionExtentRatio: 0.15,
-            secondaryActions: [
-              Padding(
-                padding: const EdgeInsets.all(2.5),
-                child: IconSlideAction(
-                  caption: 'Xoá',
-                  color: AppColors.redEB5757,
-                  icon: Icons.delete_outline,
-                  onTap: () {
-                    // homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDL[index].ugsTeach));
-                    // controller.listGSDL.remove(controller.listGSDL[index]);
-                    // controller.update();
-                  },
-                ),
-              ),
-            ],
-            child: InkWell(
-              onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSTDL[index].ugsId), 0),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
-                child: SizedBox(
-                  height: AppDimens.height * 0.17,
-                  child: Stack(
-                    alignment: Alignment.topLeft,
-                    children: [
-                      Positioned.fill(
-                        left: 30,
-                        child: Container(
-                          padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
+          itemBuilder: (context, index) => InkWell(
+            onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSTDL[index].ugsId), 0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
+              child: SizedBox(
+                height: AppDimens.height * 0.17,
+                child: Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Positioned.fill(
+                      left: 30,
+                      child: Container(
+                        padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
+                          BoxShadow(
+                            color: AppColors.black.withOpacity(0.25),
+                            spreadRadius: 0,
+                            blurRadius: 4,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  controller.listGSTDL[index].ugsName,
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space6,
+                                ),
+                                RatingBar(
+                                  initialRating: 3,
+                                  itemSize: 12,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: false,
+                                  itemCount: 5,
+                                  ignoreGestures: true,
+                                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                  ratingWidget: RatingWidget(
+                                    full: SvgPicture.asset(Images.ic_star),
+                                    empty: SvgPicture.asset(Images.ic_star_border),
+                                  ),
+                                  unratedColor: AppColors.greyAAAAAA,
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: AppDimens.space6,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Ngày xem hồ sơ:',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                                ),
+                                SizedBox(
+                                  width: AppDimens.space4,
+                                ),
+                                Text(
+                                  controller.listGSTDL[index].suStatus,
+                                  style: AppTextStyles.regularW400(
+                                    context,
+                                    size: AppDimens.textSize14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: AppDimens.space6,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Điểm lọc:',
+                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space6,
+                                    ),
+                                    Text(
+                                      controller.listGSTDL[index].suStatus,
+                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.redFF0033),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 95,
+                                  height: 30,
+                                  child: CustomButton1(
+
+                                    backColor: AppColors.whiteFFFFFF,
+                                    title: 'Xoá',
+                                    color: AppColors.primary4C5BD4,
+                                    onPressed: () {
+                                      controller.deleteTutorPointFree(int.parse(controller.listGSTDL[index].ugsId));
+                                      controller.listGSTDL.remove(controller.listGSTDL[index]);
+                                      controller.update();
+                                    },
+                                    textColor: AppColors.secondaryF8971C,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          boxShadow: [
                             BoxShadow(
                               color: AppColors.black.withOpacity(0.25),
                               spreadRadius: 0,
-                              blurRadius: 4,
+                              blurRadius: 3,
                               offset: Offset(0, 3), // changes position of shadow
                             ),
-                          ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.listGSTDL[index].ugsName,
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  RatingBar(
-                                    initialRating: 3,
-                                    itemSize: 12,
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: false,
-                                    itemCount: 5,
-                                    ignoreGestures: true,
-                                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                                    ratingWidget: RatingWidget(
-                                      full: SvgPicture.asset(Images.ic_star),
-                                      empty: SvgPicture.asset(Images.ic_star_border),
-                                    ),
-                                    unratedColor: AppColors.greyAAAAAA,
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: AppDimens.space6,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Ngày xem hồ sơ:',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                  ),
-                                  SizedBox(
-                                    width: AppDimens.space4,
-                                  ),
-                                  Text(
-                                    controller.listGSTDL[index].suStatus,
-                                    style: AppTextStyles.regularW400(
-                                      context,
-                                      size: AppDimens.textSize14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: AppDimens.space6,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Điểm lọc:',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space6,
-                                      ),
-                                      Text(
-                                        controller.listGSTDL[index].suStatus,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.redFF0033),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 95,
-                                    height: 30,
-                                    child: CustomButton1(
-
-                                      backColor: AppColors.whiteFFFFFF,
-                                      title: 'Xoá',
-                                      color: AppColors.primary4C5BD4,
-                                      onPressed: () {
-                                      },
-                                      textColor: AppColors.secondaryF8971C,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.black.withOpacity(0.25),
-                                spreadRadius: 0,
-                                blurRadius: 3,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(80),
-                            child: CachedNetworkImage(
-                              imageUrl: controller.listGSTDL[index].ugsAvatar,
-                              width: 60,
-                              height: 60,
-                              fit: BoxFit.cover,
-                              progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(value: downloadProgress.progress),
-                              ),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(80),
+                          child: CachedNetworkImage(
+                            imageUrl: controller.listGSTDL[index].ugsAvatar,
+                            width: 60,
+                            height: 60,
+                            fit: BoxFit.cover,
+                            progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                              child: CircularProgressIndicator(value: downloadProgress.progress),
                             ),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
