@@ -128,76 +128,82 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        Images.ic_money,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space8,
-                                      ),
-                                      Text(
-                                        '${controller.listClassPosted[index].pftPrice}vnđ/${controller.listClassPosted[index].pftMonth}',
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        Images.ic_book,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space8,
-                                      ),
-                                      Text(
-                                        controller.listClassPosted[index].asNameDetail,
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize14,
+                              Flexible(
+                                flex: 7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(
+                                          Images.ic_money,
+                                          width: 16,
+                                          height: 16,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space6,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SvgPicture.asset(
-                                        Images.ic_location,
-                                        width: 16,
-                                        height: 16,
-                                      ),
-                                      SizedBox(
-                                        width: AppDimens.space8,
-                                      ),
-                                      Text(
-                                        '${controller.listClassPosted[index].ctyDetail}, ${controller.listClassPosted[index].citName} ',
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize14,
+                                        SizedBox(
+                                          width: AppDimens.space8,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                        Text(
+                                          '${controller.listClassPosted[index].pftPrice}vnđ/${controller.listClassPosted[index].pftMonth}',
+                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: AppDimens.space6,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(
+                                          Images.ic_book,
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.space8,
+                                        ),
+                                        Text(
+                                          controller.listClassPosted[index].asNameDetail,
+                                          style: AppTextStyles.regular(
+                                            context,
+                                            size: AppDimens.textSize14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: AppDimens.space6,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(
+                                          Images.ic_location,
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.space8,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            '${controller.listClassPosted[index].ctyDetail}, ${controller.listClassPosted[index].citName} ',
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,20 +293,20 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                       textColor: AppColors.whiteFFFFFF,
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: AppDimens.space20,
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                    width: 95,
-                                    child: CustomButton1(
-                                      textColor: AppColors.black,
-                                      onPressed: () {},
-                                      color: AppColors.grey747474,
-                                      title: 'Xoá bài',
-                                      backColor: AppColors.whiteFFFFFF,
-                                    ),
-                                  )
+                                  // SizedBox(
+                                  //   width: AppDimens.space20,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 30,
+                                  //   width: 95,
+                                  //   child: CustomButton1(
+                                  //     textColor: AppColors.black,
+                                  //     onPressed: () {},
+                                  //     color: AppColors.grey747474,
+                                  //     title: 'Xoá bài',
+                                  //     backColor: AppColors.whiteFFFFFF,
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ],

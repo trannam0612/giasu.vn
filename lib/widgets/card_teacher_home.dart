@@ -21,7 +21,7 @@ class CardTeacherHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Container(
-      width: width * 0.5,
+      width: width * 0.55,
       padding: EdgeInsets.symmetric(
           horizontal: AppDimens.space8, vertical: AppDimens.space12),
       margin: EdgeInsets.only(left: 0, top: 15, right: 0, bottom: 20),
@@ -64,6 +64,7 @@ class CardTeacherHome extends StatelessWidget {
                 children: [
                   Text(
                     name,
+                    overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.regularW500(context,
                         size: AppDimens.textSize14),
                   ),

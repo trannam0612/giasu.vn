@@ -112,7 +112,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                     height: AppDimens.space10,
                   ),
                   Container(
-                    height: height * 0.16,
+                    height: height * 0.17,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       physics: BouncingScrollPhysics(),
@@ -342,7 +342,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                     ],
                   ),
                   Container(
-                      height: AppDimens.height * 0.195,
+                      height: AppDimens.height * 0.21,
                       child: ListView.separated(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,

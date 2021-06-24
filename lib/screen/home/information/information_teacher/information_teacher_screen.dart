@@ -4,21 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:sp_util/sp_util.dart';
+
+import 'checkbox_list_class.dart';
 
 class InformationTeacherScreen extends StatelessWidget {
-  const InformationTeacherScreen({Key key}) : super(key: key);
+  final int type;
+
+  const InformationTeacherScreen({Key key, this.type = 0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
+    ListTeacherSuggestController listTeacherSuggestController = Get.put(ListTeacherSuggestController());
     return GetBuilder<InformationTeacherController>(
       init: InformationTeacherController(),
       builder: (controller) => Scaffold(
@@ -26,10 +36,7 @@ class InformationTeacherScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               'Thông tin gia sư',
-              style: AppTextStyles.regularW500(context,
-                  size: AppDimens.textSize24,
-                  lineHeight: AppDimens.textSize28,
-                  color: AppColors.whiteFFFFFF),
+              style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
             ),
             backgroundColor: AppColors.primary4C5BD4,
             elevation: 0,
@@ -49,10 +56,7 @@ class InformationTeacherScreen extends StatelessWidget {
             child: Container(
               width: AppDimens.width,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
-                    image: ExactAssetImage(Images.bg_background_container)),
+                image: DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
               ),
               padding: EdgeInsets.all(AppDimens.space16),
               child: Column(
@@ -64,13 +68,11 @@ class InformationTeacherScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(80),
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
-                      imageUrl:
-                          controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                      imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
                       width: 85,
                       height: 85,
                       progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress),
+                        child: CircularProgressIndicator(value: downloadProgress.progress),
                       ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
@@ -80,10 +82,7 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                    style: AppTextStyles.regularW700(context,
-                        size: AppDimens.textSize20,
-                        color: AppColors.whiteFFFFFF,
-                        lineHeight: AppDimens.textSize24),
+                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -112,21 +111,19 @@ class InformationTeacherScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(AppDimens.space20),
                     width: AppDimens.width,
-                    decoration: BoxDecoration(
-                        color: AppColors.whiteFFFFFF,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.black.withOpacity(0.25),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: Offset(0, 2), // changes position of shadow
-                          ),
-                        ]),
-                    child: Column(
+                    decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(10), boxShadow: [
+                      BoxShadow(
+                        color: AppColors.black.withOpacity(0.25),
+                        spreadRadius: 0,
+                        blurRadius: 4,
+                        offset: Offset(0, 2), // changes position of shadow
+                      ),
+                    ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,7 +139,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.asDetail,
+                                  controller.resultDetailTeacher.data.data.dataInfo.asIdName.join(', '),
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,
@@ -150,43 +147,9 @@ class InformationTeacherScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_call,
-                                  width: 18,
-                                  height: 18,
-                                  color: AppColors.grey747474,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space8,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: AppDimens.space4,
-                                      horizontal: AppDimens.space8),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primary4C5BD4,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Text(
-                                    'sử dụng 1 điểm để xem',
-                                    style: AppTextStyles.regular(context,
-                                        size: AppDimens.textSize14,
-                                        color: AppColors.whiteFFFFFF),
-                                  ),
-                                ),
-                              ],
+                            SizedBox(
+                              height: AppDimens.space6,
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -201,7 +164,9 @@ class InformationTeacherScreen extends StatelessWidget {
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  '300.000 vnđ/giờ',
+                                  controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary}vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice}vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,
@@ -209,33 +174,80 @@ class InformationTeacherScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SvgPicture.asset(
-                                  Images.ic_mail,
-                                  width: 18,
-                                  height: 18,
-                                  color: AppColors.grey747474,
-                                ),
                                 SizedBox(
-                                  width: AppDimens.space8,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: AppDimens.space4,
-                                      horizontal: AppDimens.space8),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primary4C5BD4,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Text(
-                                    'sử dụng 1 điểm để xem',
-                                    style: AppTextStyles.regular(context,
-                                        size: AppDimens.textSize14,
-                                        color: AppColors.whiteFFFFFF),
+                                  height: 18,
+                                  width: 18,
+                                  child: SvgPicture.asset(
+                                    Images.ic_call,
+                                    width: 18,
+                                    height: 18,
+                                    color: AppColors.grey747474,
                                   ),
                                 ),
+                                SizedBox(
+                                  width: AppDimens.space6,
+                                ),
+                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                    ? Text(
+                                        controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                      )
+                                    : Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                        child: Text(
+                                          'sử dụng 1 điểm để xem',
+                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                        ),
+                                      ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: AppDimens.space6,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 18,
+                                  width: 18,
+                                  child: SvgPicture.asset(
+                                    Images.ic_mail,
+                                    width: 18,
+                                    height: 18,
+                                    color: AppColors.grey747474,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: AppDimens.space6,
+                                ),
+                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                    ? Container(
+                                      width: AppDimens.width*0.3,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text(
+                                            controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                          ),
+                                      ),
+                                    )
+                                    : Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                        child: Text(
+                                          'sử dụng 1 điểm để xem',
+                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                        ),
+                                      ),
                               ],
                             ),
                           ],
@@ -248,24 +260,19 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     'Giới thiệu chung',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
                   ),
                   Container(
-                    height: AppDimens.height *0.2,
+                    height: AppDimens.height * 0.2,
+                    width: AppDimens.width,
                     padding: EdgeInsets.all(AppDimens.space14),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.whiteFFFFFF),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
                     child: Text(
                       controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
-                      style: AppTextStyles.regularW400(context,
-                          size: AppDimens.textSize14,
-                          color: AppColors.grey747474,
-                          lineHeight: AppDimens.textSize18),
+                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -274,36 +281,28 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     'Thông tin cá nhân',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppDimens.space8),
-                    decoration: BoxDecoration(
-                        color: AppColors.whiteFFFFFF,
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(10)),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Giới tính:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
                                 controller.resultDetailTeacher.data.data.dataInfo.ugsGender,
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -313,22 +312,17 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Ngày sinh:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
                                 controller.resultDetailTeacher.data.data.dataInfo.ugsBrithday,
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -338,22 +332,17 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Địa chỉ:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Định Công, Hoàng Mai ,Hà Nội',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -363,22 +352,17 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Tình trạng hôn nhân:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Chưa kết hôn',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsMarriage,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -391,36 +375,28 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     'Thông tin giảng dạy',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppDimens.space8),
-                    decoration: BoxDecoration(
-                        color: AppColors.whiteFFFFFF,
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(10)),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Kiểu gia sư:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Giảng viên',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.nametype,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -430,22 +406,17 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'môn học giảng dạy:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Hóa học',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n'),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
                               ),
                             ],
                           ),
@@ -455,22 +426,38 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Khu vực giảng dạy:',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              ),
+                              Text(
+                                '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')}, ${controller.resultDetailTeacher.data.data.dataInfo.cityName}',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.25,
+                          color: AppColors.greyAAAAAA,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Lớp học giảng dạy:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Lớp 10',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.ctName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -480,22 +467,17 @@ class InformationTeacherScreen extends StatelessWidget {
                           color: AppColors.greyAAAAAA,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: AppDimens.padding14,
-                              vertical: AppDimens.padding8),
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Hình thức giảng dạy:',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.grey747474),
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                'Gặp mặt',
-                                style: AppTextStyles.regularW400(context,
-                                    size: AppDimens.textSize16),
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
                           ),
@@ -508,8 +490,7 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     'Lịch học có thể dạy',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -529,14 +510,12 @@ class InformationTeacherScreen extends StatelessWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppDimens.padding20),
+                      padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding20),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: AppDimens.smallPadding10),
+                            padding: EdgeInsets.symmetric(vertical: AppDimens.smallPadding10),
                             child: ListView.separated(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
@@ -546,10 +525,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                         Text(
                                           controller.listbuoiday[index].thu,
                                           textAlign: TextAlign.center,
-                                          style: AppTextStyles.regularW400(
-                                              context,
-                                              size: AppDimens.textSize14,
-                                              color: AppColors.black),
+                                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.black),
                                         ),
                                         Spacer(),
                                         CustomButton3(
@@ -558,22 +534,9 @@ class InformationTeacherScreen extends StatelessWidget {
                                             // controller.listbuoiday[index].sang = controller.listbuoiday[index].sang;
                                             // controller.update();
                                           },
-                                          color: controller.listbuoiday[index]
-                                                      .sang ==
-                                                  1
-                                              ? AppColors.secondaryF8971C
-                                              : AppColors.whiteFFFFFF,
-                                          textColor: controller
-                                                      .listbuoiday[index]
-                                                      .sang ==
-                                                  1
-                                              ? AppColors.whiteFFFFFF
-                                              : AppColors.grey747474,
-                                          hasSide: controller.listbuoiday[index]
-                                                      .sang ==
-                                                  1
-                                              ? false
-                                              : true,
+                                          color: controller.listbuoiday[index].sang == '1' ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].sang == '1' ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].sang == '1' ? false : true,
                                         ),
                                         SizedBox(
                                           width: AppDimens.padding20,
@@ -584,22 +547,9 @@ class InformationTeacherScreen extends StatelessWidget {
                                             // controller.listbuoiday[index].chieu = !controller.listbuoiday[index].chieu;
                                             // controller.update();
                                           },
-                                          color: controller.listbuoiday[index]
-                                                      .chieu ==
-                                                  1
-                                              ? AppColors.secondaryF8971C
-                                              : AppColors.whiteFFFFFF,
-                                          textColor: controller
-                                                      .listbuoiday[index]
-                                                      .chieu ==
-                                                  1
-                                              ? AppColors.whiteFFFFFF
-                                              : AppColors.grey747474,
-                                          hasSide: controller.listbuoiday[index]
-                                                      .chieu ==
-                                                  1
-                                              ? false
-                                              : true,
+                                          color: controller.listbuoiday[index].chieu == '1' ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].chieu == '1' ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].chieu == '1' ? false : true,
                                         ),
                                         SizedBox(
                                           width: AppDimens.padding20,
@@ -610,21 +560,9 @@ class InformationTeacherScreen extends StatelessWidget {
                                             // controller.listbuoiday[index].toi = !controller.listbuoiday[index].toi;
                                             // controller.update();
                                           },
-                                          color: controller
-                                                      .listbuoiday[index].toi ==
-                                                  1
-                                              ? AppColors.secondaryF8971C
-                                              : AppColors.whiteFFFFFF,
-                                          textColor: controller
-                                                      .listbuoiday[index].toi ==
-                                                  1
-                                              ? AppColors.whiteFFFFFF
-                                              : AppColors.grey747474,
-                                          hasSide: controller
-                                                      .listbuoiday[index].toi ==
-                                                  1
-                                              ? false
-                                              : true,
+                                          color: controller.listbuoiday[index].toi == '1' ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].toi == '1' ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].toi == '1' ? false : true,
                                         ),
                                       ],
                                     ),
@@ -642,16 +580,13 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     'Đánh giá',
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize20),
+                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: AppDimens.space16,
-                        horizontal: AppDimens.space20),
+                    padding: EdgeInsets.symmetric(vertical: AppDimens.space16, horizontal: AppDimens.space20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(AppDimens.space10),
                       color: AppColors.whiteFFFFFF,
@@ -700,9 +635,7 @@ class InformationTeacherScreen extends StatelessWidget {
                             onPressed: () {},
                             child: Text(
                               'Đánh giá',
-                              style: AppTextStyles.regularW400(context,
-                                  size: AppDimens.textSize16,
-                                  color: AppColors.whiteFFFFFF),
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF),
                             ),
                           ),
                         ),
@@ -711,7 +644,7 @@ class InformationTeacherScreen extends StatelessWidget {
                         ),
                         ListView.separated(
                           shrinkWrap: true,
-                          itemCount: 5,
+                          itemCount: 1,
                           itemBuilder: (context, index) => Container(
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space16),
                             child: Row(
@@ -721,25 +654,21 @@ class InformationTeacherScreen extends StatelessWidget {
                                 Container(
                                   decoration: BoxDecoration(boxShadow: [
                                     BoxShadow(
-                                      color:
-                                          AppColors.greyC4C4C4.withOpacity(0.25),
+                                      color: AppColors.greyC4C4C4.withOpacity(0.25),
                                       spreadRadius: 0,
                                       blurRadius: 9,
-                                      offset: Offset(
-                                          0, 2), // changes position of shadow
+                                      offset: Offset(0, 2), // changes position of shadow
                                     ),
                                   ]),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
                                     child: CachedNetworkImage(
-                                      imageUrl:
-                                          'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
+                                      imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
                                       height: 50,
                                       width: 50,
                                       fit: BoxFit.cover,
                                       progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                        child: CircularProgressIndicator(
-                                            value: downloadProgress.progress),
+                                        child: CircularProgressIndicator(value: downloadProgress.progress),
                                       ),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                     ),
@@ -755,9 +684,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                         ),
                                         Text(
                                           'Nguyễn Thị A',
-                                          style: AppTextStyles.regularW700(
-                                              context,
-                                              size: AppDimens.textSize16),
+                                          style: AppTextStyles.regularW700(context, size: AppDimens.textSize16),
                                         ),
                                         SizedBox(
                                           width: AppDimens.space12,
@@ -770,13 +697,10 @@ class InformationTeacherScreen extends StatelessWidget {
                                           allowHalfRating: false,
                                           itemCount: 5,
                                           ignoreGestures: true,
-                                          itemPadding: EdgeInsets.symmetric(
-                                              horizontal: 3.0),
+                                          itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
                                           ratingWidget: RatingWidget(
-                                            full:
-                                                SvgPicture.asset(Images.ic_star),
-                                            empty: SvgPicture.asset(
-                                                Images.ic_star_border),
+                                            full: SvgPicture.asset(Images.ic_star),
+                                            empty: SvgPicture.asset(Images.ic_star_border),
                                           ),
                                           unratedColor: AppColors.greyAAAAAA,
                                           onRatingUpdate: (rating) {
@@ -789,13 +713,10 @@ class InformationTeacherScreen extends StatelessWidget {
                                       height: AppDimens.space4,
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: AppDimens.space12),
+                                      padding: const EdgeInsets.only(left: AppDimens.space12),
                                       child: Text(
                                         '50 ngày trước',
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14,
-                                            color: AppColors.greyAAAAAA),
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                       ),
                                     ),
                                     SizedBox(
@@ -807,68 +728,67 @@ class InformationTeacherScreen extends StatelessWidget {
                                         'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
                                         softWrap: true,
                                         textAlign: TextAlign.left,
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14,
-                                            lineHeight: AppDimens.textSize16,
-                                            color: AppColors.grey747474),
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                     ),
                                     SizedBox(
                                       height: AppDimens.space14,
                                     ),
                                     GestureDetector(
-                                      onTap:() {
-
-                                      },
+                                      onTap: () {},
                                       child: Row(
                                         children: [
                                           Text(
                                             '1 phản hồi',
-                                            style: AppTextStyles.regularW700(
-                                                context,
-                                                size: AppDimens.textSize14,
-                                                color: AppColors.greyAAAAAA),
+                                            style: AppTextStyles.regularW700(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                           ),
                                           SizedBox(
                                             width: AppDimens.space6,
                                           ),
                                           SvgPicture.asset(Images.ic_arrow_down),
-                                          SizedBox(height: AppDimens.space14,),
+                                          SizedBox(
+                                            height: AppDimens.space14,
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: AppDimens.space16,),
+                                    SizedBox(
+                                      height: AppDimens.space16,
+                                    ),
                                     Row(
                                       children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(80),
                                           child: CachedNetworkImage(
-                                            imageUrl:
-                                            'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
+                                            imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
                                             height: 38,
                                             width: 38,
                                             fit: BoxFit.cover,
                                             progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                              child: CircularProgressIndicator(
-                                                  value: downloadProgress.progress),
+                                              child: CircularProgressIndicator(value: downloadProgress.progress),
                                             ),
                                             errorWidget: (context, url, error) => Icon(Icons.error),
                                           ),
                                         ),
-                                        SizedBox(width: AppDimens.space8,),
+                                        SizedBox(
+                                          width: AppDimens.space8,
+                                        ),
                                         Column(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Nguyễn Văn Tuấn Anh', style: AppTextStyles.regularW700(context, size: AppDimens.textSize14),
+                                              'Nguyễn Văn Tuấn Anh',
+                                              style: AppTextStyles.regularW700(context, size: AppDimens.textSize14),
                                             ),
-                                            SizedBox(height: AppDimens.space2,),
+                                            SizedBox(
+                                              height: AppDimens.space2,
+                                            ),
                                             Text(
-                                              '50 ngày trước',style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                                              '50 ngày trước',
+                                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                             ),
                                             Text('Cảm ơn cô đã quan tâm.'),
-
                                           ],
                                         )
                                       ],
@@ -878,43 +798,133 @@ class InformationTeacherScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          separatorBuilder: (context, index) => Divider(color: AppColors.grey747474, thickness: 0.15,),
+                          separatorBuilder: (context, index) => Divider(
+                            color: AppColors.grey747474,
+                            thickness: 0.15,
+                          ),
                         )
                       ],
                     ),
                   ),
-                  SizedBox(height: AppDimens.space16,),
-                  Row(
-                    children: [
-                      Spacer(),
-                      SizedBox(
-                        width: 130,
-                        height: 30,
-                        child: CustomButton2(
-                          color: AppColors.primary4C5BD4,
-                          hasRadius: true,
-                          textColor: AppColors.whiteFFFFFF,
-                          onPressed: () {
-
-                          },
-                          title: 'Mời dạy',
-                        ),
-                      ),
-                      SizedBox(width: AppDimens.space6,),
-                      SizedBox(
-                        width: 130,
-                        height: 30,
-                        child: CustomButton1(
-                          title: 'Lưu gia sư',
-                          color: AppColors.grey747474,
-                          textColor: AppColors.secondaryF8971C,
-                          hasRadius: true,
-                          backColor: AppColors.whiteFFFFFF,
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  )
+                  SizedBox(
+                    height: AppDimens.space16,
+                  ),
+                  type == 0
+                      ? Row(
+                          children: [
+                            Spacer(),
+                            SizedBox(
+                              width: 130,
+                              height: 30,
+                              child: CustomButton2(
+                                color: AppColors.primary4C5BD4,
+                                hasRadius: true,
+                                textColor: AppColors.whiteFFFFFF,
+                                onPressed: () {
+                                  Get.dialog(CheckboxListClass(
+                                    name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                    imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                                    idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
+                                  ));
+                                },
+                                title: 'Mời dạy',
+                              ),
+                            ),
+                            SizedBox(
+                              width: AppDimens.space6,
+                            ),
+                            SizedBox(
+                              width: 130,
+                              height: 30,
+                              child: CustomButton1(
+                                title: controller.resultDetailTeacher.data.data.dataInfo.checkSave ? 'Bỏ Lưu' : 'Lưu',
+                                color: AppColors.grey747474,
+                                textColor: AppColors.black,
+                                hasRadius: true,
+                                backColor: AppColors.whiteFFFFFF,
+                                onPressed: () {
+                                  if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
+                                    controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
+                                    homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                    controller.update();
+                                  } else {
+                                    controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
+                                    homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                    controller.update();
+                                  }
+                                },
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        )
+                      : controller.acepted
+                          ? Container()
+                          : Column(
+                              children: [
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                      text: '${controller.resultDetailTeacher.data.data.dataInfo.ugsName}',
+                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24),
+                                      children: [
+                                        TextSpan(
+                                          text: ' đã đề nghị dạy lớp\n',
+                                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
+                                        ),
+                                        TextSpan(
+                                          text: SpUtil.getString(ConstString.NAME_CLASS),
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                        )
+                                      ]),
+                                ),
+                                SizedBox(
+                                  height: AppDimens.space10,
+                                ),
+                                Row(
+                                  children: [
+                                    Spacer(),
+                                    SizedBox(
+                                      width: 130,
+                                      height: 30,
+                                      child: CustomButton2(
+                                        color: AppColors.primary4C5BD4,
+                                        hasRadius: true,
+                                        textColor: AppColors.whiteFFFFFF,
+                                        onPressed: () {
+                                          listTeacherSuggestController.acceptOffer(
+                                              int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                          controller.acepted = true;
+                                          controller.update();
+                                        },
+                                        title: 'Đồng ý',
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space6,
+                                    ),
+                                    SizedBox(
+                                      width: 130,
+                                      height: 30,
+                                      child: CustomButton1(
+                                        title: 'Từ chối',
+                                        color: AppColors.grey747474,
+                                        textColor: AppColors.black,
+                                        hasRadius: true,
+                                        backColor: AppColors.whiteFFFFFF,
+                                        onPressed: () {
+                                          listTeacherSuggestController.refuseOffer(
+                                              int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                          controller.acepted = true;
+                                          controller.update();
+                                        },
+                                      ),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
+                              ],
+                            )
                 ],
               ),
             ),

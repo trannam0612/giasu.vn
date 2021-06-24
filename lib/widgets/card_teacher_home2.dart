@@ -24,7 +24,7 @@ class CardTeacherHome2 extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
       child: SizedBox(
-        height: height * 0.115,
+        height: height * 0.13,
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
