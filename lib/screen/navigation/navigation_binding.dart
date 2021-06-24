@@ -7,6 +7,6 @@ class NavigationBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => NavigationController());
-    Get.lazyPut(() => SettingsController());
+    // Get.lazyPut(() => SettingsController());
   }
 }

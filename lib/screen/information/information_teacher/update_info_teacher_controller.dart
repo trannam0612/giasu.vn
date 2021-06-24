@@ -28,6 +28,7 @@ class UpdateInfoTeacherController extends GetxController {
   ResultListDistrict resultListDistrict = ResultListDistrict();
   UserRepositories userRepositories = UserRepositories();
   ResultGetInfoTeacher resultGetInfoTeacher = ResultGetInfoTeacher();
+  Lichday lichday = Lichday();
   String valueErrorPassword = '';
   bool isShowPassword = true;
   bool errorShowPassword = false;
@@ -82,7 +83,7 @@ class UpdateInfoTeacherController extends GetxController {
   bool errorStatusFee = false;
   bool errorSubjectTopic = false;
   bool errorArea = false;
-  bool valueButtonLuong = false;
+  bool valueButtonLuong = true;
   int idClass = 0;
   int idLuong = 0;
   int idDistrict = 0;
@@ -94,13 +95,16 @@ class UpdateInfoTeacherController extends GetxController {
   int idSubject;
 
   void changValueButtonLuong() {
+    print('valueButtonLuong');
+
     valueButtonLuong = !valueButtonLuong;
-    // if (valueButtonLuong) {
-    //   salaryCD.clear();
-    // } else {
-    //   salaryUL1.clear();
-    //   salaryUL2.clear();
-    // }
+    print(valueButtonLuong);
+    if (!valueButtonLuong) {
+      salaryCD.clear();
+    } else {
+      salaryUL1.clear();
+      salaryUL2.clear();
+    }
     update();
   }
 
@@ -775,16 +779,6 @@ class UpdateInfoTeacherController extends GetxController {
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
-    print(listSubjectSelect.length);
-    print(selectedClass);
-    print(listSubjectSelectTopic.length);
-    print(selectedFormTeaching);
-    print(area.text);
-    print(errorKieuGS);
-    print(listDistrictSelect.length);
-    print(valueCheckBox);
-    print('oke');
-
     errorSalaryCD = true;
     errorSalaryUL1 = true;
     errorSalaryUL2 = true;
@@ -801,6 +795,7 @@ class UpdateInfoTeacherController extends GetxController {
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
+      print('11111');
       salaryCD.text.isNotEmpty &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
@@ -810,7 +805,6 @@ class UpdateInfoTeacherController extends GetxController {
               area.text.isNotEmpty &&
               listDistrictSelect.isNotEmpty &&
               // ignore: deprecated_member_use
-              salaryCD.text.isNotEmpty &&
               data != null &&
               !selectedStatusFee.isNullOrBlank
           // ignore: unnecessary_statements
@@ -823,6 +817,18 @@ class UpdateInfoTeacherController extends GetxController {
               richText: false,
             ));
     } else {
+      print('abc');
+      print(salaryUL1.text);
+      print(salaryUL2.text);
+      print(errorKieuGS);
+      print(listSubjectSelect);
+      print(listSubjectSelectTopic);
+      print(selectedClass);
+      print(selectedFormTeaching);
+      print(area.text);
+      print(listDistrictSelect);
+      print(listDistrictSelect);
+
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               !errorKieuGS &&
@@ -832,12 +838,10 @@ class UpdateInfoTeacherController extends GetxController {
               !selectedFormTeaching.isNullOrBlank &&
               area.text.isNotEmpty &&
               listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              salaryCD.text.isNotEmpty &&
               data != null &&
               !selectedStatusFee.isNullOrBlank
           // ignore: unnecessary_statements
-          ? print('Đăng ký thành công')
+          ? updateInfoTeacher()
           // registerTeacher()
           : Get.dialog(DialogError(
               title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -886,10 +890,16 @@ class UpdateInfoTeacherController extends GetxController {
       company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
       information.text = resultGetInfoTeacher.data.infoTutor.ugsAboutUs;
       selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
+      listSubjectSelect.clear();
       resultGetInfoTeacher.data.infoTutor.asName.forEach((element) {
-        listSubjectSelect.map((e) => e.asName = element);
+        listDataSubject.map((e) => e.asName == element);
+        for (int i = 0; i < listDataSubject.length; i++) {
+          if (listDataSubject[i].asName == element) {
+            listSubjectSelect.add(listDataSubject[i]);
+          }
+        }
       });
-      // listSubjectSelect.map((e) => e.asName = resultGetInfoTeacher.data.infoTutor.asName);
+      getListTopic(listSubjectSelect.map((e) => e.asId).join(','));
       listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
       selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
       selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ugsFormality;
@@ -903,20 +913,17 @@ class UpdateInfoTeacherController extends GetxController {
           idClass = int.parse(listDataClass[i].ctId);
         }
       }
-      ;
+      // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
       idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
       idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
       listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
       listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
       selectedStatusFee = resultGetInfoTeacher.data.infoTutor.ugsTime;
-      salaryUL1.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split(',').first;
-      salaryUL2.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split(',').last;
+      salaryUL1.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').first;
+      salaryUL2.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').last;
       idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
       listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
 
-      print('resultGetInfoTeacher.data.infoTutor.ugsUnitPrice');
-      print(resultGetInfoTeacher.data.infoTutor.ugsUnitPrice);
-      print(salaryCD.text);
       listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
       listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
       listbuoiday[0].toi = resultGetInfoTeacher.data.lichday.tt2;
@@ -938,6 +945,8 @@ class UpdateInfoTeacherController extends GetxController {
       listbuoiday[6].sang = resultGetInfoTeacher.data.lichday.scn;
       listbuoiday[6].chieu = resultGetInfoTeacher.data.lichday.ccn;
       listbuoiday[6].toi = resultGetInfoTeacher.data.lichday.tcn;
+      lichday = resultGetInfoTeacher.data.lichday;
+
       // provincial.text = resultGetInfoTeacher.data.data.citName;
       // address.text = resultGetInfoTeacher.data.data.ugsAddress;
       Get.to(UpdateInfoTeacherStep1Screen());
@@ -948,7 +957,35 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
+  void setDataLichDay() {
+    resultGetInfoTeacher.data.lichday.st2 = listbuoiday[0].sang;
+    resultGetInfoTeacher.data.lichday.ct2 = listbuoiday[0].chieu;
+    resultGetInfoTeacher.data.lichday.tt2 = listbuoiday[0].toi;
+    resultGetInfoTeacher.data.lichday.st3 = listbuoiday[1].sang;
+    resultGetInfoTeacher.data.lichday.ct3 = listbuoiday[1].chieu;
+    resultGetInfoTeacher.data.lichday.tt3 = listbuoiday[1].toi;
+    resultGetInfoTeacher.data.lichday.st4 = listbuoiday[2].sang;
+    resultGetInfoTeacher.data.lichday.ct4 = listbuoiday[2].chieu;
+    resultGetInfoTeacher.data.lichday.tt4 = listbuoiday[2].toi;
+    resultGetInfoTeacher.data.lichday.st5 = listbuoiday[3].sang;
+    resultGetInfoTeacher.data.lichday.ct5 = listbuoiday[3].chieu;
+    resultGetInfoTeacher.data.lichday.tt5 = listbuoiday[3].toi;
+    resultGetInfoTeacher.data.lichday.st6 = listbuoiday[4].sang;
+    resultGetInfoTeacher.data.lichday.ct6 = listbuoiday[4].chieu;
+    resultGetInfoTeacher.data.lichday.tt6 = listbuoiday[4].toi;
+    resultGetInfoTeacher.data.lichday.st7 = listbuoiday[5].sang;
+    resultGetInfoTeacher.data.lichday.ct7 = listbuoiday[5].chieu;
+    resultGetInfoTeacher.data.lichday.tt7 = listbuoiday[5].toi;
+    resultGetInfoTeacher.data.lichday.scn = listbuoiday[6].sang;
+    resultGetInfoTeacher.data.lichday.ccn = listbuoiday[6].chieu;
+    resultGetInfoTeacher.data.lichday.tcn = listbuoiday[6].toi;
+    update();
+  }
+
   Future<void> updateInfoTeacher() async {
+    setDataLichDay();
+    print('resultLichDayToJson(lichday)');
+    print(resultLichDayToJson(lichday));
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
     print(test.join(','));
     Get.dialog(DialogLoading());
@@ -980,8 +1017,8 @@ class UpdateInfoTeacherController extends GetxController {
         timeExpStart.text,
         timeExpEnd.text,
         informationExp.text,
-        listIdSubjectSelect.join('-'),
-        listIdDistrictSelect.join('-'),
+        listSubjectSelect.map((e) => e.asId).join(','),
+        listSubjectSelectTopic.map((e) => e.idSubject).join(','),
         idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2,
         salaryCD.text,
         idTime = selectedStatusFee == 'Giờ'
@@ -993,12 +1030,14 @@ class UpdateInfoTeacherController extends GetxController {
         salaryUL2.text,
         idValueArea,
         listIdDetailDistrictSelect.join(','),
-        test.join(','));
+        resultLichDayToJson(lichday));
+    print('11111');
+    print(listIdDetailDistrictSelect.join(','));
     ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
       Get.back();
       Utils.showToast(resultGetInfoTeacher.data.message);
-      Get.off(NavigationScreen());
+      Get.offAndToNamed(Routes.navigation);
     } else {
       Get.back();
       Utils.showToast(resultGetInfoTeacher.error.message);

@@ -865,6 +865,7 @@ Widget SelectTinhThanh(BuildContext context) {
                   updateInfoTeacherController.area.text = listDataCity[index].citName;
                   updateInfoTeacherController.idValueArea = int.parse(listDataCity[index].citId);
                   updateInfoTeacherController.listDistrictSelect.clear();
+                  updateInfoTeacherController.listIdDetailDistrictSelect.clear();
                   updateInfoTeacherController.getListDistrictArea(updateInfoTeacherController.idValueArea);
                   Get.back();
                 },
@@ -917,7 +918,13 @@ Widget SelectDistrict(BuildContext context) {
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
-                onTap: () {
+                onTap: () async {
+                  if (updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listDistrictArea[index].nameCity)) {
+                    updateInfoTeacherController.listIdDetailDistrictSelect.remove(updateInfoTeacherController.listDistrictArea[index].idCity);
+                  } else {
+                    updateInfoTeacherController.listIdDetailDistrictSelect.add(updateInfoTeacherController.listDistrictArea[index].idCity);
+                    print(updateInfoTeacherController.listIdDetailDistrictSelect);
+                  }
                   updateInfoTeacherController.onSelectQH(updateInfoTeacherController.listDistrictArea[index].nameCity);
                   Get.back();
                 },

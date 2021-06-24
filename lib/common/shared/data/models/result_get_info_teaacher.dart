@@ -113,9 +113,9 @@ class InfoTutor {
   String ugsGraduationYear;
   String ugsSpecialized;
   String ugsCityGs;
-  dynamic citNameGs;
+  String citNameGs;
   String ugsCountyGs;
-  dynamic citDetailGs;
+  String citDetailGs;
   String ugsAddress;
   String ugsWorkplace;
   String ugsAboutUs;
@@ -154,9 +154,9 @@ class InfoTutor {
     ugsGraduationYear: json["ugs_graduation_year"] == null ? null : json["ugs_graduation_year"],
     ugsSpecialized: json["ugs_specialized"] == null ? null : json["ugs_specialized"],
     ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
-    citNameGs: json["cit_name_gs"],
+    citNameGs: json["cit_name_gs"] == null ? null : json["cit_name_gs"],
     ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
-    citDetailGs: json["cit_detail_gs"],
+    citDetailGs: json["cit_detail_gs"] == null ? null : json["cit_detail_gs"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
     ugsWorkplace: json["ugs_workplace"] == null ? null : json["ugs_workplace"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
@@ -196,9 +196,9 @@ class InfoTutor {
     "ugs_graduation_year": ugsGraduationYear == null ? null : ugsGraduationYear,
     "ugs_specialized": ugsSpecialized == null ? null : ugsSpecialized,
     "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
-    "cit_name_gs": citNameGs,
+    "cit_name_gs": citNameGs == null ? null : citNameGs,
     "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
-    "cit_detail_gs": citDetailGs,
+    "cit_detail_gs": citDetailGs == null ? null : citDetailGs,
     "ugs_address": ugsAddress == null ? null : ugsAddress,
     "ugs_workplace": ugsWorkplace == null ? null : ugsWorkplace,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
@@ -223,12 +223,12 @@ class InfoTutor {
     "ugs_formality": ugsFormality == null ? null : ugsFormality,
   };
 }
+Lichday resultLichDayFromJson(String str) => Lichday.fromJson(json.decode(str));
+
+String resultLichDayToJson(Lichday data) => json.encode(data.toJson());
 
 class Lichday {
   Lichday({
-    this.tsId,
-    this.ugsId,
-    this.pftId,
     this.st2,
     this.st3,
     this.st4,
@@ -252,9 +252,6 @@ class Lichday {
     this.tcn,
   });
 
-  String tsId;
-  String ugsId;
-  String pftId;
   String st2;
   String st3;
   String st4;
@@ -278,9 +275,6 @@ class Lichday {
   String tcn;
 
   factory Lichday.fromJson(Map<String, dynamic> json) => Lichday(
-    tsId: json["ts_id"] == null ? null : json["ts_id"],
-    ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
-    pftId: json["pft_id"] == null ? null : json["pft_id"],
     st2: json["st2"] == null ? null : json["st2"],
     st3: json["st3"] == null ? null : json["st3"],
     st4: json["st4"] == null ? null : json["st4"],
@@ -305,9 +299,6 @@ class Lichday {
   );
 
   Map<String, dynamic> toJson() => {
-    "ts_id": tsId == null ? null : tsId,
-    "ugs_id": ugsId == null ? null : ugsId,
-    "pft_id": pftId == null ? null : pftId,
     "st2": st2 == null ? null : st2,
     "st3": st3 == null ? null : st3,
     "st4": st4 == null ? null : st4,
