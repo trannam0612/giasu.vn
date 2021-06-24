@@ -810,7 +810,7 @@ class RegisterGiaSuController extends GetxController {
     ResultData res = await authenticationRepositories.listDistrict(idCity);
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
       Utils.showToast(resultListDistrict.error.message);
@@ -869,7 +869,7 @@ class RegisterGiaSuController extends GetxController {
         salaryUL1.text,
         salaryUL2.text,
         idArea,
-        listDistrictSelect.map((e) => e.citId).join(','),
+        listDistrictSelect.map((e) => e.idCity).join(','),
         test.join(','));
     ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
     if (resultRegisterTeacher.data != null) {

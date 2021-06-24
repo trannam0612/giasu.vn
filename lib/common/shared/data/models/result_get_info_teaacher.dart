@@ -126,7 +126,7 @@ class InfoTutor {
   String ugsYearEnd;
   String ugsJobDescription;
   String asId;
-  String asName;
+  List<String> asName;
   String asDetailId;
   List<String> asDetail;
   String ugsUnitPrice;
@@ -167,7 +167,7 @@ class InfoTutor {
     ugsYearEnd: json["ugs_year_end"] == null ? null : json["ugs_year_end"],
     ugsJobDescription: json["ugs_job_description"] == null ? null : json["ugs_job_description"],
     asId: json["as_id"] == null ? null : json["as_id"],
-    asName: json["as_name"] == null ? null : json["as_name"],
+    asName: json["as_name"] == null ? null : List<String>.from(json["as_name"].map((x) => x)),
     asDetailId: json["as_detail_id"] == null ? null : json["as_detail_id"],
     asDetail: json["as_detail"] == null ? null : List<String>.from(json["as_detail"].map((x) => x)),
     ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
@@ -209,7 +209,7 @@ class InfoTutor {
     "ugs_year_end": ugsYearEnd == null ? null : ugsYearEnd,
     "ugs_job_description": ugsJobDescription == null ? null : ugsJobDescription,
     "as_id": asId == null ? null : asId,
-    "as_name": asName == null ? null : asName,
+    "as_name": asName == null ? null : List<dynamic>.from(asName.map((x) => x)),
     "as_detail_id": asDetailId == null ? null : asDetailId,
     "as_detail": asDetail == null ? null : List<dynamic>.from(asDetail.map((x) => x)),
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
@@ -334,20 +334,20 @@ class Lichday {
 
 class Error {
   Error({
-    this.result,
+    this.code,
     this.message,
   });
 
-  bool result;
+  int code;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    result: json["result"] == null ? null : json["result"],
+    code: json["code"] == null ? null : json["code"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "result": result == null ? null : result,
+    "code": code == null ? null : code,
     "message": message == null ? null : message,
   };
 }

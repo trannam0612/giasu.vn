@@ -382,7 +382,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 children: [
                                                   SizedBox(
                                                     child: Text(
-                                                      controller.listDistrictSelect[index].citName,
+                                                      controller.listDistrictSelect[index].nameCity,
                                                       overflow: TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -970,7 +970,7 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        registerGiaSuController.listDistrict[index].citName,
+                        registerGiaSuController.listDistrict[index].nameCity,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),

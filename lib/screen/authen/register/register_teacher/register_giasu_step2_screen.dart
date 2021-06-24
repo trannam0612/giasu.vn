@@ -571,8 +571,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.district.text = registerGiaSuController.listDistrict[index].citName;
-                  registerGiaSuController.idDistrict = int.parse(registerGiaSuController.listDistrict[index].citId);
+                  registerGiaSuController.district.text = registerGiaSuController.listDistrict[index].nameCity;
+                  registerGiaSuController.idDistrict = int.parse(registerGiaSuController.listDistrict[index].idCity);
                   Get.back();
                 },
                 child: SizedBox(
@@ -580,11 +580,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        registerGiaSuController.listDistrict[index].citName,
+                        registerGiaSuController.listDistrict[index].nameCity,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrict[index].citName == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerGiaSuController.listDistrict[index].nameCity == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),

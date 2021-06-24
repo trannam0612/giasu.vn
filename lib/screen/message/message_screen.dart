@@ -120,58 +120,58 @@ Widget SelectTinhThanh(BuildContext context) {
 }
 
 // ignore: non_constant_identifier_names
-Widget SelectDistrict(BuildContext context) {
-  PostController postController = Get.put(PostController());
-  List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
-  return SafeArea(
-      child: Scaffold(
-    backgroundColor: AppColors.greyf6f6f6,
-    appBar: AppBar(
-      backgroundColor: AppColors.primary4C5BD4,
-      title: Text(
-        'Quận, Huyện',
-        style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
-      ),
-      leading: IconButton(
-        icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
-        onPressed: () {
-          Get.back();
-        },
-      ),
-    ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  postController.district.text = postController.listDistrict[index].citName;
-                  postController.idDistrict = int.parse(postController.listDistrict[index].citId);
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        postController.listDistrict[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
-                      ),
-                      Spacer(),
-                      postController.listDistrict[index].citName == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: postController.listDistrict.length),
-    ),
-  ));
-}
+// Widget SelectDistrict(BuildContext context) {
+//   PostController postController = Get.put(PostController());
+//   List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
+//   return SafeArea(
+//       child: Scaffold(
+//     backgroundColor: AppColors.greyf6f6f6,
+//     appBar: AppBar(
+//       backgroundColor: AppColors.primary4C5BD4,
+//       title: Text(
+//         'Quận, Huyện',
+//         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+//       ),
+//       leading: IconButton(
+//         icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
+//         onPressed: () {
+//           Get.back();
+//         },
+//       ),
+//     ),
+//     body: Container(
+//       padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+//       child: ListView.separated(
+//           physics: BouncingScrollPhysics(),
+//           itemBuilder: (context, index) => InkWell(
+//                 // ignore: deprecated_member_use
+//                 onTap: () {
+//                   postController.district.text = postController.listDistrict[index].citName;
+//                   postController.idDistrict = int.parse(postController.listDistrict[index].citId);
+//                   Get.back();
+//                 },
+//                 child: SizedBox(
+//                   height: 30,
+//                   child: Row(
+//                     children: [
+//                       Text(
+//                         postController.listDistrict[index].citName,
+//                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+//                       ),
+//                       Spacer(),
+//                       postController.listDistrict[index].citName == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//           separatorBuilder: (context, index) => Divider(
+//                 thickness: 1,
+//                 color: AppColors.black12,
+//               ),
+//           itemCount: postController.listDistrict.length),
+//     ),
+//   ));
+// }
 
 // DialogImage() {
 //   BuildContext context = Get.context;

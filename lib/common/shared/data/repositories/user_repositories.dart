@@ -27,10 +27,8 @@ class UserRepositories {
   }
 
   Future<ResultData> updateInfoTeacher(
+      String token,
       String phone,
-      String email,
-      String newPass,
-      String retypePassword,
       // File avatar,
       String name,
       int gender,
@@ -41,10 +39,13 @@ class UserRepositories {
       String school,
       String graduationYear,
       String specialized,
+      int cityGs,
+      int countyGs,
       String address,
       String workplace,
       String aboutUs,
       String achievements,
+      // String experence,
       int experienceYear,
       String title,
       String yearStart,
@@ -66,16 +67,12 @@ class UserRepositories {
     };
     // String fileName = avatar.path.split('/').last;
     Map<String, dynamic> body = {
+      'token': token,
       'ugs_phone': phone,
-      'ugs_email': email,
-      'ugs_password': newPass,
-      'ugs_retype_password': retypePassword,
-      // 'ugs_avatar': await MultipartFile.fromFile(
-      //   avatar.path,
-      //   filename: fileName,
-      //   contentType: new MediaType("image", "jpeg"),
-      // ),
       'ugs_name': name,
+      // 'ugs_email': email,
+      // 'ugs_password': newPass,
+      // 'ugs_retype_password': retypePassword,
       'ugs_gender': gender,
       'ugs_birthday': birthDay,
       'ugs_marriage': marriage,
@@ -84,11 +81,14 @@ class UserRepositories {
       'ugs_school': school,
       'ugs_graduation_year': graduationYear,
       'ugs_specialized': specialized,
+      'ugs_city_gs': cityGs,
+      'ugs_county_gs': countyGs,
       'ugs_address': address,
       'ugs_workplace': workplace,
       'ugs_about_us': aboutUs,
       'ugs_achievements': achievements,
-      'ugs_experience_year': experienceYear,
+      'ugs_experence': experienceYear,
+      // 'ugs_experience_year': experienceYear,
       'ugs_title': title,
       'ugs_year_start': yearStart,
       'ugs_year_end': yearEnd,
@@ -105,7 +105,7 @@ class UserRepositories {
       'lichday': lichday,
     };
 
-    ResultData rest = await httpManager.netFetch(Address.update_info_parent, body, header, Options(method: 'post'));
+    ResultData rest = await httpManager.netFetch(Address.update_info_tutor, body, header, Options(method: 'post'));
 
     return rest;
   }

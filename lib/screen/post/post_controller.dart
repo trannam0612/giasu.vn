@@ -442,7 +442,7 @@ class PostController extends GetxController {
     ResultData res = await authenticationRepositories.listDistrict(idCity);
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
       Utils.showToast(resultListDistrict.error.message);

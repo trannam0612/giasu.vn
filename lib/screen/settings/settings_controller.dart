@@ -5,12 +5,15 @@ import 'package:giasu_vn/common/shared/data/models/result_get_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_teaacher.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
+import 'package:giasu_vn/screen/settings/settings_screen.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class SettingsController extends GetxController {
   UserRepositories userRepositories = UserRepositories();
-
+  ResultGetInfoTeacher resultGetInfoTeacher = ResultGetInfoTeacher();
+  ResultGetInfoParent resultGetInfoParent = ResultGetInfoParent();
   bool isSwitchedNotification = false;
   bool isSwitchedMessage = false;
   bool isSwitchedVibrate = false;
@@ -20,7 +23,7 @@ class SettingsController extends GetxController {
   void onInit() {
     user = SpUtil.getString(ConstString.USER_TYPE);
     print(user);
-    getInfoParent();
+    user == '1' ? getInfoParent() : getInfoTeacher();
     // TODO: implement onInit
     super.onInit();
   }
@@ -41,10 +44,11 @@ class SettingsController extends GetxController {
   }
 
   Future<void> getInfoParent() async {
+    // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await userRepositories.getInfoParent(token);
-    ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
+    resultGetInfoParent = resultGetInfoParentFromJson(res.data);
     if (resultGetInfoParent.data != null) {
       // Get.back();
       Utils.showToast(resultGetInfoParent.data.message);
@@ -55,6 +59,7 @@ class SettingsController extends GetxController {
       // dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
       // provincial.text = resultGetInfoParent.data.data.citName;
       // address.text = resultGetInfoParent.data.data.ugsAddress;
+      // Get.to(SettingsScreen());
     } else {
       // Get.back();
       Utils.showToast(resultGetInfoParent.error.message);
@@ -63,12 +68,12 @@ class SettingsController extends GetxController {
   }
 
   Future<void> getInfoTeacher() async {
-    Get.dialog(DialogLoading());
+    // Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await userRepositories.getInfoTeacher(token);
-    ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+    resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
-      Get.back();
+      // Get.back();
       Utils.showToast(resultGetInfoTeacher.data.message);
       // urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
       // print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
@@ -120,8 +125,9 @@ class SettingsController extends GetxController {
       // // provincial.text = resultGetInfoTeacher.data.data.citName;
       // // address.text = resultGetInfoTeacher.data.data.ugsAddress;
       // Get.to(UpdateInfoTeacherStep1Screen());
+      // Get.to(SettingsScreen());
     } else {
-      Get.back();
+      // Get.back();
       Utils.showToast(resultGetInfoTeacher.error.message);
     }
     update();

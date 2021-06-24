@@ -125,7 +125,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      controller.listSubjectSelect[index],
+                                                      controller.listSubjectSelect[index].asName,
                                                       overflow: TextOverflow.ellipsis,
                                                       maxLines: 1,
                                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -225,7 +225,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        controller.listSubjectSelectTopic[index],
+                                                        controller.listSubjectSelectTopic[index].nameSubject,
                                                         overflow: TextOverflow.ellipsis,
                                                         maxLines: 1,
                                                         style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
@@ -323,7 +323,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                             readOnly: true,
                             isShowIcon: true,
                             obligatory: true,
-                            textEditingController: controller.areaTeaching,
+                            textEditingController: controller.area,
                             onPressed: () {},
                             title: 'Khu vực giảng dạy',
                             hintText: 'Chọn tỉnh, thành phố',
@@ -356,7 +356,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
                                     borderRadius: BorderRadius.circular(AppDimens.space10),
-                                    border: Border.all(color: controller.errorDistrict ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
+                                    border: Border.all(color: controller.errorDistrictArea ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listDistrictSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
@@ -409,7 +409,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                         ],
                                       )),
                           ),
-                          controller.errorDistrict
+                          controller.errorDistrictArea
                               ? Padding(
                                   padding: const EdgeInsets.only(top: AppDimens.space4),
                                   child: Text(
@@ -755,7 +755,8 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                     itemBuilder: (context, index) => InkWell(
                           // ignore: deprecated_member_use
                           onTap: () {
-                            controller.onSelectSubject(controller.listSubject[index]);
+                            controller.onSelectSubject(listDataSubject[index]);
+                            controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
                             Get.back();
                           },
                           child: SizedBox(
@@ -763,11 +764,11 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                             child: Row(
                               children: [
                                 Text(
-                                  controller.listSubject[index],
+                                  listDataSubject[index].asName,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelect.map((e) => e).contains(controller.listSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),
@@ -776,7 +777,7 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                           thickness: 1,
                           color: AppColors.black12,
                         ),
-                    itemCount: controller.listSubject.length),
+                    itemCount: listDataSubject.length),
               ),
             ),
           ));
@@ -808,7 +809,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                     itemBuilder: (context, index) => InkWell(
                           // ignore: deprecated_member_use
                           onTap: () {
-                            controller.onSelectSubjectTopic(controller.listSubjectTopic[index]);
+                            controller.onSelectSubjectTopic(controller.listTopic[index]);
                             Get.back();
                           },
                           child: SizedBox(
@@ -816,11 +817,11 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                             child: Row(
                               children: [
                                 Text(
-                                  controller.listSubjectTopic[index],
+                                  controller.listTopic[index].nameSubject,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e).contains(controller.listSubjectTopic[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
                               ],
                             ),
                           ),
@@ -829,7 +830,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                           thickness: 1,
                           color: AppColors.black12,
                         ),
-                    itemCount: controller.listSubjectTopic.length),
+                    itemCount: controller.listTopic.length),
               ),
             ),
           ));
@@ -837,7 +838,7 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
 
 Widget SelectTinhThanh(BuildContext context) {
   UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
-  List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
+  // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -861,7 +862,10 @@ Widget SelectTinhThanh(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  updateInfoTeacherController.areaTeaching.text = list[index];
+                  updateInfoTeacherController.area.text = listDataCity[index].citName;
+                  updateInfoTeacherController.idValueArea = int.parse(listDataCity[index].citId);
+                  updateInfoTeacherController.listDistrictSelect.clear();
+                  updateInfoTeacherController.getListDistrictArea(updateInfoTeacherController.idValueArea);
                   Get.back();
                 },
                 child: SizedBox(
@@ -869,11 +873,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        list[index],
+                        listDataCity[index].citName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      list[index] == updateInfoTeacherController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataCity[index].citName == updateInfoTeacherController.area.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -882,20 +886,22 @@ Widget SelectTinhThanh(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: list.length),
+          itemCount: listDataCity.length),
     ),
   ));
 }
 
+// ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
   UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
+  // List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận, Huyện',
+        'Quận/huyện',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
@@ -912,7 +918,7 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  updateInfoTeacherController.onSelectQH(updateInfoTeacherController.listQH[index]);
+                  updateInfoTeacherController.onSelectQH(updateInfoTeacherController.listDistrictArea[index].nameCity);
                   Get.back();
                 },
                 child: SizedBox(
@@ -920,11 +926,13 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        updateInfoTeacherController.listQH[index],
+                        updateInfoTeacherController.listDistrictArea[index].nameCity,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listQH[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listDistrictArea[index].nameCity)
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),
@@ -933,7 +941,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: updateInfoTeacherController.listQH.length),
+          itemCount: updateInfoTeacherController.listDistrictArea.length),
     ),
   ));
 }

@@ -154,6 +154,7 @@ class LoginController extends GetxController {
 // }
   @override
   void onInit() {
+    email.text = SpUtil.getString(ConstString.EMAIL);
     print(userType);
     listCitySubject();
     super.onInit();
