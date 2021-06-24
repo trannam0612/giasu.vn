@@ -403,25 +403,28 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                     height: AppDimens.height * 0.5,
                     width: AppDimens.width,
                     child: ListView.builder(
-                      itemBuilder: (context, index) => CardTeacherHome2(
-                        name: controller.listGSPB[index].ugsName,
-                        rate: 3,
-                        subject: controller.listGSPB[index].asName,
-                        address: controller.listGSPB[index].citName,
-                        image: controller.listGSPB[index].ugsAvatar,
-                        saved: controller.listGSPB[index].checkSave,
-                        onTap: () {
-                          if(!controller.listGSPB[index].checkSave) {
-                            controller.listGSPB[index].checkSave = true;
-                            controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
-                            controller.update();
-                          }
-                          else {
-                            controller.listGSPB[index].checkSave = false;
-                            controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
-                            controller.update();
-                          }
-                        },
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSPB[index].ugsId), 0),
+                        child: CardTeacherHome2(
+                          name: controller.listGSPB[index].ugsName,
+                          rate: 3,
+                          subject: controller.listGSPB[index].asName,
+                          address: controller.listGSPB[index].citName,
+                          image: controller.listGSPB[index].ugsAvatar,
+                          saved: controller.listGSPB[index].checkSave,
+                          onTap: () {
+                            if(!controller.listGSPB[index].checkSave) {
+                              controller.listGSPB[index].checkSave = true;
+                              controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
+                              controller.update();
+                            }
+                            else {
+                              controller.listGSPB[index].checkSave = false;
+                              controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
+                              controller.update();
+                            }
+                          },
+                        ),
                       ),
                       itemCount: controller.listGSPB.length,
                     ),

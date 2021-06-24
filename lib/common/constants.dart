@@ -20,4 +20,6 @@ class ConstString {
   static const String GENDER = "Giới tính";
   static const String USER_BIRTH_DAY = "Ngày sinh";
   static const String USER_HON_NHAN = "Tình trạng hôn nhân";
+  static const String NAME_CLASS = "NAME_CLASS";
+  static const String ID_CLASS = "ID_CLASS";
 }
