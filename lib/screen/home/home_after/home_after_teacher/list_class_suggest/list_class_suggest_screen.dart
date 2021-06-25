@@ -10,6 +10,9 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_su
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:intl/intl.dart';
 
+import '../home_after_teacher_controller.dart';
+import '../home_after_teacher_controller.dart';
+
 class ListClassSuggestScreen extends StatefulWidget {
   final String title;
   final String fee;
@@ -40,11 +43,13 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
   ScrollController _controller = ScrollController();
   ListClassSuggestController listClassSuggestController = Get.put(ListClassSuggestController());
   InformationClassController informationClassController = Get.put(InformationClassController());
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   int i = 1;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    listClassSuggestController.listLDDN = [];
     listClassSuggestController.classOffered(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
@@ -84,7 +89,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterTeacherController.homeAfterTeacher(1, 10);
             },
           ),
         ),
@@ -217,13 +222,15 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                             SizedBox(
                                               width: AppDimens.space8,
                                             ),
-                                            Text(
-                                              '${controller.listLDDN[index].ctyDetail}, ${controller.listLDDN[index].citName}',
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
+                                            Expanded(
+                                              child: Text(
+                                                '${controller.listLDDN[index].ctyDetail}, ${controller.listLDDN[index].citName}',
+                                                style: AppTextStyles.regular(
+                                                  context,
+                                                  size: AppDimens.textSize14,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
-                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ],
                                         ),

@@ -7,6 +7,8 @@ import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart'
 import 'package:giasu_vn/common/utils.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../../common/utils.dart';
+
 class ListClassTeachingController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultClassAccepted resultClassAccepted = ResultClassAccepted();
@@ -18,8 +20,13 @@ class ListClassTeachingController extends GetxController {
     ResultData res = await homeRepositories.classAccepted(token, currentPage, limit);
     resultClassAccepted = resultClassAcceptedFromJson(res.data);
     if (resultClassAccepted.data != null) {
-      for (int i = 0; i < resultClassAccepted.data.listPhdnd.length; i++) {
-        listPHDND.add(resultClassAccepted.data.listPhdnd[i]);
+      if(resultClassAccepted.data.listPhdnd.isNotEmpty) {
+        for (int i = 0; i < resultClassAccepted.data.listPhdnd.length; i++) {
+          listPHDND.add(resultClassAccepted.data.listPhdnd[i]);
+        }
+      }
+      else {
+        Utils.showToast('Đã hết!');
       }
     } else {
       Utils.showToast(resultClassAccepted.error.message);

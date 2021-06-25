@@ -35,6 +35,8 @@ import 'package:giasu_vn/widgets/card_teacher_home2.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../common/theme/app_dimens.dart';
+
 class HomeAfterParentScreen extends StatefulWidget {
   const HomeAfterParentScreen({Key key}) : super(key: key);
 
@@ -281,6 +283,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 ),
                                 Text(
                                   'Gia sư đã lưu',
+                                  textAlign: TextAlign.center,
                                   style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
                                 ),
                                 SizedBox(

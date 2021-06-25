@@ -7,6 +7,8 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 
+import '../common/theme/app_dimens.dart';
+
 class CardTeacherHome2 extends StatelessWidget {
   final String name;
   final String image;
@@ -49,9 +51,13 @@ class CardTeacherHome2 extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              name,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                            SizedBox(
+                              width: AppDimens.width * 0.55,
+                              child: Text(
+                                name,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                              ),
                             ),
                             SizedBox(
                               height: AppDimens.space6,

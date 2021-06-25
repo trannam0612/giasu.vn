@@ -13,6 +13,8 @@ import 'package:giasu_vn/screen/home/information/information_teacher/information
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
+import '../home_after_parent_controller.dart';
+
 class ListTutorFromFilterPointScreen extends StatefulWidget {
   const ListTutorFromFilterPointScreen({Key key}) : super(key: key);
 
@@ -23,6 +25,7 @@ class ListTutorFromFilterPointScreen extends StatefulWidget {
 class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPointScreen> {
   ListTutorFromFilterPointController listTutorFromFilterPointController = Get.put(ListTutorFromFilterPointController());
   InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   ScrollController _controller = ScrollController();
   int i = 1;
 
@@ -63,7 +66,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterParentController.homeAfterParent(1, 10);
             },
           ),
         ),

@@ -15,6 +15,8 @@ import 'package:giasu_vn/screen/home/information/information_teacher/information
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
+import '../../../information/information_teacher/checkbox_list_class.dart';
+
 class ListTeacherRecentlyScreen extends StatefulWidget {
   final bool saved;
   final String name;
@@ -104,7 +106,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
-                      height: height * 0.23,
+                      height: height * 0.25,
                       child: Stack(
                         alignment: Alignment.topLeft,
                         children: [
@@ -128,6 +130,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                     children: [
                                       Text(
                                         controller.listGSGDMore[index].ugsName,
+                                        overflow: TextOverflow.ellipsis,
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                                       ),
                                       SizedBox(
@@ -235,9 +238,15 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                             height: 30,
                                             width: 95,
                                             child: CustomButton2(
-                                              title: 'Đề nghị dạy',
+                                              title: 'Mời dạy',
                                               color: AppColors.primary4C5BD4,
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Get.dialog(CheckboxListClass(
+                                                  name: controller.listGSGDMore[index].ugsName,
+                                                  imageUrl: controller.listGSGDMore[index].ugsAvatar,
+                                                  idGS: controller.listGSGDMore[index].ugsId,
+                                                ));
+                                              },
                                               textColor: AppColors.whiteFFFFFF,
                                             ),
                                           ),
@@ -251,12 +260,20 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                                 ? CustomButton2(
                                                     title: 'Đã lưu',
                                                     color: AppColors.primary4C5BD4,
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      controller.listGSGDMore[index].checkSave = false;
+                                                      homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSGDMore[index].ugsId));
+                                                      controller.update();
+                                                    },
                                                     textColor: AppColors.whiteFFFFFF,
                                                   )
                                                 : CustomButton1(
                                                     textColor: AppColors.secondaryF8971C,
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      controller.listGSGDMore[index].checkSave = true;
+                                                      homeAfterParentController.saveTutor(int.parse(controller.listGSGDMore[index].ugsId));
+                                                      controller.update();
+                                                    },
                                                     color: AppColors.secondaryF8971C,
                                                     title: 'Lưu',
                                                     backColor: AppColors.whiteFFFFFF,

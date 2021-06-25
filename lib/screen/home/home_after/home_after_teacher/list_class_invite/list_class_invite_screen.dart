@@ -15,6 +15,8 @@ import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../home_after_teacher_controller.dart';
+
 class ListClassInviteScreen extends StatefulWidget {
   final String title;
   final String fee;
@@ -43,6 +45,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
   ScrollController _controller = ScrollController();
   ListClassInvitedController listClassInvitedController = Get.put(ListClassInvitedController());
   InformationClassController informationClassController = Get.put(InformationClassController());
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   int i = 1;
 
   @override
@@ -87,7 +90,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterTeacherController.homeAfterTeacher(1, 10);
             },
           ),
         ),

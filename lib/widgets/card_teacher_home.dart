@@ -7,6 +7,8 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 
+import '../common/theme/app_dimens.dart';
+
 class CardTeacherHome extends StatelessWidget {
   final String name;
   final String image;
@@ -21,7 +23,7 @@ class CardTeacherHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Container(
-      width: width * 0.55,
+      width: width * 0.6,
       padding: EdgeInsets.symmetric(
           horizontal: AppDimens.space8, vertical: AppDimens.space12),
       margin: EdgeInsets.only(left: 0, top: 15, right: 0, bottom: 20),
@@ -62,11 +64,14 @@ class CardTeacherHome extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    name,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.regularW500(context,
-                        size: AppDimens.textSize14),
+                  SizedBox(
+                    width: AppDimens.width * 0.35,
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.regularW500(context,
+                          size: AppDimens.textSize14),
+                    ),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -96,12 +101,16 @@ class CardTeacherHome extends StatelessWidget {
           SizedBox(
             height: AppDimens.space10,
           ),
-          Text(
-            content,
-            textAlign: TextAlign.left,
-            style: AppTextStyles.regularW400(context,
-                size: AppDimens.textSize14, color: AppColors.grey747474),
-            maxLines: 2,
+          SizedBox(
+            // width: AppDimens.width * ,
+            child: Text(
+              content,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.regularW400(context,
+                  size: AppDimens.textSize14, color: AppColors.grey747474),
+              maxLines: 1,
+            ),
           )
         ],
       ),

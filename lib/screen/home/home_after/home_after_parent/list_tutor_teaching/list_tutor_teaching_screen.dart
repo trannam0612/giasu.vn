@@ -84,7 +84,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
-                      height: height * 0.21,
+                      height: height * 0.24,
                       child: Stack(
                         alignment: Alignment.topLeft,
                         children: [
@@ -109,6 +109,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                                       Text(
                                         controller.listGSDD[index].ugsName,
                                         style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       SizedBox(
                                         height: AppDimens.space6,

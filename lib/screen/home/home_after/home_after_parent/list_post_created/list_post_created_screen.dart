@@ -46,6 +46,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    listPostCreatedController.listClassPosted = [];
     listPostCreatedController.classPosted(1, 10);
 
     _controller.addListener(() {
