@@ -37,51 +37,23 @@ class Data {
 
   bool result;
   String message;
-  DataNotiGs dataNotiGs;
+  List<DataNotiG> dataNotiGs;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     result: json["result"] == null ? null : json["result"],
     message: json["message"] == null ? null : json["message"],
-    dataNotiGs: json["data_noti_gs"] == null ? null : DataNotiGs.fromJson(json["data_noti_gs"]),
+    dataNotiGs: json["data_noti_gs"] == null ? null : List<DataNotiG>.from(json["data_noti_gs"].map((x) => DataNotiG.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "result": result == null ? null : result,
     "message": message == null ? null : message,
-    "data_noti_gs": dataNotiGs == null ? null : dataNotiGs.toJson(),
+    "data_noti_gs": dataNotiGs == null ? null : List<dynamic>.from(dataNotiGs.map((x) => x.toJson())),
   };
 }
 
-class DataNotiGs {
-  DataNotiGs({
-    this.dataNotiInvite,
-    this.dataNotiAcceptInvite,
-    this.dataNotiRefuseInvite,
-    this.dataNotiPoint,
-  });
-
-  List<DataNoti> dataNotiInvite;
-  List<DataNoti> dataNotiAcceptInvite;
-  List<DataNoti> dataNotiRefuseInvite;
-  List<DataNoti> dataNotiPoint;
-
-  factory DataNotiGs.fromJson(Map<String, dynamic> json) => DataNotiGs(
-    dataNotiInvite: json["data_noti_invite"] == null ? null : List<DataNoti>.from(json["data_noti_invite"].map((x) => DataNoti.fromJson(x))),
-    dataNotiAcceptInvite: json["data_noti_accept_invite"] == null ? null : List<DataNoti>.from(json["data_noti_accept_invite"].map((x) => DataNoti.fromJson(x))),
-    dataNotiRefuseInvite: json["data_noti_refuse_invite"] == null ? null : List<DataNoti>.from(json["data_noti_refuse_invite"].map((x) => DataNoti.fromJson(x))),
-    dataNotiPoint: json["data_noti_point"] == null ? null : List<DataNoti>.from(json["data_noti_point"].map((x) => DataNoti.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data_noti_invite": dataNotiInvite == null ? null : List<dynamic>.from(dataNotiInvite.map((x) => x.toJson())),
-    "data_noti_accept_invite": dataNotiAcceptInvite == null ? null : List<dynamic>.from(dataNotiAcceptInvite.map((x) => x.toJson())),
-    "data_noti_refuse_invite": dataNotiRefuseInvite == null ? null : List<dynamic>.from(dataNotiRefuseInvite.map((x) => x.toJson())),
-    "data_noti_point": dataNotiPoint == null ? null : List<dynamic>.from(dataNotiPoint.map((x) => x.toJson())),
-  };
-}
-
-class DataNoti {
-  DataNoti({
+class DataNotiG {
+  DataNotiG({
     this.ugsPh,
     this.idClass,
     this.ugsName,
@@ -99,7 +71,7 @@ class DataNoti {
   String notiDate;
   int type;
 
-  factory DataNoti.fromJson(Map<String, dynamic> json) => DataNoti(
+  factory DataNotiG.fromJson(Map<String, dynamic> json) => DataNotiG(
     ugsPh: json["ugs_ph"] == null ? null : json["ugs_ph"],
     idClass: json["id_class"] == null ? null : json["id_class"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],

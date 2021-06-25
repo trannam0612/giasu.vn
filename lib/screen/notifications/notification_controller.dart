@@ -32,18 +32,12 @@ class NotificationController extends GetxController {
   ResultAcceptInviteTeach resultAcceptInviteTeach = ResultAcceptInviteTeach();
   ResultRefuseInviteTeach resultRefuseInviteTeach = ResultRefuseInviteTeach();
 
-  List<DataNoti> listNoti = [];
-
   Future<void> notification() async {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await notificationRepositories.notification(token);
     resultNotification = resultNotificationFromJson(res.data);
     if (resultNotification.data != null) {
       Utils.showToast(resultNotification.data.message);
-      listNoti = resultNotification.data.dataNotiGs.dataNotiAcceptInvite +
-          resultNotification.data.dataNotiGs.dataNotiInvite +
-          resultNotification.data.dataNotiGs.dataNotiPoint +
-          resultNotification.data.dataNotiGs.dataNotiRefuseInvite;
     } else {
       Utils.showToast(resultNotification.error.message);
     }

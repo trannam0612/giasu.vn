@@ -64,19 +64,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 )),
             child: ListView.separated(
               shrinkWrap: true,
-              itemCount: controller.listNoti.length,
+              itemCount: controller.resultNotification.data.dataNotiGs.length,
               itemBuilder: (context, index) => CardNotification(
                 buttonAgree: () {
-                  controller.acceptInviteTeach(int.parse(controller.listNoti[index].idClass));
+                  controller.acceptInviteTeach(int.parse(controller.resultNotification.data.dataNotiGs[index].idClass));
                 },
                 buttonRefuse: () {
-                  controller.refuseInviteTeach(int.parse(controller.listNoti[index].idClass));
+                  controller.refuseInviteTeach(int.parse(controller.resultNotification.data.dataNotiGs[index].idClass));
                 },
-                checkButton: controller.listNoti[index].type,
-                title: controller.listNoti[index].ugsName,
-                content: controller.listNoti[index].content,
-                image: controller.listNoti[index].ugsAvatar,
-                time: timeAgo(int.parse(controller.listNoti[index].notiDate)),
+                checkButton: controller.resultNotification.data.dataNotiGs[index].type,
+                title: controller.resultNotification.data.dataNotiGs[index].ugsName,
+                content: controller.resultNotification.data.dataNotiGs[index].content,
+                image: controller.resultNotification.data.dataNotiGs[index].ugsAvatar,
+                time: timeAgo(int.parse(controller.resultNotification.data.dataNotiGs[index].notiDate)),
               ),
               separatorBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(left: 80),
