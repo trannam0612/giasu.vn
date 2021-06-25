@@ -15,16 +15,16 @@ class ResultDetailClass {
   });
 
   ResultDetailClassData data;
-  dynamic error;
+  Error error;
 
   factory ResultDetailClass.fromJson(Map<String, dynamic> json) => ResultDetailClass(
     data: json["data"] == null ? null : ResultDetailClassData.fromJson(json["data"]),
-    error: json["error"],
+    error: json["error"] == null ? null : Error.fromJson(json["error"]),
   );
 
   Map<String, dynamic> toJson() => {
     "data": data == null ? null : data.toJson(),
-    "error": error,
+    "error": error == null ? null : error.toJson(),
   };
 }
 
@@ -58,25 +58,37 @@ class DataData {
     this.countDnd,
     this.lichday,
     this.listClassLq,
+    this.currentPage,
+    this.limit,
+    this.total,
   });
 
   DataInfo dataInfo;
   String countDnd;
   Lichday lichday;
-  ListClassLq listClassLq;
+  List<ListClassLq> listClassLq;
+  int currentPage;
+  int limit;
+  int total;
 
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     dataInfo: json["dataInfo"] == null ? null : DataInfo.fromJson(json["dataInfo"]),
     countDnd: json["count_dnd"] == null ? null : json["count_dnd"],
     lichday: json["lichday"] == null ? null : Lichday.fromJson(json["lichday"]),
-    listClassLq: json["listClassLQ"] == null ? null : ListClassLq.fromJson(json["listClassLQ"]),
+    listClassLq: json["listClassLQ"] == null ? null : List<ListClassLq>.from(json["listClassLQ"].map((x) => ListClassLq.fromJson(x))),
+    currentPage: json["current_page"] == null ? null : json["current_page"],
+    limit: json["limit"] == null ? null : json["limit"],
+    total: json["total"] == null ? null : json["total"],
   );
 
   Map<String, dynamic> toJson() => {
     "dataInfo": dataInfo == null ? null : dataInfo.toJson(),
     "count_dnd": countDnd == null ? null : countDnd,
     "lichday": lichday == null ? null : lichday.toJson(),
-    "listClassLQ": listClassLq == null ? null : listClassLq.toJson(),
+    "listClassLQ": listClassLq == null ? null : List<dynamic>.from(listClassLq.map((x) => x.toJson())),
+    "current_page": currentPage == null ? null : currentPage,
+    "limit": limit == null ? null : limit,
+    "total": total == null ? null : total,
   };
 }
 
@@ -93,6 +105,8 @@ class DataInfo {
     this.pftMonth,
     this.asId,
     this.asName,
+    this.asDetail,
+    this.asDetailName,
     this.pftGender,
     this.pftForm,
     this.ctId,
@@ -101,6 +115,11 @@ class DataInfo {
     this.pftTime,
     this.pftNbStudent,
     this.pftDetail,
+    this.nametype,
+    this.pftAddress,
+    this.pftPhone,
+    this.checkSave,
+    this.checkOffer,
   });
 
   String pftId;
@@ -114,6 +133,8 @@ class DataInfo {
   String pftMonth;
   String asId;
   String asName;
+  String asDetail;
+  String asDetailName;
   String pftGender;
   String pftForm;
   String ctId;
@@ -122,6 +143,11 @@ class DataInfo {
   String pftTime;
   String pftNbStudent;
   String pftDetail;
+  String nametype;
+  String pftAddress;
+  String pftPhone;
+  bool checkSave;
+  bool checkOffer;
 
   factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -135,6 +161,8 @@ class DataInfo {
     pftMonth: json["pft_month"] == null ? null : json["pft_month"],
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
+    asDetail: json["as_detail"] == null ? null : json["as_detail"],
+    asDetailName: json["as_detail_name"] == null ? null : json["as_detail_name"],
     pftGender: json["pft_gender"] == null ? null : json["pft_gender"],
     pftForm: json["pft_form"] == null ? null : json["pft_form"],
     ctId: json["ct_id"] == null ? null : json["ct_id"],
@@ -143,6 +171,11 @@ class DataInfo {
     pftTime: json["pft_time"] == null ? null : json["pft_time"],
     pftNbStudent: json["pft_nb_student"] == null ? null : json["pft_nb_student"],
     pftDetail: json["pft_detail"] == null ? null : json["pft_detail"],
+    nametype: json["nametype"] == null ? null : json["nametype"],
+    pftAddress: json["pft_address"] == null ? null : json["pft_address"],
+    pftPhone: json["pft_phone"] == null ? null : json["pft_phone"],
+    checkSave: json["check_save"] == null ? null : json["check_save"],
+    checkOffer: json["check_offer"] == null ? null : json["check_offer"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -157,6 +190,8 @@ class DataInfo {
     "pft_month": pftMonth == null ? null : pftMonth,
     "as_id": asId == null ? null : asId,
     "as_name": asName == null ? null : asName,
+    "as_detail": asDetail == null ? null : asDetail,
+    "as_detail_name": asDetailName == null ? null : asDetailName,
     "pft_gender": pftGender == null ? null : pftGender,
     "pft_form": pftForm == null ? null : pftForm,
     "ct_id": ctId == null ? null : ctId,
@@ -165,6 +200,11 @@ class DataInfo {
     "pft_time": pftTime == null ? null : pftTime,
     "pft_nb_student": pftNbStudent == null ? null : pftNbStudent,
     "pft_detail": pftDetail == null ? null : pftDetail,
+    "nametype": nametype == null ? null : nametype,
+    "pft_address": pftAddress == null ? null : pftAddress,
+    "pft_phone": pftPhone == null ? null : pftPhone,
+    "check_save": checkSave == null ? null : checkSave,
+    "check_offer": checkOffer == null ? null : checkOffer,
   };
 }
 
@@ -278,34 +318,6 @@ class Lichday {
 
 class ListClassLq {
   ListClassLq({
-    this.empty,
-    this.currentPage,
-    this.limit,
-    this.total,
-  });
-
-  List<Empty> empty;
-  int currentPage;
-  int limit;
-  int total;
-
-  factory ListClassLq.fromJson(Map<String, dynamic> json) => ListClassLq(
-    empty: json[""] == null ? null : List<Empty>.from(json[""].map((x) => Empty.fromJson(x))),
-    currentPage: json["current_page"] == null ? null : json["current_page"],
-    limit: json["limit"] == null ? null : json["limit"],
-    total: json["total"] == null ? null : json["total"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "": empty == null ? null : List<dynamic>.from(empty.map((x) => x.toJson())),
-    "current_page": currentPage == null ? null : currentPage,
-    "limit": limit == null ? null : limit,
-    "total": total == null ? null : total,
-  };
-}
-
-class Empty {
-  Empty({
     this.ugsAvatar,
     this.pftId,
     this.pftSummary,
@@ -327,7 +339,7 @@ class Empty {
   String pftPrice;
   String pftMonth;
 
-  factory Empty.fromJson(Map<String, dynamic> json) => Empty(
+  factory ListClassLq.fromJson(Map<String, dynamic> json) => ListClassLq(
     ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     pftId: json["pft_id"] == null ? null : json["pft_id"],
     pftSummary: json["pft_summary"] == null ? null : json["pft_summary"],
@@ -349,5 +361,25 @@ class Empty {
     "pft_detail": pftDetail == null ? null : pftDetail,
     "pft_price": pftPrice == null ? null : pftPrice,
     "pft_month": pftMonth == null ? null : pftMonth,
+  };
+}
+
+class Error {
+  Error({
+    this.result,
+    this.message,
+  });
+
+  bool result;
+  String message;
+
+  factory Error.fromJson(Map<String, dynamic> json) => Error(
+    result: json["result"] == null ? null : json["result"],
+    message: json["message"] == null ? null : json["message"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "result": result == null ? null : result,
+    "message": message == null ? null : message,
   };
 }

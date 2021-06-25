@@ -67,6 +67,7 @@ class Data {
 class ListGsdd {
   ListGsdd({
     this.ugsId,
+    this.ugsAvatar,
     this.ugsName,
     this.linkDetailTutor,
     this.pftId,
@@ -81,6 +82,7 @@ class ListGsdd {
   });
 
   String ugsId;
+  String ugsAvatar;
   String ugsName;
   String linkDetailTutor;
   String pftId;
@@ -88,13 +90,14 @@ class ListGsdd {
   String linkDetailClass;
   String asId;
   String asName;
-  bool receivedDate;
+  String receivedDate;
   String pftPrice;
   String pftMonth;
   String otStatus;
 
   factory ListGsdd.fromJson(Map<String, dynamic> json) => ListGsdd(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
+    ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -110,6 +113,7 @@ class ListGsdd {
 
   Map<String, dynamic> toJson() => {
     "ugs_id": ugsId == null ? null : ugsId,
+    "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
     "ugs_name": ugsName == null ? null : ugsName,
     "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
     "pft_id": pftId == null ? null : pftId,

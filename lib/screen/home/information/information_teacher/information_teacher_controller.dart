@@ -4,6 +4,7 @@ import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_detail_teacher.dart';
 import 'package:giasu_vn/common/shared/data/models/result_invite_teach.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_class_post.dart';
+import 'package:giasu_vn/common/shared/data/models/result_minus_point.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
@@ -16,6 +17,7 @@ class InformationTeacherController extends GetxController {
   ResultListClassPosted resultListClassPosted = ResultListClassPosted();
   ResultInviteTeach resultInviteTeach = ResultInviteTeach();
   ResultDetailTeacher resultDetailTeacher = ResultDetailTeacher();
+  ResultMinusPoint resultMinusPoint = ResultMinusPoint();
   List<ListClass> listPostCreated = [];
   List<buoiday> listbuoiday = [
     buoiday('Thứ 2', '1', "0", "0"),
@@ -66,6 +68,19 @@ class InformationTeacherController extends GetxController {
     } else {
       Get.back();
       Utils.showToast(resultInviteTeach.error.message);
+    }
+    update();
+  }Future<void> minusPoint(int idGS) async {
+    print('minusPoint');
+    // await Future.delayed(Duration(milliseconds: 1));
+    // Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.minusPoint(token,idGS);
+    resultMinusPoint = resultMinusPointFromJson(res.data);
+    if (resultMinusPoint.data != null) {
+      Utils.showToast(resultMinusPoint.data.message);
+    } else {
+      Utils.showToast(resultMinusPoint.error.message);
     }
     update();
   }

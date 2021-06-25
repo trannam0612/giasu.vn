@@ -70,7 +70,8 @@ class HomeAfterTeacherController extends GetxController {
   Future<void> detailClass(int idClass) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    ResultData res = await homeRepositories.detailClass(idClass);
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.detailClass(token,idClass);
     resultDetailClass = resultDetailClassFromJson(res.data);
     if (resultDetailClass.data != null) {
       Get.back();

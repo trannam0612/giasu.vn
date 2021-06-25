@@ -22,4 +22,5 @@ class ConstString {
   static const String USER_HON_NHAN = "Tình trạng hôn nhân";
   static const String NAME_CLASS = "NAME_CLASS";
   static const String ID_CLASS = "ID_CLASS";
+  static const String NAME_PARENT = "NAME_PARENT";
 }
