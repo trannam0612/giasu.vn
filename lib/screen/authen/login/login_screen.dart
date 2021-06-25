@@ -11,6 +11,9 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 
+import '../../../common/theme/app_colors.dart';
+import '../../../common/theme/app_colors.dart';
+import '../../../common/theme/app_colors.dart';
 import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -22,6 +25,14 @@ class LoginScreen extends StatelessWidget {
         onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
         child: SafeArea(
           child: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(icon: SvgPicture.asset(Images.ic_arrow_left_iphone, color: AppColors.primary4C5BD4,),
+              onPressed: () {
+                Get.back();
+              },),
+              backgroundColor: AppColors.whiteFFFFFF,
+              elevation: 0,
+            ),
             backgroundColor: AppColors.greyf6f6f6,
             resizeToAvoidBottomInset: false,
             body: Container(
