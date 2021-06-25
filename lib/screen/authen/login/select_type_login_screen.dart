@@ -10,15 +10,18 @@ import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/screen/authen/register/intro_login.dart';
+import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../../common/images.dart';
+import '../../home/home_before/home_before_screen.dart';
 
 class SelectTypeLoginScreen extends StatelessWidget {
   const SelectTypeLoginScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    HomeBeforeController homeBeforeController = Get.put(HomeBeforeController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
@@ -156,7 +159,9 @@ class SelectTypeLoginScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // Get.toNamed(Routes.FORGOT);
+                    homeBeforeController.homeBefore();
+                    print(homeBeforeController.listGSGD.length);
+                    print(homeBeforeController.listLHPB.length);
                   },
                   child: Text(
                     'Truy cập không cần tài khoản',

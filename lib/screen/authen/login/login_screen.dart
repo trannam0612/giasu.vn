@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/register/intro_login.dart';
+import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
@@ -19,6 +20,7 @@ import 'login_controller.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    HomeBeforeController homeBeforeController = Get.put(HomeBeforeController());
     return GetBuilder<LoginController>(
       init: LoginController(),
       builder: (controller) => GestureDetector(
@@ -157,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
-                                  // Get.toNamed(Routes.FORGOT);
+                                  homeBeforeController.homeBefore();
                                 },
                                 child: Text(
                                   'Truy cập không cần tài khoản',
