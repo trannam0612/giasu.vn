@@ -681,6 +681,33 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
+  Future<void> getListDataTopic(String idTopic) async {
+    listTopic = [];
+    listSubjectSelectTopic.clear();
+    print('getListTopic');
+    print(listSubjectSelect.join(','));
+    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+    resultListTopic = resultListTopicFromJson(res.data);
+    if (resultListTopic.data != null) {
+      listTopic = resultListTopic.data.listSubjectTag;
+      resultGetInfoTeacher.data.infoTutor.asDetail.forEach((element) {
+        // listDataSubject.map((e) => e.asName == element);
+        print('element');
+        print(element);
+        print(listTopic.map((e) => e.nameSubject));
+        for (int i = 0; i < listTopic.length; i++) {
+          if (listTopic[i].nameSubject == element) {
+            listSubjectSelectTopic.add(listTopic[i]);
+          }
+        }
+      });
+      Utils.showToast(resultListTopic.data.message);
+    } else {
+      Utils.showToast(resultListTopic.error.message);
+    }
+    update();
+  }
+
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
     ResultData res = await authenticationRepositories.listDistrict(idCity);
@@ -892,15 +919,16 @@ class UpdateInfoTeacherController extends GetxController {
       selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
       listSubjectSelect.clear();
       resultGetInfoTeacher.data.infoTutor.asName.forEach((element) {
-        listDataSubject.map((e) => e.asName == element);
+        // listDataSubject.map((e) => e.asName == element);
         for (int i = 0; i < listDataSubject.length; i++) {
           if (listDataSubject[i].asName == element) {
             listSubjectSelect.add(listDataSubject[i]);
           }
         }
       });
-      getListTopic(listSubjectSelect.map((e) => e.asId).join(','));
-      listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
+      // getListTopic(listSubjectSelect.map((e) => e.asId).join(','));
+      getListDataTopic(listSubjectSelect.map((e) => e.asId).join(','));
+      // listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
       selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
       selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ugsFormality;
       area.text = resultGetInfoTeacher.data.infoTutor.citName;
@@ -913,6 +941,7 @@ class UpdateInfoTeacherController extends GetxController {
           idClass = int.parse(listDataClass[i].ctId);
         }
       }
+
       // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
       idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
       idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);

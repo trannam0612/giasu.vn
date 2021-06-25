@@ -20,6 +20,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_te
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_parent_saved/list_parent_saved_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
+import 'package:giasu_vn/search/search_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
@@ -83,7 +84,9 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                         width: 100,
                         height: 45,
                       ),
-                      SizedBox(height: 40, width: width * 0.6, child: CustomSearchTextField()),
+                      SizedBox(height: 40, width: width * 0.6, child: CustomSearchTextField(
+                        onTap: () => Get.to(() => SearchScreen()),
+                      )),
                     ],
                   ),
                   SizedBox(

@@ -27,6 +27,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_te
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
+import 'package:giasu_vn/search/search_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
@@ -37,7 +38,6 @@ import 'package:sp_util/sp_util.dart';
 class HomeAfterParentScreen extends StatefulWidget {
   const HomeAfterParentScreen({Key key}) : super(key: key);
 
-
   @override
   _HomeAfterParentScreenState createState() => _HomeAfterParentScreenState();
 }
@@ -46,18 +46,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
   InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
   HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   LoginController loginController = Get.put(LoginController());
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return GetBuilder<HomeAfterParentController>(
       init: HomeAfterParentController(),
-      builder: (controller) =>  SafeArea(
+      builder: (controller) => SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.greyf6f6f6,
           body: SingleChildScrollView(
@@ -83,7 +85,11 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         height: 45,
                       ),
                       SizedBox(
-                          height: 40, width : width*0.6,child: CustomSearchTextField()),
+                          height: 40,
+                          width: width * 0.6,
+                          child: CustomSearchTextField(
+                            onTap: () => Get.to(() => SearchScreen()),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -152,12 +158,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsmd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gsmd})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () => Get.to(ListTeacherSuggestedScreen()),
                           child: Container(
@@ -192,12 +201,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsdnd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gsdnd})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () => Get.to(ListPostCreatedScreen()),
                           child: Container(
@@ -232,12 +244,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.tindang})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.tindang})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () => Get.to(ListTeacherSaved()),
                           child: Container(
@@ -271,12 +286,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gsdl})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () => Get.to(ListTutorTeachingScreen()),
                           child: Container(
@@ -311,12 +329,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gsdd})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gsdd})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () => Get.to(ListTutorFromFilterPointScreen()),
                           child: Container(
@@ -351,12 +372,15 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 SizedBox(
                                   height: AppDimens.space4,
                                 ),
-                                Text('(${controller.resultHomeAfterParent.data.gstdl})', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                Text('(${controller.resultHomeAfterParent.data.gstdl})',
+                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: AppDimens.space10,),
+                        SizedBox(
+                          width: AppDimens.space10,
+                        ),
                       ],
                     ),
                   ),
@@ -413,12 +437,11 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           image: controller.listGSPB[index].ugsAvatar,
                           saved: controller.listGSPB[index].checkSave,
                           onTap: () {
-                            if(!controller.listGSPB[index].checkSave) {
+                            if (!controller.listGSPB[index].checkSave) {
                               controller.listGSPB[index].checkSave = true;
                               controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
                               controller.update();
-                            }
-                            else {
+                            } else {
                               controller.listGSPB[index].checkSave = false;
                               controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
                               controller.update();

@@ -756,6 +756,7 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                           // ignore: deprecated_member_use
                           onTap: () {
                             controller.onSelectSubject(listDataSubject[index]);
+                            controller.listSubjectSelectTopic.clear();
                             controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
                             Get.back();
                           },
