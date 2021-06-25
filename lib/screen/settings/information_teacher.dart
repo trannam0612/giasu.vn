@@ -45,9 +45,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Họ và tên:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsName,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -125,9 +130,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Địa chỉ:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -141,9 +151,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Trường học:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -171,9 +186,14 @@ class InformationTeacherMore extends StatelessWidget {
                                   'Tiêu đề:',
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                 ),
-                                Text(
-                                  controller.resultGetInfoTeacher.data.infoTutor.ugsTitle,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                Expanded(
+                                  child: Text(
+                                    controller.resultGetInfoTeacher.data.infoTutor.ugsTitle,
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.right,
+                                    maxLines: null,
+                                  ),
                                 ),
                               ],
                             ),
@@ -203,9 +223,14 @@ class InformationTeacherMore extends StatelessWidget {
                                   'Mô tả:',
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                 ),
-                                Text(
-                                  controller.resultGetInfoTeacher.data.infoTutor.ugsJobDescription,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                Expanded(
+                                  child: Text(
+                                    controller.resultGetInfoTeacher.data.infoTutor.ugsJobDescription,
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.right,
+                                    maxLines: null,
+                                  ),
                                 ),
                               ],
                             ),
@@ -222,9 +247,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Thành tích bản thân:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsAchievements,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsAchievements,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -238,9 +268,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Nơi công tác hiện tại:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsWorkplace,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsWorkplace,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -254,9 +289,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Mô tả về bản thân:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsAboutUs,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.ugsAboutUs,
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -286,9 +326,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Môn học giảng dạy:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.asName.join(','),
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.asName.join(','),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -302,9 +347,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Môn học chi tiết:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.asDetail.join(','),
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.asDetail.join(','),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -366,9 +416,14 @@ class InformationTeacherMore extends StatelessWidget {
                             'Quận huyện:',
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
-                          Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.citDetail.join(','),
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor.citDetail.join(','),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.right,
+                              maxLines: null,
+                            ),
                           ),
                         ],
                       ),
@@ -409,9 +464,14 @@ class InformationTeacherMore extends StatelessWidget {
                                   'Ước lượng:',
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                 ),
-                                Text(
-                                  controller.resultGetInfoTeacher.data.infoTutor.ugsSalary,
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                Expanded(
+                                  child: Text(
+                                    controller.resultGetInfoTeacher.data.infoTutor.ugsSalary,
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.right,
+                                    maxLines: null,
+                                  ),
                                 ),
                               ],
                             ),

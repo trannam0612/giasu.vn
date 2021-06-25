@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/data/http/address.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
@@ -131,9 +132,14 @@ class SettingsScreen extends StatelessWidget {
                                         'Họ và tên:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.ugsName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.ugsName,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -211,9 +217,14 @@ class SettingsScreen extends StatelessWidget {
                                         'Địa chỉ:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.ugsAddress,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.ugsAddress,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -243,9 +254,16 @@ class SettingsScreen extends StatelessWidget {
                                         'Họ và tên:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                          // softWrap: false,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -323,9 +341,14 @@ class SettingsScreen extends StatelessWidget {
                                         'Địa chỉ:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -339,9 +362,14 @@ class SettingsScreen extends StatelessWidget {
                                         'Trường học:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                        ),
                                       ),
                                     ],
                                   ),

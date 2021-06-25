@@ -124,8 +124,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               Get.to(SelectTinhThanh(context));
                             },
                             readOnly: true,
-                            isShowIcon: false,
-                            obligatory: true,
+                            isShowIcon: true,
+                            obligatory: false,
                             textEditingController: controller.provincial,
                             onPressed: () {},
                             title: 'Tỉnh, thành phố',
@@ -138,15 +138,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           CustomTextField(
                             onTapTextField: () {
-                              Get.to(SelectDistrict(context));
+                              Get.to(SelectClass(context));
                             },
                             readOnly: true,
-                            isShowIcon: false,
-                            obligatory: true,
-                            textEditingController: controller.district,
+                            isShowIcon: true,
+                            obligatory: false,
+                            textEditingController: controller.className,
                             onPressed: () {},
-                            title: 'Quận/huyện',
-                            hintText: 'Chọn Quận/huyện',
+                            title: 'Lớp học',
+                            hintText: 'Chọn lớp học',
                             iconSuffix: Images.ic_arrow_down,
                             error: controller.checkDistrict(),
                           ),
@@ -155,7 +155,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           DropDownSelect(
                             hint: 'Chọn môn học',
-                            obligatory: true,
+                            obligatory: false,
                             title: 'Môn học',
                             list: listDataSubject.map((e) => e.asName).toList(),
                             onChanged: (String value) => controller.onSelectedSubject(value),
@@ -164,64 +164,6 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           SizedBox(
                             height: AppDimens.space18,
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Hình thức',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.black),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: ' *',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: AppDimens.space4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                children: [
-                                  Theme(
-                                    child: Checkbox(
-                                      value: controller.valueCheckBox,
-                                      onChanged: (value) {
-                                        controller.changeValueCheckBox();
-                                      },
-                                    ),
-                                    data: ThemeData(
-                                      primarySwatch: Colors.blue,
-                                      unselectedWidgetColor: AppColors.grey686F7A, // Your color
-                                    ),
-                                  ),
-                                  Text(
-                                    'Gặp mặt',
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Theme(
-                                    child: Checkbox(
-                                      value: !controller.valueCheckBox,
-                                      onChanged: (value) {
-                                        controller.changeValueCheckBox();
-                                      },
-                                    ),
-                                    data: ThemeData(
-                                      primarySwatch: Colors.blue,
-                                      unselectedWidgetColor: AppColors.grey686F7A, // Your color
-                                    ),
-                                  ),
-                                  Text(
-                                    'Online',
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
-                                  )
-                                ],
-                              ),
-                            ],
                           ),
                           SizedBox(
                             height: AppDimens.space36,
@@ -235,10 +177,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                 color: AppColors.primary4C5BD4,
                                 onPressed: () {
                                   print(controller.idProvincial);
-                                  print(controller.idDistrict);
+                                  print(controller.idClass);
                                   print(controller.idSubject);
                                   print(controller.idForm);
-                                  controller.searchParent();
+                                  controller.userType == '1' ? controller.searchParent() : controller.searchTeacher();
                                 },
                                 title: 'Tìm kiếm',
                                 textColor: AppColors.whiteFFFFFF,
@@ -314,7 +256,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 onTap: () {
                   searchController.provincial.text = listDataCity[index].citName;
                   searchController.idProvincial = int.parse(listDataCity[index].citId);
-                  searchController.getListDistrict(searchController.idProvincial);
+                  // searchController.getListDistrict(searchController.idProvincial);
                   Get.back();
                 },
                 child: SizedBox(
@@ -341,7 +283,7 @@ Widget SelectTinhThanh(BuildContext context) {
 }
 
 // ignore: non_constant_identifier_names
-Widget SelectDistrict(BuildContext context) {
+Widget SelectClass(BuildContext context) {
   SearchController searchController = Get.put(SearchController());
   // List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
   return SafeArea(
@@ -367,8 +309,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  searchController.district.text = searchController.listDistrict[index].nameCity;
-                  searchController.idDistrict = int.parse(searchController.listDistrict[index].idCity);
+                  searchController.className.text = listDataClass[index].ctName;
+                  searchController.idClass = int.parse(listDataClass[index].ctId);
                   Get.back();
                 },
                 child: SizedBox(
@@ -376,11 +318,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        searchController.listDistrict[index].nameCity,
+                        listDataClass[index].ctName,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      searchController.listDistrict[index].nameCity == searchController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      listDataClass[index].ctName == searchController.className.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -389,7 +331,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: searchController.listDistrict.length),
+          itemCount: listDataClass.length),
     ),
   ));
 }

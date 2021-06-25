@@ -62,30 +62,43 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   topLeft: Radius.circular(5),
                   topRight: Radius.circular(5),
                 )),
-            child: ListView.separated(
-              shrinkWrap: true,
-              itemCount: controller.resultNotification.data.dataNotiGs.length,
-              itemBuilder: (context, index) => CardNotification(
-                buttonAgree: () {
-                  controller.acceptInviteTeach(int.parse(controller.resultNotification.data.dataNotiGs[index].idClass));
-                },
-                buttonRefuse: () {
-                  controller.refuseInviteTeach(int.parse(controller.resultNotification.data.dataNotiGs[index].idClass));
-                },
-                checkButton: controller.resultNotification.data.dataNotiGs[index].type,
-                title: controller.resultNotification.data.dataNotiGs[index].ugsName,
-                content: controller.resultNotification.data.dataNotiGs[index].content,
-                image: controller.resultNotification.data.dataNotiGs[index].ugsAvatar,
-                time: timeAgo(int.parse(controller.resultNotification.data.dataNotiGs[index].notiDate)),
-              ),
-              separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(left: 80),
-                child: Divider(
-                  thickness: 0.25,
-                  color: AppColors.greyAAAAAA,
-                ),
-              ),
-            ),
+            child: controller.resultNotification.data != null
+                ? ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: controller.resultNotification.data.dataNoti.length,
+                    itemBuilder: (context, index) => CardNotification(
+                      buttonAgree: () {
+                        controller.acceptInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass));
+                        controller.notification();
+                      },
+                      buttonRefuse: () {
+                        controller.refuseInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass));
+                        controller.notification();
+                      },
+                      checkButton: controller.resultNotification.data.dataNoti[index].type,
+                      title: controller.resultNotification.data.dataNoti[index].ugsName,
+                      content: controller.resultNotification.data.dataNoti[index].content,
+                      image: controller.resultNotification.data.dataNoti[index].ugsAvatar,
+                      time: timeAgo(int.parse(controller.resultNotification.data.dataNoti[index].notiDate)),
+                    ),
+                    separatorBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.only(left: 80),
+                      child: Divider(
+                        thickness: 0.25,
+                        color: AppColors.greyAAAAAA,
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: AppDimens.width,
+                    height: AppDimens.height,
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: AppColors.whiteFFFFFF,
+                      ),
+                    ),
+                  ),
           ),
         ),
       ),

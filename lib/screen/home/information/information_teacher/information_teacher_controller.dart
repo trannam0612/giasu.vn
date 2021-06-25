@@ -70,12 +70,14 @@ class InformationTeacherController extends GetxController {
       Utils.showToast(resultInviteTeach.error.message);
     }
     update();
-  }Future<void> minusPoint(int idGS) async {
+  }
+
+  Future<void> minusPoint(int idGS) async {
     print('minusPoint');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.minusPoint(token,idGS);
+    ResultData res = await homeRepositories.minusPoint(token, idGS);
     resultMinusPoint = resultMinusPointFromJson(res.data);
     if (resultMinusPoint.data != null) {
       Utils.showToast(resultMinusPoint.data.message);

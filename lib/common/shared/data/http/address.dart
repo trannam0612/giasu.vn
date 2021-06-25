@@ -80,16 +80,20 @@ class Address {
     return '$BASE_URL/detail_subject.php?as_id=${asId}';
   }
 
-  static String searchParent(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
-    return '$BASE_URL/search_by_filter_tutor.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
-  }
-
-  static String searchTeacher(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
-    return '$BASE_URL/search_by_filter_class.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
-  }
+  // static String searchParent(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
+  //   return '$BASE_URL/search_by_filter_tutor.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
+  // }
+  //
+  // static String searchTeacher(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
+  //   return '$BASE_URL/search_by_filter_class.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
+  // }
 
 //Noti
   static const String notification = BASE_URL + "/notification.php";
+
+//Search
+  static const String search_list_teacher = BASE_URL + "/list_tutor.php";
+  static const String search_list_class = BASE_URL + "/list_class.php";
 
 // static const String detail_subject = BASE_URL + "detail_subject.php";
 }
