@@ -168,7 +168,6 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                       ),
                                     ],
                                   ),
-                                  widget.saved ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save)
                                 ],
                               ),
                               SizedBox(

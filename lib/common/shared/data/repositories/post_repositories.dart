@@ -110,8 +110,8 @@ class PostRepositories {
     return rest;
   }
 
-  Future<ResultData> getDetailPost(int idClass) async {
-    ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
-    return rest;
-  }
+  // Future<ResultData> getDetailPost(int idClass) async {
+  //   ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
+  //   return rest;
+  // }
 }

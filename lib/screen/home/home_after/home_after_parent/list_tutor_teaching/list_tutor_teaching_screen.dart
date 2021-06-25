@@ -153,7 +153,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                                         width: AppDimens.space4,
                                       ),
                                       Text(
-                                        '15/08/2000',
+                                        controller.listGSDD[index].receivedDate,
                                         style: AppTextStyles.regularW400(
                                           context,
                                           size: AppDimens.textSize14,
@@ -251,7 +251,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
-                                  imageUrl: 'https://newsmd1fr.keeng.net/tiin/archive/images/20201018/222252_dsc_8457_2.jpg',
+                                  imageUrl: controller.listGSDD[index].ugsAvatar,
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,

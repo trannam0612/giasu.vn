@@ -495,7 +495,8 @@ class UpdatePostController extends GetxController {
 
   Future<void> getDetailClass(int idInfoClass) async {
     Get.dialog(DialogLoading());
-    ResultData res = await homeRepositories.detailClass(idInfoClass);
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.detailClass(token, idInfoClass);
     resultGetInfoPost = resultGetInfoPostFromJson(res.data);
     if (resultGetInfoPost.data != null) {
       Get.back();
