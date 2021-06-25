@@ -19,6 +19,10 @@ import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_watch_teacher.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../common/theme/app_dimens.dart';
+import '../../../../common/theme/app_dimens.dart';
+import '../../../../common/theme/app_dimens.dart';
+import '../../../../common/utils.dart';
 import 'checkbox_list_class.dart';
 
 class InformationTeacherScreen extends StatelessWidget {
@@ -83,6 +87,8 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Text(
                     controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
                   ),
                   SizedBox(
@@ -182,8 +188,10 @@ class InformationTeacherScreen extends StatelessWidget {
                             teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                             nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                             ontap: () {
-                              controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                              controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
+                              if(controller.resultMinusPoint.data!=null) {
+                                controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
+                              }
                               Get.back();
                               controller.update();
 
@@ -214,11 +222,15 @@ class InformationTeacherScreen extends StatelessWidget {
                                           style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
                                         )
                                       : Container(
+                                    width: AppDimens.width*0.3,
                                           padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
                                           decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                          child: Text(
-                                            'sử dụng 1 điểm để xem',
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              'sử dụng 1 điểm để xem',
+                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                            ),
                                           ),
                                         ),
                                 ],
@@ -254,11 +266,15 @@ class InformationTeacherScreen extends StatelessWidget {
                                         ),
                                       )
                                       : Container(
+                                    width: AppDimens.width*0.3,
                                           padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
                                           decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                          child: Text(
-                                            'sử dụng 1 điểm để xem',
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              'sử dụng 1 điểm để xem',
+                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                            ),
                                           ),
                                         ),
                                 ],
@@ -350,13 +366,21 @@ class InformationTeacherScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Địa chỉ:',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  'Địa chỉ:',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                ),
                               ),
-                              Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                              Container(
+                                width: AppDimens.width * 0.6,
+                                child: Text(
+                                  controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.end,
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                ),
                               ),
                             ],
                           ),
@@ -449,7 +473,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')}, ${controller.resultDetailTeacher.data.data.dataInfo.cityName}',
+                                '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')},\n ${controller.resultDetailTeacher.data.data.dataInfo.cityName}',
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
                                 textAlign: TextAlign.right,
                               ),

@@ -102,7 +102,7 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: AppDimens.space14, vertical: AppDimens.space6),
+          padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
           width: AppDimens.width,
           child: controller.listLHGDMore.isNotEmpty ? ListView.builder(
             physics: BouncingScrollPhysics(),

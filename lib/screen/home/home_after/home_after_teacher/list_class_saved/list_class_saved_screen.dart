@@ -48,6 +48,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    listClassSavedController.listLDL = [];
     listClassSavedController.classSaved(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
@@ -80,7 +81,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterTeacherController.homeAfterTeacher(1, 10);
             },
           ),
         ),

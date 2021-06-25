@@ -15,6 +15,8 @@ import 'package:giasu_vn/screen/home/information/information_teacher/information
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
+import '../../../../../common/theme/app_dimens.dart';
+
 class ListTeacherSaved extends StatefulWidget {
   final bool saved;
   final String name;
@@ -85,11 +87,16 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterParentController.homeAfterParent(1, 10);
             },
           ),
         ),
-        body: ListView.builder(
+        body: controller.listGSDL.isEmpty ? Center(
+          child: Text(
+            'Danh sách trống',
+            style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, color: AppColors.grey747474),
+          ),
+        ) : ListView.builder(
           physics: BouncingScrollPhysics(),
           controller: _controller,
           itemCount: controller.listGSDL.length,
@@ -141,9 +148,13 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                       controller.listGSDL[index].ugsName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                      SizedBox(
+                                        width: AppDimens.width * 0.7,
+                                        child: Text(
+                                         controller.listGSDL[index].ugsName,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                        ),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space6,

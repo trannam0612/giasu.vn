@@ -77,11 +77,6 @@ class InformationTeacherController extends GetxController {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.minusPoint(token,idGS);
     resultMinusPoint = resultMinusPointFromJson(res.data);
-    if (resultMinusPoint.data != null) {
-      Utils.showToast(resultMinusPoint.data.message);
-    } else {
-      Utils.showToast(resultMinusPoint.error.message);
-    }
     update();
   }
 

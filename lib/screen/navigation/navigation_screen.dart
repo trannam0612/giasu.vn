@@ -60,7 +60,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
                     },
                     child: SvgPicture.asset(
                       Images.ic_plus,
-                      width: 24,
+                      width: 20,
                     ),
                     backgroundColor: AppColors.secondaryF8971C,
                   )
@@ -75,28 +75,28 @@ class _NavigationScreenState extends State<NavigationScreen> {
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_home,
-                      width: 24,
+                      width: 20,
                       color: controller.pageIndex.value == 0 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_message,
-                      width: 24,
+                      width: 20,
                       color: controller.pageIndex.value == 1 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_notification,
-                      width: 24,
+                      width: 20,
                       color: controller.pageIndex.value == 2 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_setting,
-                      width: 24,
+                      width: 20,
                       color: controller.pageIndex.value == 3 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),

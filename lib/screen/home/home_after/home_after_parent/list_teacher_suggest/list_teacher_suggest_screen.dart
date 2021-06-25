@@ -17,6 +17,9 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../../common/theme/app_dimens.dart';
+import '../../../../../common/theme/app_dimens.dart';
+
 class ListTeacherSuggestedScreen extends StatefulWidget {
   final bool saved;
   final String name;
@@ -128,7 +131,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                       child: SizedBox(
-                        height: height * 0.24,
+                        height: height * 0.28,
                         child: Stack(
                           alignment: Alignment.topLeft,
                           children: [
@@ -154,9 +157,13 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              controller.listGSDD[index].ugsName,
-                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                            SizedBox(
+                                              width: AppDimens.width * 0.6,
+                                              child: Text(
+                                                controller.listGSDD[index].ugsName,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                              ),
                                             ),
                                             SizedBox(
                                               height: AppDimens.space6,
@@ -229,56 +236,47 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                       height: AppDimens.space6,
                                     ),
                                     Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Flexible(
-                                          flex : 8,
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                Images.ic_book,
-                                                width: 16,
-                                                height: 16,
-                                              ),
-                                              SizedBox(
-                                                width: AppDimens.space6,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  controller.listGSDD[index].asDetailName.join(', '),
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: AppTextStyles.regular(
-                                                    context,
-                                                    size: AppDimens.textSize14,
-                                                  ),
+                                        SvgPicture.asset(
+                                          Images.ic_book,
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.space6,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            controller.listGSDD[index].asDetailName.join(', '),
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
 
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                         ),
-                                        Flexible(
-                                          flex: 6,
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                Images.ic_money,
-                                                color: AppColors.secondaryF8971C,
-                                                width: 16,
-                                                height: 16,
-                                              ),
-                                              SizedBox(
-                                                width: AppDimens.space6,
-                                              ),
-                                              Text(
-                                                '${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                              ),
-                                            ],
-                                          ),
+                                      ],
+                                    ),
+                                    SizedBox(height: AppDimens.space6,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SvgPicture.asset(
+                                          Images.ic_money,
+                                          color: AppColors.secondaryF8971C,
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.space6,
+                                        ),
+                                        Text(
+                                          '${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}',
+                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                         ),
                                       ],
                                     ),

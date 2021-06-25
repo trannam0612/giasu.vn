@@ -19,8 +19,13 @@ class ListTeacherSavedController extends GetxController {
     resultTutorSaved = resultTutorSavedFromJson(res.data);
     if (resultTutorSaved.data != null) {
       // Get.back();
-      for (int i = 0; i < resultTutorSaved.data.listGsdl.length; i++) {
-        listGSDL.add(resultTutorSaved.data.listGsdl[i]);
+      if(resultTutorSaved.data.listGsdl.isNotEmpty) {
+        for (int i = 0; i < resultTutorSaved.data.listGsdl.length; i++) {
+          listGSDL.add(resultTutorSaved.data.listGsdl[i]);
+        }
+      }
+      else {
+        Utils.showToast('Đã hết');
       }
     } else {
       Get.back();

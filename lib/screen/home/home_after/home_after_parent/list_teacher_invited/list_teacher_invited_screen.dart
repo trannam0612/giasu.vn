@@ -11,6 +11,8 @@ import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_par
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_invited/list_teacher_invited_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 
+import '../../../../../common/theme/app_dimens.dart';
+
 class ListTeacherInvitedScreen extends StatefulWidget {
   final bool saved;
   final String name;
@@ -125,9 +127,13 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            controller.listGSMD[index].ugsName,
-                                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                          Container(
+                                            width :AppDimens.width * 0.6,
+                                            child: Text(
+                                              controller.listGSMD[index].ugsName,
+                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                           SizedBox(
                                             height: AppDimens.space6,

@@ -126,7 +126,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           onTap: () => Get.to(ListClassInviteScreen()),
                           child: Container(
                             width: width * 0.2,
-                            height: height * 0.13,
+                            height: height * 0.145,
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -166,7 +166,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           onTap: () => Get.to(ListClassTeachingScreen()),
                           child: Container(
                             width: width * 0.2,
-                            height: height * 0.13,
+                            height: height * 0.145,
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -206,7 +206,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           onTap: () => Get.to(ListClassSuggestScreen()),
                           child: Container(
                             width: width * 0.2,
-                            height: height * 0.13,
+                            height: height * 0.145,
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -246,7 +246,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           onTap: () => Get.to(ListClassSavedScreen()),
                           child: Container(
                             width: width * 0.2,
-                            height: height * 0.13,
+                            height: height * 0.145,
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
