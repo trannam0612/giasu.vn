@@ -105,7 +105,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                   itemBuilder: (context, index) => InkWell(
                     onTap: () {
                       SpUtil.putString(ConstString.NAME_PARENT, controller.listPHMD[index].ugsName);
-                      informationClassController.detailClass(int.parse(controller.listPHMD[index].pftId), 1);
+                      informationClassController.detailClass(int.parse(controller.listPHMD[index].pftId), 0);
                     },
                     child: Container(
                           margin: EdgeInsets.only(bottom: 10),

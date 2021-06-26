@@ -108,6 +108,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                               children: [
                                 Text(
                                   controller.listGSTDL[index].ugsName,
+                                  overflow: TextOverflow.ellipsis,
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                                 ),
                                 SizedBox(

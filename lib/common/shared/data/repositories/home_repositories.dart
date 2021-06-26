@@ -14,6 +14,16 @@ class HomeRepositories {
     ResultData rest = await httpManager.netFetch(Address.HOME, body, header, Options(method: 'post'));
 
     return rest;
+  }Future<ResultData> homeBefore() async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {'token': '', 'current_page': '', 'limit': ''};
+
+    ResultData rest = await httpManager.netFetch(Address.HOME, null, header, Options(method: 'post'));
+
+    return rest;
   }
 
   Future<ResultData> invitedTutor(String token, int currentPage, int limit) async {

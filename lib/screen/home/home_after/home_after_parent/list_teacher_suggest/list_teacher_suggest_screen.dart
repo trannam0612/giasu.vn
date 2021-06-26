@@ -111,7 +111,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                     Padding(
                       padding: const EdgeInsets.all(2.5),
                       child: IconSlideAction(
-                        caption: 'Delete',
+                        caption: 'Xoá',
                         color: AppColors.redEB5757,
                         icon: Icons.delete_outline,
                         onTap: () {
@@ -126,7 +126,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                     onTap: () {
                       SpUtil.putString(ConstString.NAME_CLASS, controller.listGSDD[index].pftSummary);
                       SpUtil.putString(ConstString.ID_CLASS, controller.listGSDD[index].pftId);
-                      informationTeacherController.detailTeacher(int.parse(controller.listGSDD[index].ugsId), 1);
+                      informationTeacherController.detailTeacher(int.parse(controller.listGSDD[index].ugsId), 0);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
@@ -186,22 +186,25 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                                 print(rating);
                                               },
                                             ),
-                                            SizedBox(height: AppDimens.space4,),
+                                            SizedBox(
+                                              height: AppDimens.space4,
+                                            ),
                                           ],
                                         ),
                                         InkWell(
-                                            onTap: () {
-                                              if (!controller.listGSDD[index].checkSave) {
-                                                controller.listGSDD[index].checkSave = true;
-                                                homeAfterParentController.saveTutor(int.parse(controller.listGSDD[index].ugsId));
-                                                controller.update();
-                                              } else {
-                                                controller.listGSDD[index].checkSave = false;
-                                                homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDD[index].ugsId));
-                                                controller.update();
-                                              }
-                                            },
-                                            child: controller.listGSDD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save))
+                                          child: controller.listGSDD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
+                                          onTap: () {
+                                            if (!controller.listGSDD[index].checkSave) {
+                                              controller.listGSDD[index].checkSave = true;
+                                              homeAfterParentController.saveTutor(int.parse(controller.listGSDD[index].ugsId));
+                                              controller.update();
+                                            } else {
+                                              controller.listGSDD[index].checkSave = false;
+                                              homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDD[index].ugsId));
+                                              controller.update();
+                                            }
+                                          },
+                                        )
                                       ],
                                     ),
                                     SizedBox(
@@ -255,12 +258,13 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                               context,
                                               size: AppDimens.textSize14,
                                             ),
-
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: AppDimens.space6,),
+                                    SizedBox(
+                                      height: AppDimens.space6,
+                                    ),
                                     Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -280,7 +284,6 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                         ),
                                       ],
                                     ),
-
                                     SizedBox(
                                       height: AppDimens.space10,
                                     ),
