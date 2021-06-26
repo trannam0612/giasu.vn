@@ -260,9 +260,9 @@ class ListResultSearchScreen extends StatelessWidget {
                     itemCount: controller.resultSearchClassTeacher.data.data.dataLh.length),
               )
             : ListView.builder(
-                itemCount: controller.resultSearchListTeacher.data.data.dataGs.length,
+                itemCount: controller.listDataTeacher.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId), 0),
+                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listDataTeacher[index].ugsId), 0),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
@@ -289,11 +289,11 @@ class ListResultSearchScreen extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                        controller.listDataTeacher[index].ugsName,
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                                         overflow: TextOverflow.clip,
                                         textAlign: TextAlign.left,
-                                        maxLines: 2,
+                                        maxLines: 1,
                                       ),
                                       SizedBox(
                                         height: AppDimens.space6,
@@ -334,7 +334,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        controller.resultSearchListTeacher.data.data.dataGs[index].asName,
+                                        controller.listDataTeacher[index].asName,
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,
@@ -361,7 +361,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.resultSearchListTeacher.data.data.dataGs[index].citName,
+                                            controller.listDataTeacher[index].citName,
                                             style: AppTextStyles.regular(
                                               context,
                                               size: AppDimens.textSize14,
@@ -383,7 +383,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                             width: AppDimens.space6,
                                           ),
                                           Text(
-                                            '${controller.resultSearchListTeacher.data.data.dataGs[index].ugsUnitPrice}/${controller.resultSearchListTeacher.data.data.dataGs[index].ugsMonth}',
+                                            '${controller.listDataTeacher[index].ugsUnitPrice}/${controller.listDataTeacher[index].ugsMonth}',
                                             style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                           ),
                                         ],
@@ -406,9 +406,9 @@ class ListResultSearchScreen extends StatelessWidget {
                                               color: AppColors.primary4C5BD4,
                                               onPressed: () {
                                                 Get.dialog(CheckboxListClass(
-                                                  imageUrl: controller.resultSearchListTeacher.data.data.dataGs[index].ugsAvatar,
-                                                  idGS: controller.resultSearchListTeacher.data.data.dataGs[index].ugsId,
-                                                  name: controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
+                                                  idGS: controller.listDataTeacher[index].ugsId,
+                                                  name: controller.listDataTeacher[index].ugsName,
                                                 ));
                                               },
                                               textColor: AppColors.whiteFFFFFF,
@@ -421,16 +421,16 @@ class ListResultSearchScreen extends StatelessWidget {
                                             height: 30,
                                             width: 95,
                                             child: CustomButton1(
-                                              textColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              textColor: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
                                               onPressed: () {
-                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave = !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave;
-                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave
-                                                    ? controller.saveTutor(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId))
-                                                    : controller.deleteTutorSaved(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId));
+                                                controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
+                                                controller.listDataTeacher[index].checkSave
+                                                    ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
+                                                    : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
                                               },
-                                              color: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              title: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                              backColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
+                                              color: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
+                                              backColor: !controller.listDataTeacher[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
                                             ),
                                           )
                                         ],
@@ -458,7 +458,7 @@ class ListResultSearchScreen extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
-                                  imageUrl: image,
+                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,

@@ -577,10 +577,11 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
-    RegExp regExp = new RegExp(pattern);
+
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
     }

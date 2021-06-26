@@ -177,6 +177,7 @@ class PostScreen extends StatelessWidget {
                         CustomTextField(
                           textEditingController: controller.numberStudent,
                           obligatory: true,
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           error: controller.checkNumberStudent(),
                           keyboardType: TextInputType.number,
                           onPressed: () {},
@@ -321,6 +322,7 @@ class PostScreen extends StatelessWidget {
                                   // controller.valueButtonLuong
                                   //     ?
                                   CustomTextField(
+                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                 error: controller.checkSalaryCD(),
                                 textEditingController: controller.salaryCD,
                                 obligatory: false,
@@ -418,6 +420,7 @@ class PostScreen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           obligatory: true,
                           error: controller.checkPhone(),

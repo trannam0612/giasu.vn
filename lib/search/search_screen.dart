@@ -91,6 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: GestureDetector(
                         onTap: () {
                           controller.isValueSearch = false;
+                          controller.displayCurrentLocation();
                           controller.update();
                         },
                         child: Container(
@@ -190,8 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                     )
-                  : Container(
-                      height: 500,
+                  : Expanded(
                       child: Center(
                         child: GoogleMap(
                           initialCameraPosition: CameraPosition(target: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude), zoom: 15, bearing: 0.0, tilt: 0.0),

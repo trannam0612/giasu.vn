@@ -14,15 +14,32 @@ import 'package:giasu_vn/screen/information/information_parent/update_info_paren
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
 import 'package:giasu_vn/screen/settings/information_teacher.dart';
 import 'package:giasu_vn/screen/settings/settings_controller.dart';
 import 'package:sp_util/sp_util.dart';
 
-class SettingsScreen extends StatelessWidget {
-  UpdateInformationParentController updateInformationParentController = Get.put(UpdateInformationParentController());
-  UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
-
+class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  UpdateInformationParentController updateInformationParentController = Get.put(UpdateInformationParentController());
+
+  UpdateInfoTeacherController updateInfoTeacherController = Get.put(UpdateInfoTeacherController());
+  SettingsController settingsController = Get.find();
+
+  NavigationController navigationController = Get.find();
+
+  @override
+  void initState() {
+    settingsController.user == '1' ? settingsController.getInfoParent() : settingsController.getInfoTeacher();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +52,12 @@ class SettingsScreen extends StatelessWidget {
           title: Text(
             'Cài đặt',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+          ),
+          leading: IconButton(
+            icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
+            onPressed: () {
+              navigationController.changePage(0);
+            },
           ),
         ),
         body: SingleChildScrollView(

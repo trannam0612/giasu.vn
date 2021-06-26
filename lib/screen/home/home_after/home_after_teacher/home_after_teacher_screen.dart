@@ -51,7 +51,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
     // TODO: implement initState
     super.initState();
     print('abc');
-    // homeAfterTeacherController.homeAfterTeacher(1, 10);
+    homeAfterTeacherController.homeAfterTeacher(1, 10);
   }
 
   @override
@@ -86,9 +86,12 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                         width: 100,
                         height: 45,
                       ),
-                      SizedBox(height: 40, width: width * 0.6, child: CustomSearchTextField(
-                        onTap: () => Get.to(() => SearchScreen()),
-                      )),
+                      SizedBox(
+                          height: 40,
+                          width: width * 0.6,
+                          child: CustomSearchTextField(
+                            onTap: () => Get.to(() => SearchScreen()),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -328,8 +331,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) => InkWell(
-                            onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
-                            child: Container(
+                                onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
+                                child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
                                     borderRadius: BorderRadius.circular(AppDimens.space16),
@@ -358,7 +361,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                     hasButton: false,
                                   ),
                                 ),
-                          ),
+                              ),
                           itemCount: controller.listLHPB.length))
                 ],
               ),

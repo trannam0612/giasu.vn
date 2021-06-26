@@ -51,6 +51,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
 
   @override
   void initState() {
+    // homeAfterParentController.homeAfterParent(1, 10);
     // TODO: implement initState
     super.initState();
   }
@@ -213,7 +214,9 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           width: AppDimens.space10,
                         ),
                         InkWell(
-                          onTap: () => Get.to(ListPostCreatedScreen()),
+                          onTap: () => Get.to(ListPostCreatedScreen(
+                            back: () => Get.back(),
+                          )),
                           child: Container(
                             width: width * 0.2,
                             height: height * 0.13,

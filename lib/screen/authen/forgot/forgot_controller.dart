@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
@@ -8,6 +10,7 @@ import 'package:giasu_vn/common/shared/data/models/result_verify_forgot.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
@@ -87,6 +90,27 @@ class ForgotController extends GetxController {
     update();
   }
 
+  Timer _timer;
+  RxInt seconds = 30.obs;
+
+  void startTimer() {
+    print(' startTimer();');
+    seconds.value = 30;
+    const period = const Duration(seconds: 1);
+    _timer = Timer.periodic(period, (timer) {
+      seconds--;
+
+      if (seconds.value == 0) {
+        // Countdown seconds 0, cancel timer
+        if (_timer != null) {
+          _timer.cancel();
+          _timer = null;
+        }
+      }
+    });
+    update();
+  }
+
   Future<void> verifyForgotPassword() async {
     Get.dialog(DialogLoading());
     String tokenForgot = SpUtil.getString(ConstString.token_forgot);
@@ -113,7 +137,8 @@ class ForgotController extends GetxController {
     if (resultNewPasswordForgot.data != null) {
       Get.back();
       Utils.showToast(resultNewPasswordForgot.data.message);
-      Get.offAllNamed(Routes.LOGIN);
+      // Get.(Routes.LOGIN);
+      Get.offAll(SelectTypeLoginScreen());
     } else {
       Get.back();
       Utils.showToast(resultNewPasswordForgot.error.message);
@@ -152,7 +177,7 @@ class ForgotController extends GetxController {
 
   void checkButtonSendEmail() {
     errorEmail = true;
-    email.text.isNotEmpty ? emailForgotPassword() : Utils.showToast('Email không được để trống!');
+    email.text.isNotEmpty ? {emailForgotPassword(), startTimer()} : Utils.showToast('Email không được để trống!');
     update();
   }
 
@@ -163,6 +188,7 @@ class ForgotController extends GetxController {
     ResultEmailForgot resultEmailForgot = resultEmailForgotFromJson(res.data);
     if (resultEmailForgot.data != null) {
       Get.back();
+
       SpUtil.putString(ConstString.token_forgot, resultEmailForgot.data.dataUser.token);
       Utils.showToast(resultEmailForgot.data.message);
       Get.toNamed(Routes.verify_forgot);

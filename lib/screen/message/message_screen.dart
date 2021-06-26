@@ -10,6 +10,7 @@ import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/message/message_controller.dart';
+import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
 import 'package:giasu_vn/screen/post/post_controller.dart';
 import 'package:giasu_vn/screen/post/update_post/update_post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -22,6 +23,8 @@ import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
 
 class MessageScreen extends StatelessWidget {
+  NavigationController navigationController = Get.find();
+
   final f = new DateFormat('dd-MM-yyyy');
 
   @override
@@ -42,13 +45,14 @@ class MessageScreen extends StatelessWidget {
                     leading: IconButton(
                       icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
                       onPressed: () {
-                        Get.back();
+                        navigationController.changePage(0);
                       },
                     ),
                   ),
                   body: Container(
                     padding: EdgeInsets.all(AppDimens.padding16),
-                    child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Center(
                           child: Image.asset(Images.img_message_app),

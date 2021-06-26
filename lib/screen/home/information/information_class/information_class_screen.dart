@@ -534,68 +534,67 @@ class InformationClassScreen extends StatelessWidget {
                           Spacer(),
                         ],
                       )
-                    : controller.accepted
+                    : type == 5
                         ? Container()
-                        : Column(
-                          children: [
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                  text: SpUtil.getString(ConstString.NAME_PARENT),
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24),
-                                  children: [
-                                    TextSpan(
-                                      text: ' đã mời bạn dạy lớp\n',
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
-                                    ),
-                                    TextSpan(
-                                      text: controller.resultDetailClass.data.data.dataInfo.pftSummary,
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
-                                    )
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: AppDimens.space10,
-                            ),
-                            Row(
+                        : controller.accepted
+                            ? Container()
+                            : Column(
                                 children: [
-                                  Spacer(),
-                                  SizedBox(
-                                    height: 35,
-                                    width: 140,
-                                    child: CustomButton2(
-                                      title: 'Đồng ý',
-                                      color: AppColors.primary4C5BD4,
-                                      onPressed: () {
-                                        listClassInvitedController.acceptInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
-                                        controller.accepted = true;
-                                        Get.to(ListClassTeachingScreen());
-                                        controller.update();
-                                      },
-                                      textColor: AppColors.whiteFFFFFF,
-                                    ),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(text: SpUtil.getString(ConstString.NAME_PARENT), style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24), children: [
+                                      TextSpan(
+                                        text: ' đã mời bạn dạy lớp\n',
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
+                                      ),
+                                      TextSpan(
+                                        text: controller.resultDetailClass.data.data.dataInfo.pftSummary,
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                      )
+                                    ]),
                                   ),
-                                  Spacer(),
                                   SizedBox(
-                                    height: 35,
-                                    width: 140,
-                                    child: CustomButton1(
-                                      textColor: AppColors.black,
-                                      onPressed: () {
-                                        listClassInvitedController.refuseInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
-                                        controller.accepted = true;
-                                        controller.update();
-                                      },
-                                      color: AppColors.grey747474,
-                                      title: 'Từ chối',
-                                      backColor: AppColors.whiteFFFFFF,
-                                    ),
+                                    height: AppDimens.space10,
                                   ),
-                                  Spacer(),
+                                  Row(
+                                    children: [
+                                      Spacer(),
+                                      SizedBox(
+                                        height: 35,
+                                        width: 140,
+                                        child: CustomButton2(
+                                          title: 'Đồng ý',
+                                          color: AppColors.primary4C5BD4,
+                                          onPressed: () {
+                                            listClassInvitedController.acceptInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                            controller.accepted = true;
+                                            Get.to(ListClassTeachingScreen());
+                                            controller.update();
+                                          },
+                                          textColor: AppColors.whiteFFFFFF,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      SizedBox(
+                                        height: 35,
+                                        width: 140,
+                                        child: CustomButton1(
+                                          textColor: AppColors.black,
+                                          onPressed: () {
+                                            listClassInvitedController.refuseInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                            controller.accepted = true;
+                                            controller.update();
+                                          },
+                                          color: AppColors.grey747474,
+                                          title: 'Từ chối',
+                                          backColor: AppColors.whiteFFFFFF,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                    ],
+                                  ),
                                 ],
-                              ),
-                          ],
-                        )
+                              )
               ],
             ),
           ),

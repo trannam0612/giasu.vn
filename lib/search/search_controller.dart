@@ -90,6 +90,8 @@ class SearchController extends GetxController {
   void displayCurrentLocation() async {
     final location = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     locationDefault = location;
+    print('locationDefault');
+    print(locationDefault);
     update();
   }
 
@@ -106,12 +108,14 @@ class SearchController extends GetxController {
     update();
   }
 
+  List<DataG> listDataTeacher = [];
+
   Future<void> searchParent() async {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await searchRepositories.searchParent(token, 1, idSubject, idClass, idProvincial, 1, 10);
     resultSearchListTeacher = resultSearchListTeacherFromJson(res.data);
     if (resultSearchListTeacher.data != null) {
-      print(resultSearchListTeacher.data.message);
+      listDataTeacher = listDataTeacher + resultSearchListTeacher.data.data.dataGs;
       Get.to(ListResultSearchScreen());
     } else {
       print(resultSearchListTeacher.error.message);

@@ -45,7 +45,11 @@ class LoginController extends GetxController {
   List<String> listSubject = [];
 
   bool isShowPass = true;
-
+  void changeValuePassword() {
+    print('changeValuePassword');
+    isShowPass = !isShowPass;
+    update();
+  }
   Future<void> loginParent() async {
     Get.dialog(DialogLoading());
     ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
@@ -59,6 +63,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.ID_USER, resultLogin.data.data.id);
       SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
+      SpUtil.putString(ConstString.USER_TYPE, '1');
       Utils.showToast(resultLogin.data.message);
       homeAfterParentController.homeAfterParent(1, 10);
       // Get.toNamed(Routes.navigation);
@@ -86,6 +91,7 @@ class LoginController extends GetxController {
       SpUtil.putString(ConstString.ID_USER, resultLoginTeacher.data.data.id);
       SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
       SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
+      SpUtil.putString(ConstString.USER_TYPE, '2');
       Utils.showToast(resultLoginTeacher.data.message);
       homeAfterTeacherController.homeAfterTeacher(1, 10);
       // Get.toNamed(Routes.navigation);
@@ -131,6 +137,7 @@ class LoginController extends GetxController {
     email.text = SpUtil.getString(ConstString.EMAIL);
     print(userType);
     listCitySubject();
+    SpUtil.putString(ConstString.Status_user, '1');
     super.onInit();
   }
 }

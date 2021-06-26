@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -124,6 +125,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           error: controller.checkPhone(),
                           keyboardType: TextInputType.phone,
@@ -275,6 +277,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         //   height: AppDimens.space20,
                         // ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
                           obligatory: true,
                           keyboardType: TextInputType.number,
@@ -311,6 +314,15 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpStart.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpStart.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
                                 keyboardType: TextInputType.number,
@@ -330,6 +342,15 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpEnd.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpEnd.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
                                 keyboardType: TextInputType.number,
@@ -375,6 +396,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.graduationYear,
                           obligatory: false,
                           keyboardType: TextInputType.number,

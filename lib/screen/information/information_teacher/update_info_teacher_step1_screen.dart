@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -96,15 +97,6 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        controller.errorImage
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
                         SizedBox(
                           height: 4,
                         ),
@@ -139,6 +131,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           error: controller.checkPhone(),
                           keyboardType: TextInputType.phone,
@@ -289,6 +282,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         //   height: AppDimens.space20,
                         // ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
                           obligatory: true,
                           keyboardType: TextInputType.number,
@@ -324,6 +318,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpStart.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpStart.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
                                 error: controller.checkTimeExpStart(),
@@ -342,6 +345,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpEnd.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpEnd.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
                                 error: controller.checkTimeExpEnd(),
@@ -397,19 +409,20 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        // CustomTextField(
-                        //   textEditingController: controller.graduationYear,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Năm tốt nghiệp',
-                        //   hintText: '05/2012',
-                        //   isPassword: false,
-                        //   isShowIcon: true,
-                        //   iconSuffix: Images.ic_date,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
+                        CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          textEditingController: controller.graduationYear,
+                          obligatory: false,
+                          onPressed: () {},
+                          title: 'Năm tốt nghiệp',
+                          hintText: '2012',
+                          isPassword: false,
+                          isShowIcon: true,
+                          iconSuffix: Images.ic_date,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
                         CustomTextField(
                           textEditingController: controller.company,
                           obligatory: false,

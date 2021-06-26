@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,7 +7,9 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/register/intro_login.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
@@ -18,6 +22,8 @@ import '../../../common/theme/app_colors.dart';
 import 'login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     HomeBeforeController homeBeforeController = Get.put(HomeBeforeController());
@@ -28,10 +34,15 @@ class LoginScreen extends StatelessWidget {
         child: SafeArea(
           child: Scaffold(
             appBar: AppBar(
-              leading: IconButton(icon: SvgPicture.asset(Images.ic_arrow_left_iphone, color: AppColors.primary4C5BD4,),
-              onPressed: () {
-                Get.back();
-              },),
+              leading: IconButton(
+                icon: SvgPicture.asset(
+                  Images.ic_arrow_left_iphone,
+                  color: AppColors.primary4C5BD4,
+                ),
+                onPressed: () {
+                  Get.offAll(SelectTypeLoginScreen());
+                },
+              ),
               backgroundColor: AppColors.whiteFFFFFF,
               elevation: 0,
             ),
@@ -87,16 +98,18 @@ class LoginScreen extends StatelessWidget {
                                 height: AppDimens.space16,
                               ),
                               CustomTextField(
+                                maxLine: 1,
                                 textEditingController: controller.pass,
                                 onPressed: () {
-                                  // controller.changeShowPass();
+                                  controller.changeValuePassword();
                                 },
                                 title: 'Mật khẩu',
                                 hintText: 'Mật khẩu',
                                 // isPassword: controller.isShowPass,
                                 isShowIcon: true,
-                                colorIcon: AppColors.greyf6f6f6,
-                                iconSuffix: Images.ic_eye_off,
+                                isPassword: controller.isShowPass,
+                                colorIcon: AppColors.grey747474,
+                                iconSuffix: controller.isShowPass ? Images.ic_eye_on : Images.ic_eye_off,
                               ),
                               SizedBox(
                                 height: AppDimens.space32,
