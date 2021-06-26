@@ -7,13 +7,14 @@ import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:http_parser/http_parser.dart';
 
 class UserRepositories {
-  Future<ResultData> updateInfoParent(String token, String name, int gender, String birth, int city, String address) async {
+  Future<ResultData> updateInfoParent(String token, String phone, String name, int gender, String birth, int city, String address) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
     Map<String, dynamic> body = {
       'token': token,
+      'ugs_phone': phone,
       'ugs_name': name,
       'ugs_gender': gender,
       'ugs_birthday': birth,

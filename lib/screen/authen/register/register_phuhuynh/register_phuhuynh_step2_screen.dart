@@ -337,7 +337,7 @@ Widget SelectDistrict(BuildContext context) {
                 // ignore: deprecated_member_use
                 onTap: () {
                   registerPhuHuynhController.district.text = registerPhuHuynhController.listDistrict[index].nameCity;
-                  registerPhuHuynhController.idDistrict = int.parse(registerPhuHuynhController.listDistrict[index].nameCity);
+                  registerPhuHuynhController.idDistrict = int.parse(registerPhuHuynhController.listDistrict[index].idCity);
                   Get.back();
                 },
                 child: SizedBox(

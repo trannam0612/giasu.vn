@@ -9,8 +9,10 @@ import 'package:giasu_vn/common/shared/data/models/result_update_avatar.dart';
 import 'package:giasu_vn/common/shared/data/models/result_update_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
+import 'package:giasu_vn/screen/settings/settings_controller.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,6 +21,7 @@ import 'package:sp_util/sp_util.dart';
 
 class UpdateInformationParentController extends GetxController {
   UserRepositories userRepositories = UserRepositories();
+  SettingsController settingsController = Get.put(SettingsController());
   bool isShowRePassword = true;
   bool isShowPassword = true;
   bool errorEmail = false;
@@ -226,6 +229,8 @@ class UpdateInformationParentController extends GetxController {
       dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
       provincial.text = resultGetInfoParent.data.data.citName;
       address.text = resultGetInfoParent.data.data.ugsAddress;
+      idGender = int.parse(resultGetInfoParent.data.data.ugsGenderId);
+      idProvincial = int.parse(resultGetInfoParent.data.data.ugsCity);
       Get.to(UpdateInformationParentScreen());
     } else {
       Get.back();
@@ -261,10 +266,12 @@ class UpdateInformationParentController extends GetxController {
 
   Future<void> updateInfoParent() async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.updateInfoParent(token, fullName.text, idGender, dateTime.text, idProvincial, address.text);
+    ResultData res = await userRepositories.updateInfoParent(token, phone.text, fullName.text, idGender, dateTime.text, idProvincial, address.text);
     ResultUpdateInfoParent resultUpdateInfoParent = resultUpdateInfoParentFromJson(res.data);
     if (resultUpdateInfoParent.data != null) {
       Utils.showToast(resultUpdateInfoParent.data.message);
+      settingsController.getInfoParent();
+      Get.offAndToNamed(Routes.navigation);
     } else {
       Utils.showToast(resultUpdateInfoParent.error.message);
     }

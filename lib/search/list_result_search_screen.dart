@@ -12,12 +12,14 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_te
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/checkbox_list_class.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/search/search_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class ListResultSearchScreen extends StatelessWidget {
   InformationClassController informationClassController = Get.put(InformationClassController());
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
   final String title;
   final String fee;
   final String subject;
@@ -259,214 +261,217 @@ class ListResultSearchScreen extends StatelessWidget {
               )
             : ListView.builder(
                 itemCount: controller.resultSearchListTeacher.data.data.dataGs.length,
-                itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
-                  child: SizedBox(
-                    height: AppDimens.height * 0.20,
-                    child: Stack(
-                      alignment: Alignment.topLeft,
-                      children: [
-                        Positioned.fill(
-                          left: 30,
-                          child: Container(
-                            padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
-                              BoxShadow(
-                                color: AppColors.black.withOpacity(0.25),
-                                spreadRadius: 0,
-                                blurRadius: 4,
-                                offset: Offset(0, 3), // changes position of shadow
-                              ),
-                            ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
-                                      overflow: TextOverflow.clip,
-                                      textAlign: TextAlign.left,
-                                      maxLines: 2,
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space6,
-                                    ),
-                                    RatingBar(
-                                      initialRating: rate.toDouble(),
-                                      itemSize: 12,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: false,
-                                      itemCount: 5,
-                                      ignoreGestures: true,
-                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                                      ratingWidget: RatingWidget(
-                                        full: SvgPicture.asset(Images.ic_star),
-                                        empty: SvgPicture.asset(Images.ic_star_border),
-                                      ),
-                                      unratedColor: AppColors.greyAAAAAA,
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset(
-                                      Images.ic_book,
-                                      width: 16,
-                                      height: 16,
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space6,
-                                    ),
-                                    Text(
-                                      controller.resultSearchListTeacher.data.data.dataGs[index].asName,
-                                      style: AppTextStyles.regular(
-                                        context,
-                                        size: AppDimens.textSize14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space6,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(
-                                          Images.ic_location,
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space8,
-                                        ),
-                                        Text(
-                                          controller.resultSearchListTeacher.data.data.dataGs[index].citName,
-                                          style: AppTextStyles.regular(
-                                            context,
-                                            size: AppDimens.textSize14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(
-                                          Images.ic_money,
-                                          color: AppColors.secondaryF8971C,
-                                          width: 16,
-                                          height: 16,
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space6,
-                                        ),
-                                        Text(
-                                          '${controller.resultSearchListTeacher.data.data.dataGs[index].ugsUnitPrice}/${controller.resultSearchListTeacher.data.data.dataGs[index].ugsMonth}',
-                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      height: AppDimens.space10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Spacer(),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 95,
-                                          child: CustomButton2(
-                                            title: 'Mời dạy',
-                                            color: AppColors.primary4C5BD4,
-                                            onPressed: () {
-                                              Get.dialog(CheckboxListClass(
-                                                imageUrl: controller.resultSearchListTeacher.data.data.dataGs[index].ugsAvatar,
-                                                idGS: controller.resultSearchListTeacher.data.data.dataGs[index].ugsId,
-                                                name: controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
-                                              ));
-                                            },
-                                            textColor: AppColors.whiteFFFFFF,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space20,
-                                        ),
-                                        SizedBox(
-                                          height: 30,
-                                          width: 95,
-                                          child: CustomButton1(
-                                            textColor: controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                            onPressed: () {
-                                              controller.resultSearchListTeacher.data.data.dataGs[index].checkSave = !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave;
-                                              controller.resultSearchListTeacher.data.data.dataGs[index].checkSave
-                                                  ? controller.saveTutor(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId))
-                                                  : controller.deleteTutorSaved(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId));
-                                            },
-                                            color: controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                            title: controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                            backColor: controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              boxShadow: [
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId), 0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
+                    child: SizedBox(
+                      height: AppDimens.height * 0.20,
+                      child: Stack(
+                        alignment: Alignment.topLeft,
+                        children: [
+                          Positioned.fill(
+                            left: 30,
+                            child: Container(
+                              padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
                                 BoxShadow(
                                   color: AppColors.black.withOpacity(0.25),
                                   spreadRadius: 0,
-                                  blurRadius: 3,
+                                  blurRadius: 4,
                                   offset: Offset(0, 3), // changes position of shadow
                                 ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
-                              child: CachedNetworkImage(
-                                imageUrl: image,
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                                progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(value: downloadProgress.progress),
-                                ),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                        overflow: TextOverflow.clip,
+                                        textAlign: TextAlign.left,
+                                        maxLines: 2,
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space6,
+                                      ),
+                                      RatingBar(
+                                        initialRating: rate.toDouble(),
+                                        itemSize: 12,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: false,
+                                        itemCount: 5,
+                                        ignoreGestures: true,
+                                        itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                        ratingWidget: RatingWidget(
+                                          full: SvgPicture.asset(Images.ic_star),
+                                          empty: SvgPicture.asset(Images.ic_star_border),
+                                        ),
+                                        unratedColor: AppColors.greyAAAAAA,
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space6,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.ic_book,
+                                        width: 16,
+                                        height: 16,
+                                      ),
+                                      SizedBox(
+                                        width: AppDimens.space6,
+                                      ),
+                                      Text(
+                                        controller.resultSearchListTeacher.data.data.dataGs[index].asName,
+                                        style: AppTextStyles.regular(
+                                          context,
+                                          size: AppDimens.textSize14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space6,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Images.ic_location,
+                                            width: 16,
+                                            height: 16,
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space8,
+                                          ),
+                                          Text(
+                                            controller.resultSearchListTeacher.data.data.dataGs[index].citName,
+                                            style: AppTextStyles.regular(
+                                              context,
+                                              size: AppDimens.textSize14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SvgPicture.asset(
+                                            Images.ic_money,
+                                            color: AppColors.secondaryF8971C,
+                                            width: 16,
+                                            height: 16,
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space6,
+                                          ),
+                                          Text(
+                                            '${controller.resultSearchListTeacher.data.data.dataGs[index].ugsUnitPrice}/${controller.resultSearchListTeacher.data.data.dataGs[index].ugsMonth}',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: AppDimens.space10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Spacer(),
+                                          SizedBox(
+                                            height: 30,
+                                            width: 95,
+                                            child: CustomButton2(
+                                              title: 'Mời dạy',
+                                              color: AppColors.primary4C5BD4,
+                                              onPressed: () {
+                                                Get.dialog(CheckboxListClass(
+                                                  imageUrl: controller.resultSearchListTeacher.data.data.dataGs[index].ugsAvatar,
+                                                  idGS: controller.resultSearchListTeacher.data.data.dataGs[index].ugsId,
+                                                  name: controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                                ));
+                                              },
+                                              textColor: AppColors.whiteFFFFFF,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: AppDimens.space20,
+                                          ),
+                                          SizedBox(
+                                            height: 30,
+                                            width: 95,
+                                            child: CustomButton1(
+                                              textColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              onPressed: () {
+                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave = !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave;
+                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave
+                                                    ? controller.saveTutor(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId))
+                                                    : controller.deleteTutorSaved(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId));
+                                              },
+                                              color: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              title: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? 'Lưu' : 'Đã lưu',
+                                              backColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            top: 5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.black.withOpacity(0.25),
+                                    spreadRadius: 0,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(80),
+                                child: CachedNetworkImage(
+                                  imageUrl: image,
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(value: downloadProgress.progress),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

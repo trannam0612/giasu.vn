@@ -94,7 +94,37 @@ class CardNotification extends StatelessWidget {
                           )
                         ],
                       )
-                    : Container()
+                    : checkButton == 2
+                        ? Row(
+                            children: [
+                              Spacer(),
+                              SizedBox(
+                                width: 95,
+                                height: 30,
+                                child: CustomButton2(
+                                  title: 'Đồng ý',
+                                  color: AppColors.primary4C5BD4,
+                                  onPressed: buttonAgree,
+                                  textColor: AppColors.whiteFFFFFF,
+                                ),
+                              ),
+                              SizedBox(
+                                width: AppDimens.space20,
+                              ),
+                              SizedBox(
+                                width: 95,
+                                height: 30,
+                                child: CustomButton1(
+                                  textColor: AppColors.black,
+                                  onPressed: buttonRefuse,
+                                  color: AppColors.grey747474,
+                                  title: 'Từ chối',
+                                  backColor: AppColors.whiteFFFFFF,
+                                ),
+                              )
+                            ],
+                          )
+                        : Container()
               ],
             ),
           )

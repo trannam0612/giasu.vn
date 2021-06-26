@@ -911,6 +911,7 @@ Widget SelectTinhThanh(BuildContext context) {
                 onTap: () {
                   registerGiaSuController.areaTeaching.text = listDataCity[index].citName;
                   registerGiaSuController.idArea = int.parse(listDataCity[index].citId);
+                  registerGiaSuController.listDistrictSelect.clear();
                   registerGiaSuController.getListDistrict(int.parse(listDataCity[index].citId));
                   Get.back();
                 },

@@ -54,41 +54,45 @@ class Data {
 
 class DataNoti {
   DataNoti({
-    this.ugsPh,
+    this.ugsGs,
     this.idClass,
     this.ugsName,
     this.content,
     this.ugsAvatar,
     this.notiDate,
     this.type,
+    this.idLop,
   });
 
-  String ugsPh;
+  String ugsGs;
   String idClass;
   String ugsName;
   String content;
   String ugsAvatar;
   String notiDate;
   int type;
+  String idLop;
 
   factory DataNoti.fromJson(Map<String, dynamic> json) => DataNoti(
-    ugsPh: json["ugs_ph"] == null ? null : json["ugs_ph"],
+    ugsGs: json["ugs_gs"] == null ? null : json["ugs_gs"],
     idClass: json["id_class"] == null ? null : json["id_class"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     content: json["content"] == null ? null : json["content"],
     ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     notiDate: json["noti_date"] == null ? null : json["noti_date"],
     type: json["type"] == null ? null : json["type"],
+    idLop: json["id_lop"] == null ? null : json["id_lop"],
   );
 
   Map<String, dynamic> toJson() => {
-    "ugs_ph": ugsPh == null ? null : ugsPh,
+    "ugs_gs": ugsGs == null ? null : ugsGs,
     "id_class": idClass == null ? null : idClass,
     "ugs_name": ugsName == null ? null : ugsName,
     "content": content == null ? null : content,
     "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
     "noti_date": notiDate == null ? null : notiDate,
     "type": type == null ? null : type,
+    "id_lop": idLop == null ? null : idLop,
   };
 }
 

@@ -28,7 +28,7 @@ class PostController extends GetxController {
   int idFormTeaching;
   int idExp;
 
-  List<String> listDay = ['1', '2', '3', '4', '5', '6', '7'];
+  List<String> listDay = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
   List<String> listTime = ['1,5', '2', '2,5', '3'];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];

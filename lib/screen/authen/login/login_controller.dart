@@ -122,36 +122,10 @@ class LoginController extends GetxController {
     if (diff.inDays > 0) return "${diff.inDays} ${diff.inDays == 1 ? "ngày" : "ngày"} trước";
     if (diff.inHours > 0) return "${diff.inHours} ${diff.inHours == 1 ? "giờ" : "giờ"} trước";
     if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
+    update();
     return "vừa xong";
   }
 
-//
-// Future<void> getListData() async {
-//   print('getListData');
-//   ResultData res = await authenticationRepositories.getListData();
-//   resultListData = resultListDataFromJson(res.data);
-//   if (res.result) {
-//     SpUtil.putString(ConstString.Status_user, '1');
-//     listProvincial = resultListData.data.danhSachThanhPho.map((e) => e.citName).toList();
-//     listFormTeaching = resultListData.data.danhSachHinhThucGiangDay.map((e) => e.methodName).toList();
-//     listKVday = resultListData.data.danhSachKhuVucGiangDay.map((e) => e.citName).toList();
-//     listKieuGS = resultListData.data.danhSachKieuGiaSu.map((e) => e.nameType).toList();
-//     listLuong = resultListData.data.danhSachLuongTheo.map((e) => e.name).toList();
-//     listClass = resultListData.data.danhSachLopHocSeDay.map((e) => e.levelClassName).toList();
-//     listSubject = resultListData.data.danhSachMonHoc.map((e) => e.subject).toList();
-//     listGender = resultListData.data.danhSachGioiTinh.map((e) => e.sexName).toList();
-//     // print(listProvincial);
-//     // print(listFormTeaching);
-//     // print(listKVday);
-//     // print(listKieuGS);
-//     // print(listLuong);
-//     // print(listClass);
-//     // print(listSubject);
-//     // print(resultListData.data.danhSchGiiTnh);
-//     print('200');
-//   }
-//   update();
-// }
   @override
   void onInit() {
     email.text = SpUtil.getString(ConstString.EMAIL);

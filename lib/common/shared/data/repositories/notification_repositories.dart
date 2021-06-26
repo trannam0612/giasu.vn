@@ -16,4 +16,17 @@ class NotificationRepositories {
     ResultData rest = await httpManager.netFetch(Address.notification, body, header, Options(method: 'post'));
     return rest;
   }
+
+  Future<ResultData> deleteNotification(String token, int idNoti) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'token': token,
+      'id_noti': idNoti,
+    };
+    ResultData rest = await httpManager.netFetch(Address.delete_notification, body, header, Options(method: 'post'));
+    return rest;
+  }
 }

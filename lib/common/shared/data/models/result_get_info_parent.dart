@@ -59,8 +59,10 @@ class DataData {
     this.ugsAvatar,
     this.ugsEmail,
     this.ugsPassword,
+    this.ugsGenderId,
     this.ugsGender,
     this.ugsBrithday,
+    this.ugsCity,
     this.citName,
     this.ugsAddress,
   });
@@ -70,8 +72,10 @@ class DataData {
   String ugsAvatar;
   String ugsEmail;
   String ugsPassword;
+  String ugsGenderId;
   String ugsGender;
   String ugsBrithday;
+  String ugsCity;
   String citName;
   String ugsAddress;
 
@@ -81,8 +85,10 @@ class DataData {
     ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     ugsEmail: json["ugs_email"] == null ? null : json["ugs_email"],
     ugsPassword: json["ugs_password"] == null ? null : json["ugs_password"],
+    ugsGenderId: json["ugs_gender_id"] == null ? null : json["ugs_gender_id"],
     ugsGender: json["ugs_gender"] == null ? null : json["ugs_gender"],
     ugsBrithday: json["ugs_brithday"] == null ? null : json["ugs_brithday"],
+    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
   );
@@ -93,8 +99,10 @@ class DataData {
     "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
     "ugs_email": ugsEmail == null ? null : ugsEmail,
     "ugs_password": ugsPassword == null ? null : ugsPassword,
+    "ugs_gender_id": ugsGenderId == null ? null : ugsGenderId,
     "ugs_gender": ugsGender == null ? null : ugsGender,
     "ugs_brithday": ugsBrithday == null ? null : ugsBrithday,
+    "ugs_city": ugsCity == null ? null : ugsCity,
     "cit_name": citName == null ? null : citName,
     "ugs_address": ugsAddress == null ? null : ugsAddress,
   };
@@ -102,20 +110,20 @@ class DataData {
 
 class Error {
   Error({
-    this.result,
+    this.code,
     this.message,
   });
 
-  bool result;
+  int code;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    result: json["result"] == null ? null : json["result"],
+    code: json["code"] == null ? null : json["code"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "result": result == null ? null : result,
+    "code": code == null ? null : code,
     "message": message == null ? null : message,
   };
 }

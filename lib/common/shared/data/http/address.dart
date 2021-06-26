@@ -90,6 +90,7 @@ class Address {
 
 //Noti
   static const String notification = BASE_URL + "/notification.php";
+  static const String delete_notification = BASE_URL + "/delete_notification.php";
 
 //Search
   static const String search_list_teacher = BASE_URL + "/list_tutor.php";

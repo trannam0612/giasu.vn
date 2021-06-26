@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
 import 'package:giasu_vn/screen/notifications/notification_controller.dart';
 import 'package:giasu_vn/widgets/card_notification.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +21,7 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   NotificationController notificationController = Get.find();
+  NavigationController navigationController = Get.find();
 
   @override
   void initState() {
@@ -49,6 +53,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         title: Text('Thông báo'),
         backgroundColor: AppColors.primary4C5BD4,
         elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            Images.ic_arrow_left_iphone,
+            color: AppColors.whiteFFFFFF,
+          ),
+          onPressed: () {
+            navigationController.changePage(0);
+          },
+        ),
       ),
       body: GetBuilder<NotificationController>(
         init: NotificationController(),
@@ -63,32 +76,43 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   topRight: Radius.circular(5),
                 )),
             child: controller.resultNotification.data != null
-                ? ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: controller.resultNotification.data.dataNoti.length,
-                    itemBuilder: (context, index) => CardNotification(
-                      buttonAgree: () {
-                        controller.acceptInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass));
-                        controller.notification();
-                      },
-                      buttonRefuse: () {
-                        controller.refuseInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass));
-                        controller.notification();
-                      },
-                      checkButton: controller.resultNotification.data.dataNoti[index].type,
-                      title: controller.resultNotification.data.dataNoti[index].ugsName,
-                      content: controller.resultNotification.data.dataNoti[index].content,
-                      image: controller.resultNotification.data.dataNoti[index].ugsAvatar,
-                      time: timeAgo(int.parse(controller.resultNotification.data.dataNoti[index].notiDate)),
-                    ),
-                    separatorBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.only(left: 80),
-                      child: Divider(
-                        thickness: 0.25,
-                        color: AppColors.greyAAAAAA,
-                      ),
-                    ),
-                  )
+                ? controller.resultNotification.data.dataNoti.isNotEmpty
+                    ? ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: controller.resultNotification.data.dataNoti.length,
+                        itemBuilder: (context, index) => CardNotification(
+                          buttonAgree: () {
+                            controller.resultNotification.data.dataNoti[index].type == 1
+                                ? controller.acceptInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass))
+                                : controller.acceptOffer(int.parse(controller.resultNotification.data.dataNoti[index].ugsGs), int.parse(controller.resultNotification.data.dataNoti[index].idClass));
+                            controller.notification();
+                          },
+                          buttonRefuse: () {
+                            controller.resultNotification.data.dataNoti[index].type == 1
+                                ? controller.refuseInviteTeach(int.parse(controller.resultNotification.data.dataNoti[index].idClass))
+                                : controller.refuseOffer(int.parse(controller.resultNotification.data.dataNoti[index].ugsGs), int.parse(controller.resultNotification.data.dataNoti[index].idClass));
+                            controller.notification();
+                          },
+                          checkButton: controller.resultNotification.data.dataNoti[index].type,
+                          title: controller.resultNotification.data.dataNoti[index].ugsName,
+                          content: controller.resultNotification.data.dataNoti[index].content,
+                          image: controller.resultNotification.data.dataNoti[index].ugsAvatar,
+                          time: timeAgo(int.parse(controller.resultNotification.data.dataNoti[index].notiDate)),
+                        ),
+                        separatorBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.only(left: 80),
+                          child: Divider(
+                            thickness: 0.25,
+                            color: AppColors.greyAAAAAA,
+                          ),
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          'Bạn không có thông báo nào!',
+                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                        ),
+                      )
                 : Container(
                     width: AppDimens.width,
                     height: AppDimens.height,
