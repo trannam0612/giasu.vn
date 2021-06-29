@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_create_post.dart';
+import 'package:giasu_vn/common/shared/data/models/result_detail_class.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_post.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
@@ -13,6 +14,9 @@ import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_post_created/list_post_created_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 import 'package:giasu_vn/screen/post/update_post/updatr_post_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
@@ -24,7 +28,7 @@ import 'package:sp_util/sp_util.dart';
 class UpdatePostController extends GetxController {
   AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   HomeRepositories homeRepositories = HomeRepositories();
-
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   PostRepositories postRepositories = PostRepositories();
   ResultListTopic resultListTopic = ResultListTopic();
   List<ListDistrict> listDistrict = [];
@@ -33,8 +37,7 @@ class UpdatePostController extends GetxController {
   int idDistrict;
   int idFormTeaching;
   int idExp;
-
-  List<String> listDay = ['1', '2', '3', '4', '5', '6', '7'];
+  List<String> listDay = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
   List<String> listTime = ['1,5', '2', '2,5', '3'];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
@@ -154,8 +157,24 @@ class UpdatePostController extends GetxController {
     salaryUL2.addListener(() {
       update();
     });
+    search.addListener(() {
+      update();
+    });
     // getDataQH(idProvincial);
     super.onInit();
+  }
+
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
   }
 
   bool valueButtonLuong = false;
@@ -429,10 +448,8 @@ class UpdatePostController extends GetxController {
         district.text.isNotEmpty &&
         address.text.isNotEmpty &&
         data != null) {
-      print('Đúng');
       updatePost(idPost);
     } else {
-      print('Sai');
       Get.dialog(DialogError(
         title: 'Tất cả các thông tin trên là bắt buộc để đăng tin.',
         onTap: () => Get.back(),
@@ -457,7 +474,8 @@ class UpdatePostController extends GetxController {
   }
 
   Future<void> updatePost(int id) async {
-    final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+    print('updatePost');
+    setDataLichDay();
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await postRepositories.updatePost(
         token,
@@ -480,18 +498,50 @@ class UpdatePostController extends GetxController {
         idProvincial,
         idDistrict,
         idExp,
-        test.join(','));
+        lichdayToJson(lichDay));
     ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
     if (resultCreatePost.data != null) {
       Utils.showToast(resultCreatePost.data.message);
+      print(111111);
+      Get.off(ListPostCreatedScreen(
+        back: () {
+          homeAfterParentController.homeAfterParent(1, 10);
+        },
+      ));
     } else {
       Utils.showToast(resultCreatePost.error.message);
     }
     update();
   }
 
+  void setDataLichDay() {
+    resultGetInfoPost.data.data.lichday.st2 = listbuoiday[0].sang;
+    resultGetInfoPost.data.data.lichday.ct2 = listbuoiday[0].chieu;
+    resultGetInfoPost.data.data.lichday.tt2 = listbuoiday[0].toi;
+    resultGetInfoPost.data.data.lichday.st3 = listbuoiday[1].sang;
+    resultGetInfoPost.data.data.lichday.ct3 = listbuoiday[1].chieu;
+    resultGetInfoPost.data.data.lichday.tt3 = listbuoiday[1].toi;
+    resultGetInfoPost.data.data.lichday.st4 = listbuoiday[2].sang;
+    resultGetInfoPost.data.data.lichday.ct4 = listbuoiday[2].chieu;
+    resultGetInfoPost.data.data.lichday.tt4 = listbuoiday[2].toi;
+    resultGetInfoPost.data.data.lichday.st5 = listbuoiday[3].sang;
+    resultGetInfoPost.data.data.lichday.ct5 = listbuoiday[3].chieu;
+    resultGetInfoPost.data.data.lichday.tt5 = listbuoiday[3].toi;
+    resultGetInfoPost.data.data.lichday.st6 = listbuoiday[4].sang;
+    resultGetInfoPost.data.data.lichday.ct6 = listbuoiday[4].chieu;
+    resultGetInfoPost.data.data.lichday.tt6 = listbuoiday[4].toi;
+    resultGetInfoPost.data.data.lichday.st7 = listbuoiday[5].sang;
+    resultGetInfoPost.data.data.lichday.ct7 = listbuoiday[5].chieu;
+    resultGetInfoPost.data.data.lichday.tt7 = listbuoiday[5].toi;
+    resultGetInfoPost.data.data.lichday.scn = listbuoiday[6].sang;
+    resultGetInfoPost.data.data.lichday.ccn = listbuoiday[6].chieu;
+    resultGetInfoPost.data.data.lichday.tcn = listbuoiday[6].toi;
+    update();
+  }
+
   ResultGetInfoPost resultGetInfoPost = ResultGetInfoPost();
   int idPost;
+  LichDay lichDay = LichDay();
 
   Future<void> getDetailClass(int idInfoClass) async {
     Get.dialog(DialogLoading());
@@ -549,6 +599,7 @@ class UpdatePostController extends GetxController {
       listbuoiday[6].sang = resultGetInfoPost.data.data.lichday.scn;
       listbuoiday[6].chieu = resultGetInfoPost.data.data.lichday.ccn;
       listbuoiday[6].toi = resultGetInfoPost.data.data.lichday.tcn;
+      lichDay = resultGetInfoPost.data.data.lichday;
       idFormTeaching = resultGetInfoPost.data.data.dataInfo.pftForm == "Gặp mặt" ? 1 : 2;
       idTime = resultGetInfoPost.data.data.dataInfo.pftTime == '1,5'
           ? 1
@@ -568,6 +619,7 @@ class UpdatePostController extends GetxController {
           : resultGetInfoPost.data.data.dataInfo.nametype == 'Người đi làm'
               ? 2
               : 3;
+
       await Get.to(UpdatePostScreen());
     } else {
       Get.back();

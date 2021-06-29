@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
@@ -16,10 +17,9 @@ import 'package:giasu_vn/screen/home/information/information_teacher/information
 import 'package:giasu_vn/search/search_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:sp_util/sp_util.dart';
 
-class ListResultSearchScreen extends StatelessWidget {
-  InformationClassController informationClassController = Get.put(InformationClassController());
-  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+class ListResultSearchScreen extends StatefulWidget {
   final String title;
   final String fee;
   final String subject;
@@ -46,6 +46,37 @@ class ListResultSearchScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _ListResultSearchScreenState createState() => _ListResultSearchScreenState();
+}
+
+class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
+  ScrollController _controller = ScrollController();
+  SearchController searchController = Get.find();
+  InformationClassController informationClassController = Get.put(InformationClassController());
+
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  int i = 1;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    searchController.userType = SpUtil.getString(ConstString.USER_TYPE);
+    searchController.listDataTeacher = [];
+    searchController.listDataParent = [];
+    searchController.userType == '1' ? searchController.searchParent(1) : searchController.searchTeacher(1);
+
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        // homeAfterController.homeParent();
+        i++;
+        print(i);
+        searchController.userType == '1' ? searchController.searchParent(i) : searchController.searchTeacher(i);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<SearchController>(
       init: SearchController(),
@@ -67,6 +98,7 @@ class ListResultSearchScreen extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
+              controller.listDataTeacher.clear();
             },
           ),
         ),
@@ -75,9 +107,10 @@ class ListResultSearchScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space6),
                 width: AppDimens.width,
                 child: ListView.builder(
+                    controller: _controller,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) => InkWell(
-                          onTap: () => informationClassController.detailClass(int.parse(controller.resultSearchClassTeacher.data.data.dataLh[index].pftId), 0),
+                          onTap: () => informationClassController.detailClass(int.parse(controller.listDataParent[index].pftId), 0),
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10),
                             decoration: BoxDecoration(
@@ -98,7 +131,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          controller.resultSearchClassTeacher.data.data.dataLh[index].pftSummary,
+                                          controller.listDataParent[index].pftSummary,
                                           overflow: TextOverflow.ellipsis,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
                                         ),
@@ -127,7 +160,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                '${controller.resultSearchClassTeacher.data.data.dataLh[index].pftPrice}/${controller.resultSearchClassTeacher.data.data.dataLh[index].pftMonth}',
+                                                '${controller.listDataParent[index].pftPrice}/${controller.listDataParent[index].pftMonth}',
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -151,7 +184,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.resultSearchClassTeacher.data.data.dataLh[index].asName,
+                                                controller.listDataParent[index].asName,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -175,7 +208,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.resultSearchClassTeacher.data.data.dataLh[index].citName,
+                                                controller.listDataParent[index].citName,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -200,7 +233,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space4,
                                               ),
                                               Text(
-                                                controller.resultSearchClassTeacher.data.data.dataLh[index].dayPost,
+                                                controller.listDataParent[index].dayPost,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -223,7 +256,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space6,
                                               ),
                                               Text(
-                                                controller.resultSearchClassTeacher.data.data.dataLh[index].pftId,
+                                                controller.listDataParent[index].pftId,
                                                 style: AppTextStyles.regular(context, size: AppDimens.textSize16),
                                               ),
                                             ],
@@ -243,7 +276,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.resultSearchClassTeacher.data.data.dataLh[index].pftForm,
+                                                controller.listDataParent[index].pftForm,
                                                 style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                               ),
                                             ],
@@ -257,12 +290,13 @@ class ListResultSearchScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                    itemCount: controller.resultSearchClassTeacher.data.data.dataLh.length),
+                    itemCount: controller.listDataParent.length),
               )
             : ListView.builder(
-                itemCount: controller.resultSearchListTeacher.data.data.dataGs.length,
+                controller: _controller,
+                itemCount: controller.listDataTeacher.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId), 0),
+                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listDataTeacher[index].ugsId), 0),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
@@ -289,17 +323,17 @@ class ListResultSearchScreen extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                        controller.listDataTeacher[index].ugsName,
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
                                         overflow: TextOverflow.clip,
                                         textAlign: TextAlign.left,
-                                        maxLines: 2,
+                                        maxLines: 1,
                                       ),
                                       SizedBox(
                                         height: AppDimens.space6,
                                       ),
                                       RatingBar(
-                                        initialRating: rate.toDouble(),
+                                        initialRating: widget.rate.toDouble(),
                                         itemSize: 12,
                                         minRating: 1,
                                         direction: Axis.horizontal,
@@ -334,7 +368,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        controller.resultSearchListTeacher.data.data.dataGs[index].asName,
+                                        controller.listDataTeacher[index].asName,
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,
@@ -361,7 +395,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.resultSearchListTeacher.data.data.dataGs[index].citName,
+                                            controller.listDataTeacher[index].citName,
                                             style: AppTextStyles.regular(
                                               context,
                                               size: AppDimens.textSize14,
@@ -383,7 +417,7 @@ class ListResultSearchScreen extends StatelessWidget {
                                             width: AppDimens.space6,
                                           ),
                                           Text(
-                                            '${controller.resultSearchListTeacher.data.data.dataGs[index].ugsUnitPrice}/${controller.resultSearchListTeacher.data.data.dataGs[index].ugsMonth}',
+                                            '${controller.listDataTeacher[index].ugsUnitPrice}/${controller.listDataTeacher[index].ugsMonth}',
                                             style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                           ),
                                         ],
@@ -406,9 +440,9 @@ class ListResultSearchScreen extends StatelessWidget {
                                               color: AppColors.primary4C5BD4,
                                               onPressed: () {
                                                 Get.dialog(CheckboxListClass(
-                                                  imageUrl: controller.resultSearchListTeacher.data.data.dataGs[index].ugsAvatar,
-                                                  idGS: controller.resultSearchListTeacher.data.data.dataGs[index].ugsId,
-                                                  name: controller.resultSearchListTeacher.data.data.dataGs[index].ugsName,
+                                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
+                                                  idGS: controller.listDataTeacher[index].ugsId,
+                                                  name: controller.listDataTeacher[index].ugsName,
                                                 ));
                                               },
                                               textColor: AppColors.whiteFFFFFF,
@@ -421,16 +455,16 @@ class ListResultSearchScreen extends StatelessWidget {
                                             height: 30,
                                             width: 95,
                                             child: CustomButton1(
-                                              textColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              textColor: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
                                               onPressed: () {
-                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave = !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave;
-                                                controller.resultSearchListTeacher.data.data.dataGs[index].checkSave
-                                                    ? controller.saveTutor(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId))
-                                                    : controller.deleteTutorSaved(int.parse(controller.resultSearchListTeacher.data.data.dataGs[index].ugsId));
+                                                controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
+                                                controller.listDataTeacher[index].checkSave
+                                                    ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
+                                                    : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
                                               },
-                                              color: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              title: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                              backColor: !controller.resultSearchListTeacher.data.data.dataGs[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
+                                              color: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                              title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
+                                              backColor: !controller.listDataTeacher[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
                                             ),
                                           )
                                         ],
@@ -458,7 +492,7 @@ class ListResultSearchScreen extends StatelessWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
-                                  imageUrl: image,
+                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,

@@ -84,6 +84,18 @@ class RegisterGiaSuController extends GetxController {
   int idArea;
 
   int idSubject;
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
+  }
 
   void changValueButtonLuong() {
     valueButtonLuong = !valueButtonLuong;
@@ -188,6 +200,10 @@ class RegisterGiaSuController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
+    search.addListener(() {
+      // checkPassword();
+      update();
+    });
     passWord.addListener(() {
       // checkPassword();
       update();
@@ -577,10 +593,11 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
-    RegExp regExp = new RegExp(pattern);
+
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
     }

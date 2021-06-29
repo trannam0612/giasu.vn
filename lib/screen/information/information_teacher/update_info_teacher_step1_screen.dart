@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -11,6 +12,7 @@ import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
@@ -96,15 +98,6 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        controller.errorImage
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
                         SizedBox(
                           height: 4,
                         ),
@@ -139,6 +132,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           error: controller.checkPhone(),
                           keyboardType: TextInputType.phone,
@@ -222,6 +216,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           readOnly: true,
                           error: controller.checkProvincial(),
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
@@ -289,6 +284,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         //   height: AppDimens.space20,
                         // ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
                           obligatory: true,
                           keyboardType: TextInputType.number,
@@ -324,6 +320,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpStart.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpStart.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
                                 error: controller.checkTimeExpStart(),
@@ -342,6 +347,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             Flexible(
                               flex: 5,
                               child: CustomTextField(
+                                readOnly: true,
+                                onTapTextField: () {
+                                  controller.timeExpEnd.text = f.format(DateTime.now());
+                                  Get.dialog(DialogTime(
+                                    onChanged: (DateTime value) {
+                                      controller.timeExpEnd.text = f.format(value);
+                                    },
+                                  ));
+                                },
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
                                 error: controller.checkTimeExpEnd(),
@@ -397,19 +411,20 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        // CustomTextField(
-                        //   textEditingController: controller.graduationYear,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Năm tốt nghiệp',
-                        //   hintText: '05/2012',
-                        //   isPassword: false,
-                        //   isShowIcon: true,
-                        //   iconSuffix: Images.ic_date,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
+                        CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          textEditingController: controller.graduationYear,
+                          obligatory: false,
+                          onPressed: () {},
+                          title: 'Năm tốt nghiệp',
+                          hintText: '2012',
+                          isPassword: false,
+                          isShowIcon: true,
+                          iconSuffix: Images.ic_date,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
                         CustomTextField(
                           textEditingController: controller.company,
                           obligatory: false,
@@ -494,38 +509,56 @@ Widget SelectTinhThanh(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  updateInfoTeacherController.provincial.text = listDataCity[index].citName;
-                  updateInfoTeacherController.idProvincial = int.parse(listDataCity[index].citId);
-                  updateInfoTeacherController.district.clear();
-                  updateInfoTeacherController.getListDistrict(updateInfoTeacherController.idProvincial);
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: updateInfoTeacherController.search,
+              onChanged: (value) {
+                updateInfoTeacherController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          updateInfoTeacherController.provincial.text = updateInfoTeacherController.listProvincial  [index].citName;
+                          updateInfoTeacherController.idProvincial = int.parse(updateInfoTeacherController.listProvincial  [index].citId);
+                          updateInfoTeacherController.district.clear();
+                          updateInfoTeacherController.getListDistrict(updateInfoTeacherController.idProvincial);
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                updateInfoTeacherController.listProvincial  [index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              updateInfoTeacherController.listProvincial  [index].citName == updateInfoTeacherController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == updateInfoTeacherController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: updateInfoTeacherController.listProvincial  .length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }

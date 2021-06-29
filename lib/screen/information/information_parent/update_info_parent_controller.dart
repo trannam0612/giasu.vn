@@ -9,6 +9,7 @@ import 'package:giasu_vn/common/shared/data/models/result_update_avatar.dart';
 import 'package:giasu_vn/common/shared/data/models/result_update_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_screen.dart';
@@ -87,8 +88,24 @@ class UpdateInformationParentController extends GetxController {
     address.addListener(() {
       update();
     });
+    search.addListener(() {
+      update();
+    });
     // TODO: implement onInit
     super.onInit();
+  }
+
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
   }
 
   imgFromGallery() async {

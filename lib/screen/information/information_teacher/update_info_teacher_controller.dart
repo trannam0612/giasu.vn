@@ -135,7 +135,7 @@ class UpdateInfoTeacherController extends GetxController {
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Đã kết hôn', 'Chưa kết hôn'];
   List<String> listFormTeaching = ['Online', 'Gặp mặt'];
-  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
+  List<String> listGender = ['Nam', 'Nữ'];
   List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
 
@@ -267,7 +267,23 @@ class UpdateInfoTeacherController extends GetxController {
     salaryUL2.addListener(() {
       update();
     });
+    search.addListener(() {
+      update();
+    });
     super.onInit();
+    update();
+  }
+
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
     update();
   }
 
@@ -501,7 +517,7 @@ class UpdateInfoTeacherController extends GetxController {
   void onSelectedClass(String value) {
     selectedClass = value;
     for (int i = 0; i < listDataClass.length; i++) {
-      if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
+      if (value == listDataClass[i].ctName) {
         idClass = int.parse(listDataClass[i].ctId);
       }
     }
@@ -587,11 +603,13 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phone.text.length < 6) {
+    } else if (errorPhone && !regExp.hasMatch(phone.text)) {
       return 'Số điện thoại không hợp lệ!';
     }
     return null;
@@ -778,6 +796,7 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkNullButton');
     if (fullName.text.isNotEmpty &&
         phone.text.isNotEmpty &&
+        regExp.hasMatch(phone.text) &&
         dateTime.text.isNotEmpty &&
         errorGender == false &&
         errorMarriage == false &&
@@ -908,6 +927,7 @@ class UpdateInfoTeacherController extends GetxController {
       district.text = resultGetInfoTeacher.data.infoTutor.citDetailGs;
       address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
       numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
+      graduationYear.text = resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
       titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
       timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
       timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;

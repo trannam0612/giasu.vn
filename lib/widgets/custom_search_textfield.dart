@@ -13,8 +13,9 @@ class CustomSearchTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final VoidCallback onPressed;
   final VoidCallback onTap;
+  final bool readOnly;
 
-  const CustomSearchTextField({Key key, this.controller, this.onChanged, this.textEditingController, this.onPressed, this.onTap}) : super(key: key);
+  const CustomSearchTextField({Key key, this.controller, this.onChanged, this.textEditingController, this.onPressed, this.onTap, this.readOnly = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class CustomSearchTextField extends StatelessWidget {
       ),
       child: TextField(
         onTap: onTap,
-        readOnly: true,
+        readOnly: readOnly,
         onChanged: (value) {
           if (onChanged != null) onChanged(value);
         },

@@ -14,6 +14,7 @@ import 'package:giasu_vn/screen/post/update_post/update_post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
@@ -35,7 +36,7 @@ class UpdatePostScreen extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
-                    'Tạo bài đăng',
+                    'Sửa bài đăng',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
@@ -440,6 +441,7 @@ class UpdatePostScreen extends StatelessWidget {
                           readOnly: true,
                           error: controller.checkProvincial(),
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
@@ -611,7 +613,7 @@ class UpdatePostScreen extends StatelessWidget {
                               onPressed: () {
                                 controller.checkButton();
                               },
-                              title: 'Đăng',
+                              title: 'Cập nhật',
                               textColor: AppColors.whiteFFFFFF,
                               color: AppColors.primary4C5BD4,
                             ),
@@ -627,7 +629,7 @@ class UpdatePostScreen extends StatelessWidget {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  PostController postController = Get.put(PostController());
+  UpdatePostController updatePostController = Get.put(UpdatePostController());
   // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
@@ -645,46 +647,65 @@ Widget SelectTinhThanh(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  postController.provincial.text = listDataCity[index].citName;
-                  postController.idProvincial = int.parse(listDataCity[index].citId);
-                  postController.getListDistrict(int.parse(listDataCity[index].citId));
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: updatePostController.search,
+              onChanged: (value) {
+                updatePostController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          updatePostController.provincial.text = updatePostController.listProvincial [index].citName;
+                          updatePostController.idProvincial = int.parse(updatePostController.listProvincial [index].citId);
+                          updatePostController.listDistrict.clear();
+                          updatePostController.district.clear();
+                          updatePostController.getListDistrict(int.parse(updatePostController.listProvincial [index].citId));
 
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                updatePostController.listProvincial [index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              updatePostController.listProvincial [index].citName == updatePostController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == postController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: updatePostController.listProvincial .length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }
 
 // ignore: non_constant_identifier_names
 Widget SelectDistrict(BuildContext context) {
-  PostController postController = Get.put(PostController());
-  List<String> list = ['Hai bà trưng', 'Hoàng Mai', 'Tây Hồ', 'Ba Đình'];
+  UpdatePostController updatePostController = Get.put(UpdatePostController());
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -708,8 +729,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  postController.district.text = postController.listDistrict[index].nameCity;
-                  postController.idDistrict = int.parse(postController.listDistrict[index].idCity);
+                  updatePostController.district.text = updatePostController.listDistrict[index].nameCity;
+                  updatePostController.idDistrict = int.parse(updatePostController.listDistrict[index].idCity);
                   Get.back();
                 },
                 child: SizedBox(
@@ -717,11 +738,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        postController.listDistrict[index].nameCity,
+                        updatePostController.listDistrict[index].nameCity,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      postController.listDistrict[index].nameCity == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updatePostController.listDistrict[index].nameCity == updatePostController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
@@ -730,7 +751,7 @@ Widget SelectDistrict(BuildContext context) {
                 thickness: 1,
                 color: AppColors.black12,
               ),
-          itemCount: postController.listDistrict.length),
+          itemCount: updatePostController.listDistrict.length),
     ),
   ));
 }

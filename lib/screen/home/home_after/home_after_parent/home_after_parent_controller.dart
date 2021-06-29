@@ -34,6 +34,7 @@ class HomeAfterParentController extends GetxController {
 
   Future<void> homeAfterParent(int currentPage, int limit) async {
     print('homeAfterParent');
+    await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);

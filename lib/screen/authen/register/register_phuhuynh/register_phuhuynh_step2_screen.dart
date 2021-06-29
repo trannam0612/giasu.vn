@@ -9,6 +9,7 @@ import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
@@ -171,6 +172,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanhParent(context));
                           },
                           readOnly: true,
@@ -273,38 +275,56 @@ Widget SelectTinhThanhParent(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  registerPhuHuynhController.provincial.text = listDataCity[index].citName;
-                  registerPhuHuynhController.district.clear();
-                  registerPhuHuynhController.idProvincial = int.parse(listDataCity[index].citId);
-                  registerPhuHuynhController.getListDistrict(registerPhuHuynhController.idProvincial);
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: registerPhuHuynhController.search,
+              onChanged: (value) {
+                registerPhuHuynhController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          registerPhuHuynhController.provincial.text = registerPhuHuynhController.listProvincial[index].citName;
+                          registerPhuHuynhController.district.clear();
+                          registerPhuHuynhController.idProvincial = int.parse(registerPhuHuynhController.listProvincial[index].citId);
+                          registerPhuHuynhController.getListDistrict(registerPhuHuynhController.idProvincial);
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                registerPhuHuynhController.listProvincial[index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              registerPhuHuynhController.listProvincial[index].citName == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: registerPhuHuynhController.listProvincial.length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }

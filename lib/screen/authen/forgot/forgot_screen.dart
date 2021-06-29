@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -83,16 +84,19 @@ class ForgotScreen extends StatelessWidget {
                     SizedBox(
                       height: AppDimens.height * 0.03,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Bạn đã có tài khoản? ',
-                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Đăng nhập',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
-                          ),
-                        ],
+                    InkWell(
+                      onTap: () => Get.offAll(SelectTypeLoginScreen()),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Bạn đã có tài khoản? ',
+                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Đăng nhập',
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

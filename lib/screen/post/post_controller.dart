@@ -11,6 +11,9 @@ import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_post_created/list_post_created_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -18,6 +21,7 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class PostController extends GetxController {
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   PostRepositories postRepositories = PostRepositories();
   ResultListTopic resultListTopic = ResultListTopic();
@@ -111,10 +115,25 @@ class PostController extends GetxController {
   int idTopicSubject;
   int idClass;
   int idTime;
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
+    search.addListener(() {
+      update();
+    });
     title.addListener(() {
       update();
     });
@@ -320,10 +339,10 @@ class PostController extends GetxController {
     return null;
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
-    RegExp regExp = new RegExp(pattern);
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
@@ -476,6 +495,11 @@ class PostController extends GetxController {
         test.join(','));
     ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
     if (resultCreatePost.data != null) {
+      Get.off(ListPostCreatedScreen(
+        back: () {
+          homeAfterParentController.homeAfterParent(1, 10);
+        },
+      ));
       Utils.showToast(resultCreatePost.data.message);
     } else {
       Utils.showToast(resultCreatePost.error.message);

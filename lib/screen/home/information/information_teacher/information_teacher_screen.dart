@@ -188,10 +188,7 @@ class InformationTeacherScreen extends StatelessWidget {
                             teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                             nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                             ontap: () {
-                              if(controller.resultMinusPoint.data!=null) {
-                                controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
-                              }
+                              controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
                               Get.back();
                               controller.update();
 
@@ -682,7 +679,7 @@ class InformationTeacherScreen extends StatelessWidget {
                         ),
                         ListView.separated(
                           shrinkWrap: true,
-                          itemCount: 1,
+                          itemCount: 0,
                           itemBuilder: (context, index) => Container(
                             padding: EdgeInsets.symmetric(vertical: AppDimens.space16),
                             child: Row(

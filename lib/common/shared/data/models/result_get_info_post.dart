@@ -65,7 +65,7 @@ class DataData {
 
   DataInfo dataInfo;
   String countDnd;
-  Lichday lichday;
+  LichDay lichday;
   List<ListClassLq> listClassLq;
   int currentPage;
   int limit;
@@ -74,7 +74,7 @@ class DataData {
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     dataInfo: json["dataInfo"] == null ? null : DataInfo.fromJson(json["dataInfo"]),
     countDnd: json["count_dnd"] == null ? null : json["count_dnd"],
-    lichday: json["lichday"] == null ? null : Lichday.fromJson(json["lichday"]),
+    lichday: json["lichday"] == null ? null : LichDay.fromJson(json["lichday"]),
     listClassLq: json["listClassLQ"] == null ? null : List<ListClassLq>.from(json["listClassLQ"].map((x) => ListClassLq.fromJson(x))),
     currentPage: json["current_page"] == null ? null : json["current_page"],
     limit: json["limit"] == null ? null : json["limit"],
@@ -207,12 +207,12 @@ class DataInfo {
     "check_offer": checkOffer == null ? null : checkOffer,
   };
 }
+LichDay lichdayFromJson(String str) => LichDay.fromJson(json.decode(str));
 
-class Lichday {
-  Lichday({
-    this.tsId,
-    this.ugsId,
-    this.pftId,
+String lichdayToJson(LichDay data) => json.encode(data.toJson());
+
+class LichDay {
+  LichDay({
     this.st2,
     this.st3,
     this.st4,
@@ -236,9 +236,6 @@ class Lichday {
     this.tcn,
   });
 
-  String tsId;
-  String ugsId;
-  String pftId;
   String st2;
   String st3;
   String st4;
@@ -261,10 +258,7 @@ class Lichday {
   String tt7;
   String tcn;
 
-  factory Lichday.fromJson(Map<String, dynamic> json) => Lichday(
-    tsId: json["ts_id"] == null ? null : json["ts_id"],
-    ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
-    pftId: json["pft_id"] == null ? null : json["pft_id"],
+  factory LichDay.fromJson(Map<String, dynamic> json) => LichDay(
     st2: json["st2"] == null ? null : json["st2"],
     st3: json["st3"] == null ? null : json["st3"],
     st4: json["st4"] == null ? null : json["st4"],
@@ -289,9 +283,6 @@ class Lichday {
   );
 
   Map<String, dynamic> toJson() => {
-    "ts_id": tsId == null ? null : tsId,
-    "ugs_id": ugsId == null ? null : ugsId,
-    "pft_id": pftId == null ? null : pftId,
     "st2": st2 == null ? null : st2,
     "st3": st3 == null ? null : st3,
     "st4": st4 == null ? null : st4,
@@ -366,20 +357,20 @@ class ListClassLq {
 
 class Error {
   Error({
-    this.code,
+    this.result,
     this.message,
   });
 
-  int code;
+  bool result;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    code: json["code"] == null ? null : json["code"],
+    result: json["result"] == null ? null : json["result"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
+    "result": result == null ? null : result,
     "message": message == null ? null : message,
   };
 }

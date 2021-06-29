@@ -112,7 +112,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                         Padding(
                           padding: const EdgeInsets.all(2.5),
                           child: IconSlideAction(
-                            caption: 'Delete',
+                            caption: 'Xoá',
                             color: AppColors.redEB5757,
                             icon: Icons.delete_outline,
                             onTap: () {

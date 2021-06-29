@@ -12,6 +12,10 @@ import 'package:giasu_vn/screen/home/information/information_teacher/information
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../common/utils.dart';
+import '../../../../common/utils.dart';
+import '../../../../common/utils.dart';
+
 class InformationTeacherController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultListClassPosted resultListClassPosted = ResultListClassPosted();
@@ -71,7 +75,7 @@ class InformationTeacherController extends GetxController {
     }
     update();
   }
-
+  bool show = false;
   Future<void> minusPoint(int idGS) async {
     print('minusPoint');
     // await Future.delayed(Duration(milliseconds: 1));
@@ -79,6 +83,13 @@ class InformationTeacherController extends GetxController {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.minusPoint(token, idGS);
     resultMinusPoint = resultMinusPointFromJson(res.data);
+    if(resultMinusPoint.data != null) {
+      resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
+      Utils.showToast(resultMinusPoint.data.message);
+    }
+    else {
+      Utils.showToast(resultMinusPoint.error.message);
+    }
     update();
   }
 

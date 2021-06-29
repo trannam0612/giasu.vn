@@ -1,5 +1,5 @@
 class ConstString {
-  static const String Status_user = '0';
+  static const String Status_user = 'Status_user';
   static const String ID_USER = "ID_USER";
   static const String EMAIL = "Email";
   static const String PASSWORD = "Mật khẩu";

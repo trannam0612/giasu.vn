@@ -68,9 +68,14 @@ class Images {
   static const String ic_check = _img_ + 'ic_check.svg';
   static const String ic_double_check = _img_ + 'ic_double_check.svg';
   static const String ic_send_2 = _img_ + 'ic_send_2.svg';
+  static const String ic_drop_right_1 = _img_ + 'ic_drop_right_1.svg';
 
   //PNG
+  static const String gif_loading = _img_ + 'gif_loading.gif';
+  static const String img_logo_splash = _img_ + 'img_logo_splash.png';
   static const String img_message_app = _img_ + 'img_message_app.png';
+  static const String img_intro_1 = _img_ + 'img_intro_1.png';
+  static const String img_intro_2 = _img_ + 'img_intro_2.png';
   static const String img_check_green = _img_ + 'img_check_green.png';
   static const String img_bg_welcom = _img_ + 'img_bg_welcom.png';
   static const String img_bg_welcome = _img_ + 'img_bg_welcome.png';

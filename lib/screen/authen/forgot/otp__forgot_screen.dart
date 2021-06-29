@@ -100,44 +100,54 @@ class OTPForgotScreen extends StatelessWidget {
                                             enableInteractiveSelection: false,
                                           ),
                                         )))),
-                            SizedBox(
-                              height: AppDimens.space16,
-                            ),
-                            SizedBox(
-                              width: AppDimens.width * 0.3,
-                              height: AppDimens.height * 0.07,
-                              child: CustomButton2(
-                                onPressed: () {
-                                  // controller.login();
-                                  // controller.pass.clear();
-                                },
-                                title: 'Gửi lại',
-                                textColor: AppColors.whiteFFFFFF,
-                                color: AppColors.primary4C5BD4,
-                              ),
+                            controller.seconds.value == 0
+                                ? SizedBox(
+                                    height: AppDimens.space16,
+                                  )
+                                : Container(),
+                            Obx(
+                              () => controller.seconds.value == 0
+                                  ? InkWell(
+                                      onTap: () {
+                                        controller.startTimer();
+                                        controller.emailForgotPassword();
+                                      },
+                                      child: Text(
+                                        'Gửi lại',
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                      ),
+                                    )
+                                  : Container(),
                             ),
                             SizedBox(
                               height: AppDimens.space32,
                             ),
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Vui lòng kiểm tra Email để nhận mã OTP.\n nếu bạn chưa nhận được sau đây ',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '(30s) ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
-                                  ),
-                                  TextSpan(
-                                    text: 'mã hãy ấn vào nút ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                                  ),
-                                  TextSpan(
-                                    text: '"Gửi lại"',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
-                                  ),
-                                ],
+                            Obx(
+                              () => RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  text: 'Vui lòng kiểm tra Email để nhận mã OTP.\n nếu bạn chưa nhận được mã sau',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                  children: <TextSpan>[
+                                    controller.seconds.value != 0
+                                        ? TextSpan(
+                                            text: ' ${controller.seconds.value}s ',
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
+                                          )
+                                        : TextSpan(
+                                            text: ' ',
+                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                          ),
+                                    TextSpan(
+                                      text: ' hãy ấn vào nút\n ',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                    ),
+                                    TextSpan(
+                                      text: '"Gửi lại"',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(
