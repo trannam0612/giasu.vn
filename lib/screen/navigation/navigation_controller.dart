@@ -4,6 +4,7 @@ import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_screen.dart';
+import 'package:giasu_vn/screen/message/message_screen.dart';
 import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';
@@ -17,6 +18,7 @@ class NavigationController extends GetxController {
   String token;
 
   Rx<Widget> currentPage = Rx<Widget>(HomeBeforeScreen());
+
   // Rx<Widget> currentPage;
 
   @override
@@ -54,7 +56,7 @@ class NavigationController extends GetxController {
       case 1:
         // if (token != '') {
         pageIndex.value = 1;
-        currentPage.value = PostScreen();
+        currentPage.value = MessageScreen();
         // } else {
         //   Get.dialog(DialogError2(
         //     button1: 'Đăng nhập',

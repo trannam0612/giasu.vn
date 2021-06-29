@@ -28,8 +28,6 @@ class Images {
   static const String ic_tutor = _img_ + 'tutor.svg';
   static const String ic_parent = _img_ + 'parent.svg';
 
-
-
   static const String ic_check_blue = _img_ + 'ic_check_blue.svg';
   static const String ic_uncheck_blue = _img_ + 'ic_uncheck_blue.svg';
   static const String ic_add_image = _img_ + 'ic_add_image.svg';
@@ -72,6 +70,7 @@ class Images {
   static const String ic_send_2 = _img_ + 'ic_send_2.svg';
 
   //PNG
+  static const String img_message_app = _img_ + 'img_message_app.png';
   static const String img_check_green = _img_ + 'img_check_green.png';
   static const String img_bg_welcom = _img_ + 'img_bg_welcom.png';
   static const String img_bg_welcome = _img_ + 'img_bg_welcome.png';

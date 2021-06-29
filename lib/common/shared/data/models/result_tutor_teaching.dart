@@ -67,6 +67,7 @@ class Data {
 class ListGsdd {
   ListGsdd({
     this.ugsId,
+    this.ugsAvatar,
     this.ugsName,
     this.linkDetailTutor,
     this.pftId,
@@ -81,6 +82,7 @@ class ListGsdd {
   });
 
   String ugsId;
+  String ugsAvatar;
   String ugsName;
   String linkDetailTutor;
   String pftId;
@@ -95,6 +97,7 @@ class ListGsdd {
 
   factory ListGsdd.fromJson(Map<String, dynamic> json) => ListGsdd(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
+    ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -110,6 +113,7 @@ class ListGsdd {
 
   Map<String, dynamic> toJson() => {
     "ugs_id": ugsId == null ? null : ugsId,
+    "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
     "ugs_name": ugsName == null ? null : ugsName,
     "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
     "pft_id": pftId == null ? null : pftId,
@@ -127,23 +131,19 @@ class ListGsdd {
 class Error {
   Error({
     this.result,
-    this.code,
     this.message,
   });
 
   bool result;
-  int code;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
     result: json["result"] == null ? null : json["result"],
-    code: json["code"] == null ? null : json["code"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
     "result": result == null ? null : result,
-    "code": code == null ? null : code,
     "message": message == null ? null : message,
   };
 }

@@ -46,6 +46,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    listPostCreatedController.listClassPosted = [];
     listPostCreatedController.classPosted(1, 10);
 
     _controller.addListener(() {
@@ -293,20 +294,20 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                       textColor: AppColors.whiteFFFFFF,
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: AppDimens.space20,
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                    width: 95,
-                                    child: CustomButton1(
-                                      textColor: AppColors.black,
-                                      onPressed: () {},
-                                      color: AppColors.grey747474,
-                                      title: 'Xoá bài',
-                                      backColor: AppColors.whiteFFFFFF,
-                                    ),
-                                  )
+                                  // SizedBox(
+                                  //   width: AppDimens.space20,
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 30,
+                                  //   width: 95,
+                                  //   child: CustomButton1(
+                                  //     textColor: AppColors.black,
+                                  //     onPressed: () {},
+                                  //     color: AppColors.grey747474,
+                                  //     title: 'Xoá bài',
+                                  //     backColor: AppColors.whiteFFFFFF,
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ],

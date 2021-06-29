@@ -73,7 +73,9 @@ class ListTeacherSuggestController extends GetxController {
       Utils.showToast(resultAcceptOffer.error.message);
     }
     update();
-  }Future<void> tutorDeleteOffer(int idGS, int idLop) async {
+  }
+
+  Future<void> tutorDeleteOffer(int idGS, int idLop) async {
     print('tutorDeleteOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());

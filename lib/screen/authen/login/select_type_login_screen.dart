@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -10,6 +11,8 @@ import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/screen/authen/register/intro_login.dart';
 import 'package:sp_util/sp_util.dart';
+
+import '../../../common/images.dart';
 
 class SelectTypeLoginScreen extends StatelessWidget {
   const SelectTypeLoginScreen({Key key}) : super(key: key);

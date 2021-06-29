@@ -6,13 +6,15 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 
 import '../common/theme/app_dimens.dart';
+
 class CustomSearchTextField extends StatelessWidget {
   final controller;
   final ValueChanged<String> onChanged;
   final TextEditingController textEditingController;
   final VoidCallback onPressed;
+  final VoidCallback onTap;
 
-  const CustomSearchTextField({Key key, this.controller, this.onChanged, this.textEditingController, this.onPressed}) : super(key: key);
+  const CustomSearchTextField({Key key, this.controller, this.onChanged, this.textEditingController, this.onPressed, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,8 @@ class CustomSearchTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onTap: onTap,
+        readOnly: true,
         onChanged: (value) {
           if (onChanged != null) onChanged(value);
         },
@@ -63,19 +67,18 @@ class CustomSearchTextField extends StatelessWidget {
                 ),
               ),
             ),
-          suffixIcon:GestureDetector(
-            onTap: onPressed,
-            child: Container(
-              padding: EdgeInsets.all(8),
-              child: SvgPicture.asset(
-                Images.ic_menu,
-                color: AppColors.black,
-                height: 14,
-                width: 14,
+            suffixIcon: GestureDetector(
+              onTap: onPressed,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  Images.ic_menu,
+                  color: AppColors.black,
+                  height: 14,
+                  width: 14,
+                ),
               ),
-            ),
-          )
-        ),
+            )),
       ),
     );
   }

@@ -12,6 +12,9 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:intl/intl.dart';
 
+import '../home_after_teacher_controller.dart';
+import '../home_after_teacher_controller.dart';
+
 class ListClassTeachingScreen extends StatefulWidget {
   final String title;
   final String fee;
@@ -40,6 +43,7 @@ class ListClassTeachingScreen extends StatefulWidget {
 
 class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
   ScrollController _controller = ScrollController();
+  HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   ListClassTeachingController listClassTeachingController = Get.put(ListClassTeachingController());
   int i = 1;
 
@@ -47,6 +51,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    listClassTeachingController.listPHDND = [];
     listClassTeachingController.classAccepted(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
@@ -84,7 +89,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterTeacherController.homeAfterTeacher(1, 10);
             },
           ),
         ),

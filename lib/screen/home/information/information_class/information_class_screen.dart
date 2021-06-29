@@ -2,22 +2,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_invite/list_class_invited_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_saved/list_class_saved_controller.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
+import 'package:sp_util/sp_util.dart';
 
 class InformationClassScreen extends StatelessWidget {
-  const InformationClassScreen({Key key}) : super(key: key);
+  final int type;
+
+  const InformationClassScreen({Key key, this.type = 0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
+    ListClassSavedController listClassSavedController = Get.put(ListClassSavedController());
+    ListClassInvitedController listClassInvitedController = Get.put(ListClassInvitedController());
     return GetBuilder<InformationClassController>(
       init: InformationClassController(),
       builder: (controller) => Scaffold(
@@ -48,7 +57,7 @@ class InformationClassScreen extends StatelessWidget {
               children: [
                 Center(
                   child: Text(
-                    homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftSummary,
+                    controller.resultDetailClass.data.data.dataInfo.pftSummary,
                     textAlign: TextAlign.center,
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, lineHeight: AppDimens.textSize22, color: AppColors.primary4C5BD4),
                   ),
@@ -75,7 +84,7 @@ class InformationClassScreen extends StatelessWidget {
                     height: AppDimens.width * 0.2,
                     child: Center(
                       child: Text(
-                        homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftDetail,
+                        controller.resultDetailClass.data.data.dataInfo.pftDetail,
                         style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.textSize18),
                         textAlign: TextAlign.center,
                       ),
@@ -106,7 +115,7 @@ class InformationClassScreen extends StatelessWidget {
                           width: AppDimens.space6,
                         ),
                         Text(
-                          homeAfterTeacherController.resultDetailClass.data.data.dataInfo.status,
+                          controller.resultDetailClass.data.data.dataInfo.status,
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
                         )
                       ],
@@ -142,7 +151,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.ctyDetailName}, ${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.cityName}',
+                              '${controller.resultDetailClass.data.data.dataInfo.ctyDetailName}, ${controller.resultDetailClass.data.data.dataInfo.cityName}',
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -162,7 +171,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftPrice} vnđ/${homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftMonth}',
+                              '${controller.resultDetailClass.data.data.dataInfo.pftPrice} vnđ/${controller.resultDetailClass.data.data.dataInfo.pftMonth}',
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -182,7 +191,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.asName,
+                              controller.resultDetailClass.data.data.dataInfo.asDetailName,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -202,7 +211,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              'Sinh viên',
+                              controller.resultDetailClass.data.data.dataInfo.nametype,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -222,7 +231,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftGender,
+                              controller.resultDetailClass.data.data.dataInfo.pftGender,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -267,7 +276,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftId,
+                              controller.resultDetailClass.data.data.dataInfo.pftId,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -287,7 +296,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftForm,
+                              controller.resultDetailClass.data.data.dataInfo.pftForm,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -307,7 +316,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.ctName,
+                              controller.resultDetailClass.data.data.dataInfo.ctName,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -327,7 +336,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftNbLesson,
+                              controller.resultDetailClass.data.data.dataInfo.pftNbLesson,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -347,7 +356,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftTime,
+                              controller.resultDetailClass.data.data.dataInfo.pftTime,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -367,7 +376,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              homeAfterTeacherController.resultDetailClass.data.data.dataInfo.pftNbStudent,
+                              controller.resultDetailClass.data.data.dataInfo.pftNbStudent,
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -466,36 +475,127 @@ class InformationClassScreen extends StatelessWidget {
                 SizedBox(
                   height: AppDimens.space18,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Spacer(),
-                    SizedBox(
-                      width: 140,
-                      height: 35,
-                      child: CustomButton2(
-                        color: AppColors.primary4C5BD4,
-                        title: 'Đề nghị dạy',
-                        textColor: AppColors.whiteFFFFFF,
-                        onPressed: () {},
-                        hasRadius: true,
-                      ),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: 140,
-                      height: 35,
-                      child: CustomButton1(
-                        color: AppColors.greyAAAAAA,
-                        title: 'Lưu lớp học',
-                        textColor: AppColors.secondaryF8971C,
-                        onPressed: () {},
-                        hasRadius: true,
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                )
+                type == 0
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Spacer(),
+                          SizedBox(
+                            width: 140,
+                            height: 35,
+                            child: controller.resultDetailClass.data.data.dataInfo.checkOffer
+                                ? CustomButton1(
+                                    color: AppColors.greyAAAAAA,
+                                    title: 'Đã đề nghị',
+                                    textColor: AppColors.grey686F7A,
+                                    hasRadius: true,
+                                  )
+                                : CustomButton2(
+                                    color: AppColors.primary4C5BD4,
+                                    title: 'Đề nghị dạy',
+                                    textColor: AppColors.whiteFFFFFF,
+                                    onPressed: () {
+                                      listClassSavedController.offerTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                      controller.resultDetailClass.data.data.dataInfo.checkOffer = true;
+                                      controller.update();
+                                    },
+                                    hasRadius: true,
+                                  ),
+                          ),
+                          Spacer(),
+                          SizedBox(
+                            width: 140,
+                            height: 35,
+                            child: controller.resultDetailClass.data.data.dataInfo.checkSave
+                                ? CustomButton1(
+                                    color: AppColors.greyAAAAAA,
+                                    title: 'Bỏ Lưu',
+                                    textColor: AppColors.black,
+                                    onPressed: () {
+                                      controller.resultDetailClass.data.data.dataInfo.checkSave = false;
+                                      homeAfterTeacherController.deleteClassSaved(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+
+                                      controller.update();
+                                    },
+                                    hasRadius: true,
+                                  )
+                                : CustomButton1(
+                                    color: AppColors.greyAAAAAA,
+                                    title: 'Lưu lớp học',
+                                    textColor: AppColors.secondaryF8971C,
+                                    onPressed: () {
+                                      controller.resultDetailClass.data.data.dataInfo.checkSave = true;
+                                      homeAfterTeacherController.saveClass(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                      controller.update();
+                                    },
+                                    hasRadius: true,
+                                  ),
+                          ),
+                          Spacer(),
+                        ],
+                      )
+                    : controller.accepted
+                        ? Container()
+                        : Column(
+                          children: [
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                  text: SpUtil.getString(ConstString.NAME_PARENT),
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24),
+                                  children: [
+                                    TextSpan(
+                                      text: ' đã mời bạn dạy lớp\n',
+                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
+                                    ),
+                                    TextSpan(
+                                      text: controller.resultDetailClass.data.data.dataInfo.pftSummary,
+                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                    )
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: AppDimens.space10,
+                            ),
+                            Row(
+                                children: [
+                                  Spacer(),
+                                  SizedBox(
+                                    height: 35,
+                                    width: 140,
+                                    child: CustomButton2(
+                                      title: 'Đồng ý',
+                                      color: AppColors.primary4C5BD4,
+                                      onPressed: () {
+                                        listClassInvitedController.acceptInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                        controller.accepted = true;
+                                        Get.to(ListClassTeachingScreen());
+                                        controller.update();
+                                      },
+                                      textColor: AppColors.whiteFFFFFF,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  SizedBox(
+                                    height: 35,
+                                    width: 140,
+                                    child: CustomButton1(
+                                      textColor: AppColors.black,
+                                      onPressed: () {
+                                        listClassInvitedController.refuseInviteTeach(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId));
+                                        controller.accepted = true;
+                                        controller.update();
+                                      },
+                                      color: AppColors.grey747474,
+                                      title: 'Từ chối',
+                                      backColor: AppColors.whiteFFFFFF,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                          ],
+                        )
               ],
             ),
           ),

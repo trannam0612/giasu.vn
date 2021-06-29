@@ -29,9 +29,12 @@ class Address {
   static const String INVITE_TEACH = BASE_URL + "/invite_teach.php";
   static const String TUTOR_FROM_FILTER_POINT = BASE_URL + "/tutor_from_filter_point.php";
   static const String TUTOR_TEACHING = BASE_URL + "/tutor_is_teaching.php";
+  static const String DELETE_PARENT_SAVED = BASE_URL + "/delete_parent_saved.php";
+  static const String DELETE_TUTOR_POINT_FREE = BASE_URL + "/delete_tutor_point_free.php";
+  static const String MINUS_POINT = BASE_URL + "/update_point_free_buy.php";
 
-  static String detailClass(int idClass) {
-    return '$BASE_URL/detail_class.php?pft_id=${idClass}';
+  static String detailClass(String token, int idClass) {
+    return '$BASE_URL/detail_class.php?token=${token}&pft_id=${idClass}';
   }
 
   static String detailTutor(String token, int idGS) {
@@ -76,6 +79,22 @@ class Address {
   static String detail_subject(String asId) {
     return '$BASE_URL/detail_subject.php?as_id=${asId}';
   }
+
+  // static String searchParent(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
+  //   return '$BASE_URL/search_by_filter_tutor.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
+  // }
+  //
+  // static String searchTeacher(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
+  //   return '$BASE_URL/search_by_filter_class.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
+  // }
+
+//Noti
+  static const String notification = BASE_URL + "/notification.php";
+  static const String delete_notification = BASE_URL + "/delete_notification.php";
+
+//Search
+  static const String search_list_teacher = BASE_URL + "/list_tutor.php";
+  static const String search_list_class = BASE_URL + "/list_class.php";
 
 // static const String detail_subject = BASE_URL + "detail_subject.php";
 }

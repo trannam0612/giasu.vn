@@ -7,6 +7,8 @@ import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart'
 import 'package:giasu_vn/common/utils.dart';
 import 'package:sp_util/sp_util.dart';
 
+import '../../../../../common/utils.dart';
+
 class ListClassSavedController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultClassSaved resultClassSaved = ResultClassSaved();
@@ -20,8 +22,13 @@ class ListClassSavedController extends GetxController {
     ResultData res = await homeRepositories.classSaved(token, currentPage, limit);
     resultClassSaved = resultClassSavedFromJson(res.data);
     if (resultClassSaved.data != null) {
-      for (int i = 0; i < resultClassSaved.data.listLdl.length; i++) {
-        listLDL.add(resultClassSaved.data.listLdl[i]);
+      if(resultClassSaved.data.listLdl.isNotEmpty) {
+        for (int i = 0; i < resultClassSaved.data.listLdl.length; i++) {
+          listLDL.add(resultClassSaved.data.listLdl[i]);
+        }
+      }
+      else {
+        Utils.showToast("Đã hết");
       }
     } else {
       Utils.showToast('Trống!');

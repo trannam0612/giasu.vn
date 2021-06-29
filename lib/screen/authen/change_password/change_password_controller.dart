@@ -92,7 +92,7 @@ class ChangePasswordController extends GetxController {
     errorShowPassword = true;
     errorShowRePassword = true;
     errorShowOldPassword = true;
-    oldPassWord.text.isNotEmpty && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+    oldPassWord.text.isNotEmpty && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text && passWord.text.length >= 6
         ? changePassword()
         // Get.to(RegisterParentStep2Screen())
         : Get.dialog(DialogError(

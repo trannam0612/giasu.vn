@@ -166,8 +166,8 @@ class UpdatePostController extends GetxController {
     resultListTopic = resultListTopicFromJson(res.data);
     if (resultListTopic.data != null) {
       listTopic = resultListTopic.data.listSubjectTag;
-      // selectedTopicSubject = listTopic[0].nameSubject;
-      // idTopicSubject = int.parse(listTopic[0].idSubject);
+      selectedTopicSubject = listTopic[0].nameSubject;
+      idTopicSubject = int.parse(listTopic[0].idSubject);
       Utils.showToast(resultListTopic.data.message);
     } else {
       Utils.showToast(resultListTopic.error.message);
@@ -448,7 +448,7 @@ class UpdatePostController extends GetxController {
     ResultData res = await authenticationRepositories.listDistrict(idCity);
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.dataDistrict.listDistrict;
+      listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
       Utils.showToast(resultListDistrict.error.message);
@@ -495,7 +495,8 @@ class UpdatePostController extends GetxController {
 
   Future<void> getDetailClass(int idInfoClass) async {
     Get.dialog(DialogLoading());
-    ResultData res = await homeRepositories.detailClass(idInfoClass);
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await homeRepositories.detailClass(token, idInfoClass);
     resultGetInfoPost = resultGetInfoPostFromJson(res.data);
     if (resultGetInfoPost.data != null) {
       Get.back();
@@ -512,7 +513,13 @@ class UpdatePostController extends GetxController {
       selectedTopicSubject = resultGetInfoPost.data.data.dataInfo.asDetailName;
       selectedClass = resultGetInfoPost.data.data.dataInfo.ctName;
       numberStudent.text = resultGetInfoPost.data.data.dataInfo.pftNbStudent;
-      selectedTimeTeaching = resultGetInfoPost.data.data.dataInfo.pftTime;
+      selectedTimeTeaching = resultGetInfoPost.data.data.dataInfo.pftTime == '1'
+          ? '1,5'
+          : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
+              ? '2'
+              : resultGetInfoPost.data.data.dataInfo.pftTime == '3'
+                  ? '2,5'
+                  : '3';
       selectedDayTeaching = resultGetInfoPost.data.data.dataInfo.pftNbLesson;
       selectMethodTeach = resultGetInfoPost.data.data.dataInfo.pftForm;
       salaryCD.text = resultGetInfoPost.data.data.dataInfo.pftPrice;

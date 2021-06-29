@@ -9,8 +9,11 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_from_filter_point/list_tutor_from_filter_point_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+
+import '../home_after_parent_controller.dart';
 
 class ListTutorFromFilterPointScreen extends StatefulWidget {
   const ListTutorFromFilterPointScreen({Key key}) : super(key: key);
@@ -21,6 +24,8 @@ class ListTutorFromFilterPointScreen extends StatefulWidget {
 
 class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPointScreen> {
   ListTutorFromFilterPointController listTutorFromFilterPointController = Get.put(ListTutorFromFilterPointController());
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   ScrollController _controller = ScrollController();
   int i = 1;
 
@@ -61,7 +66,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
               color: AppColors.whiteFFFFFF,
             ),
             onPressed: () {
-              Get.back();
+              homeAfterParentController.homeAfterParent(1, 10);
             },
           ),
         ),
@@ -74,24 +79,8 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
           physics: BouncingScrollPhysics(),
           controller: _controller,
           itemCount: controller.listGSTDL.length,
-          itemBuilder: (context, index) => Slidable(
-            actionPane: SlidableDrawerActionPane(),
-            actionExtentRatio: 0.15,
-            secondaryActions: [
-              Padding(
-                padding: const EdgeInsets.all(2.5),
-                child: IconSlideAction(
-                  caption: 'Xoá',
-                  color: AppColors.redEB5757,
-                  icon: Icons.delete_outline,
-                  onTap: () {
-                    // homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSDL[index].ugsTeach));
-                    // controller.listGSDL.remove(controller.listGSDL[index]);
-                    // controller.update();
-                  },
-                ),
-              ),
-            ],
+          itemBuilder: (context, index) => InkWell(
+            onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSTDL[index].ugsId), 0),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
@@ -198,6 +187,9 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                                     title: 'Xoá',
                                     color: AppColors.primary4C5BD4,
                                     onPressed: () {
+                                      controller.deleteTutorPointFree(int.parse(controller.listGSTDL[index].ugsId));
+                                      controller.listGSTDL.remove(controller.listGSTDL[index]);
+                                      controller.update();
                                     },
                                     textColor: AppColors.secondaryF8971C,
                                   ),

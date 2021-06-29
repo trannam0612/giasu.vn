@@ -654,7 +654,7 @@ Widget SelectTinhThanh(BuildContext context) {
                   postController.provincial.text = listDataCity[index].citName;
                   postController.idProvincial = int.parse(listDataCity[index].citId);
                   postController.getListDistrict(int.parse(listDataCity[index].citId));
-
+                  postController.district.clear();
                   Get.back();
                 },
                 child: SizedBox(
@@ -707,8 +707,8 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  postController.district.text = postController.listDistrict[index].citName;
-                  postController.idDistrict = int.parse(postController.listDistrict[index].citId);
+                  postController.district.text = postController.listDistrict[index].nameCity;
+                  postController.idDistrict = int.parse(postController.listDistrict[index].idCity);
                   Get.back();
                 },
                 child: SizedBox(
@@ -716,11 +716,11 @@ Widget SelectDistrict(BuildContext context) {
                   child: Row(
                     children: [
                       Text(
-                        postController.listDistrict[index].citName,
+                        postController.listDistrict[index].nameCity,
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      postController.listDistrict[index].citName == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      postController.listDistrict[index].nameCity == postController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
                     ],
                   ),
                 ),
