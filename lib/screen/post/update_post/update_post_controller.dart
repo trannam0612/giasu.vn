@@ -157,8 +157,24 @@ class UpdatePostController extends GetxController {
     salaryUL2.addListener(() {
       update();
     });
+    search.addListener(() {
+      update();
+    });
     // getDataQH(idProvincial);
     super.onInit();
+  }
+
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
   }
 
   bool valueButtonLuong = false;

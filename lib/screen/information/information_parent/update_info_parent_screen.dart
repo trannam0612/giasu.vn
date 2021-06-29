@@ -11,6 +11,7 @@ import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhu
 import 'package:giasu_vn/screen/information/information_parent/update_info_parent_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
@@ -96,15 +97,6 @@ class UpdateInformationParentScreen extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        controller.errorImage
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
@@ -185,6 +177,7 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         ),
                         CustomTextField(
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           readOnly: true,
@@ -274,36 +267,56 @@ Widget SelectTinhThanh(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  updateInformationParentController.provincial.text = listDataCity[index].citName;
-                  updateInformationParentController.idProvincial = int.parse(listDataCity[index].citId);
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: updateInformationParentController.search,
+              onChanged: (value) {
+                updateInformationParentController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          updateInformationParentController.provincial.text = updateInformationParentController.listProvincial[index].citName;
+                          updateInformationParentController.idProvincial = int.parse(updateInformationParentController.listProvincial[index].citId);
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                updateInformationParentController.listProvincial[index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              updateInformationParentController.listProvincial[index].citName == updateInformationParentController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == updateInformationParentController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: updateInformationParentController.listProvincial.length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }

@@ -449,7 +449,7 @@ class InformationTeacherMore extends StatelessWidget {
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                 ),
                                 Text(
-                                  controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice,
+                                  '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
                                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                 ),
                               ],
@@ -466,7 +466,7 @@ class InformationTeacherMore extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    controller.resultGetInfoTeacher.data.infoTutor.ugsSalary,
+                                    '${controller.resultGetInfoTeacher.data.infoTutor.ugsSalary}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
                                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                     overflow: TextOverflow.clip,
                                     textAlign: TextAlign.right,

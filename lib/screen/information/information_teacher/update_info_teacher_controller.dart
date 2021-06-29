@@ -267,7 +267,23 @@ class UpdateInfoTeacherController extends GetxController {
     salaryUL2.addListener(() {
       update();
     });
+    search.addListener(() {
+      update();
+    });
     super.onInit();
+    update();
+  }
+
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
     update();
   }
 

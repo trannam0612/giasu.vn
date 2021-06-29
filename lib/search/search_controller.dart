@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_delete_tutor_saved.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
+import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_save_tutor.dart';
 import 'package:giasu_vn/common/shared/data/models/result_search_list_class.dart';
 import 'package:giasu_vn/common/shared/data/models/result_search_list_teacher.dart';
@@ -31,6 +32,7 @@ class SearchController extends GetxController {
   TextEditingController className = TextEditingController();
   TextEditingController subject = TextEditingController();
   TextEditingController methodTeach = TextEditingController();
+  TextEditingController search = TextEditingController();
   Position locationDefault = Position(latitude: 0, longitude: 0);
   int idProvincial;
   int idClass;
@@ -49,6 +51,9 @@ class SearchController extends GetxController {
   void onInit() {
     userType = SpUtil.getString(ConstString.USER_TYPE);
     // TODO: implement onInit
+    search.addListener(() {
+      update();
+    });
     super.onInit();
   }
 
@@ -61,6 +66,18 @@ class SearchController extends GetxController {
   }
 
   String selectedSubject;
+
+  RxList<dynamic> listProvincial = [].obs;
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
+  }
 
   void onSelectedSubject(String value) {
     selectedSubject = value;
@@ -110,13 +127,13 @@ class SearchController extends GetxController {
 
   List<DataG> listDataTeacher = [];
 
-  Future<void> searchParent() async {
+  Future<void> searchParent(int i) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await searchRepositories.searchParent(token, 1, idSubject, idClass, idProvincial, 1, 10);
+    ResultData res = await searchRepositories.searchParent(token, 1, idSubject, idClass, idProvincial, i, 10);
     resultSearchListTeacher = resultSearchListTeacherFromJson(res.data);
     if (resultSearchListTeacher.data != null) {
       listDataTeacher = listDataTeacher + resultSearchListTeacher.data.data.dataGs;
-      Get.to(ListResultSearchScreen());
+      // Get.to(ListResultSearchScreen());
     } else {
       print(resultSearchListTeacher.error.message);
     }
@@ -138,12 +155,15 @@ class SearchController extends GetxController {
     update();
   }
 
-  Future<void> searchTeacher() async {
-    ResultData res = await searchRepositories.searchClass(1, idSubject, idClass, idProvincial, 1, 10);
+  List<DataLh> listDataParent = [];
+
+  Future<void> searchTeacher(int i) async {
+    ResultData res = await searchRepositories.searchClass(1, idSubject, idClass, idProvincial, i, 10);
     resultSearchClassTeacher = resultSearchClassTeacherFromJson(res.data);
     if (resultSearchClassTeacher.data != null) {
       print(resultSearchClassTeacher.data.message);
-      Get.to(ListResultSearchScreen());
+      listDataParent = listDataParent + resultSearchClassTeacher.data.data.dataLh;
+      // Get.to(ListResultSearchScreen());
     } else {
       print(resultSearchClassTeacher.error.message);
     }

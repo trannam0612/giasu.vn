@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/change_password/change_password_screen.dart';
@@ -44,6 +45,14 @@ class MyApp extends StatelessWidget {
       statusBarColor: AppColors.primary4C5BD4,
     ));
     return GetMaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('vi', ''), // English, no country code
+      ],
       debugShowCheckedModeBanner: false,
       enableLog: true,
       theme: ThemeData(

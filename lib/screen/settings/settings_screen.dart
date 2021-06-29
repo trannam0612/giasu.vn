@@ -36,6 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
+    settingsController.user = SpUtil.getString(ConstString.USER_TYPE);
     settingsController.user == '1' ? settingsController.getInfoParent() : settingsController.getInfoTeacher();
     // TODO: implement initState
     super.initState();
@@ -443,7 +444,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         height: AppDimens.space20,
                       ),
                       InkWell(
-                        onTap: () => Get.offAllNamed(Routes.select_type_login),
+                        onTap: () {
+                          SpUtil.remove(ConstString.token);
+                          Get.offAllNamed(Routes.select_type_login);
+                        },
                         child: Text(
                           'Đăng xuất',
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.redFF0033),

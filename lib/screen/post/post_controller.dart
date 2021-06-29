@@ -115,10 +115,25 @@ class PostController extends GetxController {
   int idTopicSubject;
   int idClass;
   int idTime;
+  RxList<dynamic> listProvincial = [].obs;
+  TextEditingController search = TextEditingController();
+
+  void changeSearchProvincial(String value) {
+    listProvincial.clear();
+    for (int i = 0; i < listDataCity.length; i++) {
+      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+        listProvincial.add(listDataCity[i]);
+      }
+    }
+    update();
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
+    search.addListener(() {
+      update();
+    });
     title.addListener(() {
       update();
     });

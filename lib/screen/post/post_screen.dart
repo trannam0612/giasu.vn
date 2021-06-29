@@ -13,6 +13,7 @@ import 'package:giasu_vn/screen/post/post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
@@ -442,6 +443,7 @@ class PostScreen extends StatelessWidget {
                           readOnly: true,
                           error: controller.checkProvincial(),
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
@@ -647,38 +649,56 @@ Widget SelectTinhThanh(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  postController.provincial.text = listDataCity[index].citName;
-                  postController.idProvincial = int.parse(listDataCity[index].citId);
-                  postController.getListDistrict(int.parse(listDataCity[index].citId));
-                  postController.district.clear();
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: postController.search,
+              onChanged: (value) {
+                postController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          postController.provincial.text = postController.listProvincial[index].citName;
+                          postController.idProvincial = int.parse(postController.listProvincial[index].citId);
+                          postController.getListDistrict(int.parse(postController.listProvincial[index].citId));
+                          postController.district.clear();
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                postController.listProvincial[index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              postController.listProvincial[index].citName == postController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == postController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: postController.listProvincial.length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }

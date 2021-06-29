@@ -65,307 +65,318 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
         child: Scaffold(
           backgroundColor: AppColors.greyf6f6f6,
           body: SingleChildScrollView(
-            child: Container(
-              // height: height * 0.,
-              decoration: BoxDecoration(
-                image: DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: AppDimens.space10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: AppDimens.space10,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        Images.img_logo_giasu365,
-                        width: 100,
-                        height: 45,
-                      ),
-                      SizedBox(
-                          height: 40,
-                          width: width * 0.6,
-                          child: CustomSearchTextField(
-                            onTap: () => Get.to(() => SearchScreen()),
-                          )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: AppDimens.space24,
-                  ),
-                  Text(
-                    'chào mừng',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: AppDimens.space4,
-                  ),
-                  Text(
-                    SpUtil.getString(ConstString.NAME),
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: AppDimens.space24,
-                  ),
-                  Text(
-                    'Danh sách của bạn',
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF, lineHeight: 19),
-                  ),
-                  SizedBox(
-                    height: AppDimens.space10,
-                  ),
-                  Container(
-                    height: height * 0.17,
+            child: controller.resultHomeAfterTeacher.data != null
+                ? Container(
+                    // height: height * 0.,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
+                    ),
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () => Get.to(ListClassInviteScreen()),
-                          child: Container(
-                            width: width * 0.2,
-                            height: height * 0.145,
-                            padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.whiteFFFFFF,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.25),
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(2, 2), // changes position of shadow
-                                ),
-                              ],
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              Images.img_logo_giasu365,
+                              width: 100,
+                              height: 45,
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_add_friend,
-                                  width: 40,
-                                  height: 40,
+                            SizedBox(
+                                height: 40,
+                                width: width * 0.6,
+                                child: CustomSearchTextField(
+                                  onTap: () => Get.to(() => SearchScreen()),
+                                )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: AppDimens.space24,
+                        ),
+                        Text(
+                          'chào mừng',
+                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space4,
+                        ),
+                        Text(
+                          SpUtil.getString(ConstString.NAME),
+                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space24,
+                        ),
+                        Text(
+                          'Danh sách của bạn',
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF, lineHeight: 19),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        Container(
+                          height: height * 0.17,
+                          padding: EdgeInsets.symmetric(horizontal: AppDimens.space10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () => Get.to(ListClassInviteScreen()),
+                                child: Container(
+                                  width: width * 0.2,
+                                  height: height * 0.145,
+                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.whiteFFFFFF,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.black.withOpacity(0.25),
+                                        spreadRadius: 0,
+                                        blurRadius: 3,
+                                        offset: Offset(2, 2), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.ic_add_friend,
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        'Lớp mời bạn dạy',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space4,
+                                      ),
+                                      Text('(${controller.resultHomeAfterTeacher.data.lmd})',
+                                          style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                    ],
+                                  ),
                                 ),
-                                Text(
-                                  'Lớp mời bạn dạy',
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                              ),
+                              InkWell(
+                                onTap: () => Get.to(ListClassTeachingScreen()),
+                                child: Container(
+                                  width: width * 0.2,
+                                  height: height * 0.145,
+                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.whiteFFFFFF,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.black.withOpacity(0.25),
+                                        spreadRadius: 0,
+                                        blurRadius: 3,
+                                        offset: Offset(2, 2), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.ic_presentation,
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        'Lớp nhận dạy',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space4,
+                                      ),
+                                      Text('(${controller.resultHomeAfterTeacher.data.lnd})',
+                                          style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: AppDimens.space4,
+                              ),
+                              InkWell(
+                                onTap: () => Get.to(ListClassSuggestScreen()),
+                                child: Container(
+                                  width: width * 0.2,
+                                  height: height * 0.145,
+                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.whiteFFFFFF,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.black.withOpacity(0.25),
+                                        spreadRadius: 0,
+                                        blurRadius: 3,
+                                        offset: Offset(2, 2), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.ic_document,
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        'Lớp đề nghị dạy',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize14),
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space4,
+                                      ),
+                                      Text('(${controller.resultHomeAfterTeacher.data.ldnd})',
+                                          style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                    ],
+                                  ),
                                 ),
-                                Text('(${controller.resultHomeAfterTeacher.data.lmd})',
-                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
-                              ],
-                            ),
+                              ),
+                              InkWell(
+                                onTap: () => Get.to(ListClassSavedScreen()),
+                                child: Container(
+                                  width: width * 0.2,
+                                  height: height * 0.145,
+                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.whiteFFFFFF,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.black.withOpacity(0.25),
+                                        spreadRadius: 0,
+                                        blurRadius: 3,
+                                        offset: Offset(2, 2), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Images.ic_like,
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                      Text(
+                                        'Lớp đã lưu',
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                      ),
+                                      SizedBox(
+                                        height: AppDimens.space4,
+                                      ),
+                                      Text('(${controller.resultHomeAfterTeacher.data.ldl})',
+                                          style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        InkWell(
-                          onTap: () => Get.to(ListClassTeachingScreen()),
-                          child: Container(
-                            width: width * 0.2,
-                            height: height * 0.145,
-                            padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.whiteFFFFFF,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.25),
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(2, 2), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_presentation,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                Text(
-                                  'Lớp nhận dạy',
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space4,
-                                ),
-                                Text('(${controller.resultHomeAfterTeacher.data.lnd})',
-                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
-                              ],
-                            ),
-                          ),
+                        SizedBox(
+                          height: AppDimens.space20,
                         ),
-                        InkWell(
-                          onTap: () => Get.to(ListClassSuggestScreen()),
-                          child: Container(
-                            width: width * 0.2,
-                            height: height * 0.145,
-                            padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.whiteFFFFFF,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.25),
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(2, 2), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_document,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                Text(
-                                  'Lớp đề nghị dạy',
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize14),
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space4,
-                                ),
-                                Text('(${controller.resultHomeAfterTeacher.data.ldnd})',
-                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
-                              ],
-                            ),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Lớp học gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                            InkWell(
+                              onTap: () => Get.to(ListClassRecentlyScreen()),
+                              child: Text(
+                                'xem thêm >>',
+                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: 14),
+                              ),
+                            )
+                          ],
                         ),
-                        InkWell(
-                          onTap: () => Get.to(ListClassSavedScreen()),
-                          child: Container(
-                            width: width * 0.2,
-                            height: height * 0.145,
-                            padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColors.whiteFFFFFF,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.25),
-                                  spreadRadius: 0,
-                                  blurRadius: 3,
-                                  offset: Offset(2, 2), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_like,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                Text(
-                                  'Lớp đã lưu',
-                                  style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
-                                ),
-                                SizedBox(
-                                  height: AppDimens.space4,
-                                ),
-                                Text('(${controller.resultHomeAfterTeacher.data.ldl})',
-                                    style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
-                              ],
-                            ),
-                          ),
+                        Container(
+                            height: AppDimens.height * 0.21,
+                            child: ListView.separated(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) => InkWell(
+                                      onTap: () => informationClassController.detailClass(int.parse(controller.listLHGD[index].pftId), 0),
+                                      child: CardClassHome(
+                                        title: controller.listLHGD[index].pftSummary,
+                                        subject: controller.listLHGD[index].asName,
+                                        address: controller.listLHGD[index].citName,
+                                        time: controller.timeAgo(int.parse(controller.listLHGD[index].dayPost)),
+                                      ),
+                                    ),
+                                separatorBuilder: (context, index) => SizedBox(
+                                      width: AppDimens.space10,
+                                    ),
+                                itemCount: controller.listLHGD.length)),
+                        Text('Lớp học phổ biến', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                        SizedBox(
+                          height: AppDimens.space14,
                         ),
+                        Container(
+                            height: AppDimens.height * 0.5,
+                            width: AppDimens.width,
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) => InkWell(
+                                      onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                                          borderRadius: BorderRadius.circular(AppDimens.space16),
+                                        ),
+                                        margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
+                                        child: CardClassHome2(
+                                          title: controller.listLHPB[index].pftSummary,
+                                          time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
+                                          fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
+                                          subject: controller.listLHPB[index].asDetailName,
+                                          address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
+                                          classId: controller.listLHPB[index].pftId,
+                                          methodTeach: controller.listLHPB[index].pftForm,
+                                          numberSuggest: controller.listLHPB[index].countDnd,
+                                          save: controller.listLHPB[index].checkSave,
+                                          onTap: () {
+                                            if (!controller.listLHPB[index].checkSave) {
+                                              controller.listLHPB[index].checkSave = true;
+                                              controller.saveClass(int.parse(controller.listLHPB[index].pftId));
+                                            } else {
+                                              controller.listLHPB[index].checkSave = false;
+                                              controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
+                                            }
+                                            controller.update();
+                                          },
+                                          hasButton: false,
+                                        ),
+                                      ),
+                                    ),
+                                itemCount: controller.listLHPB.length))
                       ],
                     ),
+                  )
+                : Container(
+                    width: AppDimens.width,
+                    height: AppDimens.height,
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: AppColors.whiteFFFFFF,
+                      ),
+                    ),
                   ),
-                  SizedBox(
-                    height: AppDimens.space20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Lớp học gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
-                      InkWell(
-                        onTap: () => Get.to(ListClassRecentlyScreen()),
-                        child: Text(
-                          'xem thêm >>',
-                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: 14),
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                      height: AppDimens.height * 0.21,
-                      child: ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => InkWell(
-                                onTap: () => informationClassController.detailClass(int.parse(controller.listLHGD[index].pftId), 0),
-                                child: CardClassHome(
-                                  title: controller.listLHGD[index].pftSummary,
-                                  subject: controller.listLHGD[index].asName,
-                                  address: controller.listLHGD[index].citName,
-                                  time: controller.timeAgo(int.parse(controller.listLHGD[index].dayPost)),
-                                ),
-                              ),
-                          separatorBuilder: (context, index) => SizedBox(
-                                width: AppDimens.space10,
-                              ),
-                          itemCount: controller.listLHGD.length)),
-                  Text('Lớp học phổ biến', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
-                  SizedBox(
-                    height: AppDimens.space14,
-                  ),
-                  Container(
-                      height: AppDimens.height * 0.5,
-                      width: AppDimens.width,
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) => InkWell(
-                                onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                                    borderRadius: BorderRadius.circular(AppDimens.space16),
-                                  ),
-                                  margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
-                                  child: CardClassHome2(
-                                    title: controller.listLHPB[index].pftSummary,
-                                    time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
-                                    fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
-                                    subject: controller.listLHPB[index].asDetailName,
-                                    address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
-                                    classId: controller.listLHPB[index].pftId,
-                                    methodTeach: controller.listLHPB[index].pftForm,
-                                    numberSuggest: controller.listLHPB[index].countDnd,
-                                    save: controller.listLHPB[index].checkSave,
-                                    onTap: () {
-                                      if (!controller.listLHPB[index].checkSave) {
-                                        controller.listLHPB[index].checkSave = true;
-                                        controller.saveClass(int.parse(controller.listLHPB[index].pftId));
-                                      } else {
-                                        controller.listLHPB[index].checkSave = false;
-                                        controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
-                                      }
-                                      controller.update();
-                                    },
-                                    hasButton: false,
-                                  ),
-                                ),
-                              ),
-                          itemCount: controller.listLHPB.length))
-                ],
-              ),
-            ),
           ),
         ),
       ),

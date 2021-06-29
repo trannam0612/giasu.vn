@@ -10,6 +10,7 @@ import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
@@ -209,6 +210,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           readOnly: true,
                           error: controller.checkProvincial(),
                           onTapTextField: () {
+                            controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
@@ -530,38 +532,56 @@ Widget SelectTinhThanh(BuildContext context) {
         },
       ),
     ),
-    body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
-      child: ListView.separated(
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context, index) => InkWell(
-                // ignore: deprecated_member_use
-                onTap: () {
-                  registerGiaSuController.provincial.text = listDataCity[index].citName;
-                  registerGiaSuController.idProvincial = int.parse(listDataCity[index].citId);
-                  registerGiaSuController.district.clear();
-                  registerGiaSuController.getListDistrict(registerGiaSuController.idProvincial);
-                  Get.back();
-                },
-                child: SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        listDataCity[index].citName,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+    body: Obx(
+      () => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomSearchTextField(
+              readOnly: false,
+              textEditingController: registerGiaSuController.search,
+              onChanged: (value) {
+                registerGiaSuController.changeSearchProvincial(value);
+              },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              child: ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) => InkWell(
+                        // ignore: deprecated_member_use
+                        onTap: () {
+                          registerGiaSuController.provincial.text = registerGiaSuController.listProvincial[index].citName;
+                          registerGiaSuController.idProvincial = int.parse(registerGiaSuController.listProvincial[index].citId);
+                          registerGiaSuController.district.clear();
+                          registerGiaSuController.getListDistrict(registerGiaSuController.idProvincial);
+                          Get.back();
+                        },
+                        child: SizedBox(
+                          height: 30,
+                          child: Row(
+                            children: [
+                              Text(
+                                registerGiaSuController.listProvincial[index].citName,
+                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                              ),
+                              Spacer(),
+                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                            ],
+                          ),
+                        ),
                       ),
-                      Spacer(),
-                      listDataCity[index].citName == registerGiaSuController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
-                    ],
-                  ),
-                ),
-              ),
-          separatorBuilder: (context, index) => Divider(
-                thickness: 1,
-                color: AppColors.black12,
-              ),
-          itemCount: listDataCity.length),
+                  separatorBuilder: (context, index) => Divider(
+                        thickness: 1,
+                        color: AppColors.black12,
+                      ),
+                  itemCount: registerGiaSuController.listProvincial.length),
+            ),
+          ),
+        ],
+      ),
     ),
   ));
 }
