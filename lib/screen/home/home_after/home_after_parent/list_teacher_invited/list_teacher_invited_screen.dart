@@ -158,22 +158,22 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                           ),
                                         ],
                                       ),
-                                      // InkWell(child: controller.listGSMD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
-                                      // onTap: () {
-                                      //   if (!controller.listGSMD[index].checkSave) {
-                                      //     controller.listGSMD[index].checkSave = true;
-                                      //     homeAfterParentController.saveTutor(int.parse(controller.listGSMD[index].ugsId));
-                                      //     controller.update();
-                                      //   } else {
-                                      //     controller.listGSMD[index].checkSave = false;
-                                      //     homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSMD[index].ugsId));
-                                      //     controller.update();
-                                      //   }
-                                      // },)
+                                      InkWell(child: controller.listGSMD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
+                                      onTap: () {
+                                        if (!controller.listGSMD[index].checkSave) {
+                                          controller.listGSMD[index].checkSave = true;
+                                          homeAfterParentController.saveTutor(int.parse(controller.listGSMD[index].ugsId));
+                                          controller.update();
+                                        } else {
+                                          controller.listGSMD[index].checkSave = false;
+                                          homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSMD[index].ugsId));
+                                          controller.update();
+                                        }
+                                      },)
                                     ],
                                   ),
                                   SizedBox(
-                                    height: AppDimens.space6,
+                                    height: AppDimens.space16,
                                   ),
                                   Row(
                                     children: [
@@ -238,7 +238,7 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        '${controller.listGSMD[index].pftPrice}vnđ/${controller.listGSMD[index].pftMonth}',
+                                        '${controller.listGSMD[index].pftPrice} vnđ/${controller.listGSMD[index].pftMonth}',
                                         style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],

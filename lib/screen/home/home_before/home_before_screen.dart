@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/search/search_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
@@ -19,6 +20,7 @@ class HomeBeforeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InformationClassController informationClassController = Get.put(InformationClassController());
     String timeAgo(int timestamp) {
       var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
       var now = new DateTime.now();
@@ -72,7 +74,7 @@ class HomeBeforeScreen extends StatelessWidget {
                         height: AppDimens.space24,
                       ),
                       Text(
-                        'chào mừng',
+                        'Chào mừng',
                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
                       ),
                       SizedBox(
@@ -289,7 +291,7 @@ class HomeBeforeScreen extends StatelessWidget {
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) => InkWell(
-                                  onTap: () => Get.dialog(DialogErrorLogin()),
+                              onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),

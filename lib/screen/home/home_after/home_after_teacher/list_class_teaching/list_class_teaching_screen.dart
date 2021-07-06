@@ -8,8 +8,10 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:intl/intl.dart';
 
 import '../home_after_teacher_controller.dart';
@@ -45,6 +47,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
   ScrollController _controller = ScrollController();
   HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   ListClassTeachingController listClassTeachingController = Get.put(ListClassTeachingController());
+  InformationClassController informationClassController = Get.put(InformationClassController());
   int i = 1;
 
   @override
@@ -105,6 +108,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                   controller: _controller,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) => InkWell(
+                    onTap: () => informationClassController.detailClass(int.parse(controller.listPHDND[index].itClassCode), 0),
                     child: Slidable(
                       actionPane: SlidableDrawerActionPane(),
                       actionExtentRatio: 0.15,
@@ -116,9 +120,15 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                             color: AppColors.redEB5757,
                             icon: Icons.delete_outline,
                             onTap: () {
-                              controller.deleteClassAccepted(int.parse(controller.listPHDND[index].itClassCode));
-                              controller.listPHDND.remove(controller.listPHDND[index]);
-                              controller.update();
+                              Get.dialog(DialogConfirm(
+                                onPressed: () {
+                                  controller.deleteClassAccepted(int.parse(controller.listPHDND[index].itClassCode));
+                                  controller.listPHDND.remove(controller.listPHDND[index]);
+                                  Get.back();
+                                  controller.update();
+                                },
+                                title: 'Bạn có chắc là muốn xoá gia sư này không ?',
+                              ));
                             },
                           ),
                         ),
@@ -174,7 +184,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                   width: AppDimens.space8,
                                                 ),
                                                 Text(
-                                                  '${controller.listPHDND[index].pftPrice}vnđ/${controller.listPHDND[index].pftMonth}',
+                                                  '${controller.listPHDND[index].pftPrice} vnđ/${controller.listPHDND[index].pftMonth}',
                                                   style: AppTextStyles.regular(
                                                     context,
                                                     size: AppDimens.textSize14,

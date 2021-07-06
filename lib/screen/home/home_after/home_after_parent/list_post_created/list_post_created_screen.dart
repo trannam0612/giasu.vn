@@ -150,7 +150,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            '${controller.listClassPosted[index].pftPrice}vnđ/${controller.listClassPosted[index].pftMonth}',
+                                            '${controller.listClassPosted[index].pftPrice} vnđ/${controller.listClassPosted[index].pftMonth}',
                                             style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                           ),
                                         ],
@@ -286,7 +286,7 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                     Spacer(),
                                     SizedBox(
                                       height: 30,
-                                      width: 95,
+                                      width: 110,
                                       child: CustomButton2(
                                         title: 'Chỉnh sửa',
                                         color: AppColors.primary4C5BD4,

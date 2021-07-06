@@ -73,7 +73,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
-            'Gia sư gần đây',
+            'Lớp học mới nhất',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,

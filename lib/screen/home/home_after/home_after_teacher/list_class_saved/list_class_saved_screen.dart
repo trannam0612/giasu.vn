@@ -11,6 +11,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_sa
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 
 class ListClassSavedScreen extends StatefulWidget {
   final String title;
@@ -284,7 +285,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                               children: [
                                 Spacer(),
                                 SizedBox(
-                                  width: 110,
+                                  width: 120,
                                   height: 30,
                                   child: controller.listLDL[index].checkOffer
                                       ? CustomButton1(
@@ -313,9 +314,15 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                   child: CustomButton1(
                                     textColor: AppColors.black,
                                     onPressed: () {
-                                      homeAfterTeacherController.deleteClassSaved(int.parse(controller.listLDL[index].pftId));
-                                      controller.listLDL.remove(controller.listLDL[index]);
-                                      controller.update();
+                                      Get.dialog(DialogConfirm(
+                                        onPressed: () {
+                                          homeAfterTeacherController.deleteClassSaved(int.parse(controller.listLDL[index].pftId));
+                                          controller.listLDL.remove(controller.listLDL[index]);
+                                          Get.back();
+                                          controller.update();
+                                        },
+                                        title: 'Bạn có chắc là muốn bỏ lưu gia sư này không ?',
+                                      ));
                                     },
                                     color: AppColors.grey747474,
                                     title: 'Huỷ lưu',

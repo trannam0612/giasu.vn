@@ -170,20 +170,6 @@ class LoginScreen extends StatelessWidget {
                               SizedBox(
                                 height: AppDimens.space20,
                               ),
-                              InkWell(
-                                onTap: () {
-                                  homeBeforeController.homeBefore();
-                                },
-                                child: Text(
-                                  'Truy cập không cần tài khoản',
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyles.regularW400(
-                                    context,
-                                    size: AppDimens.textSize16,
-                                    color: AppColors.primary4C5BD4,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         )

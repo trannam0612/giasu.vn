@@ -42,7 +42,11 @@ class DialogErrorLogin extends StatelessWidget {
               thickness: 0.25,
             ),
             SizedBox(
+              height: AppDimens.space10,
+            ),
+            SizedBox(
               height: 30,
+              width: 110,
               child: CustomButton2(
                 color: AppColors.primary4C5BD4,
                 textColor: AppColors.whiteFFFFFF,
@@ -71,7 +75,7 @@ class DialogErrorLogin extends StatelessWidget {
                 InkWell(
                   onTap: () => Get.to(IntroLoginScreen()),
                   child: Text(
-                    'Đăng kí',
+                    'Đăng ký',
                     style: AppTextStyles.regularW400(context,
                         size: AppDimens.textSize14,
                         color: AppColors.secondaryF8971C),

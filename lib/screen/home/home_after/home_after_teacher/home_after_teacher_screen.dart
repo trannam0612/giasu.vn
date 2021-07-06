@@ -99,7 +99,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           height: AppDimens.space24,
                         ),
                         Text(
-                          'chào mừng',
+                          'Chào mừng',
                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
                         ),
                         SizedBox(
@@ -294,7 +294,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Lớp học gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                            Text('Lớp học mới nhất', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                             InkWell(
                               onTap: () => Get.to(ListClassRecentlyScreen()),
                               child: Text(
@@ -305,7 +305,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           ],
                         ),
                         Container(
-                            height: AppDimens.height * 0.21,
+                            height: AppDimens.height * 0.19,
                             child: ListView.separated(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,

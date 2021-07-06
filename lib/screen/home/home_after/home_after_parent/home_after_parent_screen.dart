@@ -100,7 +100,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           height: AppDimens.space24,
                         ),
                         Text(
-                          'chào mừng',
+                          'Chào mừng',
                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
                         ),
                         SizedBox(
@@ -397,7 +397,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Gia sư gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                            Text('Gia sư mới nhất', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                             InkWell(
                               onTap: () => Get.to(ListTeacherRecentlyScreen()),
                               child: Text(
@@ -426,7 +426,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                   ),
                               itemCount: controller.listGSGD.length),
                         ),
-                        Text('Gia sư phổ biến', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                        Text('Gia sư nổi bật', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                         SizedBox(
                           height: AppDimens.space14,
                         ),

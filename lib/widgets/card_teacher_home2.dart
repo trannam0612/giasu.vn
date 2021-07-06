@@ -26,7 +26,7 @@ class CardTeacherHome2 extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
       child: SizedBox(
-        height: height * 0.13,
+        height: height * 0.15,
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
@@ -60,7 +60,7 @@ class CardTeacherHome2 extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: AppDimens.space6,
+                              height: AppDimens.space10,
                             ),
                             RatingBar(
                               initialRating: rate.toDouble(),
@@ -89,10 +89,9 @@ class CardTeacherHome2 extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: AppDimens.space6,
+                      height: AppDimens.space10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -115,6 +114,7 @@ class CardTeacherHome2 extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(height: AppDimens.space6,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,

@@ -155,7 +155,7 @@ class InformationTeacherScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: AppDimens.space6,
+                              height: AppDimens.space8,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -172,8 +172,8 @@ class InformationTeacherScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary}vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice}vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
+                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
                                   style: AppTextStyles.regular(
                                     context,
                                     size: AppDimens.textSize14,
@@ -184,16 +184,6 @@ class InformationTeacherScreen extends StatelessWidget {
                           ],
                         ),
                         InkWell(
-                          onTap: () => Get.dialog(DialogWatchTeacher(
-                            teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                            nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                            ontap: () {
-                              controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                              Get.back();
-                              controller.update();
-
-                            },
-                          )),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -218,18 +208,30 @@ class InformationTeacherScreen extends StatelessWidget {
                                           controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
                                           style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
                                         )
-                                      : Container(
+                                      : InkWell(
+                                    onTap: () => Get.dialog(DialogWatchTeacher(
+                                      teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                      nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                      ontap: () {
+                                        controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                        Get.back();
+                                        controller.update();
+
+                                      },
+                                    )),
+                                        child: Container(
                                     width: AppDimens.width*0.3,
-                                          padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Text(
-                                              'sử dụng 1 điểm để xem',
-                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                            padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                            decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                'sử dụng 1 điểm để xem',
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                      ),
                                 ],
                               ),
                               SizedBox(
@@ -262,18 +264,30 @@ class InformationTeacherScreen extends StatelessWidget {
                                             ),
                                         ),
                                       )
-                                      : Container(
+                                      : InkWell(
+                                    onTap: () => Get.dialog(DialogWatchTeacher(
+                                      teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                      nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                      ontap: () {
+                                        controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                        Get.back();
+                                        controller.update();
+
+                                      },
+                                    )),
+                                        child: Container(
                                     width: AppDimens.width*0.3,
-                                          padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Text(
-                                              'sử dụng 1 điểm để xem',
-                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                            padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                            decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                'sử dụng 1 điểm để xem',
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                      ),
                                 ],
                               ),
                             ],
@@ -283,17 +297,16 @@ class InformationTeacherScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppDimens.space12,
+                    height: AppDimens.space16,
                   ),
                   Text(
                     'Giới thiệu chung',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
-                    height: AppDimens.space6,
+                    height: AppDimens.space16,
                   ),
                   Container(
-                    height: AppDimens.height * 0.2,
                     width: AppDimens.width,
                     padding: EdgeInsets.all(AppDimens.space14),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
@@ -304,14 +317,14 @@ class InformationTeacherScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppDimens.space12,
+                    height: AppDimens.space16,
                   ),
                   Text(
                     'Thông tin cá nhân',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
-                    height: AppDimens.space6,
+                    height: AppDimens.space16,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppDimens.space8),
@@ -406,14 +419,14 @@ class InformationTeacherScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppDimens.space12,
+                    height: AppDimens.space16,
                   ),
                   Text(
                     'Thông tin giảng dạy',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
-                    height: AppDimens.space6,
+                    height: AppDimens.space16,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppDimens.space8),
@@ -446,7 +459,7 @@ class InformationTeacherScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'môn học giảng dạy:',
+                                'Môn học giảng dạy:',
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
@@ -521,14 +534,14 @@ class InformationTeacherScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppDimens.space12,
+                    height: AppDimens.space16,
                   ),
                   Text(
                     'Lịch học có thể dạy',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
-                    height: AppDimens.space6,
+                    height: AppDimens.space16,
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -611,14 +624,14 @@ class InformationTeacherScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: AppDimens.space12,
+                    height: AppDimens.space16,
                   ),
                   Text(
                     'Đánh giá',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                   ),
                   SizedBox(
-                    height: AppDimens.space6,
+                    height: AppDimens.space16,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppDimens.space16, horizontal: AppDimens.space20),

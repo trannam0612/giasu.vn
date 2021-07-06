@@ -241,14 +241,14 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: AppDimens.space10,
+                  height: AppDimens.space16,
                 ),
                 Text(
                   'Thông tin lớp học',
                   style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
                 ),
                 SizedBox(
-                  height: AppDimens.space10,
+                  height: AppDimens.space16,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: AppDimens.space8),
@@ -386,7 +386,7 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(AppDimens.space10),
+                  padding: const EdgeInsets.all(AppDimens.space16),
                   child: Text(
                     'Số buổi có thể học',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
@@ -475,7 +475,7 @@ class InformationClassScreen extends StatelessWidget {
                 SizedBox(
                   height: AppDimens.space18,
                 ),
-                type == 0
+                type == null ? Container() : type == 0
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
