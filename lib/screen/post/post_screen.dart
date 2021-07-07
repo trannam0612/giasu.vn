@@ -104,7 +104,7 @@ class PostScreen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         DropDownSelect(
-                          hint: 'Khác',
+                          hint: 'Chọn giới tính',
                           obligatory: true,
                           title: 'Giới tính',
                           list: controller.listGender,
@@ -316,7 +316,7 @@ class PostScreen extends StatelessWidget {
                         //   height: AppDimens.space8,
                         // ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child:
@@ -376,7 +376,7 @@ class PostScreen extends StatelessWidget {
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                              height: AppDimens.height * 0.07,
+                              margin: EdgeInsets.only(top: AppDimens.space4),
                               decoration:
                                   BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
                               child: DropdownButtonHideUnderline(
@@ -430,7 +430,7 @@ class PostScreen extends StatelessWidget {
                             // Get.dialog(DialogFee());
                           },
                           title: 'Điện thoại liên hệ',
-                          hintText: '',
+                          hintText: 'Nhập điện thoại liên hệ',
                           isPassword: false,
                           isShowIcon: false,
                           iconSuffix: Images.ic_arrow_down,
@@ -495,7 +495,7 @@ class PostScreen extends StatelessWidget {
                         ),
                         RichText(
                           text: TextSpan(
-                            text: 'Buổi có thể học ',
+                            text: 'Buổi dạy dự kiến ',
                             style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
                             children: <TextSpan>[
                               TextSpan(

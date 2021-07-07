@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -32,7 +33,8 @@ class RegisterParentStep2Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Đăng ký',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -112,6 +114,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           height: AppDimens.space10,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
                           obligatory: true,
                           onPressed: () {
@@ -126,7 +129,6 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           height: AppDimens.space10,
                         ),
                         DropDownSelect(
-                          obligatory: true,
                           title: 'Giới Tính',
                           isTitle: true,
                           hint: 'Chọn Giới Tính',
@@ -135,15 +137,15 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        controller.errorGender
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
+                        // controller.errorGender
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
+                        //         child: Text(
+                        //           '\t\tTrường bắt buộc!',
+                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                        //         ),
+                        //       )
+                        //     : Container(),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
@@ -159,13 +161,12 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           },
                           readOnly: true,
                           isShowIcon: true,
-                          obligatory: true,
                           textEditingController: controller.dateTime,
                           onPressed: () {},
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
-                          error: controller.checkDate(),
+                          // error: controller.checkDate(),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
@@ -208,13 +209,12 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         CustomTextField(
                           onTapTextField: () {},
                           isShowIcon: false,
-                          obligatory: true,
                           textEditingController: controller.address,
                           onPressed: () {},
                           title: 'Địa chỉ',
                           hintText: 'Địa chỉ của bạn',
                           iconSuffix: Images.ic_arrow_down,
-                          error: controller.checkAddress(),
+                          // error: controller.checkAddress(),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
@@ -311,7 +311,9 @@ Widget SelectTinhThanhParent(BuildContext context) {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              registerPhuHuynhController.listProvincial[index].citName == registerPhuHuynhController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              registerPhuHuynhController.listProvincial[index].citName == registerPhuHuynhController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -369,7 +371,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerPhuHuynhController.listDistrict[index].nameCity == registerPhuHuynhController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerPhuHuynhController.listDistrict[index].nameCity == registerPhuHuynhController.district.text
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),
@@ -411,7 +415,8 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,

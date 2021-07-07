@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -31,7 +32,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                     backgroundColor: AppColors.primary4C5BD4,
                     title: Text(
                       'Đăng ký',
-                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                      style: AppTextStyles.regularW500(context,
+                          size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                     ),
                     leading: IconButton(
                       icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -83,7 +85,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -100,7 +103,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.all(AppDimens.padding8),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
+                                    borderRadius: BorderRadius.circular(AppDimens.space10),
+                                    border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listSubjectSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
@@ -120,7 +124,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                             child: Container(
                                               alignment: Alignment.topCenter,
                                               padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                              decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.greyC4C4C4, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   Expanded(
@@ -180,7 +185,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -223,7 +229,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                               child: Container(
                                                 alignment: Alignment.topCenter,
                                                 padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                                decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.greyC4C4C4, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                                 child: Row(
                                                   children: [
                                                     Expanded(
@@ -344,7 +351,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -379,7 +387,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                             },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                              decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   SizedBox(
@@ -413,7 +422,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                         ],
                                       )),
                           ),
-                          controller.errorDistrict
+                          controller.errorDistrictS3
                               ? Padding(
                                   padding: const EdgeInsets.only(top: AppDimens.space4),
                                   child: Text(
@@ -439,7 +448,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -458,7 +468,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     },
                                     child: Text(
                                       'Cố định',
-                                      style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
+                                      style: AppTextStyles.regularW700(context,
+                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
@@ -485,14 +496,17 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     },
                                     child: Text(
                                       'Ước lượng',
-                                      style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
+                                      style: AppTextStyles.regularW700(context,
+                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
                                       primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
                                       padding: EdgeInsets.all(AppDimens.space8),
                                       onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: AppColors.primary4C5BD4), borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
+                                          borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
                                     ),
                                   ),
                                 ),
@@ -503,11 +517,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                   child: controller.valueButtonLuong
                                       ? CustomTextField(
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                           error: controller.checkSalaryCD(),
                                           textEditingController: controller.salaryCD,
                                           obligatory: false,
@@ -524,6 +539,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                           children: [
                                             Expanded(
                                               child: CustomTextField(
+                                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                 error: controller.checkSalaryUL1(),
                                                 textEditingController: controller.salaryUL1,
                                                 obligatory: false,
@@ -541,6 +557,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: CustomTextField(
+                                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                                 error: controller.checkSalaryUL2(),
                                                 textEditingController: controller.salaryUL2,
                                                 obligatory: false,
@@ -559,9 +576,11 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                                height: AppDimens.height * 0.063,
-                                decoration:
-                                    BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
+                                margin: EdgeInsets.symmetric(vertical: AppDimens.space4),
+                                decoration: BoxDecoration(
+                                    color: AppColors.whiteFFFFFF,
+                                    borderRadius: BorderRadius.circular(AppDimens.space10),
+                                    border: Border.all(width: 1, color: AppColors.grey747474)),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
                                     hint: Text(
@@ -607,7 +626,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -654,7 +674,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  color:
+                                                      controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
                                                   textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
                                                   hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                                 ),
@@ -669,8 +690,10 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  color:
+                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor:
+                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
                                                   hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                                 ),
                                                 SizedBox(
@@ -707,6 +730,9 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                   ),
                                 )
                               : Container(),
+                          SizedBox(
+                            height: AppDimens.space20,
+                          ),
                           Container(
                             width: AppDimens.width,
                             child: Row(
@@ -731,15 +757,18 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: 'Điều khoản \nsử dụng ',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regularW400(context,
+                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                                       ),
                                       TextSpan(
                                         text: 'và ',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.black),
+                                        style: AppTextStyles.regularW400(context,
+                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.black),
                                       ),
                                       TextSpan(
                                         text: 'Chính sách bảo mật',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regularW400(context,
+                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                                       ),
                                     ],
                                   ),
@@ -787,7 +816,8 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học',
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style:
+                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -817,7 +847,9 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index])
+                                    ? SvgPicture.asset(Images.ic_check_green)
+                                    : Container()
                               ],
                             ),
                           ),
@@ -842,7 +874,8 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học chi tiết',
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style:
+                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -870,7 +903,9 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject)
+                                    ? SvgPicture.asset(Images.ic_check_green)
+                                    : Container()
                               ],
                             ),
                           ),
@@ -940,7 +975,9 @@ Widget SelectTinhThanh(BuildContext context) {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.areaTeaching.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.areaTeaching.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -995,7 +1032,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listDistrict[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listDistrict[index])
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),

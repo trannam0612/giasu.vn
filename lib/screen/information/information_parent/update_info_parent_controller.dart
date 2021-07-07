@@ -184,11 +184,13 @@ class UpdateInformationParentController extends GetxController {
     return null;
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phone.text.length < 9) {
+    } else if (errorPhone && !regExp.hasMatch(phone.text)) {
       return 'Số điện thoại không hợp lệ!';
     }
     return null;
@@ -309,7 +311,13 @@ class UpdateInformationParentController extends GetxController {
     errorGender = gender.isNullOrBlank ? true : false;
     errorImage = avatar.isNullOrBlank ? true : false;
     // print()
-    fullName.text.isNotEmpty && phone.text.isNotEmpty && errorGender == false && dateTime.text.isNotEmpty && provincial.text.isNotEmpty && address.text.isNotEmpty
+    fullName.text.isNotEmpty &&
+            phone.text.isNotEmpty &&
+            regExp.hasMatch(phone.text) &&
+            errorGender == false &&
+            dateTime.text.isNotEmpty &&
+            provincial.text.isNotEmpty &&
+            address.text.isNotEmpty
         ?
         // Get.to(RegisterParentStep2Screen())
         updateInfoParent()

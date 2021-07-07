@@ -39,6 +39,8 @@ class UpdateInfoTeacherController extends GetxController {
   File imageAvatar;
   File imageInfor;
   File avatar;
+  DateTime start;
+  DateTime end;
   String valueGender = 'Khác';
   String valueExperience = 'Chọn kiểu gia sư';
   DateTime valueDate = DateTime.now();
@@ -346,6 +348,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkTimeExp');
     if (errorTimeExpStart && timeExpStart.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorTimeExpStart && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+      return 'Thời gian bắt đầu sai!';
     }
     return null;
   }
@@ -354,6 +358,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkTimeExp');
     if (errorTimeExpEnd && timeExpEnd.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorTimeExpEnd && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+      return 'Thời gian kết thúc sai!';
     }
     return null;
   }
@@ -778,37 +784,46 @@ class UpdateInfoTeacherController extends GetxController {
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
-    errorDateTime = true;
+    // errorDateTime = true;
     errorProvincial = true;
     errorDistrict = true;
     errorAddress = true;
-    errorNumberYearExp = true;
-    errorTitleExp = true;
-    errorTimeExpStart = true;
-    errorTimeExpEnd = true;
-    errorInformationExp = true;
+    // errorNumberYearExp = true;
+    // errorTitleExp = true;
+    // errorTimeExpStart = true;
+    // errorTimeExpEnd = true;
+    // errorInformationExp = true;
     // ignore: deprecated_member_use
-    errorGender = selectedGender.isNullOrBlank ? true : false;
+    // errorGender = selectedGender.isNullOrBlank ? true : false;
     // ignore: deprecated_member_use
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
     print('checkNullButton');
+    print(fullName.text);
+    print(phone.text);
+    print(errorMarriage);
+    print(provincial.text);
+    print(district.text);
+    print(informationExp.text);
     if (fullName.text.isNotEmpty &&
         phone.text.isNotEmpty &&
         regExp.hasMatch(phone.text) &&
-        dateTime.text.isNotEmpty &&
-        errorGender == false &&
+        // dateTime.text.isNotEmpty &&
+        // errorGender == false &&
         errorMarriage == false &&
         provincial.text.isNotEmpty &&
-        district.text.isNotEmpty &&
-        address.text.isNotEmpty &&
-        numberYearExp.text.isNotEmpty &&
-        numberYearExp.text != '0' &&
-        titleExp.text.isNotEmpty &&
-        timeExpStart.text.isNotEmpty &&
-        timeExpEnd.text.isNotEmpty &&
-        informationExp.text.isNotEmpty) {
+        district.text.isNotEmpty
+    // &&
+        // address.text.isNotEmpty &&
+        // numberYearExp.text.isNotEmpty &&
+        // numberYearExp.text != '0' &&
+        // titleExp.text.isNotEmpty &&
+        // timeExpStart.text.isNotEmpty &&
+        // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
+        // timeExpEnd.text.isNotEmpty &&
+        // informationExp.text.isNotEmpty
+    ) {
       Get.to(UpdateInfoTeacherStep2Screen());
     } else {
       Get.dialog(DialogError(
@@ -931,6 +946,8 @@ class UpdateInfoTeacherController extends GetxController {
       titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
       timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
       timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
+      // end = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearEnd);
+      // start = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearStart);
       informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
       school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
       prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;

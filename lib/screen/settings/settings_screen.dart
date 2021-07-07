@@ -82,27 +82,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsAvatar : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
+                                  imageUrl: controller.user == '1'
+                                      ? controller.resultGetInfoParent.data.data.ugsAvatar
+                                      : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
                                   width: 80,
                                   height: 80,
                                 ),
                               ),
                               SizedBox(
-                                width: AppDimens.space4,
+                                width: AppDimens.space10,
                               ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsName : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+                                      controller.user == '1'
+                                          ? controller.resultGetInfoParent.data.data.ugsName
+                                          : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
                                       style: AppTextStyles.regularW500(context, size: AppDimens.textSize22),
                                     ),
                                     SizedBox(
                                       height: AppDimens.space4,
                                     ),
                                     Text(
-                                      controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsEmail : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
+                                      controller.user == '1'
+                                          ? controller.resultGetInfoParent.data.data.ugsEmail
+                                          : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                     ),
                                     SizedBox(
@@ -421,16 +427,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         color: AppColors.black12,
                       ),
                       SizedBox(
-                        height: AppDimens.space16,
-                      ),
-                      Text(
-                        'Chung',
-                        style: AppTextStyles.regularW700(
-                          context,
-                          size: AppDimens.textSize18,
-                        ),
-                      ),
-                      SizedBox(
                         height: AppDimens.space30,
                       ),
                       InkWell(
@@ -445,8 +441,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          SpUtil.remove(ConstString.token);
-                          Get.offAllNamed(Routes.select_type_login);
+                          Get.dialog(DialogLogout(context));
                         },
                         child: Text(
                           'Đăng xuất',
@@ -470,4 +465,65 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+}
+
+Widget DialogLogout(BuildContext context) {
+  return Dialog(
+    insetPadding: EdgeInsets.symmetric(horizontal: AppDimens.space30),
+    backgroundColor: AppColors.whiteFFFFFF,
+    child: Container(
+      padding: EdgeInsets.fromLTRB(AppDimens.padding16, AppDimens.space40, AppDimens.padding16, AppDimens.space32),
+      width: AppDimens.width,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(Images.ic_logout2),
+          SizedBox(
+            height: AppDimens.space28,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.space36),
+            child: Text(
+              'Bạn có chắc chắn muốn đăng xuất không ?',
+              textAlign: TextAlign.center,
+              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey686F7A),
+            ),
+          ),
+          // SizedBox(
+          //   height: AppDimens.space10,
+          // ),
+          SizedBox(
+            height: AppDimens.padding16,
+          ),
+          Divider(
+            height: 0,
+            color: AppColors.grey747474,
+            thickness: 1,
+          ),
+          TextButton(
+            child: Text(
+              'Đăng Xuất',
+              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+            ),
+            onPressed: () {
+              SpUtil.remove(ConstString.token);
+              Get.offAllNamed(Routes.select_type_login);
+            },
+          ),
+          Divider(
+            height: 0,
+            color: AppColors.grey747474,
+            thickness: 1,
+          ),
+          TextButton(
+            child: Text(
+              'Huỷ',
+              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey686F7A),
+            ),
+            onPressed: () => Get.back(),
+          )
+        ],
+      ),
+    ),
+  );
 }

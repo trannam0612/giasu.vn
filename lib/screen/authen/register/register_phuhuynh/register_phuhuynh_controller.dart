@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_check_mail.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_register_parent.dart';
@@ -50,7 +51,7 @@ class RegisterPhuHuynhController extends GetxController {
   //step2
   TextEditingController fullName = TextEditingController();
   TextEditingController phone = TextEditingController();
-
+  FocusNode checkEmailPH = FocusNode();
   TextEditingController dateTime = TextEditingController();
   TextEditingController provincial = TextEditingController();
   TextEditingController district = TextEditingController();
@@ -59,6 +60,7 @@ class RegisterPhuHuynhController extends GetxController {
   String gender;
   List<String> listGender = ['Nam', 'Nữ'];
   List<ListDistrict> listDistrict = [];
+  RxBool valueCheckEmailGS = true.obs;
 
   @override
   void onInit() {
@@ -94,6 +96,9 @@ class RegisterPhuHuynhController extends GetxController {
     });
     search.addListener(() {
       update();
+    });
+    checkEmailPH.addListener(() {
+      checkMailPH();
     });
     // TODO: implement onInit
 
@@ -140,7 +145,7 @@ class RegisterPhuHuynhController extends GetxController {
     //   }
     // }
     idGender = value == "Nam" ? 1 : 2;
-    errorGender = false;
+    // errorGender = false;
     update();
   }
 
@@ -175,10 +180,12 @@ class RegisterPhuHuynhController extends GetxController {
   String checkEmail() {
     if (errorEmail && email.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@') && !email.text.contains('.')) {
+    } else if (errorEmail && !email.text.contains('@')) {
       return 'Email không hợp lệ!';
     } else if (errorEmail && !email.text.contains('.')) {
       return 'Email không hợp lệ!';
+    } else if (!valueCheckEmailGS.value) {
+      return 'Email đã tồn tại!';
     } else {
       return null;
     }
@@ -191,12 +198,19 @@ class RegisterPhuHuynhController extends GetxController {
     return null;
   }
 
+  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
+
   String checkPhone() {
     print('checkPassword');
+
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorPhone && phone.text.length < 9) {
-      return 'Số điện thoại không hợp lệ!';
+    }
+    // else if (errorPhone && phone.text.length != 10) {
+    //   return 'Số điện thoại không hợp lệ!';
+    // }
+    else if (errorPhone && !regExp.hasMatch(phone.text)) {
+      return 'Số điện thoại sai định dạng!';
     }
     return null;
   }
@@ -250,7 +264,13 @@ class RegisterPhuHuynhController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    email.text.isNotEmpty && passWord.text.length >= 8 && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+    email.text.isNotEmpty &&
+            valueCheckEmailGS.value &&
+            email.text.contains('@') &&
+            email.text.contains('.') &&
+            passWord.text.length >= 8 &&
+            RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
+            rePassWord.text == passWord.text
         ? Get.to(RegisterParentStep2Screen())
         : Get.dialog(DialogError(
             title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
@@ -275,8 +295,8 @@ class RegisterPhuHuynhController extends GetxController {
   }
 
   Future<void> registerParent() async {
-    ResultData res = await authenticationRepositories.registerParent(
-        email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text, idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
+    ResultData res = await authenticationRepositories.registerParent(email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text,
+        idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
     resultRegisterParent = resultRegisterParentFromJson(res.data);
     if (resultRegisterParent.data != null) {
       SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
@@ -296,15 +316,24 @@ class RegisterPhuHuynhController extends GetxController {
     errorShowRePassword = true;
     errorName = true;
     errorPhone = true;
-    errorDateTime = true;
+    // errorDateTime = true;
     errorProvincial = true;
     errorDistrict = true;
-    errorAddress = true;
+    // errorAddress = true;
     errorInformation = true;
-    errorGender = gender.isNullOrBlank ? true : false;
+    // errorGender = gender.isNullOrBlank ? true : false;
     errorImage = avatar.isNullOrBlank ? true : false;
     // print()
-    fullName.text.isNotEmpty && phone.text.isNotEmpty && errorGender == false && dateTime.text.isNotEmpty && provincial.text.isNotEmpty && district.text.isNotEmpty && address.text.isNotEmpty
+    fullName.text.isNotEmpty &&
+            phone.text.isNotEmpty &&
+            regExp.hasMatch(phone.text) &&
+            // errorGender == false &&
+            // dateTime.text.isNotEmpty &&
+            provincial.text.isNotEmpty &&
+            district.text.isNotEmpty &&
+            information.text.isNotEmpty
+        // &&
+        // address.text.isNotEmpty
         ?
         // Get.to(RegisterParentStep2Screen())
         // Utils.showToast('Cập nhật thành công')
@@ -315,6 +344,23 @@ class RegisterPhuHuynhController extends GetxController {
             textButton: 'Ok',
             richText: false,
           ));
+    update();
+  }
+
+  Future<void> checkMailPH() async {
+    print('getDataQH');
+    if (email.text.isNotEmpty) {
+      ResultData res = await authenticationRepositories.checkMailPH(email.text);
+      ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
+      if (resultCheckMail.data != null) {
+        valueCheckEmailGS.value = true;
+      } else {
+        valueCheckEmailGS.value = false;
+        Utils.showToast(resultCheckMail.error.message);
+      }
+    } else {
+      return null;
+    }
     update();
   }
 }
