@@ -36,7 +36,7 @@ class DialogWatchTeacher extends StatelessWidget {
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
-                text: 'Bạn muốn sử dụng',
+                text: 'Bạn muốn Sử dụng',
                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.grey686F7A),
                 children: <TextSpan>[
                   TextSpan(

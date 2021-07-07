@@ -123,7 +123,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                 child: SizedBox(
-                  height: height * 0.2,
+                  height: height * 0.21,
                   child: Stack(
                     alignment: Alignment.topLeft,
                     children: [
@@ -182,7 +182,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                 ],
                               ),
                               SizedBox(
-                                height: AppDimens.space6,
+                                height: AppDimens.space16,
                               ),
                               Row(
                                 children: [
@@ -194,7 +194,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                     width: AppDimens.space4,
                                   ),
                                   Text(
-                                    widget.date,
+                                    controller.listGSDL[index].stDate,
                                     style: AppTextStyles.regularW400(
                                       context,
                                       size: AppDimens.textSize14,
@@ -250,7 +250,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        "${controller.listGSDL[index].ugsUnitPrice}vnđ/${controller.listGSDL[index].ugsMonth}",
+                                        "${controller.listGSDL[index].ugsUnitPrice} vnđ/${controller.listGSDL[index].ugsMonth}",
                                         style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],

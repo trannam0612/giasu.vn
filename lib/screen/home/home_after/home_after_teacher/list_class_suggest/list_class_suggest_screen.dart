@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_suggest/list_class_suggest_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:intl/intl.dart';
 
 import '../home_after_teacher_controller.dart';
@@ -115,9 +116,17 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                         color: AppColors.redEB5757,
                         icon: Icons.delete_outline,
                         onTap: () {
-                          controller.deleteClassOffered(int.parse(controller.listLDDN[index].pftId));
-                          controller.listLDDN.remove(controller.listLDDN[index]);
-                          controller.update();
+
+                          Get.dialog(DialogConfirm(
+                            title: 'Bạn có chắc là muốn xoá gia sư này không ?',
+                            onPressed: () {
+                              controller.deleteClassOffered(int.parse(controller.listLDDN[index].pftId));
+                              controller.listLDDN.remove(controller.listLDDN[index]);
+                              Get.back();
+                              controller.update();
+                            },
+                          ));
+
                         },
                       ),
                     ),
