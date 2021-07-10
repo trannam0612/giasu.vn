@@ -65,6 +65,7 @@ class DataData {
     this.ugsCity,
     this.citName,
     this.ugsAddress,
+    this.pointFree,
   });
 
   String ugsPhone;
@@ -78,6 +79,7 @@ class DataData {
   String ugsCity;
   String citName;
   String ugsAddress;
+  String pointFree;
 
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     ugsPhone: json["ugs_phone"] == null ? null : json["ugs_phone"],
@@ -91,6 +93,7 @@ class DataData {
     ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
+    pointFree: json["point_free"] == null ? null : json["point_free"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -105,25 +108,26 @@ class DataData {
     "ugs_city": ugsCity == null ? null : ugsCity,
     "cit_name": citName == null ? null : citName,
     "ugs_address": ugsAddress == null ? null : ugsAddress,
+    "point_free": pointFree == null ? null : pointFree,
   };
 }
 
 class Error {
   Error({
-    this.code,
+    this.result,
     this.message,
   });
 
-  int code;
+  bool result;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    code: json["code"] == null ? null : json["code"],
+    result: json["result"] == null ? null : json["result"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
+    "result": result == null ? null : result,
     "message": message == null ? null : message,
   };
 }

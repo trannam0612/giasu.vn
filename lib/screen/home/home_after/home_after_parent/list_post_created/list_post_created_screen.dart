@@ -276,42 +276,24 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                 ),
                               ],
                             ),
-                            Column(
+                            SizedBox(
+                              height: AppDimens.space10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 SizedBox(
-                                  height: AppDimens.space10,
-                                ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    SizedBox(
-                                      height: 30,
-                                      width: 110,
-                                      child: CustomButton2(
-                                        title: 'Chỉnh sửa',
-                                        color: AppColors.primary4C5BD4,
-                                        onPressed: () {
-                                          updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
-                                          // Get.to(PostScreen());
-                                        },
-                                        textColor: AppColors.whiteFFFFFF,
-                                      ),
-                                    ),
-                                    // SizedBox(
-                                    //   width: AppDimens.space20,
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 30,
-                                    //   width: 95,
-                                    //   child: CustomButton1(
-                                    //     textColor: AppColors.black,
-                                    //     onPressed: () {},
-                                    //     color: AppColors.grey747474,
-                                    //     title: 'Xoá bài',
-                                    //     backColor: AppColors.whiteFFFFFF,
-                                    //   ),
-                                    // )
-                                  ],
+                                  height: 30,
+                                  width: 110,
+                                  child: CustomButton2(
+                                    title: 'Chỉnh sửa',
+                                    color: AppColors.primary4C5BD4,
+                                    onPressed: () {
+                                      updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
+                                      // Get.to(PostScreen());
+                                    },
+                                    textColor: AppColors.whiteFFFFFF,
+                                  ),
                                 ),
                               ],
                             )

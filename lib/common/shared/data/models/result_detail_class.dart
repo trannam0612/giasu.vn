@@ -96,7 +96,7 @@ class DataInfo {
   DataInfo({
     this.pftId,
     this.pftSummary,
-    this.status,
+    this.trangthaiLop,
     this.cityId,
     this.cityName,
     this.cityDetail,
@@ -124,7 +124,7 @@ class DataInfo {
 
   String pftId;
   String pftSummary;
-  String status;
+  String trangthaiLop;
   String cityId;
   String cityName;
   String cityDetail;
@@ -152,7 +152,7 @@ class DataInfo {
   factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
     pftSummary: json["pft_summary"] == null ? null : json["pft_summary"],
-    status: json["status"] == null ? null : json["status"],
+    trangthaiLop: json["trangthai_lop"] == null ? null : json["trangthai_lop"],
     cityId: json["city_id"] == null ? null : json["city_id"],
     cityName: json["city_name"] == null ? null : json["city_name"],
     cityDetail: json["city_detail"] == null ? null : json["city_detail"],
@@ -181,7 +181,7 @@ class DataInfo {
   Map<String, dynamic> toJson() => {
     "pft_id": pftId == null ? null : pftId,
     "pft_summary": pftSummary == null ? null : pftSummary,
-    "status": status == null ? null : status,
+    "trangthai_lop": trangthaiLop == null ? null : trangthaiLop,
     "city_id": cityId == null ? null : cityId,
     "city_name": cityName == null ? null : cityName,
     "city_detail": cityDetail == null ? null : cityDetail,
@@ -210,9 +210,6 @@ class DataInfo {
 
 class Lichday {
   Lichday({
-    this.tsId,
-    this.ugsId,
-    this.pftId,
     this.st2,
     this.st3,
     this.st4,
@@ -236,9 +233,6 @@ class Lichday {
     this.tcn,
   });
 
-  String tsId;
-  String ugsId;
-  String pftId;
   String st2;
   String st3;
   String st4;
@@ -262,9 +256,6 @@ class Lichday {
   String tcn;
 
   factory Lichday.fromJson(Map<String, dynamic> json) => Lichday(
-    tsId: json["ts_id"] == null ? null : json["ts_id"],
-    ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
-    pftId: json["pft_id"] == null ? null : json["pft_id"],
     st2: json["st2"] == null ? null : json["st2"],
     st3: json["st3"] == null ? null : json["st3"],
     st4: json["st4"] == null ? null : json["st4"],
@@ -289,9 +280,6 @@ class Lichday {
   );
 
   Map<String, dynamic> toJson() => {
-    "ts_id": tsId == null ? null : tsId,
-    "ugs_id": ugsId == null ? null : ugsId,
-    "pft_id": pftId == null ? null : pftId,
     "st2": st2 == null ? null : st2,
     "st3": st3 == null ? null : st3,
     "st4": st4 == null ? null : st4,

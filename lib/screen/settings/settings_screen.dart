@@ -131,6 +131,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ],
                                 ),
                               ),
+                              controller.user == '1'
+                                  ? Container(
+                                      child: Text(
+                                        'Điểm: ${controller.resultGetInfoParent.data.data.pointFree}',
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                      ),
+                                    )
+                                  : Container()
                             ],
                           ),
                         ),

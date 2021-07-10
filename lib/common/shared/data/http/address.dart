@@ -65,6 +65,7 @@ class Address {
 //POST
   static const String created_class_post = BASE_URL + "/created_class_post.php";
   static const String update_class_post = BASE_URL + "/update_class_post.php";
+  static const String change_status_class_post = BASE_URL + "/change_status_class.php";
 
 //User
   static const String update_avatar = BASE_URL + "/update_avatar.php";
