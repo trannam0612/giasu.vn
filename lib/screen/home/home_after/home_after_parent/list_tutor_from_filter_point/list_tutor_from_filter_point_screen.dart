@@ -12,6 +12,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_fro
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 
 import '../home_after_parent_controller.dart';
 
@@ -84,7 +85,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
-                height: AppDimens.height * 0.17,
+                height: AppDimens.height * 0.19,
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
@@ -135,7 +136,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                               ],
                             ),
                             SizedBox(
-                              height: AppDimens.space6,
+                              height: AppDimens.space16,
                             ),
                             Row(
                               children: [
@@ -147,7 +148,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                                   width: AppDimens.space4,
                                 ),
                                 Text(
-                                  controller.listGSTDL[index].suStatus,
+                                  controller.listGSTDL[index].suToday,
                                   style: AppTextStyles.regularW400(
                                     context,
                                     size: AppDimens.textSize14,
@@ -188,9 +189,15 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                                     title: 'Xoá',
                                     color: AppColors.primary4C5BD4,
                                     onPressed: () {
-                                      controller.deleteTutorPointFree(int.parse(controller.listGSTDL[index].ugsId));
-                                      controller.listGSTDL.remove(controller.listGSTDL[index]);
-                                      controller.update();
+                                      Get.dialog(DialogConfirm(
+                                        title: 'Bạn có chắc là muốn xoá gia sư này không ?',
+                                        onPressed: () {
+                                          Get.back();
+                                          controller.deleteTutorPointFree(int.parse(controller.listGSTDL[index].ugsId));
+                                          controller.listGSTDL.remove(controller.listGSTDL[index]);
+                                          controller.update();
+                                        },
+                                      ));
                                     },
                                     textColor: AppColors.secondaryF8971C,
                                   ),

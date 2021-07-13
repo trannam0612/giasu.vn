@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
@@ -117,6 +118,7 @@ class UpdateInformationParentScreen extends StatelessWidget {
                           height: AppDimens.space10,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
                           obligatory: true,
                           onPressed: () {

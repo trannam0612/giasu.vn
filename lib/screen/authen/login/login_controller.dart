@@ -8,11 +8,13 @@ import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subjec
 import 'package:giasu_vn/common/shared/data/models/result_login_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_login_teacher.dart';
 import 'package:giasu_vn/common/shared/data/models/result_register_parent.dart';
+import 'package:giasu_vn/common/shared/data/models/result_resend_OTP_register.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/authen/otp/otp_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
@@ -45,17 +47,20 @@ class LoginController extends GetxController {
   List<String> listSubject = [];
 
   bool isShowPass = true;
+
   void changeValuePassword() {
     print('changeValuePassword');
     isShowPass = !isShowPass;
     update();
   }
+
   Future<void> loginParent() async {
     Get.dialog(DialogLoading());
     ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
     ResultLogin resultLogin = resultLoginFromJson(res.data);
     if (resultLogin.data != null) {
       Get.back();
+      SpUtil.putString(ConstString.Status_user, '1');
       print(resultLogin.data.data.token);
       print(resultLogin.data.data.email);
       print(resultLogin.data.data.id);
@@ -69,8 +74,31 @@ class LoginController extends GetxController {
       // Get.toNamed(Routes.navigation);
       // homeAfterParent(1, 10);
     } else {
+      if (resultLogin.error.code == 401) {
+        reSendOTPRegister();
+        Get.back();
+      } else {
+        Get.back();
+        Utils.showToast(resultLogin.error.message);
+      }
+    }
+    update();
+  }
+
+  Future<void> reSendOTPRegister() async {
+    Get.dialog(DialogLoading());
+    String email = SpUtil.getString(ConstString.EMAIL);
+    ResultData res = await authenticationRepositories.reSendOTPRegister(email);
+    ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
+    if (resultReSendOtpRegister.data != null) {
       Get.back();
-      Utils.showToast(resultLogin.error.message);
+      Get.to(OTPScreen());
+      SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
+
+      Utils.showToast(resultReSendOtpRegister.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultReSendOtpRegister.error.message);
     }
     update();
   }
@@ -83,7 +111,7 @@ class LoginController extends GetxController {
     ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
     if (resultLoginTeacher.data != null) {
       Get.back();
-
+      SpUtil.putString(ConstString.Status_user, '1');
       print(resultLoginTeacher.data.data.token);
       print(resultLoginTeacher.data.data.email);
       print(resultLoginTeacher.data.data.id);
@@ -96,8 +124,13 @@ class LoginController extends GetxController {
       homeAfterTeacherController.homeAfterTeacher(1, 10);
       // Get.toNamed(Routes.navigation);
     } else {
-      Get.back();
-      Utils.showToast(resultLoginTeacher.error.message);
+      if (resultLoginTeacher.error.code == 401) {
+        reSendOTPRegister();
+        Get.back();
+      } else {
+        Get.back();
+        Utils.showToast(resultLoginTeacher.error.message);
+      }
     }
     update();
   }
@@ -137,7 +170,7 @@ class LoginController extends GetxController {
     email.text = SpUtil.getString(ConstString.EMAIL);
     print(userType);
     listCitySubject();
-    SpUtil.putString(ConstString.Status_user, '1');
+
     super.onInit();
   }
 }

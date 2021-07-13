@@ -54,6 +54,7 @@ class SearchController extends GetxController {
     search.addListener(() {
       update();
     });
+    changeSearchProvincial('');
     super.onInit();
   }
 
@@ -71,10 +72,14 @@ class SearchController extends GetxController {
 
   void changeSearchProvincial(String value) {
     listProvincial.clear();
-    for (int i = 0; i < listDataCity.length; i++) {
-      if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
-        listProvincial.add(listDataCity[i]);
+    if (value != '') {
+      for (int i = 0; i < listDataCity.length; i++) {
+        if (listDataCity[i].citName.toLowerCase().contains(value.toLowerCase())) {
+          listProvincial.add(listDataCity[i]);
+        }
       }
+    } else {
+      listProvincial.addAll(listDataCity);
     }
     update();
   }
@@ -118,9 +123,7 @@ class SearchController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }

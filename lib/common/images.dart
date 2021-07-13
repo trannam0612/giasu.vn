@@ -27,6 +27,7 @@ class Images {
   static const String ic_teaching = _img_ + 'teaching.svg';
   static const String ic_tutor = _img_ + 'tutor.svg';
   static const String ic_parent = _img_ + 'parent.svg';
+  static const String ic_logout2 = _img_ + 'ic_logout2.svg';
 
   static const String ic_check_blue = _img_ + 'ic_check_blue.svg';
   static const String ic_uncheck_blue = _img_ + 'ic_uncheck_blue.svg';

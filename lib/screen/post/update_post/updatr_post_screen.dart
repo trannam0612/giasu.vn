@@ -37,7 +37,8 @@ class UpdatePostScreen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Sửa bài đăng',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -252,7 +253,8 @@ class UpdatePostScreen extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                 text: '*',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                               ),
                             ],
                           ),
@@ -316,13 +318,14 @@ class UpdatePostScreen extends StatelessWidget {
                         //   height: AppDimens.space8,
                         // ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child:
                                   // controller.valueButtonLuong
                                   //     ?
                                   CustomTextField(
+                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                 error: controller.checkSalaryCD(),
                                 textEditingController: controller.salaryCD,
                                 obligatory: false,
@@ -375,9 +378,11 @@ class UpdatePostScreen extends StatelessWidget {
                             ),
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                              height: AppDimens.height * 0.07,
-                              decoration:
-                                  BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
+                              margin: EdgeInsets.symmetric(vertical: AppDimens.space4),
+                              decoration: BoxDecoration(
+                                  color: AppColors.whiteFFFFFF,
+                                  borderRadius: BorderRadius.circular(AppDimens.space10),
+                                  border: Border.all(width: 1, color: AppColors.grey747474)),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   hint: Text(
@@ -420,6 +425,7 @@ class UpdatePostScreen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           obligatory: true,
                           error: controller.checkPhone(),
@@ -498,7 +504,8 @@ class UpdatePostScreen extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                 text: '*',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                               ),
                             ],
                           ),
@@ -668,11 +675,11 @@ Widget SelectTinhThanh(BuildContext context) {
                   itemBuilder: (context, index) => InkWell(
                         // ignore: deprecated_member_use
                         onTap: () {
-                          updatePostController.provincial.text = updatePostController.listProvincial [index].citName;
-                          updatePostController.idProvincial = int.parse(updatePostController.listProvincial [index].citId);
+                          updatePostController.provincial.text = updatePostController.listProvincial[index].citName;
+                          updatePostController.idProvincial = int.parse(updatePostController.listProvincial[index].citId);
                           updatePostController.listDistrict.clear();
                           updatePostController.district.clear();
-                          updatePostController.getListDistrict(int.parse(updatePostController.listProvincial [index].citId));
+                          updatePostController.getListDistrict(int.parse(updatePostController.listProvincial[index].citId));
 
                           Get.back();
                         },
@@ -681,11 +688,13 @@ Widget SelectTinhThanh(BuildContext context) {
                           child: Row(
                             children: [
                               Text(
-                                updatePostController.listProvincial [index].citName,
+                                updatePostController.listProvincial[index].citName,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              updatePostController.listProvincial [index].citName == updatePostController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              updatePostController.listProvincial[index].citName == updatePostController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -694,7 +703,7 @@ Widget SelectTinhThanh(BuildContext context) {
                         thickness: 1,
                         color: AppColors.black12,
                       ),
-                  itemCount: updatePostController.listProvincial .length),
+                  itemCount: updatePostController.listProvincial.length),
             ),
           ),
         ],
@@ -742,7 +751,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      updatePostController.listDistrict[index].nameCity == updatePostController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updatePostController.listDistrict[index].nameCity == updatePostController.district.text
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),

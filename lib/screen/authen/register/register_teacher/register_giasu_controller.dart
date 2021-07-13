@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_check_mail.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_topic.dart';
@@ -58,6 +59,7 @@ class RegisterGiaSuController extends GetxController {
   bool errorGender = false;
   bool errorProvincial = false;
   bool errorDistrict = false;
+  bool errorDistrictS3 = false;
   bool errorAddress = false;
   bool errorNumberYearExp = false;
   bool errorExp = false;
@@ -122,6 +124,7 @@ class RegisterGiaSuController extends GetxController {
   String selectedLuong;
   bool valueCheckBox = false;
   bool errorKieuGS = false;
+  RxBool valueCheckEmailGS = true.obs;
   String selectedTime = 'Giờ';
   List<ListDistrict> listDistrict = [];
   List<ListSubjectTag> listTopic = [];
@@ -133,7 +136,15 @@ class RegisterGiaSuController extends GetxController {
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
+  List<String> listQH = [
+    'Quận Hai Bà Trưng',
+    'Quận Hoàng Mai',
+    'Quận Hoàn Kiếm',
+    'Huyện Mỹ Hào',
+    'Quận Thanh Xuân',
+    'Quận Nam Từ Niêm',
+    'Quận Tây Hồ'
+  ];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
   List<String> listGender = ['Nam', 'Nữ'];
 
@@ -181,7 +192,7 @@ class RegisterGiaSuController extends GetxController {
   TextEditingController salaryCD = TextEditingController();
   TextEditingController salaryUL1 = TextEditingController();
   TextEditingController salaryUL2 = TextEditingController();
-
+  FocusNode focusEmail = FocusNode();
   String valueProvincial;
   int idValueProvincial;
 
@@ -259,6 +270,9 @@ class RegisterGiaSuController extends GetxController {
     salaryUL2.addListener(() {
       update();
     });
+    focusEmail.addListener(() {
+      checkEmailGS();
+    });
     super.onInit();
     update();
   }
@@ -318,19 +332,25 @@ class RegisterGiaSuController extends GetxController {
     return null;
   }
 
-  String checkTimeExpStart() {
-    print('checkTimeExp');
-    if (errorTimeExpStart && timeExpStart.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    }
-    return null;
-  }
-
   String checkTimeExpEnd() {
     print('checkTimeExp');
     if (errorTimeExpEnd && timeExpEnd.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
+    // else if (errorTimeExpEnd && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+    //   return 'Thời gian kết thúc sai!';
+    // }
+    return null;
+  }
+
+  String checkTimeExpStart() {
+    print('checkTimeExp');
+    if (errorTimeExpStart && timeExpStart.text.isEmpty) {
+      return 'Trường bắt buộc!';
+    }
+    // else if (errorTimeExpStart && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+    //   return 'Thời gian bắt đầu sai!';
+    // }
     return null;
   }
 
@@ -434,6 +454,8 @@ class RegisterGiaSuController extends GetxController {
       return 'Email không hợp lệ!';
     } else if (errorEmail && !email.text.contains('.')) {
       return 'Email không hợp lệ!';
+    } else if (!valueCheckEmailGS.value) {
+      return 'Email đã tồn tại!';
     } else {
       return null;
     }
@@ -568,10 +590,7 @@ class RegisterGiaSuController extends GetxController {
     resultListTopic = resultListTopicFromJson(res.data);
     if (resultListTopic.data != null) {
       listTopic = resultListTopic.data.listSubjectTag;
-      Utils.showToast(resultListTopic.data.message);
-    } else {
-      Utils.showToast(resultListTopic.error.message);
-    }
+    } else {}
     update();
   }
 
@@ -684,7 +703,8 @@ class RegisterGiaSuController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    if (email.text.contains('@') &&
+    if (valueCheckEmailGS.value &&
+        email.text.contains('@') &&
         email.text.contains('.') &&
         passWord.text.length >= 8 &&
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
@@ -710,16 +730,17 @@ class RegisterGiaSuController extends GetxController {
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
-    errorDateTime = true;
+    errorDistrict = true;
+    // errorDateTime = true;
     errorProvincial = true;
-    errorAddress = true;
-    errorNumberYearExp = true;
+    // errorAddress = true;
+    // errorNumberYearExp = true;
     errorTitleExp = true;
     errorTimeExpStart = true;
     errorTimeExpEnd = true;
     errorInformationExp = true;
     // ignore: deprecated_member_use
-    errorGender = selectedGender.isNullOrBlank ? true : false;
+    // errorGender = selectedGender.isNullOrBlank ? true : false;
     // ignore: deprecated_member_use
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
@@ -728,17 +749,19 @@ class RegisterGiaSuController extends GetxController {
     if (fullName.text.isNotEmpty &&
         phone.text.isNotEmpty &&
         regExp.hasMatch(phone.text) &&
-        dateTime.text.isNotEmpty &&
-        errorGender == false &&
+        // dateTime.text.isNotEmpty &&
+        // errorGender == false &&
         errorMarriage == false &&
         provincial.text.isNotEmpty &&
-        address.text.isNotEmpty &&
-        numberYearExp.text.isNotEmpty &&
-        numberYearExp.text != '0' &&
-        titleExp.text.isNotEmpty &&
-        timeExpStart.text.isNotEmpty &&
-        timeExpEnd.text.isNotEmpty &&
-        informationExp.text.isNotEmpty &&
+        district.text.isNotEmpty &&
+        // address.text.isNotEmpty &&
+        // numberYearExp.text.isNotEmpty &&
+        // numberYearExp.text != '0' &&
+        // titleExp.text.isNotEmpty &&
+        // timeExpStart.text.isNotEmpty &&
+        // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
+        // timeExpEnd.text.isNotEmpty &&
+        // informationExp.text.isNotEmpty &&
         imageAvatar != null) {
       Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
     } else {
@@ -764,7 +787,7 @@ class RegisterGiaSuController extends GetxController {
     errorExp = true;
     errorSubject = listSubjectSelect.isEmpty ? true : false;
     errorSubjectTopic = listSubjectSelectTopic.isEmpty ? true : false;
-    errorDistrict = listDistrictSelect.isEmpty ? true : false;
+    errorDistrictS3 = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
@@ -784,7 +807,6 @@ class RegisterGiaSuController extends GetxController {
               salaryCD.text.isNotEmpty &&
               data != null &&
               !selectedTime.isNullOrBlank
-          // ignore: unnecessary_statements
           ? registerTeacher()
           // registerTeacher()
           : Get.dialog(DialogError(
@@ -827,10 +849,7 @@ class RegisterGiaSuController extends GetxController {
     ResultData res = await authenticationRepositories.listDistrict(idCity);
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }
@@ -872,7 +891,7 @@ class RegisterGiaSuController extends GetxController {
         company.text,
         information.text,
         prize.text,
-        int.parse(numberYearExp.text),
+        int.parse(numberYearExp.text = '0'),
         titleExp.text,
         timeExpStart.text,
         timeExpEnd.text,
@@ -900,17 +919,22 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-// Future<void> getDataQH(int id) async {
-//   print('getDataQH');
-//
-//   ResultData res = await authenticationRepositories.getListDataQH(id);
-//   listDataQh = resultListDataQhFromJson(res.data);
-//   if (res.data != null) {
-//     print(200);
-//   } else {
-//     print('error');
-//   }
-// }
+  Future<void> checkEmailGS() async {
+    print('getDataQH');
+    if (email.text.isNotEmpty) {
+      ResultData res = await authenticationRepositories.checkMailGS(email.text);
+      ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
+      if (resultCheckMail.data != null) {
+        valueCheckEmailGS.value = true;
+      } else {
+        valueCheckEmailGS.value = false;
+        Utils.showToast(resultCheckMail.error.message);
+      }
+    } else {
+      return null;
+    }
+    update();
+  }
 
 //   Future<void> listDataTopicSubject(String id) async {
 //     print('listDataTopicSubject');

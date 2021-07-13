@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_change_status_post.dart';
 import 'package:giasu_vn/common/shared/data/models/result_detail_class.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
+import 'package:giasu_vn/common/shared/data/repositories/post_repositories.dart';
+import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
@@ -13,6 +16,9 @@ class InformationClassController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   HomeAfterTeacherController homeAfterTeacherController = Get.put(HomeAfterTeacherController());
   ResultDetailClass resultDetailClass = ResultDetailClass();
+  ResultChangeStatusPost resultChangeStatusPost = ResultChangeStatusPost();
+  PostRepositories postRepositories = PostRepositories();
+  String user = '';
   bool accepted = false;
 
   List<buoiday> listbuoiday = [
@@ -24,18 +30,19 @@ class InformationClassController extends GetxController {
     buoiday('Thứ 7', "0", "0", "0"),
     buoiday('CN', "0", "0", "0"),
   ];
+
   @override
   void onInit() {
     // TODO: implement onInit
+    user = SpUtil.getString(ConstString.Status_user);
     super.onInit();
-    
   }
 
   Future<void> detailClass(int idClass, int type) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.detailClass(token,idClass);
+    ResultData res = await homeRepositories.detailClass(token, idClass);
     resultDetailClass = resultDetailClassFromJson(res.data);
     if (resultDetailClass.data != null) {
       listbuoiday[0].sang = resultDetailClass.data.data.lichday.st2;
@@ -59,6 +66,7 @@ class InformationClassController extends GetxController {
       listbuoiday[6].sang = resultDetailClass.data.data.lichday.scn;
       listbuoiday[6].chieu = resultDetailClass.data.data.lichday.ccn;
       listbuoiday[6].toi = resultDetailClass.data.data.lichday.tcn;
+      textChangeStatus = resultDetailClass.data.data.dataInfo.trangthaiLop;
       Get.back();
       Get.to(InformationClassScreen(
         type: type,
@@ -67,5 +75,28 @@ class InformationClassController extends GetxController {
     update();
   }
 
+  String textChangeStatus = '';
 
+  void changeTextStatus() {
+    textChangeStatus = resultDetailClass.data.data.dataInfo.trangthaiLop == 'Đã có gia sư' ? 'Đang tìm gia sư' : 'Đã có gia sư';
+    update();
+  }
+
+  Future<void> changeStatusPost(int id, int status) async {
+    print('changeStatusPost');
+    // await Future.delayed(Duration(milliseconds: 1));
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await postRepositories.changeStatusPost(token, id, status);
+    resultChangeStatusPost = resultChangeStatusPostFromJson(res.data);
+    if (resultChangeStatusPost.data != null) {
+      Get.back();
+      changeTextStatus();
+      Utils.showToast(resultChangeStatusPost.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultChangeStatusPost.error.message);
+    }
+    update();
+  }
 }

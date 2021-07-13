@@ -181,9 +181,7 @@ class PostController extends GetxController {
       listTopic = resultListTopic.data.listSubjectTag;
       selectedTopicSubject = listTopic[0].nameSubject;
       idTopicSubject = int.parse(listTopic[0].idSubject);
-      Utils.showToast(resultListTopic.data.message);
     } else {
-      Utils.showToast(resultListTopic.error.message);
     }
     update();
   }
@@ -462,9 +460,7 @@ class PostController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }

@@ -1,16 +1,21 @@
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/result_change_status_post.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_class_post.dart';
 import 'package:giasu_vn/common/shared/data/models/result_refuse_offer.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
+import 'package:giasu_vn/common/shared/data/repositories/post_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ListPostCreatedController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
+  PostRepositories postRepositories = PostRepositories();
   List<ListClass> listClassPosted = [];
   ResultListClassPosted resultListClassPosted = ResultListClassPosted();
+  ResultChangeStatusPost resultChangeStatusPost = ResultChangeStatusPost();
 
   Future<void> classPosted(int currentPage, int limit) async {
     print('classPosted');
@@ -34,6 +39,6 @@ class ListPostCreatedController extends GetxController {
     }
     update();
   }
-  
+
 
 }

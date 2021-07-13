@@ -140,7 +140,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         DropDownSelect(
-                          obligatory: true,
+                          obligatory: false,
                           title: 'Giới Tính',
                           isTitle: true,
                           hint: 'Chọn Giới Tính',
@@ -149,15 +149,15 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        controller.errorGender
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
+                        // controller.errorGender
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
+                        //         child: Text(
+                        //           '\t\tTrường bắt buộc!',
+                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                        //         ),
+                        //       )
+                        //     : Container(),
                         SizedBox(
                           height: AppDimens.space20,
                         ),
@@ -172,13 +172,13 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           },
                           readOnly: true,
                           isShowIcon: true,
-                          obligatory: true,
+                          obligatory: false,
                           textEditingController: controller.dateTime,
                           onPressed: () {},
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
-                          error: controller.checkDate(),
+                          // error: controller.checkDate(),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
@@ -244,8 +244,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           textEditingController: controller.address,
-                          obligatory: true,
-                          error: controller.checkAddress(),
+                          obligatory: false,
+                          // error: controller.checkAddress(),
                           onPressed: () {},
                           title: 'Địa chỉ',
                           hintText: 'Nhập địa chỉ cụ thể',
@@ -281,9 +281,9 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         CustomTextField(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
-                          obligatory: true,
+                          obligatory: false,
                           keyboardType: TextInputType.number,
-                          error: controller.checkNumberYearExp(),
+                          // error: controller.checkNumberYearExp(),
                           onPressed: () {},
                           title: 'Số năm kinh nghiệm',
                           hintText: 'Số năm kinh nghiệm',
@@ -296,9 +296,9 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           textEditingController: controller.titleExp,
-                          obligatory: true,
+                          obligatory: false,
                           // keyboardType: TextInputType.number,
-                          error: controller.checkTitleExp(),
+                          // error: controller.checkTitleExp(),
                           onPressed: () {},
                           title: 'Kinh nghiệm giảng dạy',
                           hintText: 'Tiêu đề',
@@ -311,6 +311,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Flexible(
@@ -328,7 +329,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
                                 keyboardType: TextInputType.number,
-                                error: controller.checkTimeExpStart(),
+                                // error: controller.checkTimeExpStart(),
                                 onPressed: () {},
                                 title: '',
                                 isTitle: false,
@@ -356,7 +357,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
                                 keyboardType: TextInputType.number,
-                                error: controller.checkTimeExpEnd(),
+                                // error: controller.checkTimeExpEnd(),
                                 onPressed: () {},
                                 title: '',
                                 isTitle: false,
@@ -375,7 +376,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           hasTitle: false,
                           textEditingController: controller.informationExp,
                           obligatory: false,
-                          error: controller.checkInformationExp(),
+                          // error: controller.checkInformationExp(),
                           onPressed: () {},
                           title: '',
                           hintText: 'Mô tả',

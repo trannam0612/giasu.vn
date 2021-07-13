@@ -35,7 +35,8 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Cập nhật thông tin',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -69,7 +70,8 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                                         padding: EdgeInsets.all(30),
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(AppDimens.space100),
-                                            border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
+                                            border:
+                                                Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
                                         child: SvgPicture.asset(Images.ic_add_camera),
                                       ),
                                     )
@@ -109,7 +111,8 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -146,7 +149,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         DropDownSelect(
-                          obligatory: true,
+                          obligatory: false,
                           title: 'Giới Tính',
                           isTitle: true,
                           hint: 'Chọn Giới Tính',
@@ -155,15 +158,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        controller.errorGender
-                            ? Padding(
-                                padding: const EdgeInsets.only(top: AppDimens.space4),
-                                child: Text(
-                                  '\t\tTrường bắt buộc!',
-                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                ),
-                              )
-                            : Container(),
+                        // controller.errorGender
+                        //     ? Padding(
+                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
+                        //         child: Text(
+                        //           '\t\tTrường bắt buộc!',
+                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                        //         ),
+                        //       )
+                        //     : Container(),
                         SizedBox(
                           height: AppDimens.space20,
                         ),
@@ -178,13 +181,13 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           },
                           readOnly: true,
                           isShowIcon: true,
-                          obligatory: true,
+                          obligatory: false,
                           textEditingController: controller.dateTime,
                           onPressed: () {},
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
-                          error: controller.checkDate(),
+                          // error: controller.checkDate(),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
@@ -249,8 +252,8 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           textEditingController: controller.address,
-                          obligatory: true,
-                          error: controller.checkAddress(),
+                          obligatory: false,
+                          // error: controller.checkAddress(),
                           onPressed: () {},
                           title: 'Địa chỉ',
                           hintText: 'Nhập địa chỉ cụ thể',
@@ -286,9 +289,9 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         CustomTextField(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
-                          obligatory: true,
+                          obligatory: false,
                           keyboardType: TextInputType.number,
-                          error: controller.checkNumberYearExp(),
+                          // error: controller.checkNumberYearExp(),
                           onPressed: () {},
                           title: 'Số năm kinh nghiệm',
                           hintText: 'Số năm kinh nghiệm',
@@ -301,8 +304,8 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         ),
                         CustomTextField(
                           textEditingController: controller.titleExp,
-                          obligatory: true,
-                          error: controller.checkTitleExp(),
+                          obligatory: false,
+                          // error: controller.checkTitleExp(),
                           onPressed: () {},
                           title: 'Kinh nghiệm giảng dạy',
                           hintText: 'Tiêu đề',
@@ -322,16 +325,20 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                               child: CustomTextField(
                                 readOnly: true,
                                 onTapTextField: () {
+                                  controller.errorTimeExpStart = true;
+                                  controller.errorTimeExpEnd = true;
                                   controller.timeExpStart.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
+                                      controller.start = value;
+                                      print(controller.start.microsecond);
                                       controller.timeExpStart.text = f.format(value);
                                     },
                                   ));
                                 },
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
-                                error: controller.checkTimeExpStart(),
+                                // error: controller.checkTimeExpStart(),
                                 onPressed: () {},
                                 title: '',
                                 isTitle: false,
@@ -349,16 +356,21 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                               child: CustomTextField(
                                 readOnly: true,
                                 onTapTextField: () {
+                                  controller.errorTimeExpStart = true;
+                                  controller.errorTimeExpEnd = true;
+
                                   controller.timeExpEnd.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
+                                      controller.end = value;
+                                      print(controller.end.microsecond);
                                       controller.timeExpEnd.text = f.format(value);
                                     },
                                   ));
                                 },
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
-                                error: controller.checkTimeExpEnd(),
+                                // error: controller.checkTimeExpEnd(),
                                 onPressed: () {},
                                 title: '',
                                 isTitle: false,
@@ -377,7 +389,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           hasTitle: false,
                           textEditingController: controller.informationExp,
                           obligatory: false,
-                          error: controller.checkInformationExp(),
+                          // error: controller.checkInformationExp(),
                           onPressed: () {},
                           title: '',
                           hintText: 'Mô tả',
@@ -530,8 +542,8 @@ Widget SelectTinhThanh(BuildContext context) {
                   itemBuilder: (context, index) => InkWell(
                         // ignore: deprecated_member_use
                         onTap: () {
-                          updateInfoTeacherController.provincial.text = updateInfoTeacherController.listProvincial  [index].citName;
-                          updateInfoTeacherController.idProvincial = int.parse(updateInfoTeacherController.listProvincial  [index].citId);
+                          updateInfoTeacherController.provincial.text = updateInfoTeacherController.listProvincial[index].citName;
+                          updateInfoTeacherController.idProvincial = int.parse(updateInfoTeacherController.listProvincial[index].citId);
                           updateInfoTeacherController.district.clear();
                           updateInfoTeacherController.getListDistrict(updateInfoTeacherController.idProvincial);
                           Get.back();
@@ -541,11 +553,13 @@ Widget SelectTinhThanh(BuildContext context) {
                           child: Row(
                             children: [
                               Text(
-                                updateInfoTeacherController.listProvincial  [index].citName,
+                                updateInfoTeacherController.listProvincial[index].citName,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              updateInfoTeacherController.listProvincial  [index].citName == updateInfoTeacherController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              updateInfoTeacherController.listProvincial[index].citName == updateInfoTeacherController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -554,7 +568,7 @@ Widget SelectTinhThanh(BuildContext context) {
                         thickness: 1,
                         color: AppColors.black12,
                       ),
-                  itemCount: updateInfoTeacherController.listProvincial  .length),
+                  itemCount: updateInfoTeacherController.listProvincial.length),
             ),
           ),
         ],
@@ -603,7 +617,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      updateInfoTeacherController.listDistrict[index].nameCity == updateInfoTeacherController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      updateInfoTeacherController.listDistrict[index].nameCity == updateInfoTeacherController.district.text
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),
@@ -645,7 +661,8 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,

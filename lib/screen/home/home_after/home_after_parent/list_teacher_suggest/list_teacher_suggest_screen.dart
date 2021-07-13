@@ -12,9 +12,11 @@ import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../../../../common/theme/app_dimens.dart';
@@ -49,6 +51,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
   ListTeacherSuggestController listTeacherSuggestController = Get.put(ListTeacherSuggestController());
   HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
   InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  InformationClassController informationClassController = Get.put(InformationClassController());
   int i = 1;
 
   @override
@@ -208,11 +211,14 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                       ],
                                     ),
                                     SizedBox(
-                                      height: AppDimens.space6,
+                                      height: AppDimens.space10,
                                     ),
-                                    Text(
-                                      controller.listGSDD[index].pftSummary,
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                    InkWell(
+                                      onTap: () => informationClassController.detailClass(int.parse(controller.listGSDD[index].pftId), 5),
+                                      child: Text(
+                                        controller.listGSDD[index].pftSummary,
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: AppDimens.space6,
@@ -220,7 +226,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                     Row(
                                       children: [
                                         Text(
-                                          'Ngày đ/n:',
+                                          'Ngày đề nghị:',
                                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
                                         ),
                                         SizedBox(
@@ -279,7 +285,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                           width: AppDimens.space6,
                                         ),
                                         Text(
-                                          '${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}',
+                                          '${controller.listGSDD[index].pftPrice} vnđ/${controller.listGSDD[index].pftMonth}',
                                           style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                         ),
                                       ],
@@ -297,9 +303,16 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                             title: 'Đồng ý',
                                             color: AppColors.primary4C5BD4,
                                             onPressed: () {
-                                              controller.acceptOffer(int.parse(controller.listGSDD[index].ugsId), int.parse(controller.listGSDD[index].pftId));
-                                              controller.listGSDD.remove(controller.listGSDD[index]);
-                                              controller.update();
+                                              Get.dialog(DialogConfirm(
+                                                onPressed: () {
+                                                  controller.acceptOffer(int.parse(controller.listGSDD[index].ugsId), int.parse(controller.listGSDD[index].pftId));
+                                                  controller.listGSDD.remove(controller.listGSDD[index]);
+                                                  Get.back();
+                                                  controller.update();
+                                                },
+                                                title: 'Bạn có chắc là muốn đồng ý lời đề nghị dạy này ?',
+                                              ));
+
                                             },
                                             textColor: AppColors.whiteFFFFFF,
                                           ),
@@ -313,9 +326,16 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                           child: CustomButton1(
                                             textColor: AppColors.black,
                                             onPressed: () {
-                                              controller.refuseOffer(int.parse(controller.listGSDD[index].ugsId), int.parse(controller.listGSDD[index].pftId));
-                                              controller.listGSDD.remove(controller.listGSDD[index]);
-                                              controller.update();
+                                              Get.dialog(DialogConfirm(
+                                                onPressed: () {
+                                                  controller.refuseOffer(int.parse(controller.listGSDD[index].ugsId), int.parse(controller.listGSDD[index].pftId));
+                                                  controller.listGSDD.remove(controller.listGSDD[index]);
+                                                  Get.back();
+                                                  controller.update();
+                                                },
+                                                title: 'Bạn có chắc là muốn từ chối lời mời dạy này ?',
+                                              ));
+
                                             },
                                             color: AppColors.grey747474,
                                             title: 'Từ chối',

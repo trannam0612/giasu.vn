@@ -110,8 +110,28 @@ class PostRepositories {
     return rest;
   }
 
-  // Future<ResultData> getDetailPost(int idClass) async {
-  //   ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
-  //   return rest;
-  // }
+  Future<ResultData> changeStatusPost(
+    String token,
+    int id,
+    int status,
+  ) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'token': token,
+      'id_lop': id,
+      'stt_lop': status,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.change_status_class_post, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+// Future<ResultData> getDetailPost(int idClass) async {
+//   ResultData rest = await httpManager.netFetch(Address.detailClass(idClass), null, null, Options(method: 'get'));
+//   return rest;
+// }
 }

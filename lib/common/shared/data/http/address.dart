@@ -1,6 +1,9 @@
 class Address {
   static const String DOMAIN = "http://dev3.tinnhanh365.vn";
   static const String BASE_URL = DOMAIN + "/api_app";
+  static const String check_token = BASE_URL + "/check_token.php";
+  static const String check_mail_gs = BASE_URL + "/check_mail_register_gs.php";
+  static const String check_mail_ph = BASE_URL + "/check_mail_register_ph.php";
   static const String LOGIN_PARENT = BASE_URL + "/login_parent.php";
   static const String LOGIN_TEACHER = BASE_URL + "/login_tutor.php";
   static const String HOME = BASE_URL + "/index.php";
@@ -62,6 +65,7 @@ class Address {
 //POST
   static const String created_class_post = BASE_URL + "/created_class_post.php";
   static const String update_class_post = BASE_URL + "/update_class_post.php";
+  static const String change_status_class_post = BASE_URL + "/change_status_class.php";
 
 //User
   static const String update_avatar = BASE_URL + "/update_avatar.php";

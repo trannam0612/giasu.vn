@@ -68,18 +68,19 @@ class CustomSearchTextField extends StatelessWidget {
                 ),
               ),
             ),
-            suffixIcon: GestureDetector(
-              onTap: onPressed,
-              child: Container(
-                padding: EdgeInsets.all(8),
-                child: SvgPicture.asset(
-                  Images.ic_menu,
-                  color: AppColors.black,
-                  height: 14,
-                  width: 14,
-                ),
-              ),
-            )),
+            // suffixIcon: GestureDetector(
+            //   onTap: onPressed,
+            //   child: Container(
+            //     padding: EdgeInsets.all(8),
+            //     child: SvgPicture.asset(
+            //       Images.ic_menu,
+            //       color: AppColors.black,
+            //       height: 14,
+            //       width: 14,
+            //     ),
+            //   ),
+            // )
+        ),
       ),
     );
   }

@@ -24,7 +24,8 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Đăng ký',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -52,6 +53,7 @@ class RegisterGiaSuStep1Screen extends StatelessWidget {
                           height: AppDimens.space20,
                         ),
                         CustomTextField(
+                          focus: controller.focusEmail,
                           error: controller.checkEmail(),
                           textEditingController: controller.email,
                           obligatory: true,

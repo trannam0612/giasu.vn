@@ -17,8 +17,9 @@ class InformationTeacherMore extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
-                  'Thông tin thêm',
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  'Thông tin cá nhân',
+                  style:
+                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                 ),
               ),
               body: SingleChildScrollView(
@@ -39,6 +40,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -60,6 +62,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -76,6 +79,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -92,6 +96,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -108,6 +113,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -124,6 +130,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -145,6 +152,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -167,7 +175,8 @@ class InformationTeacherMore extends StatelessWidget {
                       ),
                       Container(
                         padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.grey747474), borderRadius: BorderRadius.circular(AppDimens.space10)),
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: AppColors.grey747474), borderRadius: BorderRadius.circular(AppDimens.space10)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -180,6 +189,7 @@ class InformationTeacherMore extends StatelessWidget {
                               height: AppDimens.space10,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -201,6 +211,7 @@ class InformationTeacherMore extends StatelessWidget {
                               height: AppDimens.space20,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -217,6 +228,7 @@ class InformationTeacherMore extends StatelessWidget {
                               height: AppDimens.space20,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -241,6 +253,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -262,6 +275,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -283,6 +297,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -304,6 +319,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -320,6 +336,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -328,7 +345,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              controller.resultGetInfoTeacher.data.infoTutor.asName.join(','),
+                              controller.resultGetInfoTeacher.data.infoTutor.asName.join(', '),
                               style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
@@ -341,6 +358,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -349,7 +367,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              controller.resultGetInfoTeacher.data.infoTutor.asDetail.join(','),
+                              controller.resultGetInfoTeacher.data.infoTutor.asDetail.join(', '),
                               style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
@@ -362,6 +380,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -378,6 +397,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -394,6 +414,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -410,6 +431,7 @@ class InformationTeacherMore extends StatelessWidget {
                         height: AppDimens.space20,
                       ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -418,7 +440,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              controller.resultGetInfoTeacher.data.infoTutor.citDetail.join(','),
+                              controller.resultGetInfoTeacher.data.infoTutor.citDetail.join(', '),
                               style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
@@ -432,7 +454,8 @@ class InformationTeacherMore extends StatelessWidget {
                       ),
                       Container(
                           padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(border: Border.all(width: 1, color: AppColors.grey747474), borderRadius: BorderRadius.circular(AppDimens.space10)),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: AppColors.grey747474), borderRadius: BorderRadius.circular(AppDimens.space10)),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
                             Text(
                               'Học phí giảng dạy',
@@ -442,6 +465,7 @@ class InformationTeacherMore extends StatelessWidget {
                               height: AppDimens.space10,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
@@ -458,6 +482,7 @@ class InformationTeacherMore extends StatelessWidget {
                               height: AppDimens.space20,
                             ),
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(

@@ -61,6 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: widget.error == null ? AppDimens.height*0.11 : AppDimens.height*0.14,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +73,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     children: <TextSpan>[
                       TextSpan(
                         text: widget.obligatory ? ' *' : '',
-                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                        style:
+                            AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                       ),
                     ],
                   ),
@@ -82,6 +84,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             height: AppDimens.space4,
           ),
           TextFormField(
+
               inputFormatters: widget.inputFormatters,
               maxLength: widget.maxLength,
               onTap: widget.onTapTextField,

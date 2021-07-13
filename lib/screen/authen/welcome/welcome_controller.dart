@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
+import 'package:giasu_vn/common/shared/data/models/check_token.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_teaacher.dart';
+import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
@@ -20,7 +22,7 @@ import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 import 'package:sp_util/sp_util.dart';
 
 class WelcomeController extends GetxController {
-  UserRepositories userRepositories = UserRepositories();
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   LoginController loginController = Get.put(LoginController());
   RxInt value = 0.obs;
   RxString user = ''.obs;
@@ -33,13 +35,16 @@ class WelcomeController extends GetxController {
   }
 
   void checkUser() {
-    token.value == ''
-        ? Get.to(SelectTypeLoginScreen())
-        : user.value == ''
-            ? Get.to(WelcomeScreen())
-            : user.value == '2'
-                ? getInfoTeacher()
-                : getInfoParent();
+    // token.value == ''
+    //     ? Get.to(SelectTypeLoginScreen())
+    //     : user.value == ''
+    //         ? Get.to(WelcomeScreen())
+    //         : checkToken();
+    user.value != '1'
+        ? Get.to(WelcomeScreen())
+        : token.value == '1'
+            ? Get.to(SelectTypeLoginScreen())
+            : checkToken();
     value.value > 1 ? Get.to(SelectTypeLoginScreen()) : null;
     print(value.value);
   }
@@ -49,36 +54,23 @@ class WelcomeController extends GetxController {
     user.value = SpUtil.getString(ConstString.Status_user);
     token.value = SpUtil.getString(ConstString.token);
     print(user.value);
+    print(token.value);
     await Future.delayed(Duration(seconds: 2), () => checkUser());
     // getInfoParent();
     // TODO: implement onInit
     super.onInit();
   }
 
-  Future<void> getInfoParent() async {
+  Future<void> checkToken() async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoParent(token);
-    ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
-    if (resultGetInfoParent.data != null) {
+    ResultData res = await authenticationRepositories.checkToken(token);
+    ResultCheckToken resultCheckToken = resultCheckTokenFromJson(res.data);
+    if (resultCheckToken.data != null) {
       Get.to(NavigationScreen());
-      Utils.showToast(resultGetInfoParent.data.message);
+      Utils.showToast(resultCheckToken.data.message);
     } else {
       Get.to(SelectTypeLoginScreen());
-      Utils.showToast(resultGetInfoParent.error.message);
-    }
-    update();
-  }
-
-  Future<void> getInfoTeacher() async {
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoTeacher(token);
-    ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
-    if (resultGetInfoTeacher.data != null) {
-      Get.to(NavigationScreen());
-      Utils.showToast(resultGetInfoTeacher.data.message);
-    } else {
-      Get.to(SelectTypeLoginScreen());
-      Utils.showToast(resultGetInfoTeacher.error.message);
+      Utils.showToast(resultCheckToken.error.message);
     }
     update();
   }

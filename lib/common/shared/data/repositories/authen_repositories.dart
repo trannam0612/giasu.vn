@@ -10,6 +10,46 @@ import 'package:http_parser/http_parser.dart';
 
 //
 class AuthenticationRepositories {
+  Future<ResultData> checkMailGS(String email) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'email': email,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.check_mail_gs, body, header, Options(method: 'post'));
+
+    return rest;
+  }Future<ResultData> checkMailPH(String email) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'email': email,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.check_mail_ph, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
+  Future<ResultData> checkToken(String token) async {
+    Map<String, dynamic> header = {
+      'accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    Map<String, dynamic> body = {
+      'token': token,
+    };
+
+    ResultData rest = await httpManager.netFetch(Address.check_token, body, header, Options(method: 'post'));
+
+    return rest;
+  }
+
   Future<ResultData> loginParent(String email, String pass) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
@@ -56,8 +96,8 @@ class AuthenticationRepositories {
     return rest;
   }
 
-  Future<ResultData> registerParent(
-      String email, String newPass, String retypePassword, File avatar, String name, String phone, int gender, String birthDay, int city, int county, String address, String aboutUs) async {
+  Future<ResultData> registerParent(String email, String newPass, String retypePassword, File avatar, String name, String phone, int gender,
+      String birthDay, int city, int county, String address, String aboutUs) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',

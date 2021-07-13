@@ -75,16 +75,15 @@ class _SearchScreenState extends State<SearchScreen> {
                           controller.update();
                         },
                         child: Container(
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               color: controller.isValueSearch ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Center(
-                              child: Text(
-                                'Tìm kiếm theo tỉnh thành',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.whiteFFFFFF : AppColors.black),
-                              ),
+                            child: Text(
+                              'Tìm kiếm theo tỉnh thành',
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.whiteFFFFFF : AppColors.black),
                             )),
                       ),
                     ),
@@ -104,7 +103,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Center(
                             child: Text(
                               'Tìm kiếm quanh đây',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.black : AppColors.whiteFFFFFF),
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.black : AppColors.whiteFFFFFF),
                             ),
                           ),
                         ),
@@ -195,7 +195,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   : Expanded(
                       child: Center(
                         child: GoogleMap(
-                          initialCameraPosition: CameraPosition(target: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude), zoom: 15, bearing: 0.0, tilt: 0.0),
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude),
+                              zoom: 15,
+                              bearing: 0.0,
+                              tilt: 0.0),
                           onMapCreated: (GoogleMapController controller) {
                             if (!_completer.isCompleted) {
                               //first calling is false
@@ -257,6 +261,7 @@ Widget SelectTinhThanh(BuildContext context) {
               readOnly: false,
               textEditingController: searchController.search,
               onChanged: (value) {
+                searchController.changeSearchProvincial('');
                 searchController.changeSearchProvincial(value);
               },
             ),
@@ -283,7 +288,9 @@ Widget SelectTinhThanh(BuildContext context) {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              searchController.listProvincial[index].citName == searchController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              searchController.listProvincial[index].citName == searchController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -311,7 +318,7 @@ Widget SelectClass(BuildContext context) {
     appBar: AppBar(
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
-        'Quận/huyện',
+        'Lớp học',
         style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(

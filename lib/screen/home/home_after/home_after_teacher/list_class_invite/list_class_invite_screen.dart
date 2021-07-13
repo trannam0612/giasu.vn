@@ -12,6 +12,7 @@ import 'package:giasu_vn/screen/home/information/information_class/information_c
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
+import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -52,6 +53,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    listClassInvitedController.listPHMD = [];
     listClassInvitedController.parentInvited(1, 10);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
@@ -303,9 +305,15 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                         title: 'Đồng ý',
                                         color: AppColors.primary4C5BD4,
                                         onPressed: () {
-                                          controller.acceptInviteTeach(int.parse(controller.listPHMD[index].pftId));
-                                          controller.listPHMD.remove(controller.listPHMD[index]);
-                                          controller.update();
+                                          Get.dialog(DialogConfirm(
+                                              onPressed: () {
+                                                controller.acceptInviteTeach(int.parse(controller.listPHMD[index].pftId));
+                                                controller.listPHMD.remove(controller.listPHMD[index]);
+                                                Get.back();
+                                                controller.update();
+                                              },
+                                            title: 'Bạn có chắc là đồng ý lời mời dạy này ?',
+                                          ));
                                         },
                                         textColor: AppColors.whiteFFFFFF,
                                       ),
@@ -319,9 +327,15 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                       child: CustomButton1(
                                         textColor: AppColors.black,
                                         onPressed: () {
-                                          controller.refuseInviteTeach(int.parse(controller.listPHMD[index].pftId));
-                                          controller.listPHMD.remove(controller.listPHMD[index]);
-                                          controller.update();
+                                          Get.dialog(DialogConfirm(
+                                            onPressed: () {
+                                              controller.refuseInviteTeach(int.parse(controller.listPHMD[index].pftId));
+                                              controller.listPHMD.remove(controller.listPHMD[index]);
+                                              Get.back();
+                                              controller.update();
+                                            },
+                                            title: 'Bạn có chắc là từ chối lời mời dạy này ?',
+                                          ));
                                         },
                                         color: AppColors.grey747474,
                                         title: 'Từ chối',
