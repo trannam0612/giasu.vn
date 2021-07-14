@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_before_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
@@ -102,7 +103,7 @@ class HomeBeforeScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.13,
+                              height: AppDimens.height * 0.145,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -138,7 +139,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.13,
+                              height: AppDimens.height * 0.145,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -174,7 +175,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.13,
+                              height: AppDimens.height * 0.145,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -210,7 +211,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.13,
+                              height: AppDimens.height * 0.145,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -254,7 +255,7 @@ class HomeBeforeScreen extends StatelessWidget {
                         children: [
                           Text('Gia sư gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                           InkWell(
-                            onTap: () => Get.to(ListTeacherRecentlyScreen()),
+                            onTap: () => Get.to(ListTeacherRecentlyBeforeScreen()),
                             child: Text(
                               'xem thêm >>',
                               style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: 14),
@@ -290,6 +291,7 @@ class HomeBeforeScreen extends StatelessWidget {
                         width: AppDimens.width,
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) => InkWell(
                               onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
                                   child: Container(

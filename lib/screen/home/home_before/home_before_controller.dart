@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/shared/data/models/result_home_before.dart';
+import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
 
 import '../../../common/shared/data/http/result_data.dart';
 import '../../../common/shared/data/repositories/home_repositories.dart';
@@ -23,7 +24,7 @@ class HomeBeforeController extends GetxController {
       listGSGD = resultHomeBefore.data.dataGs;
       listLHPB = resultHomeBefore.data.dataDslh;
       Get.back();
-      Get.to(HomeBeforeScreen());
+      Get.to(NavigationScreen());
     }
     update();
   }
