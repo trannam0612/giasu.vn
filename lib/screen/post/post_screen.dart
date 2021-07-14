@@ -54,13 +54,13 @@ class PostScreen extends StatelessWidget {
                       children: [
                         CustomTextField(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
                           textEditingController: controller.title,
                           obligatory: true,
                           error: controller.checkTitle(),
                           onPressed: () {},
-                          title: 'Tiêu để',
+                          title: 'Tiêu đề',
                           hintText: 'Nhập tiêu đề ',
                           isPassword: false,
                           isShowIcon: false,
@@ -71,7 +71,7 @@ class PostScreen extends StatelessWidget {
                         ),
                         CustomTextFieldBox(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
                           textEditingController: controller.contentTitle,
                           obligatory: true,

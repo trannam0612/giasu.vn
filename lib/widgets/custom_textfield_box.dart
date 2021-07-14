@@ -36,7 +36,9 @@ class CustomTextFieldBox extends StatefulWidget {
       this.colorIcon = AppColors.black12,
       this.isShowIcon = false,
       this.obligatory = false,
-      this.error, this.hasTitle = true, this.inputFormatters});
+      this.error,
+      this.hasTitle = true,
+      this.inputFormatters});
 
   @override
   _CustomTextFieldBoxState createState() => _CustomTextFieldBoxState();
@@ -49,18 +51,21 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          widget.hasTitle ? RichText(
-            text: TextSpan(
-              text: widget.title,
-              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-              children: <TextSpan>[
-                TextSpan(
-                  text: widget.obligatory ? ' *' : '',
-                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
-                ),
-              ],
-            ),
-          ) : Container(),
+          widget.hasTitle
+              ? RichText(
+                  text: TextSpan(
+                    text: widget.title,
+                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.obligatory ? ' *' : '',
+                        style:
+                            AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
           SizedBox(
             height: AppDimens.space4,
           ),
@@ -76,6 +81,8 @@ class _CustomTextFieldBoxState extends State<CustomTextFieldBox> {
               controller: widget.textEditingController,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: AppColors.black),
               decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.whiteFFFFFF,
                 errorText: widget.error,
                 hintText: widget.hintText,
                 hintStyle: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),

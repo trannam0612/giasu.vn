@@ -56,7 +56,7 @@ class UpdatePostScreen extends StatelessWidget {
                       children: [
                         CustomTextField(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
                           textEditingController: controller.title,
                           obligatory: true,
@@ -73,7 +73,7 @@ class UpdatePostScreen extends StatelessWidget {
                         ),
                         CustomTextFieldBox(
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅]+')),
+                            FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
                           textEditingController: controller.contentTitle,
                           obligatory: true,

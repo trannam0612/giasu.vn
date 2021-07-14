@@ -300,6 +300,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listDataTeacher[index].ugsId), 0),
                   child: Container(
+                    height: AppDimens.height * 0.25,
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
                       height: AppDimens.height * 0.20,
@@ -320,6 +321,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                 ),
                               ]),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
@@ -427,13 +429,13 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                       ),
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: AppDimens.space10,
-                                      ),
-                                      controller.token != null
-                                          ? Row(
+                                  controller.token != ''
+                                      ? Column(
+                                          children: [
+                                            SizedBox(
+                                              height: AppDimens.space10,
+                                            ),
+                                            Row(
                                               children: [
                                                 Spacer(),
                                                 SizedBox(
@@ -479,9 +481,9 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                                 )
                                               ],
                                             )
-                                          : Container(),
-                                    ],
-                                  )
+                                          ],
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),

@@ -849,8 +849,8 @@ class RegisterGiaSuController extends GetxController {
     ResultData res = await authenticationRepositories.listDistrict(idCity);
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
-    } else {
-    }
+      listDistrict = resultListDistrict.data.listCity;
+    } else {}
     update();
   }
 

@@ -19,6 +19,7 @@ class InformationClassController extends GetxController {
   ResultChangeStatusPost resultChangeStatusPost = ResultChangeStatusPost();
   PostRepositories postRepositories = PostRepositories();
   String user = '';
+  String token = '';
   bool accepted = false;
 
   List<buoiday> listbuoiday = [
@@ -35,6 +36,7 @@ class InformationClassController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     user = SpUtil.getString(ConstString.Status_user);
+    token = SpUtil.getString(ConstString.token);
     super.onInit();
   }
 

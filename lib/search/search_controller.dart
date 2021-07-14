@@ -38,7 +38,7 @@ class SearchController extends GetxController {
   int idClass;
   int idSubject;
   int idForm;
-  bool statusUser = false;
+  bool statusUser = true;
   bool errorProvincial = false;
   bool valueCheckBox = false;
   bool errorDistrict = false;
