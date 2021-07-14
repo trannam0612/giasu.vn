@@ -857,7 +857,7 @@ class InformationTeacherScreen extends StatelessWidget {
                   SizedBox(
                     height: AppDimens.space16,
                   ),
-                  type == 0
+                  type == 5 ? Container() : type == 0
                       ? Row(
                           children: [
                             Spacer(),
