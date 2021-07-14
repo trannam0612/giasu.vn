@@ -62,6 +62,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
     // TODO: implement initState
     super.initState();
     searchController.userType = SpUtil.getString(ConstString.USER_TYPE);
+    print('searchController.userType');
+    print(searchController.userType);
     searchController.listDataTeacher = [];
     searchController.listDataParent = [];
     searchController.userType == '1' ? searchController.searchParent(1) : searchController.searchTeacher(1);
@@ -307,7 +309,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                           Positioned.fill(
                             left: 30,
                             child: Container(
-                              padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                              padding: EdgeInsets.only(
+                                  left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
                                 BoxShadow(
                                   color: AppColors.black.withOpacity(0.25),
@@ -429,46 +432,54 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                       SizedBox(
                                         height: AppDimens.space10,
                                       ),
-                                      Row(
-                                        children: [
-                                          Spacer(),
-                                          SizedBox(
-                                            height: 30,
-                                            width: 95,
-                                            child: CustomButton2(
-                                              title: 'Mời dạy',
-                                              color: AppColors.primary4C5BD4,
-                                              onPressed: () {
-                                                Get.dialog(CheckboxListClass(
-                                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
-                                                  idGS: controller.listDataTeacher[index].ugsId,
-                                                  name: controller.listDataTeacher[index].ugsName,
-                                                ));
-                                              },
-                                              textColor: AppColors.whiteFFFFFF,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: AppDimens.space20,
-                                          ),
-                                          SizedBox(
-                                            height: 30,
-                                            width: 95,
-                                            child: CustomButton1(
-                                              textColor: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              onPressed: () {
-                                                controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
-                                                controller.listDataTeacher[index].checkSave
-                                                    ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
-                                                    : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
-                                              },
-                                              color: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                              backColor: !controller.listDataTeacher[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                      controller.token != null
+                                          ? Row(
+                                              children: [
+                                                Spacer(),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 95,
+                                                  child: CustomButton2(
+                                                    title: 'Mời dạy',
+                                                    color: AppColors.primary4C5BD4,
+                                                    onPressed: () {
+                                                      Get.dialog(CheckboxListClass(
+                                                        imageUrl: controller.listDataTeacher[index].ugsAvatar,
+                                                        idGS: controller.listDataTeacher[index].ugsId,
+                                                        name: controller.listDataTeacher[index].ugsName,
+                                                      ));
+                                                    },
+                                                    textColor: AppColors.whiteFFFFFF,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: AppDimens.space20,
+                                                ),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 95,
+                                                  child: CustomButton1(
+                                                    textColor: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.secondaryF8971C
+                                                        : AppColors.whiteFFFFFF,
+                                                    onPressed: () {
+                                                      controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
+                                                      controller.listDataTeacher[index].checkSave
+                                                          ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
+                                                          : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
+                                                    },
+                                                    color: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.secondaryF8971C
+                                                        : AppColors.whiteFFFFFF,
+                                                    title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
+                                                    backColor: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.whiteFFFFFF
+                                                        : AppColors.secondaryF8971C,
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : Container(),
                                     ],
                                   )
                                 ],

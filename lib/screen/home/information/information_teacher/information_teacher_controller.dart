@@ -35,6 +35,15 @@ class InformationTeacherController extends GetxController {
   bool isShowed = false;
   String idClass;
   bool acepted = false;
+  String token;
+
+  @override
+  void onInit() {
+    token = SpUtil.getString(ConstString.token);
+
+    // TODO: implement onInit
+    super.onInit();
+  }
 
   Future<void> classPosted(int currentPage, int limit) async {
     print('classPosted');
@@ -75,7 +84,9 @@ class InformationTeacherController extends GetxController {
     }
     update();
   }
+
   bool show = false;
+
   Future<void> minusPoint(int idGS) async {
     print('minusPoint');
     // await Future.delayed(Duration(milliseconds: 1));
@@ -83,11 +94,10 @@ class InformationTeacherController extends GetxController {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.minusPoint(token, idGS);
     resultMinusPoint = resultMinusPointFromJson(res.data);
-    if(resultMinusPoint.data != null) {
+    if (resultMinusPoint.data != null) {
       resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
       Utils.showToast(resultMinusPoint.data.message);
-    }
-    else {
+    } else {
       Utils.showToast(resultMinusPoint.error.message);
     }
     update();

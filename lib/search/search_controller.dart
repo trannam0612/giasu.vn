@@ -38,11 +38,13 @@ class SearchController extends GetxController {
   int idClass;
   int idSubject;
   int idForm;
+  bool statusUser = false;
   bool errorProvincial = false;
   bool valueCheckBox = false;
   bool errorDistrict = false;
   bool errorSubject = false;
   bool errorMethodTeach = false;
+  String token;
   String userType;
 
   List<String> listMethodTeach = ['Online', 'Gặp mặt'];
@@ -50,12 +52,24 @@ class SearchController extends GetxController {
   @override
   void onInit() {
     userType = SpUtil.getString(ConstString.USER_TYPE);
+    token = SpUtil.getString(ConstString.token);
     // TODO: implement onInit
     search.addListener(() {
       update();
     });
     changeSearchProvincial('');
     super.onInit();
+  }
+
+  void changeStatusUser() {
+    statusUser = !statusUser;
+    if (statusUser) {
+      SpUtil.putString(ConstString.USER_TYPE, '2');
+    } else {
+      SpUtil.putString(ConstString.USER_TYPE, '1');
+    }
+    userType = SpUtil.getString(ConstString.USER_TYPE);
+    update();
   }
 
   String checkProvincial() {
@@ -123,8 +137,7 @@ class SearchController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrict = resultListDistrict.data.listCity;
-    } else {
-    }
+    } else {}
     update();
   }
 

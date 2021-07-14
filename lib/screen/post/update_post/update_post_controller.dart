@@ -189,7 +189,7 @@ class UpdatePostController extends GetxController {
       idTopicSubject = int.parse(listTopic[0].idSubject);
       Utils.showToast(resultListTopic.data.message);
     } else {
-      Utils.showToast(resultListTopic.error.message);
+      // Utils.showToast(resultListTopic.error.message);
     }
     update();
   }
@@ -468,7 +468,7 @@ class UpdatePostController extends GetxController {
       listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
+      // Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }

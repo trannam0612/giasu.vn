@@ -700,7 +700,7 @@ class UpdateInfoTeacherController extends GetxController {
       listTopic = resultListTopic.data.listSubjectTag;
       Utils.showToast(resultListTopic.data.message);
     } else {
-      Utils.showToast(resultListTopic.error.message);
+      // Utils.showToast(resultListTopic.error.message);
     }
     update();
   }
@@ -727,7 +727,7 @@ class UpdateInfoTeacherController extends GetxController {
       });
       Utils.showToast(resultListTopic.data.message);
     } else {
-      Utils.showToast(resultListTopic.error.message);
+      // Utils.showToast(resultListTopic.error.message);
     }
     update();
   }
@@ -740,7 +740,7 @@ class UpdateInfoTeacherController extends GetxController {
       listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
+      // Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }
@@ -753,7 +753,7 @@ class UpdateInfoTeacherController extends GetxController {
       listDistrictArea = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
+      // Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }
