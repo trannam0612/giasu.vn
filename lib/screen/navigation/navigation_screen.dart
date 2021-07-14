@@ -8,6 +8,7 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
+import 'package:giasu_vn/widgets/dialog_error_login.dart';
 import 'package:sp_util/sp_util.dart';
 import 'navigation_controller.dart';
 
@@ -68,9 +69,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
             body: NavigationController.to.currentPage.value,
             backgroundColor: AppColors.whiteFFFFFF,
             bottomNavigationBar: BottomNavigationBar(
+              showSelectedLabels: controller.token !='' ? true : false,
+              showUnselectedLabels: false,
               backgroundColor: AppColors.whiteFFFFFF,
               currentIndex: NavigationController.to.pageIndex.value,
-              onTap: NavigationController.to.changePage,
+              onTap: controller.token != '' ? NavigationController.to.changePage : null,
               items: [
                 _buildBottomNavItem(
                     SvgPicture.asset(
@@ -83,21 +86,21 @@ class _NavigationScreenState extends State<NavigationScreen> {
                     SvgPicture.asset(
                       Images.ic_message,
                       width: 20,
-                      color: controller.pageIndex.value == 1 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: controller.token =='' ? AppColors.greyAAAAAA : controller.pageIndex.value == 1 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_notification,
                       width: 20,
-                      color: controller.pageIndex.value == 2 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color:controller.token =='' ? AppColors.greyAAAAAA :  controller.pageIndex.value == 2 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_setting,
                       width: 20,
-                      color: controller.pageIndex.value == 3 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: controller.token =='' ? AppColors.greyAAAAAA : controller.pageIndex.value == 3 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
                     ),
                     context),
               ],

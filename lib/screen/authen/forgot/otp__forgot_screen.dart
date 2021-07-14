@@ -71,7 +71,8 @@ class OTPForgotScreen extends StatelessWidget {
                                         padding: EdgeInsets.all(10),
                                         child: Container(
                                           padding: EdgeInsets.symmetric(horizontal: AppDimens.padding16),
-                                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8)), boxShadow: [
+                                          decoration:
+                                              BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8)), boxShadow: [
                                             BoxShadow(
                                               color: Colors.white,
                                               blurRadius: 5,
@@ -114,7 +115,8 @@ class OTPForgotScreen extends StatelessWidget {
                                       },
                                       child: Text(
                                         'Gửi lại',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regularW400(context,
+                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                                       ),
                                     )
                                   : Container(),
@@ -132,7 +134,8 @@ class OTPForgotScreen extends StatelessWidget {
                                     controller.seconds.value != 0
                                         ? TextSpan(
                                             text: ' ${controller.seconds.value}s ',
-                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
+                                            style: AppTextStyles.regularW400(context,
+                                                size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
                                           )
                                         : TextSpan(
                                             text: ' ',
@@ -144,7 +147,8 @@ class OTPForgotScreen extends StatelessWidget {
                                     ),
                                     TextSpan(
                                       text: '"Gửi lại"',
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                      style: AppTextStyles.regularW400(context,
+                                          size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                                     ),
                                   ],
                                 ),
@@ -160,7 +164,7 @@ class OTPForgotScreen extends StatelessWidget {
                               child: CustomButton2(
                                 onPressed: () {
                                   controller.checkButtonOTP();
-                                  // controller.pass.clear();
+                                  controller.otpUser.clear();
                                 },
                                 title: 'Xác nhận',
                                 textColor: AppColors.whiteFFFFFF,
@@ -188,7 +192,8 @@ class OTPForgotScreen extends StatelessWidget {
                                   child: Text(
                                     'Đăng nhập',
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: AppDimens.textSize16, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
                                   ),
                                 ),
                               ],

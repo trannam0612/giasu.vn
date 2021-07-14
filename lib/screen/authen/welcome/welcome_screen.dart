@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/welcome/welcome_controller.dart';
 
 import '../../../common/images.dart';
@@ -24,7 +25,12 @@ class WelcomeScreen extends StatelessWidget {
                 () => Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: AppDimens.width * 0.8, height: AppDimens.height * 0.5, child: Image.asset(controller.value.value == 0 ? Images.img_intro_1 : Images.img_intro_2)),
+                    Align(
+                        alignment: Alignment.centerRight, child: TextButton(onPressed: () => Get.to(SelectTypeLoginScreen()), child: Text('Bỏ qua'))),
+                    SizedBox(
+                        width: AppDimens.width * 0.8,
+                        height: AppDimens.height * 0.5,
+                        child: Image.asset(controller.value.value == 0 ? Images.img_intro_1 : Images.img_intro_2)),
                     controller.value.value == 0
                         ? Column(
                             children: [
@@ -72,7 +78,7 @@ class WelcomeScreen extends StatelessWidget {
                         Images.ic_drop_right_1,
                         height: AppDimens.height * 0.08,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

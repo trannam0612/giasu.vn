@@ -62,6 +62,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
     // TODO: implement initState
     super.initState();
     searchController.userType = SpUtil.getString(ConstString.USER_TYPE);
+    print('searchController.userType');
+    print(searchController.userType);
     searchController.listDataTeacher = [];
     searchController.listDataParent = [];
     searchController.userType == '1' ? searchController.searchParent(1) : searchController.searchTeacher(1);
@@ -298,6 +300,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                 itemBuilder: (context, index) => InkWell(
                   onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listDataTeacher[index].ugsId), 0),
                   child: Container(
+                    height: AppDimens.height * 0.25,
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
                       height: AppDimens.height * 0.20,
@@ -307,7 +310,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                           Positioned.fill(
                             left: 30,
                             child: Container(
-                              padding: EdgeInsets.only(left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
+                              padding: EdgeInsets.only(
+                                  left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
                                 BoxShadow(
                                   color: AppColors.black.withOpacity(0.25),
@@ -317,6 +321,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                 ),
                               ]),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
@@ -424,53 +429,61 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                       ),
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        height: AppDimens.space10,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Spacer(),
-                                          SizedBox(
-                                            height: 30,
-                                            width: 95,
-                                            child: CustomButton2(
-                                              title: 'Mời dạy',
-                                              color: AppColors.primary4C5BD4,
-                                              onPressed: () {
-                                                Get.dialog(CheckboxListClass(
-                                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
-                                                  idGS: controller.listDataTeacher[index].ugsId,
-                                                  name: controller.listDataTeacher[index].ugsName,
-                                                ));
-                                              },
-                                              textColor: AppColors.whiteFFFFFF,
+                                  controller.token != ''
+                                      ? Column(
+                                          children: [
+                                            SizedBox(
+                                              height: AppDimens.space10,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: AppDimens.space20,
-                                          ),
-                                          SizedBox(
-                                            height: 30,
-                                            width: 95,
-                                            child: CustomButton1(
-                                              textColor: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              onPressed: () {
-                                                controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
-                                                controller.listDataTeacher[index].checkSave
-                                                    ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
-                                                    : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
-                                              },
-                                              color: !controller.listDataTeacher[index].checkSave ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                              title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                              backColor: !controller.listDataTeacher[index].checkSave ? AppColors.whiteFFFFFF : AppColors.secondaryF8971C,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  )
+                                            Row(
+                                              children: [
+                                                Spacer(),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 95,
+                                                  child: CustomButton2(
+                                                    title: 'Mời dạy',
+                                                    color: AppColors.primary4C5BD4,
+                                                    onPressed: () {
+                                                      Get.dialog(CheckboxListClass(
+                                                        imageUrl: controller.listDataTeacher[index].ugsAvatar,
+                                                        idGS: controller.listDataTeacher[index].ugsId,
+                                                        name: controller.listDataTeacher[index].ugsName,
+                                                      ));
+                                                    },
+                                                    textColor: AppColors.whiteFFFFFF,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: AppDimens.space20,
+                                                ),
+                                                SizedBox(
+                                                  height: 30,
+                                                  width: 95,
+                                                  child: CustomButton1(
+                                                    textColor: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.secondaryF8971C
+                                                        : AppColors.whiteFFFFFF,
+                                                    onPressed: () {
+                                                      controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
+                                                      controller.listDataTeacher[index].checkSave
+                                                          ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
+                                                          : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
+                                                    },
+                                                    color: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.secondaryF8971C
+                                                        : AppColors.whiteFFFFFF,
+                                                    title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
+                                                    backColor: !controller.listDataTeacher[index].checkSave
+                                                        ? AppColors.whiteFFFFFF
+                                                        : AppColors.secondaryF8971C,
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      : Container(),
                                 ],
                               ),
                             ),

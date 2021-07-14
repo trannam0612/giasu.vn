@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
@@ -15,6 +16,7 @@ import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sp_util/sp_util.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key key}) : super(key: key);
@@ -30,6 +32,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     searchController.displayCurrentLocation();
+    if (searchController.token == '') {
+      SpUtil.putString(ConstString.USER_TYPE, '2');
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -75,13 +80,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           controller.update();
                         },
                         child: Container(
+                            alignment: Alignment.center,
                             padding: EdgeInsets.symmetric(vertical: 8),
                             decoration: BoxDecoration(
                               color: controller.isValueSearch ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Text(
-                              'Tìm kiếm theo tỉnh thành',
+                              'Theo tỉnh thành',
                               style: AppTextStyles.regularW400(context,
                                   size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.whiteFFFFFF : AppColors.black),
                             )),
@@ -102,7 +108,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              'Tìm kiếm quanh đây',
+                              'Quanh đây',
                               style: AppTextStyles.regularW400(context,
                                   size: AppDimens.textSize16, color: controller.isValueSearch ? AppColors.black : AppColors.whiteFFFFFF),
                             ),
@@ -167,6 +173,53 @@ class _SearchScreenState extends State<SearchScreen> {
                           SizedBox(
                             height: AppDimens.space18,
                           ),
+                          controller.token == ''
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        controller.changeStatusUser();
+                                        SpUtil.putString(ConstString.USER_TYPE, '1');
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(controller.statusUser ? Images.ic_check_blue : Images.ic_check),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Gia sư',
+                                            style: AppTextStyles.regularW500(context,
+                                                size: AppDimens.textSize16,
+                                                color: controller.statusUser ? AppColors.primary1574D0 : AppColors.grey747474),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        controller.changeStatusUser();
+                                        SpUtil.putString(ConstString.USER_TYPE, '2');
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(!controller.statusUser ? Images.ic_check_blue : Images.ic_check),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Phụ huynh',
+                                            style: AppTextStyles.regularW500(context,
+                                                size: AppDimens.textSize16,
+                                                color: !controller.statusUser ? AppColors.primary1574D0 : AppColors.grey747474),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(
                             height: AppDimens.space36,
                           ),
@@ -182,6 +235,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   print(controller.idClass);
                                   print(controller.idSubject);
                                   print(controller.idForm);
+                                  // SpUtil.putString(ConstString.USER_TYPE, '2');
                                   controller.userType == '1' ? Get.to(ListResultSearchScreen()) : Get.to(ListResultSearchScreen());
                                 },
                                 title: 'Tìm kiếm',

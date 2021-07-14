@@ -45,7 +45,15 @@ class UpdatePostController extends GetxController {
   List<String> listStringTopic = [];
   List<String> listFormTeaching = ['Gặp mặt', 'Online'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
+  List<String> listQH = [
+    'Quận Hai Bà Trưng',
+    'Quận Hoàng Mai',
+    'Quận Hoàn Kiếm',
+    'Huyện Mỹ Hào',
+    'Quận Thanh Xuân',
+    'Quận Nam Từ Niêm',
+    'Quận Tây Hồ'
+  ];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
   List<String> listGender = ['Nam', 'Nữ'];
   List<String> listLuong = ['Giờ', 'Tháng'];
@@ -180,16 +188,22 @@ class UpdatePostController extends GetxController {
   bool valueButtonLuong = false;
 
   Future<void> getListTopic(String idTopic) async {
-    listTopic = [];
+    // listTopic = [];
     ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
     resultListTopic = resultListTopicFromJson(res.data);
     if (resultListTopic.data != null) {
+      listTopic = [];
       listTopic = resultListTopic.data.listSubjectTag;
-      selectedTopicSubject = listTopic[0].nameSubject;
-      idTopicSubject = int.parse(listTopic[0].idSubject);
+      print('aaaa');
+      print(resultListTopic.data.listSubjectTag.map((e) => e.nameSubject));
+      print(listTopic.map((e) => e.nameSubject));
+      // selectedTopicSubject = listTopic[0].nameSubject;
+      // idTopicSubject = int.parse(listTopic[0].idSubject);
       Utils.showToast(resultListTopic.data.message);
     } else {
-      Utils.showToast(resultListTopic.error.message);
+      print('11111');
+
+      // Utils.showToast(resultListTopic.error.message);
     }
     update();
   }
@@ -298,6 +312,8 @@ class UpdatePostController extends GetxController {
                 ? 3
                 : 4;
     errorTimeTeaching = false;
+    print(value);
+    print(idTime);
     update();
   }
 
@@ -314,9 +330,11 @@ class UpdatePostController extends GetxController {
     //     idMethodTeach = loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodId;
     //   }
     // }
-    idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2;
+    idFormTeaching = value == 'Online' ? 2 : 1;
     errorMethodTeach = false;
-    print(idMethodTeach);
+    print(idFormTeaching);
+    print(selectMethodTeach);
+    print(value);
     update();
   }
 
@@ -440,7 +458,7 @@ class UpdatePostController extends GetxController {
         numberStudent.text.isNotEmpty &&
         numberStudent.text != '0' &&
         salaryCD.text.isNotEmpty &&
-        salaryCD.text != '0' &&
+        int.parse(salaryCD.text) > 0 &&
         errorTimeTeaching == false &&
         errorDayTeaching == false &&
         errorMethodTeach == false &&
@@ -468,7 +486,7 @@ class UpdatePostController extends GetxController {
       listDistrict = resultListDistrict.data.listCity;
       Utils.showToast(resultListDistrict.data.message);
     } else {
-      Utils.showToast(resultListDistrict.error.message);
+      // Utils.showToast(resultListDistrict.error.message);
     }
     update();
   }

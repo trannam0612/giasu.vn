@@ -127,7 +127,7 @@ class OTPScreen extends StatelessWidget {
                               child: CustomButton2(
                                 onPressed: () {
                                   controller.checkButtonOTP();
-                                  // controller.pass.clear();
+                                  controller.otpUser.clear();
                                 },
                                 title: 'Xác nhận',
                                 textColor: AppColors.whiteFFFFFF,
