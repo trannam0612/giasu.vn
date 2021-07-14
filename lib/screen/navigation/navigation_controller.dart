@@ -26,7 +26,7 @@ class NavigationController extends GetxController {
   void onInit() {
     print('NavigationController');
     print('userType');
-    print(userType);
+    print(token);
     // TODO: implement onInit
     userType = SpUtil.getString(ConstString.USER_TYPE);
     token = SpUtil.getString(ConstString.token);
@@ -39,56 +39,51 @@ class NavigationController extends GetxController {
   void changePage(int index) {
     token = SpUtil.getString(ConstString.token);
     pageIndex.value = index;
-    if(token != '') {
-      switch (index) {
-        case 0:
-        // if (token != '') {
-          pageIndex.value = 0;
-          currentPage.value = userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
-          // } else {
-          //   Get.dialog(DialogError2(
-          //     button1: 'Đăng nhập',
-          //     button2: 'Hủy',
-          //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
-          //     onTapButton2: () => Get.back(),
-          //   ));
-          // }
+    switch (index) {
+      case 0:
+      // if (token != '') {
+        pageIndex.value = 0;
+        currentPage.value = userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
+        // } else {
+        //   Get.dialog(DialogError2(
+        //     button1: 'Đăng nhập',
+        //     button2: 'Hủy',
+        //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
+        //     onTapButton2: () => Get.back(),
+        //   ));
+        // }
 
-          break;
-        case 1:
-        // if (token != '') {
-          pageIndex.value = 1;
-          currentPage.value = MessageScreen();
-          // } else {
-          //   Get.dialog(DialogError2(
-          //     button1: 'Đăng nhập',
-          //     button2: 'Hủy',
-          //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
-          //     onTapButton2: () => Get.back(),
-          //   ));
-          // }
-          break;
-        case 2:
-          pageIndex.value = 2;
-          currentPage.value = NotificationsScreen();
-          break;
-        case 3:
-        // if (token != '') {
-          pageIndex.value = 3;
-          currentPage.value = SettingsScreen();
-          // } else {
-          //   Get.dialog(DialogError2(
-          //     button1: 'Đăng nhập',
-          //     button2: 'Hủy',
-          //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
-          //     onTapButton2: () => Get.back(),
-          //   ));
-          // }
-          break;
-      }
-    }
-    else {
-      Get.dialog(DialogErrorLogin());
+        break;
+      case 1:
+      // if (token != '') {
+        pageIndex.value = 1;
+        currentPage.value = MessageScreen();
+        // } else {
+        //   Get.dialog(DialogError2(
+        //     button1: 'Đăng nhập',
+        //     button2: 'Hủy',
+        //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
+        //     onTapButton2: () => Get.back(),
+        //   ));
+        // }
+        break;
+      case 2:
+        pageIndex.value = 2;
+        currentPage.value = NotificationsScreen();
+        break;
+      case 3:
+      // if (token != '') {
+        pageIndex.value = 3;
+        currentPage.value = SettingsScreen();
+        // } else {
+        //   Get.dialog(DialogError2(
+        //     button1: 'Đăng nhập',
+        //     button2: 'Hủy',
+        //     onTapButton1: () => Get.toNamed(Routes.LOGIN),
+        //     onTapButton2: () => Get.back(),
+        //   ));
+        // }
+        break;
     }
     update();
   }

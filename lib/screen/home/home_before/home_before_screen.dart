@@ -264,7 +264,7 @@ class HomeBeforeScreen extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        height: AppDimens.height * 0.188,
+                        height: 150,
                         child: ListView.separated(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
@@ -286,36 +286,34 @@ class HomeBeforeScreen extends StatelessWidget {
                       SizedBox(
                         height: AppDimens.space14,
                       ),
-                      Container(
-                        height: AppDimens.height * 0.5,
-                        width: AppDimens.width,
-                        child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => InkWell(
-                              onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                                      borderRadius: BorderRadius.circular(AppDimens.space16),
-                                    ),
-                                    margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
-                                    child: CardClassHome2(
-                                      title: controller.listLHPB[index].pftSummary,
-                                      time: controller.listLHPB[index].dayPost,
-                                      fee: '${controller.listLHPB[index].pftPrice}vnđ/${controller.listLHPB[index].pftMonth}',
-                                      subject: controller.listLHPB[index].asDetailName,
-                                      address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
-                                      classId: controller.listLHPB[index].pftId,
-                                      methodTeach: controller.listLHPB[index].pftForm,
-                                      numberSuggest: '02',
-                                      save: true,
-                                      hasButton: false,
-                                    ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                                    borderRadius: BorderRadius.circular(AppDimens.space16),
+                                  ),
+                                  margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
+                                  child: CardClassHome2(
+                                    title: controller.listLHPB[index].pftSummary,
+                                    time: controller.listLHPB[index].dayPost,
+                                    fee: '${controller.listLHPB[index].pftPrice}vnđ/${controller.listLHPB[index].pftMonth}',
+                                    subject: controller.listLHPB[index].asDetailName,
+                                    address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
+                                    classId: controller.listLHPB[index].pftId,
+                                    methodTeach: controller.listLHPB[index].pftForm,
+                                    numberSuggest: '02',
+                                    save: false,
+                                    onTap: () => Get.dialog(DialogErrorLogin()),
+                                    hasButton: false,
                                   ),
                                 ),
-                            itemCount: controller.listLHPB.length),
-                      )
+                              ),
+                          itemCount: controller.listLHPB.length)
                     ],
                   ),
                 ),

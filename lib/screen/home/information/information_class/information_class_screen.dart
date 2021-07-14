@@ -291,7 +291,7 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: AppDimens.space16,
+                  height: AppDimens.space20,
                 ),
                 Text(
                   'Thông tin lớp học',
@@ -436,7 +436,7 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(AppDimens.space16),
+                  padding: const EdgeInsets.all(AppDimens.space20),
                   child: Text(
                     'Số buổi có thể học',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),

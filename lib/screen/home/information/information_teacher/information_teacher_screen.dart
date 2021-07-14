@@ -117,7 +117,7 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(AppDimens.space20),
-                    width: AppDimens.width,
+                    width: AppDimens.width * 0.6,
                     decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(10), boxShadow: [
                       BoxShadow(
                         color: AppColors.black.withOpacity(0.25),
@@ -126,173 +126,108 @@ class InformationTeacherScreen extends StatelessWidget {
                         offset: Offset(0, 2), // changes position of shadow
                       ),
                     ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_book,
-                                  width: 16,
-                                  height: 16,
-                                  color: AppColors.grey747474,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.asIdName.join(', '),
-                                  style: AppTextStyles.regular(
-                                    context,
-                                    size: AppDimens.textSize14,
-                                  ),
-                                ),
-                              ],
+                            SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: SvgPicture.asset(
+                                Images.ic_mail,
+                                width: 18,
+                                height: 18,
+                                color: AppColors.grey747474,
+                              ),
                             ),
                             SizedBox(
-                              height: AppDimens.space8,
+                              width: AppDimens.space6,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_money,
-                                  width: 16,
-                                  height: 16,
-                                  color: AppColors.secondaryF8971C,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
-                                  style: AppTextStyles.regular(
-                                    context,
-                                    size: AppDimens.textSize14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 18,
-                                    width: 18,
-                                    child: SvgPicture.asset(
-                                      Images.ic_call,
-                                      width: 18,
-                                      height: 18,
-                                      color: AppColors.grey747474,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: AppDimens.space6,
-                                  ),
-                                  controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                      ? Text(
-                                          controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
-                                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
-                                        )
-                                      : InkWell(
-                                    onTap: () => Get.dialog(DialogWatchTeacher(
-                                      teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                      nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                      ontap: () {
-                                        controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        Get.back();
-                                        controller.update();
-
-                                      },
-                                    )),
-                                        child: Container(
-                                    width: AppDimens.width*0.3,
-                                            padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                            decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                'sử dụng 1 điểm để xem',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
-                                              ),
-                                            ),
-                                          ),
+                            controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                ? Expanded(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
                                       ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: AppDimens.space6,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 18,
-                                    width: 18,
-                                    child: SvgPicture.asset(
-                                      Images.ic_mail,
-                                      width: 18,
-                                      height: 18,
-                                      color: AppColors.grey747474,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: AppDimens.space6,
-                                  ),
-                                  controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                      ? Container(
-                                        width: AppDimens.width*0.3,
+                                  )
+                                : Expanded(
+                                    child: InkWell(
+                                      onTap: () => Get.dialog(DialogWatchTeacher(
+                                        teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                        nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                        ontap: () {
+                                          controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          Get.back();
+                                          controller.update();
+                                        },
+                                      )),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Text(
-                                              controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
-                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
-                                            ),
-                                        ),
-                                      )
-                                      : InkWell(
-                                    onTap: () => Get.dialog(DialogWatchTeacher(
-                                      teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                      nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                      ontap: () {
-                                        controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        Get.back();
-                                        controller.update();
-
-                                      },
-                                    )),
-                                        child: Container(
-                                    width: AppDimens.width*0.3,
-                                            padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                            decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Text(
-                                                'sử dụng 1 điểm để xem',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
-                                              ),
-                                            ),
+                                            'Sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
                                           ),
+                                        ),
                                       ),
-                                ],
+                                    ),
+                                  ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: SvgPicture.asset(
+                                Images.ic_call,
+                                width: 18,
+                                height: 18,
+                                color: AppColors.grey747474,
                               ),
-                            ],
-                          ),
-                        )
+                            ),
+                            SizedBox(
+                              width: AppDimens.space6,
+                            ),
+                            controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                ? Text(
+                                    controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
+                                    style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                  )
+                                : Expanded(
+                                    child: InkWell(
+                                      onTap: () => Get.dialog(DialogWatchTeacher(
+                                        teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                        nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                        ontap: () {
+                                          controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          Get.back();
+                                          controller.update();
+                                        },
+                                      )),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            'Sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -857,122 +792,124 @@ class InformationTeacherScreen extends StatelessWidget {
                   SizedBox(
                     height: AppDimens.space16,
                   ),
-                  type == 5 ? Container() : type == 0
-                      ? Row(
-                          children: [
-                            Spacer(),
-                            SizedBox(
-                              width: 130,
-                              height: 30,
-                              child: CustomButton2(
-                                color: AppColors.primary4C5BD4,
-                                hasRadius: true,
-                                textColor: AppColors.whiteFFFFFF,
-                                onPressed: () {
-                                  Get.dialog(CheckboxListClass(
-                                    name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                    imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
-                                    idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
-                                  ));
-                                },
-                                title: 'Mời dạy',
-                              ),
-                            ),
-                            SizedBox(
-                              width: AppDimens.space6,
-                            ),
-                            SizedBox(
-                              width: 130,
-                              height: 30,
-                              child: CustomButton1(
-                                title: controller.resultDetailTeacher.data.data.dataInfo.checkSave ? 'Bỏ Lưu' : 'Lưu',
-                                color: AppColors.grey747474,
-                                textColor: AppColors.black,
-                                hasRadius: true,
-                                backColor: AppColors.whiteFFFFFF,
-                                onPressed: () {
-                                  if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
-                                    controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
-                                    homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                    controller.update();
-                                  } else {
-                                    controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
-                                    homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                    controller.update();
-                                  }
-                                },
-                              ),
-                            ),
-                            Spacer(),
-                          ],
-                        )
-                      : controller.acepted
-                          ? Container()
-                          : Column(
+                  type == 5
+                      ? Container()
+                      : type == 0
+                          ? Row(
                               children: [
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                      text: '${controller.resultDetailTeacher.data.data.dataInfo.ugsName}',
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24),
-                                      children: [
-                                        TextSpan(
-                                          text: ' đã đề nghị dạy lớp\n',
-                                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
-                                        ),
-                                        TextSpan(
-                                          text: SpUtil.getString(ConstString.NAME_CLASS),
-                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
-                                        )
-                                      ]),
+                                Spacer(),
+                                SizedBox(
+                                  width: 130,
+                                  height: 30,
+                                  child: CustomButton2(
+                                    color: AppColors.primary4C5BD4,
+                                    hasRadius: true,
+                                    textColor: AppColors.whiteFFFFFF,
+                                    onPressed: () {
+                                      Get.dialog(CheckboxListClass(
+                                        name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                        imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                                        idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
+                                      ));
+                                    },
+                                    title: 'Mời dạy',
+                                  ),
                                 ),
                                 SizedBox(
-                                  height: AppDimens.space10,
+                                  width: AppDimens.space6,
                                 ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    SizedBox(
-                                      width: 130,
-                                      height: 30,
-                                      child: CustomButton2(
-                                        color: AppColors.primary4C5BD4,
-                                        hasRadius: true,
-                                        textColor: AppColors.whiteFFFFFF,
-                                        onPressed: () {
-                                          listTeacherSuggestController.acceptOffer(
-                                              int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
-                                          controller.acepted = true;
-                                          controller.update();
-                                        },
-                                        title: 'Đồng ý',
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space6,
-                                    ),
-                                    SizedBox(
-                                      width: 130,
-                                      height: 30,
-                                      child: CustomButton1(
-                                        title: 'Từ chối',
-                                        color: AppColors.grey747474,
-                                        textColor: AppColors.black,
-                                        hasRadius: true,
-                                        backColor: AppColors.whiteFFFFFF,
-                                        onPressed: () {
-                                          listTeacherSuggestController.refuseOffer(
-                                              int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
-                                          controller.acepted = true;
-                                          controller.update();
-                                        },
-                                      ),
-                                    ),
-                                    Spacer(),
-                                  ],
+                                SizedBox(
+                                  width: 130,
+                                  height: 30,
+                                  child: CustomButton1(
+                                    title: controller.resultDetailTeacher.data.data.dataInfo.checkSave ? 'Bỏ Lưu' : 'Lưu',
+                                    color: AppColors.grey747474,
+                                    textColor: AppColors.black,
+                                    hasRadius: true,
+                                    backColor: AppColors.whiteFFFFFF,
+                                    onPressed: () {
+                                      if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
+                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
+                                        homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                        controller.update();
+                                      } else {
+                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
+                                        homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                        controller.update();
+                                      }
+                                    },
+                                  ),
                                 ),
+                                Spacer(),
                               ],
                             )
+                          : controller.acepted
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                          text: '${controller.resultDetailTeacher.data.data.dataInfo.ugsName}',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, lineHeight: 24),
+                                          children: [
+                                            TextSpan(
+                                              text: ' đã đề nghị dạy lớp\n',
+                                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 24),
+                                            ),
+                                            TextSpan(
+                                              text: SpUtil.getString(ConstString.NAME_CLASS),
+                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                            )
+                                          ]),
+                                    ),
+                                    SizedBox(
+                                      height: AppDimens.space10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Spacer(),
+                                        SizedBox(
+                                          width: 130,
+                                          height: 30,
+                                          child: CustomButton2(
+                                            color: AppColors.primary4C5BD4,
+                                            hasRadius: true,
+                                            textColor: AppColors.whiteFFFFFF,
+                                            onPressed: () {
+                                              listTeacherSuggestController.acceptOffer(
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                              controller.acepted = true;
+                                              controller.update();
+                                            },
+                                            title: 'Đồng ý',
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.space6,
+                                        ),
+                                        SizedBox(
+                                          width: 130,
+                                          height: 30,
+                                          child: CustomButton1(
+                                            title: 'Từ chối',
+                                            color: AppColors.grey747474,
+                                            textColor: AppColors.black,
+                                            hasRadius: true,
+                                            backColor: AppColors.whiteFFFFFF,
+                                            onPressed: () {
+                                              listTeacherSuggestController.refuseOffer(
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                              controller.acepted = true;
+                                              controller.update();
+                                            },
+                                          ),
+                                        ),
+                                        Spacer(),
+                                      ],
+                                    ),
+                                  ],
+                                )
                 ],
               ),
             ),

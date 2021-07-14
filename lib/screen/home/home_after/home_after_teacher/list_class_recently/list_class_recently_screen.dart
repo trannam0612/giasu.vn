@@ -84,7 +84,7 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
         backgroundColor: AppColors.greyf6f6f6,
         appBar: AppBar(
           title: Text(
-            'Lớp học gần đây',
+            'Lớp học mới nhất',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
@@ -240,11 +240,14 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                                           SizedBox(
                                             width: AppDimens.space4,
                                           ),
-                                          Text(
-                                            convertDate(int.parse(controller.listLHGDMore[index].dayPost)),
-                                            style: AppTextStyles.regular(
-                                              context,
-                                              size: AppDimens.textSize14,
+                                          Expanded(
+                                            child: Text(
+                                              convertDate(int.parse(controller.listLHGDMore[index].dayPost)),
+                                              style: AppTextStyles.regular(
+                                                context,
+                                                size: AppDimens.textSize14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],

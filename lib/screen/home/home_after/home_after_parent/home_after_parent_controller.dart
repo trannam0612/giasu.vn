@@ -19,8 +19,8 @@ class HomeAfterParentController extends GetxController {
   ResultSaveTutor resultSaveTutor = ResultSaveTutor();
   ResultDeleteTutorSaved resultDeleteTutorSaved = ResultDeleteTutorSaved();
   bool checkSave;
-  List<DataDsgsgd> listGSGD = [];
-  List<DataDsgspb> listGSPB = [];
+  List<DataDsgs> listGSGD = [];
+  List<DataDsgs> listGSPB = [];
 
   @override
   void onInit() {
