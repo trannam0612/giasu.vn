@@ -35,6 +35,7 @@ class SelectTypeLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeBeforeController homeBeforeController = Get.put(HomeBeforeController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.greyf6f6f6,
@@ -136,7 +137,7 @@ class SelectTypeLoginScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // Get.toNamed(Routes.FORGOT);
+                    homeBeforeController.homeBefore();
                   },
                   child: Text(
                     'Truy cập không cần tài khoản',
