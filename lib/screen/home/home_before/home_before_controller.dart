@@ -24,7 +24,7 @@ class HomeBeforeController extends GetxController {
       listGSGD = resultHomeBefore.data.dataGs;
       listLHPB = resultHomeBefore.data.dataDslh;
       Get.back();
-      Get.to(NavigationScreen());
+      Get.to(HomeBeforeScreen());
     }
     update();
   }

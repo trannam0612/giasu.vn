@@ -82,6 +82,8 @@ class ListClass {
     this.pftAddress,
     this.linkDetailClass,
     this.dayPost,
+    this.trangthaiLop,
+    this.listClassTrangthaiLop,
   });
 
   String pftId;
@@ -100,6 +102,8 @@ class ListClass {
   String pftAddress;
   String linkDetailClass;
   String dayPost;
+  String trangthaiLop;
+  String listClassTrangthaiLop;
 
   factory ListClass.fromJson(Map<String, dynamic> json) => ListClass(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -118,6 +122,8 @@ class ListClass {
     pftAddress: json["pft_address"] == null ? null : json["pft_address"],
     linkDetailClass: json["link_detailClass"] == null ? null : json["link_detailClass"],
     dayPost: json["day_post"] == null ? null : json["day_post"],
+    trangthaiLop: json["trangthai_lop"] == null ? null : json["trangthai_lop"],
+    listClassTrangthaiLop: json["trangthai_lop_"] == null ? null : json["trangthai_lop_"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -137,6 +143,8 @@ class ListClass {
     "pft_address": pftAddress == null ? null : pftAddress,
     "link_detailClass": linkDetailClass == null ? null : linkDetailClass,
     "day_post": dayPost == null ? null : dayPost,
+    "trangthai_lop": trangthaiLop == null ? null : trangthaiLop,
+    "trangthai_lop_": listClassTrangthaiLop == null ? null : listClassTrangthaiLop,
   };
 }
 

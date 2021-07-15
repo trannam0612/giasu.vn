@@ -388,6 +388,11 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL1');
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL1 && salaryUL1.text.length < salaryUL2.text.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        errorLuong = true;
+        update();
+      });
     }
     return null;
   }
@@ -396,6 +401,11 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL2');
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL2 && salaryUL2.text.length < salaryUL1.text.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        errorLuong = true;
+        update();
+      });
     }
     return null;
   }
@@ -800,21 +810,16 @@ class UpdateInfoTeacherController extends GetxController {
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
     print('checkNullButton');
-    print(fullName.text);
-    print(phone.text);
-    print(errorMarriage);
-    print(provincial.text);
-    print(district.text);
-    print(informationExp.text);
     if (fullName.text.isNotEmpty &&
-        phone.text.isNotEmpty &&
-        regExp.hasMatch(phone.text) &&
-        // dateTime.text.isNotEmpty &&
-        // errorGender == false &&
-        errorMarriage == false &&
-        provincial.text.isNotEmpty &&
-        district.text.isNotEmpty
-    // &&
+            phone.text.isNotEmpty &&
+            regExp.hasMatch(phone.text) &&
+            // dateTime.text.isNotEmpty &&
+            // errorGender == false &&
+            errorMarriage == false &&
+            provincial.text.isNotEmpty &&
+            district.text.isNotEmpty &&
+            f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text))
+        // &&
         // address.text.isNotEmpty &&
         // numberYearExp.text.isNotEmpty &&
         // numberYearExp.text != '0' &&
@@ -823,7 +828,7 @@ class UpdateInfoTeacherController extends GetxController {
         // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
         // timeExpEnd.text.isNotEmpty &&
         // informationExp.text.isNotEmpty
-    ) {
+        ) {
       Get.to(UpdateInfoTeacherStep2Screen());
     } else {
       Get.dialog(DialogError(
@@ -837,6 +842,7 @@ class UpdateInfoTeacherController extends GetxController {
   }
 
   bool errorBuoiDay = false;
+  bool errorLuong = false;
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');

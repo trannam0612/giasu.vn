@@ -13,6 +13,7 @@ import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -423,7 +424,7 @@ class RegisterGiaSuController extends GetxController {
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
     } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
+      return 'Mật khẩu sai định dạng!';
     }
     return null;
   }
@@ -703,25 +704,29 @@ class RegisterGiaSuController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    if (valueCheckEmailGS.value &&
-        email.text.contains('@') &&
-        email.text.contains('.') &&
-        passWord.text.length >= 8 &&
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
-        passWord.text.isNotEmpty &&
-        passWord.text == rePassWord.text &&
-        rePassWord.text.isNotEmpty) {
-      print('done');
-      Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
+    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      Get.dialog(DialogErrorPass());
     } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+      if (valueCheckEmailGS.value &&
+          email.text.contains('@') &&
+          email.text.contains('.') &&
+          passWord.text.length >= 8 &&
+          RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
+          passWord.text.isNotEmpty &&
+          passWord.text == rePassWord.text &&
+          rePassWord.text.isNotEmpty) {
+        print('done');
+        Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
+      update();
     }
-    update();
   }
 
   void checkButtonStep2() {

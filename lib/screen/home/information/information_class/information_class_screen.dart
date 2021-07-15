@@ -95,83 +95,35 @@ class InformationClassScreen extends StatelessWidget {
                 SizedBox(
                   height: AppDimens.space16,
                 ),
-                controller.user == '1'
-                    ? Column(
-                        children: [
-                          Text(
-                            'Nhấn để thay đổi trạng thái',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.greyAAAAAA),
-                          ),
-                          SizedBox(
-                            height: AppDimens.space8,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              controller.resultDetailClass.data.data.dataInfo.trangthaiLop == 'Đã có gia sư'
-                                  ? controller.changeStatusPost(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId), 0)
-                                  : controller.changeStatusPost(int.parse(controller.resultDetailClass.data.data.dataInfo.pftId), 1);
-                            },
-                            child: Center(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: AppDimens.space6, horizontal: AppDimens.space12),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 0.5,
-                                    color: AppColors.primary4C5BD4,
-                                  ),
-                                  color: AppColors.primary1574D0,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      'Trạng thái:',
-                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF),
-                                    ),
-                                    SizedBox(
-                                      width: AppDimens.space6,
-                                    ),
-                                    Text(
-                                      controller.textChangeStatus,
-                                      style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Center(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: AppDimens.space6, horizontal: AppDimens.space12),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.5,
-                              color: AppColors.primary4C5BD4,
-                            ),
-                            color: AppColors.primary1574D0,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Trạng thái:',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF),
-                              ),
-                              SizedBox(
-                                width: AppDimens.space6,
-                              ),
-                              Text(
-                                controller.textChangeStatus,
-                                style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
-                              )
-                            ],
-                          ),
-                        ),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: AppDimens.space6, horizontal: AppDimens.space12),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 0.5,
+                        color: AppColors.primary4C5BD4,
                       ),
+                      color: AppColors.whiteFFFFFF,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Trạng thái:',
+                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                        ),
+                        SizedBox(
+                          width: AppDimens.space6,
+                        ),
+                        Text(
+                          controller.textChangeStatus,
+                          style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: AppColors.secondaryF8971C),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: AppDimens.space16,
                 ),

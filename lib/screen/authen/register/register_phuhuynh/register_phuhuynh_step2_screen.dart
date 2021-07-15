@@ -57,6 +57,24 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.height * 0.07,
                         ),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Ảnh đại diện ',
+                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: '*',
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
                         InkWell(
                           onTap: () {
                             Get.dialog(DialogImage());
@@ -94,6 +112,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                                 ),
                               )
                             : Container(),
+
                         SizedBox(
                           height: AppDimens.space10,
                         ),

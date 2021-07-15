@@ -15,16 +15,16 @@ class ResultHomeAfterParent {
   });
 
   Data data;
-  dynamic error;
+  Error error;
 
   factory ResultHomeAfterParent.fromJson(Map<String, dynamic> json) => ResultHomeAfterParent(
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    error: json["error"],
+    error: json["error"] == null ? null : Error.fromJson(json["error"]),
   );
 
   Map<String, dynamic> toJson() => {
     "data": data == null ? null : data.toJson(),
-    "error": error,
+    "error": error == null ? null : error.toJson(),
   };
 }
 
@@ -110,7 +110,6 @@ class DataDsgs {
     this.ugsUnitPrice,
     this.ugsMonth,
     this.checkSave,
-    this.asName,
   });
 
   String ugsId;
@@ -131,9 +130,8 @@ class DataDsgs {
   String cityDetailNameGs;
   String ugsAboutUs;
   String ugsUnitPrice;
-  String ugsMonth;
+  UgsMonth ugsMonth;
   bool checkSave;
-  String asName;
 
   factory DataDsgs.fromJson(Map<String, dynamic> json) => DataDsgs(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
@@ -154,9 +152,8 @@ class DataDsgs {
     cityDetailNameGs: json["city_detail_name_gs"] == null ? null : json["city_detail_name_gs"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
     ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    ugsMonth: json["ugs_month"] == null ? null : ugsMonthValues.map[json["ugs_month"]],
     checkSave: json["check_save"] == null ? null : json["check_save"],
-    asName: json["as_name"] == null ? null : json["as_name"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -178,11 +175,16 @@ class DataDsgs {
     "city_detail_name_gs": cityDetailNameGs == null ? null : cityDetailNameGs,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "ugs_month": ugsMonth == null ? null : ugsMonthValues.reverse[ugsMonth],
     "check_save": checkSave == null ? null : checkSave,
-    "as_name": asName == null ? null : asName,
   };
 }
+
+enum UgsMonth { THNG }
+
+final ugsMonthValues = EnumValues({
+  "Tháng": UgsMonth.THNG
+});
 
 class PaningGs {
   PaningGs({
@@ -206,4 +208,38 @@ class PaningGs {
     "limit": limit == null ? null : limit,
     "total": total == null ? null : total,
   };
+}
+
+class Error {
+  Error({
+    this.result,
+    this.message,
+  });
+
+  bool result;
+  String message;
+
+  factory Error.fromJson(Map<String, dynamic> json) => Error(
+    result: json["result"] == null ? null : json["result"],
+    message: json["message"] == null ? null : json["message"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "result": result == null ? null : result,
+    "message": message == null ? null : message,
+  };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

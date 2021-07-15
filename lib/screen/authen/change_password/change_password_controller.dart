@@ -7,6 +7,7 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
+import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:giasu_vn/widgets/dialog_password.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -73,7 +74,7 @@ class ChangePasswordController extends GetxController {
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
     } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
+      return 'Mật khẩu sai định dạng!';
     }
     return null;
   }
@@ -92,16 +93,23 @@ class ChangePasswordController extends GetxController {
     errorShowPassword = true;
     errorShowRePassword = true;
     errorShowOldPassword = true;
-    oldPassWord.text.isNotEmpty && RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text && passWord.text.length >= 6
-        ? changePassword()
-        // Get.to(RegisterParentStep2Screen())
-        : Get.dialog(DialogError(
-            title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-            onTap: () => Get.back(),
-            textButton: 'Ok',
-            richText: false,
-          ));
-    update();
+    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      Get.dialog(DialogErrorPass());
+    } else {
+      oldPassWord.text.isNotEmpty &&
+              RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
+              rePassWord.text == passWord.text &&
+              passWord.text.length >= 6
+          ? changePassword()
+          // Get.to(RegisterParentStep2Screen())
+          : Get.dialog(DialogError(
+              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+              onTap: () => Get.back(),
+              textButton: 'Ok',
+              richText: false,
+            ));
+      update();
+    }
   }
 
   Future<void> changePassword() async {

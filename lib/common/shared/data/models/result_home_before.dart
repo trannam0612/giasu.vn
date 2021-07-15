@@ -15,16 +15,16 @@ class ResultHomeBefore {
   });
 
   Data data;
-  dynamic error;
+  Error error;
 
   factory ResultHomeBefore.fromJson(Map<String, dynamic> json) => ResultHomeBefore(
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    error: json["error"],
+    error: json["error"] == null ? null : Error.fromJson(json["error"]),
   );
 
   Map<String, dynamic> toJson() => {
     "data": data == null ? null : data.toJson(),
-    "error": error,
+    "error": error == null ? null : error.toJson(),
   };
 }
 
@@ -81,6 +81,7 @@ class DataDslh {
     this.pftPrice,
     this.pftMonth,
     this.dayPost,
+    this.countDnd,
   });
 
   String pftId;
@@ -98,6 +99,7 @@ class DataDslh {
   String pftPrice;
   String pftMonth;
   String dayPost;
+  String countDnd;
 
   factory DataDslh.fromJson(Map<String, dynamic> json) => DataDslh(
     pftId: json["pft_id"] == null ? null : json["pft_id"],
@@ -115,6 +117,7 @@ class DataDslh {
     pftPrice: json["pft_price"] == null ? null : json["pft_price"],
     pftMonth: json["pft_month"] == null ? null : json["pft_month"],
     dayPost: json["day_post"] == null ? null : json["day_post"],
+    countDnd: json["count_dnd"] == null ? null : json["count_dnd"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -133,6 +136,7 @@ class DataDslh {
     "pft_price": pftPrice == null ? null : pftPrice,
     "pft_month": pftMonth == null ? null : pftMonth,
     "day_post": dayPost == null ? null : dayPost,
+    "count_dnd": countDnd == null ? null : countDnd,
   };
 }
 
@@ -160,7 +164,7 @@ class DataG {
   String ugsName;
   String linkDetailTutor;
   String asId;
-  String asName;
+  List<String> asName;
   String asDetail;
   List<String> asDetailName;
   String ugsCity;
@@ -169,7 +173,7 @@ class DataG {
   List<String> cityDetailName;
   String ugsAboutUs;
   String ugsUnitPrice;
-  String ugsMonth;
+  UgsMonth ugsMonth;
 
   factory DataG.fromJson(Map<String, dynamic> json) => DataG(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
@@ -177,7 +181,7 @@ class DataG {
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
     asId: json["as_id"] == null ? null : json["as_id"],
-    asName: json["as_name"] == null ? null : json["as_name"],
+    asName: json["as_name"] == null ? null : List<String>.from(json["as_name"].map((x) => x)),
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
     asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
     ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
@@ -186,7 +190,7 @@ class DataG {
     cityDetailName: json["city_detail_name"] == null ? null : List<String>.from(json["city_detail_name"].map((x) => x)),
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
     ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    ugsMonth: json["ugs_month"] == null ? null : ugsMonthValues.map[json["ugs_month"]],
   );
 
   Map<String, dynamic> toJson() => {
@@ -195,7 +199,7 @@ class DataG {
     "ugs_name": ugsName == null ? null : ugsName,
     "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
     "as_id": asId == null ? null : asId,
-    "as_name": asName == null ? null : asName,
+    "as_name": asName == null ? null : List<dynamic>.from(asName.map((x) => x)),
     "as_detail": asDetail == null ? null : asDetail,
     "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
     "ugs_city": ugsCity == null ? null : ugsCity,
@@ -204,9 +208,15 @@ class DataG {
     "city_detail_name": cityDetailName == null ? null : List<dynamic>.from(cityDetailName.map((x) => x)),
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "ugs_month": ugsMonth == null ? null : ugsMonthValues.reverse[ugsMonth],
   };
 }
+
+enum UgsMonth { THNG }
+
+final ugsMonthValues = EnumValues({
+  "Tháng": UgsMonth.THNG
+});
 
 class PaningGs {
   PaningGs({
@@ -254,4 +264,38 @@ class PaningLh {
     "limit": limit == null ? null : limit,
     "total": total == null ? null : total,
   };
+}
+
+class Error {
+  Error({
+    this.result,
+    this.message,
+  });
+
+  bool result;
+  String message;
+
+  factory Error.fromJson(Map<String, dynamic> json) => Error(
+    result: json["result"] == null ? null : json["result"],
+    message: json["message"] == null ? null : json["message"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "result": result == null ? null : result,
+    "message": message == null ? null : message,
+  };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

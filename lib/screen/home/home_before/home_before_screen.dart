@@ -27,8 +27,7 @@ class HomeBeforeScreen extends StatelessWidget {
       var now = new DateTime.now();
       var format = new DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
       var time = DateTime.parse(format.format(date));
-      var diff = now.difference(time)
-      ;
+      var diff = now.difference(time);
       if (diff.inDays > 365) return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "năm" : "năm"} trước";
       if (diff.inDays > 30) return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "tháng" : "tháng"} trước";
       if (diff.inDays > 7) return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "tuần" : "tuần"} trước";
@@ -37,15 +36,17 @@ class HomeBeforeScreen extends StatelessWidget {
       if (diff.inMinutes > 0) return "${diff.inMinutes} ${diff.inMinutes == 1 ? "phút" : "phút"} trước";
       return "vừa xong";
     }
+
     return GetBuilder<HomeBeforeController>(
       init: HomeBeforeController(),
-      builder: (controller) =>  SafeArea(
+      builder: (controller) => SafeArea(
           child: Scaffold(
               backgroundColor: AppColors.greyf6f6f6,
               body: SingleChildScrollView(
                 child: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
+                    image:
+                        DecorationImage(fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
                   ),
                   padding: EdgeInsets.all(AppDimens.space16),
                   child: Column(
@@ -133,7 +134,9 @@ class HomeBeforeScreen extends StatelessWidget {
                                   SizedBox(
                                     height: AppDimens.space4,
                                   ),
-                                  Text('(0)', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                  Text('(0)',
+                                      style: AppTextStyles.regular(context,
+                                          color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                                 ],
                               ),
                             ),
@@ -169,7 +172,9 @@ class HomeBeforeScreen extends StatelessWidget {
                                   SizedBox(
                                     height: AppDimens.space4,
                                   ),
-                                  Text('(0)', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                  Text('(0)',
+                                      style: AppTextStyles.regular(context,
+                                          color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                                 ],
                               ),
                             ),
@@ -205,7 +210,9 @@ class HomeBeforeScreen extends StatelessWidget {
                                   SizedBox(
                                     height: AppDimens.space4,
                                   ),
-                                  Text('(0)', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                  Text('(0)',
+                                      style: AppTextStyles.regular(context,
+                                          color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                                 ],
                               ),
                             ),
@@ -240,7 +247,9 @@ class HomeBeforeScreen extends StatelessWidget {
                                   SizedBox(
                                     height: AppDimens.space4,
                                   ),
-                                  Text('(0)', style: AppTextStyles.regular(context, color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                  Text('(0)',
+                                      style: AppTextStyles.regular(context,
+                                          color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
                                 ],
                               ),
                             )
@@ -287,11 +296,11 @@ class HomeBeforeScreen extends StatelessWidget {
                         height: AppDimens.space14,
                       ),
                       ListView.builder(
-                        shrinkWrap: true,
+                          shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) => InkWell(
-                            onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
+                                onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), null),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
@@ -317,7 +326,34 @@ class HomeBeforeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                backgroundColor: AppColors.whiteFFFFFF,
+                currentIndex: 0,
+                onTap: (value) => Get.dialog(DialogErrorLogin()),
+                items: [
+                  _buildBottomNavItem(
+                      SvgPicture.asset(
+                        Images.ic_home,
+                        width: 20,
+                        color: AppColors.primary4C5BD4,
+                      ),
+                      context),
+                  _buildBottomNavItem(SvgPicture.asset(Images.ic_message, width: 20, color: AppColors.greyAAAAAA), context),
+                  _buildBottomNavItem(SvgPicture.asset(Images.ic_notification, width: 20, color: AppColors.greyAAAAAA), context),
+                  _buildBottomNavItem(SvgPicture.asset(Images.ic_setting, width: 20, color: AppColors.greyAAAAAA), context),
+                ],
               ))),
     );
   }
+}
+
+BottomNavigationBarItem _buildBottomNavItem(icon, BuildContext context) {
+  return BottomNavigationBarItem(
+    backgroundColor: AppColors.whiteFFFFFF,
+    icon: icon,
+    label: '',
+  );
 }
