@@ -180,7 +180,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     InkWell(
                                       onTap: () {
                                         controller.changeStatusUser();
-                                        SpUtil.putString(ConstString.USER_TYPE, '1');
+                                        SpUtil.putString(ConstString.USER_TYPE, '2');
                                       },
                                       child: Row(
                                         children: [
@@ -200,7 +200,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     InkWell(
                                       onTap: () {
                                         controller.changeStatusUser();
-                                        SpUtil.putString(ConstString.USER_TYPE, '2');
+                                        SpUtil.putString(ConstString.USER_TYPE, '1');
                                       },
                                       child: Row(
                                         children: [

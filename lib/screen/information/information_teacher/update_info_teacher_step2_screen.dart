@@ -612,12 +612,12 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                           ),
                           controller.errorLuong
                               ? Padding(
-                            padding: const EdgeInsets.only(top: AppDimens.space4),
-                            child: Text(
-                              'Trường bắt buộc!',
-                              style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                            ),
-                          )
+                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  child: Text(
+                                    'Lương bắt đầu phải nhỏ hơn lương kết thúc!',
+                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                  ),
+                                )
                               : Container(),
                           SizedBox(
                             height: AppDimens.space8,

@@ -464,42 +464,40 @@ class InformationTeacherMore extends StatelessWidget {
                             SizedBox(
                               height: AppDimens.space10,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Cố định:',
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                ),
-                                Text(
-                                  '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: AppDimens.space20,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Ước lượng:',
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    '${controller.resultGetInfoTeacher.data.infoTutor.ugsSalary}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                    overflow: TextOverflow.clip,
-                                    textAlign: TextAlign.right,
-                                    maxLines: null,
+                            controller.resultGetInfoTeacher.data.infoTutor.ugsSalary == ''
+                                ? Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Cố định:',
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      ),
+                                      Text(
+                                        '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                      ),
+                                    ],
+                                  )
+                                : Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Ước lượng:',
+                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          '${controller.resultGetInfoTeacher.data.infoTutor.ugsSalary}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.right,
+                                          maxLines: null,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
                           ])),
                     ],
                   ),

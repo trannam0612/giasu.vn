@@ -293,6 +293,26 @@ class UpdateInfoTeacherController extends GetxController {
   void dispose() {
     // TODO: implement dispose
     fullName.dispose();
+    passWord.dispose();
+    rePassWord.dispose();
+    fullName.dispose();
+    email.dispose();
+    phone.dispose();
+
+    dateTime.dispose();
+    provincial.dispose();
+    district.dispose();
+    address.dispose();
+    numberYearExp.dispose();
+    titleExp.dispose();
+    timeExpStart.dispose();
+    timeExpEnd.dispose();
+    informationExp.dispose();
+    area.dispose();
+    salaryCD.dispose();
+    salaryUL1.dispose();
+    salaryUL2.dispose();
+    search.dispose();
     super.dispose();
   }
 
@@ -388,11 +408,6 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL1');
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorSalaryUL1 && salaryUL1.text.length < salaryUL2.text.length) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        errorLuong = true;
-        update();
-      });
     }
     return null;
   }
@@ -401,11 +416,6 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL2');
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorSalaryUL2 && salaryUL2.text.length < salaryUL1.text.length) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        errorLuong = true;
-        update();
-      });
     }
     return null;
   }
@@ -862,7 +872,6 @@ class UpdateInfoTeacherController extends GetxController {
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
-      print('11111');
       salaryCD.text.isNotEmpty &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
@@ -884,18 +893,7 @@ class UpdateInfoTeacherController extends GetxController {
               richText: false,
             ));
     } else {
-      print('abc');
-      print(salaryUL1.text);
-      print(salaryUL2.text);
-      print(errorKieuGS);
-      print(listSubjectSelect);
-      print(listSubjectSelectTopic);
-      print(selectedClass);
-      print(selectedFormTeaching);
-      print(area.text);
-      print(listDistrictSelect);
-      print(listDistrictSelect);
-
+      errorLuong = int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               !errorKieuGS &&
@@ -906,6 +904,7 @@ class UpdateInfoTeacherController extends GetxController {
               area.text.isNotEmpty &&
               listDistrictSelect.isNotEmpty &&
               data != null &&
+              int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
               !selectedStatusFee.isNullOrBlank
           // ignore: unnecessary_statements
           ? updateInfoTeacher()
@@ -984,6 +983,7 @@ class UpdateInfoTeacherController extends GetxController {
           idClass = int.parse(listDataClass[i].ctId);
         }
       }
+      valueButtonLuong = resultGetInfoTeacher.data.infoTutor.ugsSalary == '' ? true : false;
 
       // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
       idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
