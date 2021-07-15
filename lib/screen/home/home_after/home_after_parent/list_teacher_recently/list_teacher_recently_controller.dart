@@ -11,7 +11,7 @@ class ListTeacherRecentlyController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultHomeAfterParent resultHomeAfterParent = ResultHomeAfterParent();
   ResultHomeBefore resultHomeBefore = ResultHomeBefore();
-  List<DataDsgsgd> listGSGDMore = [];
+  List<DataDsgs> listGSGDMore = [];
   List<DataG> listGSGDBefore = [];
   Future<void> listTeacherRecently(int currentPage, int limit) async {
     String token = SpUtil.getString(ConstString.token);

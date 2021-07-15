@@ -122,9 +122,8 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           height: AppDimens.space10,
                         ),
                         Container(
-                          height: height * 0.17,
+                          height: 130,
                           child: ListView(
-                            shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             physics: BouncingScrollPhysics(),
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -133,6 +132,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 onTap: () => Get.to(ListTeacherInvitedScreen()),
                                 child: Container(
                                   width: width * 0.2,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -175,7 +175,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 onTap: () => Get.to(ListTeacherSuggestedScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.13,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -220,7 +220,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 )),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.13,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -263,7 +263,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 onTap: () => Get.to(ListTeacherSaved()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.13,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -306,7 +306,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 onTap: () => Get.to(ListTutorTeachingScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.13,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -349,7 +349,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 onTap: () => Get.to(ListTutorFromFilterPointScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.13,
+                                  height: 104,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -408,7 +408,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           ],
                         ),
                         Container(
-                          height: AppDimens.height * 0.188,
+                          height: 150,
                           child: ListView.separated(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
@@ -430,34 +430,31 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         SizedBox(
                           height: AppDimens.space14,
                         ),
-                        Container(
-                          height: AppDimens.height * 0.5,
-                          width: AppDimens.width,
-                          child: ListView.builder(
-                            itemBuilder: (context, index) => InkWell(
-                              onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSPB[index].ugsId), 0),
-                              child: CardTeacherHome2(
-                                name: controller.listGSPB[index].ugsName,
-                                rate: 3,
-                                subject: controller.listGSPB[index].asName,
-                                address: controller.listGSPB[index].citName,
-                                image: controller.listGSPB[index].ugsAvatar,
-                                saved: controller.listGSPB[index].checkSave,
-                                onTap: () {
-                                  if (!controller.listGSPB[index].checkSave) {
-                                    controller.listGSPB[index].checkSave = true;
-                                    controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
-                                    controller.update();
-                                  } else {
-                                    controller.listGSPB[index].checkSave = false;
-                                    controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
-                                    controller.update();
-                                  }
-                                },
-                              ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSPB[index].ugsId), 0),
+                            child: CardTeacherHome2(
+                              name: controller.listGSPB[index].ugsName,
+                              rate: 3,
+                              subject: controller.listGSPB[index].asName,
+                              address: "${controller.listGSPB[index].cityDetailNameGs}, ${controller.listGSPB[index].citName}",
+                              image: controller.listGSPB[index].ugsAvatar,
+                              saved: controller.listGSPB[index].checkSave,
+                              onTap: () {
+                                if (!controller.listGSPB[index].checkSave) {
+                                  controller.listGSPB[index].checkSave = true;
+                                  controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
+                                  controller.update();
+                                } else {
+                                  controller.listGSPB[index].checkSave = false;
+                                  controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
+                                  controller.update();
+                                }
+                              },
                             ),
-                            itemCount: controller.listGSPB.length,
                           ),
+                          itemCount: controller.listGSPB.length,
                         )
                       ],
                     ),

@@ -171,11 +171,14 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                       SizedBox(
                                         width: AppDimens.space6,
                                       ),
-                                      Text(
-                                        controller.listGSGDMore[index].asDetailName.join(', '),
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize14,
+                                      Expanded(
+                                        child: Text(
+                                          controller.listGSGDMore[index].asDetailName.join(', '),
+                                          style: AppTextStyles.regular(
+                                            context,
+                                            size: AppDimens.textSize14,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ],

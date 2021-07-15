@@ -101,7 +101,7 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
-                      height: height * 0.19,
+                      height: 142,
                       child: Stack(
                         alignment: Alignment.topLeft,
                         children: [
