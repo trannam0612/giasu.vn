@@ -243,7 +243,7 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: AppDimens.space20,
+                  height: AppDimens.space24,
                 ),
                 Text(
                   'Thông tin lớp học',
@@ -358,7 +358,13 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              controller.resultDetailClass.data.data.dataInfo.pftTime,
+                              controller.resultDetailClass.data.data.dataInfo.pftTime == '1'
+                                  ? '1,5'
+                                  : controller.resultDetailClass.data.data.dataInfo.pftTime == '2'
+                                      ? '2'
+                                      : controller.resultDetailClass.data.data.dataInfo.pftTime == '3'
+                                          ? '2,5'
+                                          : '3',
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -388,7 +394,7 @@ class InformationClassScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(AppDimens.space20),
+                  padding: const EdgeInsets.all(AppDimens.space24),
                   child: Text(
                     'Số buổi có thể học',
                     style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),

@@ -314,7 +314,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           iconSuffix: Images.ic_arrow_down,
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -383,7 +383,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextFieldBox(
                           hasTitle: false,

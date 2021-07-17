@@ -103,6 +103,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.all(AppDimens.padding8),
                                 decoration: BoxDecoration(
+                                    color: AppColors.whiteFFFFFF,
                                     borderRadius: BorderRadius.circular(AppDimens.space10),
                                     border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listSubjectSelect.isNotEmpty
@@ -205,6 +206,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.all(AppDimens.padding8),
                                   decoration: BoxDecoration(
+                                      color: AppColors.whiteFFFFFF,
                                       borderRadius: BorderRadius.circular(AppDimens.space10),
                                       border: Border.all(color: controller.errorSubjectTopic ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                   child: controller.listSubjectSelectTopic.isNotEmpty

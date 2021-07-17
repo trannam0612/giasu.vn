@@ -400,6 +400,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryCD');
     if (errorSalaryCD && salaryCD.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryCD && int.parse(salaryCD.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -408,6 +410,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL1');
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL1 && int.parse(salaryUL1.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -416,6 +420,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL2');
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL2 && int.parse(salaryUL2.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -872,7 +878,9 @@ class UpdateInfoTeacherController extends GetxController {
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
+      print('TH1');
       salaryCD.text.isNotEmpty &&
+              int.parse(salaryCD.text) > 0 &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
               listSubjectSelectTopic.isNotEmpty &&
@@ -893,6 +901,8 @@ class UpdateInfoTeacherController extends GetxController {
               richText: false,
             ));
     } else {
+      print('TH2');
+
       errorLuong = int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
@@ -904,6 +914,8 @@ class UpdateInfoTeacherController extends GetxController {
               area.text.isNotEmpty &&
               listDistrictSelect.isNotEmpty &&
               data != null &&
+              int.parse(salaryUL1.text) > 0 &&
+              int.parse(salaryUL2.text) > 0 &&
               int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
               !selectedStatusFee.isNullOrBlank
           // ignore: unnecessary_statements
