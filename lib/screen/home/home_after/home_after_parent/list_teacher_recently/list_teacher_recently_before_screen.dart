@@ -100,7 +100,7 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
-                height: height * 0.2,
+                height: height * 0.22,
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [

@@ -224,7 +224,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        '${controller.listGSGDMore[index].ugsUnitPrice}vnđ/${controller.listGSGDMore[index].ugsMonth}',
+                                        '${controller.listGSGDMore[index].ugsUnitPrice} vnđ/ ${controller.listGSGDMore[index].ugsMonth}',
                                         style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],

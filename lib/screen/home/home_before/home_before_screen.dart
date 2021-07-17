@@ -104,7 +104,7 @@ class HomeBeforeScreen extends StatelessWidget {
                           children: [
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.145,
+                              height: 104,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -142,7 +142,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.145,
+                              height: 104,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -180,7 +180,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.145,
+                              height: 104,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -218,7 +218,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             ),
                             Container(
                               width: AppDimens.width * 0.2,
-                              height: AppDimens.height * 0.145,
+                              height: 104,
                               padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),

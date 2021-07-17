@@ -30,7 +30,7 @@ class DialogErrorPass extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppDimens.space40),
               child: Text(
-                'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số',
+                'Mật khẩu không chứa dấu cách, bao gồm chữ hoa, chữ thường và ít nhất một chữ số',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey686F7A, lineHeight: 22),
               ),

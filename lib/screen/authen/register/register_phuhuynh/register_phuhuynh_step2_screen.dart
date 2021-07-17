@@ -73,7 +73,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         InkWell(
                           onTap: () {
@@ -114,7 +114,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                             : Container(),
 
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           textEditingController: controller.fullName,
@@ -130,7 +130,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           iconSuffix: Images.ic_file_upload,
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -145,7 +145,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           error: controller.checkPhone(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         DropDownSelect(
                           title: 'Giới Tính',
@@ -166,7 +166,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         //       )
                         //     : Container(),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           onTapTextField: () {
@@ -188,7 +188,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           // error: controller.checkDate(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           onTapTextField: () {
@@ -206,7 +206,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           error: controller.checkProvincial(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           onTapTextField: () {
@@ -223,7 +223,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           error: controller.checkDistrict(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           onTapTextField: () {},
@@ -236,7 +236,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           // error: controller.checkAddress(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextFieldBox(
                           error: controller.checkInformation(),

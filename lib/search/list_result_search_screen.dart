@@ -373,7 +373,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        controller.listDataTeacher[index].asName,
+                                        controller.listDataTeacher[index].asName.join(','),
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,

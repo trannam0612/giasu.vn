@@ -16,6 +16,7 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:giasu_vn/widgets/dialog_error_login.dart';
 import 'package:giasu_vn/widgets/dialog_watch_teacher.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -25,10 +26,24 @@ import '../../../../common/theme/app_dimens.dart';
 import '../../../../common/utils.dart';
 import 'checkbox_list_class.dart';
 
-class InformationTeacherScreen extends StatelessWidget {
+class InformationTeacherScreen extends StatefulWidget {
   final int type;
 
   const InformationTeacherScreen({Key key, this.type = 0}) : super(key: key);
+
+  @override
+  _InformationTeacherScreenState createState() => _InformationTeacherScreenState();
+}
+
+class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    informationTeacherController.token = SpUtil.getString(ConstString.token);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,15 +171,19 @@ class InformationTeacherScreen extends StatelessWidget {
                                   )
                                 : Expanded(
                                     child: InkWell(
-                                      onTap: () => Get.dialog(DialogWatchTeacher(
-                                        teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                        nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                        ontap: () {
-                                          controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                          Get.back();
-                                          controller.update();
-                                        },
-                                      )),
+                                      onTap: () {
+                                        controller.token != ''
+                                            ? Get.dialog(DialogWatchTeacher(
+                                                teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                                ontap: () {
+                                                  controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                                  Get.back();
+                                                  controller.update();
+                                                },
+                                              ))
+                                            : Get.dialog(DialogErrorLogin());
+                                      },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
                                         decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
@@ -205,15 +224,17 @@ class InformationTeacherScreen extends StatelessWidget {
                                   )
                                 : Expanded(
                                     child: InkWell(
-                                      onTap: () => Get.dialog(DialogWatchTeacher(
-                                        teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                        nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                        ontap: () {
-                                          controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                          Get.back();
-                                          controller.update();
-                                        },
-                                      )),
+                                      onTap: () => controller.token != ''
+                                          ? Get.dialog(DialogWatchTeacher(
+                                              teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                              nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                              ontap: () {
+                                                controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                                Get.back();
+                                                controller.update();
+                                              },
+                                            ))
+                                          : Get.dialog(DialogErrorLogin()),
                                       child: Container(
                                         padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
                                         decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
@@ -795,9 +816,9 @@ class InformationTeacherScreen extends StatelessWidget {
                   SizedBox(
                     height: AppDimens.space16,
                   ),
-                  type == 5
+                  widget.type == 5
                       ? Container()
-                      : type == 0
+                      : widget.type == 0
                           ? Row(
                               children: [
                                 Spacer(),
@@ -809,11 +830,13 @@ class InformationTeacherScreen extends StatelessWidget {
                                     hasRadius: true,
                                     textColor: AppColors.whiteFFFFFF,
                                     onPressed: () {
-                                      Get.dialog(CheckboxListClass(
-                                        name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                        imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
-                                        idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
-                                      ));
+                                      controller.token != ''
+                                          ? Get.dialog(CheckboxListClass(
+                                              name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                              imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                                              idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
+                                            ))
+                                          : Get.dialog(DialogErrorLogin());
                                     },
                                     title: 'Mời dạy',
                                   ),
@@ -831,14 +854,19 @@ class InformationTeacherScreen extends StatelessWidget {
                                     hasRadius: true,
                                     backColor: AppColors.whiteFFFFFF,
                                     onPressed: () {
-                                      if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
-                                        homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        controller.update();
+                                      if (controller.token != '') {
+                                        if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
+                                          controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
+                                          homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          controller.update();
+                                        } else {
+                                          controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
+                                          homeAfterParentController
+                                              .deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          controller.update();
+                                        }
                                       } else {
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
-                                        homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        controller.update();
+                                        Get.dialog(DialogErrorLogin());
                                       }
                                     },
                                   ),
@@ -862,7 +890,8 @@ class InformationTeacherScreen extends StatelessWidget {
                                             ),
                                             TextSpan(
                                               text: SpUtil.getString(ConstString.NAME_CLASS),
-                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                              style: AppTextStyles.regularW500(context,
+                                                  size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
                                             )
                                           ]),
                                     ),
@@ -881,7 +910,8 @@ class InformationTeacherScreen extends StatelessWidget {
                                             textColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.acceptOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
@@ -902,7 +932,8 @@ class InformationTeacherScreen extends StatelessWidget {
                                             backColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.refuseOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },

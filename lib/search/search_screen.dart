@@ -34,7 +34,10 @@ class _SearchScreenState extends State<SearchScreen> {
     searchController.displayCurrentLocation();
     if (searchController.token == '') {
       SpUtil.putString(ConstString.USER_TYPE, '2');
+    }else{
+      SpUtil.putString(ConstString.USER_TYPE, '1');
     }
+    searchController.token = SpUtil.getString(ConstString.token);
     // TODO: implement initState
     super.initState();
   }
@@ -231,13 +234,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               child: CustomButton2(
                                 color: AppColors.primary4C5BD4,
                                 onPressed: () {
-                                  print(controller.idProvincial);
-                                  print(controller.idClass);
-                                  print(controller.idSubject);
-                                  print(controller.idForm);
-                                  // SpUtil.putString(ConstString.USER_TYPE, '2');
-                                  controller.userType == '1' ? Get.to(ListResultSearchScreen()) : Get.to(ListResultSearchScreen());
+                                  Get.to(ListResultSearchScreen());
                                 },
+                                // controller.userType == '1' ? Get.to(ListResultSearchScreen()) : Get.to(ListResultSearchScreen());
+                                // },
                                 title: 'Tìm kiếm',
                                 textColor: AppColors.whiteFFFFFF,
                               ),

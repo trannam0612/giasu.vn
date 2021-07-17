@@ -70,7 +70,7 @@ class WelcomeController extends GetxController {
       Utils.showToast(resultCheckToken.data.message);
     } else {
       Get.to(SelectTypeLoginScreen());
-      Utils.showToast(resultCheckToken.error.message);
+      // Utils.showToast(resultCheckToken.error.message);
     }
     update();
   }
