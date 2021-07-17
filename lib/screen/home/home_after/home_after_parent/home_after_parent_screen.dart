@@ -404,7 +404,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Gia sư mới nhất', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                            Text('Gia sư gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
                             InkWell(
                               onTap: () => Get.to(ListTeacherRecentlyScreen()),
                               child: Text(
@@ -444,7 +444,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                             child: CardTeacherHome2(
                               name: controller.listGSPB[index].ugsName,
                               rate: 3,
-                              subject: controller.listGSPB[index].asDetailName.join(','),
+                              subject: controller.listGSPB[index].asDetailName.join(', '),
                               address: "${controller.listGSPB[index].cityDetailNameGs}, ${controller.listGSPB[index].citName}",
                               image: controller.listGSPB[index].ugsAvatar,
                               saved: controller.listGSPB[index].checkSave,

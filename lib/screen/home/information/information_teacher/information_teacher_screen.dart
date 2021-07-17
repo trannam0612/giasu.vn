@@ -104,8 +104,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                     controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.regularW700(context,
-                        size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
+                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -269,8 +268,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
                     child: Text(
                       controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
-                      style: AppTextStyles.regularW400(context,
-                          size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
+                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -484,6 +482,29 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                               Text(
                                 controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.25,
+                          color: AppColors.greyAAAAAA,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Học phí giảng dạy:',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              ),
+                              Text(
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                    ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                    : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                textAlign: TextAlign.right,
                               ),
                             ],
                           ),
@@ -734,8 +755,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                         'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
                                         softWrap: true,
                                         textAlign: TextAlign.left,
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                     ),
                                     SizedBox(
@@ -861,8 +881,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                           controller.update();
                                         } else {
                                           controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
-                                          homeAfterParentController
-                                              .deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
                                           controller.update();
                                         }
                                       } else {
@@ -890,8 +909,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             ),
                                             TextSpan(
                                               text: SpUtil.getString(ConstString.NAME_CLASS),
-                                              style: AppTextStyles.regularW500(context,
-                                                  size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
                                             )
                                           ]),
                                     ),
@@ -910,8 +928,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             textColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.acceptOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
@@ -932,8 +949,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             backColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.refuseOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
