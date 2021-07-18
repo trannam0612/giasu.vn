@@ -439,6 +439,7 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         ),
                         ListView.builder(
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) => InkWell(
                             onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSPB[index].ugsId), 0),
                             child: CardTeacherHome2(

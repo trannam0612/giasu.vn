@@ -100,7 +100,7 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
-                height: height * 0.22,
+                height: 138,
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
@@ -221,7 +221,7 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  '${controller.listGSGDBefore[index].ugsUnitPrice}vnđ/${controller.listGSGDBefore[index].ugsMonth}',
+                                  controller.listGSGDBefore[index].ugsUnitPrice =='0' ?'${controller.listGSGDBefore[index].ugsSalary} vnđ/${controller.listGSGDBefore[index].ugsMonth}': '${controller.listGSGDBefore[index].ugsUnitPrice} vnđ/${controller.listGSGDBefore[index].ugsMonth}',
                                   style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                 ),
                               ],

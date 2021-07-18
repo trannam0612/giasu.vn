@@ -328,8 +328,9 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           height: AppDimens.space14,
                         ),
                         ListView.builder(
-                          shrinkWrap: true,
+                            shrinkWrap: true,
                             scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) => InkWell(
                                   onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
                                   child: Container(
