@@ -15,16 +15,16 @@ class ResultTutorSaved {
   });
 
   Data data;
-  Error error;
+  dynamic error;
 
   factory ResultTutorSaved.fromJson(Map<String, dynamic> json) => ResultTutorSaved(
     data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    error: json["error"] == null ? null : Error.fromJson(json["error"]),
+    error: json["error"],
   );
 
   Map<String, dynamic> toJson() => {
     "data": data == null ? null : data.toJson(),
-    "error": error == null ? null : error.toJson(),
+    "error": error,
   };
 }
 
@@ -80,6 +80,7 @@ class ListGsdl {
     this.stDate,
     this.ugsUnitPrice,
     this.ugsMonth,
+    this.ugsSalary,
   });
 
   String ugsTeach;
@@ -96,6 +97,7 @@ class ListGsdl {
   String stDate;
   String ugsUnitPrice;
   String ugsMonth;
+  String ugsSalary;
 
   factory ListGsdl.fromJson(Map<String, dynamic> json) => ListGsdl(
     ugsTeach: json["ugs_teach"] == null ? null : json["ugs_teach"],
@@ -112,6 +114,7 @@ class ListGsdl {
     stDate: json["st_date"] == null ? null : json["st_date"],
     ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
     ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    ugsSalary: json["ugs_salary"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -129,25 +132,6 @@ class ListGsdl {
     "st_date": stDate == null ? null : stDate,
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
     "ugs_month": ugsMonth == null ? null : ugsMonth,
-  };
-}
-
-class Error {
-  Error({
-    this.result,
-    this.message,
-  });
-
-  bool result;
-  String message;
-
-  factory Error.fromJson(Map<String, dynamic> json) => Error(
-    result: json["result"] == null ? null : json["result"],
-    message: json["message"] == null ? null : json["message"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "result": result == null ? null : result,
-    "message": message == null ? null : message,
+    "ugs_salary": ugsSalary,
   };
 }
