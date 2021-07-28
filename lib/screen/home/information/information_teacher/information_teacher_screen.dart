@@ -173,6 +173,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                       onTap: () {
                                         controller.token != ''
                                             ? Get.dialog(DialogWatchTeacher(
+                                          point: controller.resultDetailTeacher.data.data.dataInfo.pointFree,
                                                 teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                                                 nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                                                 ontap: () {

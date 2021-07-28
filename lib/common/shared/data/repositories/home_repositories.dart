@@ -302,7 +302,7 @@ class HomeRepositories {
     return rest;
   }
 
-  Future<ResultData> inviteTeach(String token, int idLop, int idGS) async {
+  Future<ResultData> inviteTeach(String token, String idLop, int idGS) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',

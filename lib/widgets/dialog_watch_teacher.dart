@@ -9,11 +9,12 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class DialogWatchTeacher extends StatelessWidget {
+  final String point;
   final String nameUser;
   final int teachId;
   final VoidCallback ontap;
 
-  const DialogWatchTeacher({Key key, this.nameUser, this.teachId, this.ontap}) : super(key: key);
+  const DialogWatchTeacher({Key key, this.nameUser, this.teachId, this.ontap, this.point}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,8 @@ class DialogWatchTeacher extends StatelessWidget {
             // SizedBox(
             //   height: AppDimens.space10,
             // ),
+            SizedBox(height: 2,),
+            Text('(Bạn đang có $point điểm)', style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),),
             SizedBox(height: AppDimens.space20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
