@@ -212,7 +212,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.provincial,

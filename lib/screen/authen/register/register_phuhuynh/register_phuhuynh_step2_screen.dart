@@ -166,7 +166,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         //       )
                         //     : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           onTapTextField: () {

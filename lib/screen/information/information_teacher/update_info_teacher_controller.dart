@@ -724,7 +724,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListTopic = resultListTopicFromJson(res.data);
     if (resultListTopic.data != null) {
       listTopic = resultListTopic.data.listSubjectTag;
-      Utils.showToast(resultListTopic.data.message);
+      // Utils.showToast(resultListTopic.data.message);
     } else {
       // Utils.showToast(resultListTopic.error.message);
     }
@@ -751,7 +751,7 @@ class UpdateInfoTeacherController extends GetxController {
           }
         }
       });
-      Utils.showToast(resultListTopic.data.message);
+      // Utils.showToast(resultListTopic.data.message);
     } else {
       // Utils.showToast(resultListTopic.error.message);
     }
@@ -764,7 +764,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
+      // Utils.showToast(resultListDistrict.data.message);
     } else {
       // Utils.showToast(resultListDistrict.error.message);
     }
@@ -777,7 +777,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrictArea = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
+      // Utils.showToast(resultListDistrict.data.message);
     } else {
       // Utils.showToast(resultListDistrict.error.message);
     }
@@ -947,7 +947,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
       Get.back();
-      Utils.showToast(resultGetInfoTeacher.data.message);
+      // Utils.showToast(resultGetInfoTeacher.data.message);
       urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
       print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
       fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;

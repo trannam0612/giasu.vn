@@ -76,7 +76,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 )
                               : Container(),
                           SizedBox(
-                            height: AppDimens.space20,
+                            height: AppDimens.space30,
                           ),
                           RichText(
                             text: TextSpan(
@@ -103,6 +103,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.all(AppDimens.padding8),
                                 decoration: BoxDecoration(
+                                    color: AppColors.whiteFFFFFF,
                                     borderRadius: BorderRadius.circular(AppDimens.space10),
                                     border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listSubjectSelect.isNotEmpty
@@ -208,6 +209,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.all(AppDimens.padding8),
                                   decoration: BoxDecoration(
+                                      color: AppColors.whiteFFFFFF,
                                       borderRadius: BorderRadius.circular(AppDimens.space10),
                                       border: Border.all(color: controller.errorSubjectTopic ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                   child: controller.listSubjectSelectTopic.isNotEmpty
@@ -302,7 +304,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 )
                               : Container(),
                           SizedBox(
-                            height: AppDimens.space20,
+                            height: AppDimens.space30,
                           ),
                           DropDownSelect(
                             title: 'Hình thức giảng dạy',
@@ -324,7 +326,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 )
                               : Container(),
                           SizedBox(
-                            height: AppDimens.space20,
+                            height: AppDimens.space30,
                           ),
                           CustomTextField(
                             onTapTextField: () {
@@ -551,10 +553,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 isPassword: false,
                                               ),
                                             ),
-                                            Text(
-                                              '~',
-                                              style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
-                                            ),
+                                            SizedBox(width: 10,),
                                             Expanded(
                                               child: CustomTextField(
                                                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -611,12 +610,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           controller.errorLuong
                               ? Padding(
-                            padding: const EdgeInsets.only(top: AppDimens.space4),
-                            child: Text(
-                              'Lương bắt đầu phải nhỏ hơn lương kết thúc!',
-                              style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                            ),
-                          )
+                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  child: Text(
+                                    'Lương bắt đầu phải nhỏ hơn lương kết thúc!',
+                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                  ),
+                                )
                               : Container(),
                           SizedBox(
                             height: AppDimens.space8,

@@ -95,6 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
                                       controller.user == '1'
@@ -109,6 +110,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       controller.user == '1'
                                           ? controller.resultGetInfoParent.data.data.ugsEmail
                                           : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474),
                                     ),
                                     SizedBox(

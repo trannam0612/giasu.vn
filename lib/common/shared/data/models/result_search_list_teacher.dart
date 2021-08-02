@@ -94,8 +94,8 @@ class DataG {
     this.citName,
     this.ugsCounty,
     this.ugsAboutUs,
-    this.ugsUnitPrice,
-    this.ugsMonth,
+    this.tutorSalary,
+    this.tutorMonth,
     this.checkSave,
   });
 
@@ -111,8 +111,8 @@ class DataG {
   String citName;
   String ugsCounty;
   String ugsAboutUs;
-  String ugsUnitPrice;
-  String ugsMonth;
+  String tutorSalary;
+  String tutorMonth;
   bool checkSave;
 
   factory DataG.fromJson(Map<String, dynamic> json) => DataG(
@@ -128,8 +128,8 @@ class DataG {
     citName: json["cit_name"] == null ? null : json["cit_name"],
     ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
-    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    tutorSalary: json["tutor_salary"] == null ? null : json["tutor_salary"],
+    tutorMonth: json["tutor_month"] == null ? null : json["tutor_month"],
     checkSave: json["check_save"] == null ? null : json["check_save"],
   );
 
@@ -146,8 +146,8 @@ class DataG {
     "cit_name": citName == null ? null : citName,
     "ugs_county": ugsCounty == null ? null : ugsCounty,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
-    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "tutor_salary": tutorSalary == null ? null : tutorSalary,
+    "tutor_month": tutorMonth == null ? null : tutorMonth,
     "check_save": checkSave == null ? null : checkSave,
   };
 }

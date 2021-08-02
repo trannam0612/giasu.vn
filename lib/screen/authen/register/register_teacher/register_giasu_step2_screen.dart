@@ -151,17 +151,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        // controller.errorGender
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
-                        //         child: Text(
-                        //           '\t\tTrường bắt buộc!',
-                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                        //         ),
-                        //       )
-                        //     : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           onTapTextField: () {
@@ -205,7 +196,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.provincial,
@@ -396,7 +387,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           iconSuffix: Images.ic_plus,
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.school,

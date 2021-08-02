@@ -50,10 +50,10 @@ class UpdateInformationParentScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '1. Thông tin cá nhân',
-                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
-                        ),
+                        // Text(
+                        //   '1. Thông tin cá nhân',
+                        //   style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
+                        // ),
                         SizedBox(
                           height: AppDimens.height * 0.07,
                         ),

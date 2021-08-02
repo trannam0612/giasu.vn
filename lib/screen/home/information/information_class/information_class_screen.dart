@@ -359,11 +359,11 @@ class InformationClassScreen extends StatelessWidget {
                             ),
                             Text(
                               controller.resultDetailClass.data.data.dataInfo.pftTime == '1'
-                                  ? '1'
+                                  ? '1,5'
                                   : controller.resultDetailClass.data.data.dataInfo.pftTime == '2'
-                                      ? '1.5'
+                                      ? '2'
                                       : controller.resultDetailClass.data.data.dataInfo.pftTime == '3'
-                                          ? '2'
+                                          ? '2,5'
                                           : '3',
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
