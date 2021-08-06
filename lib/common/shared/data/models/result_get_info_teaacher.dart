@@ -88,10 +88,8 @@ class InfoTutor {
     this.asName,
     this.asDetailId,
     this.asDetail,
-    this.ugsUnitPrice,
-    this.ugsTime,
-    this.ugsSalary,
-    this.ugsMonth,
+    this.tutorSalary,
+    this.tutorMonth,
     this.ugsCity,
     this.citName,
     this.citDetailId,
@@ -113,9 +111,9 @@ class InfoTutor {
   String ugsGraduationYear;
   String ugsSpecialized;
   String ugsCityGs;
-  String citNameGs;
+  dynamic citNameGs;
   String ugsCountyGs;
-  String citDetailGs;
+  dynamic citDetailGs;
   String ugsAddress;
   String ugsWorkplace;
   String ugsAboutUs;
@@ -129,10 +127,8 @@ class InfoTutor {
   List<String> asName;
   String asDetailId;
   List<String> asDetail;
-  String ugsUnitPrice;
-  String ugsTime;
-  String ugsSalary;
-  String ugsMonth;
+  String tutorSalary;
+  String tutorMonth;
   String ugsCity;
   String citName;
   String citDetailId;
@@ -154,9 +150,9 @@ class InfoTutor {
     ugsGraduationYear: json["ugs_graduation_year"] == null ? null : json["ugs_graduation_year"],
     ugsSpecialized: json["ugs_specialized"] == null ? null : json["ugs_specialized"],
     ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
-    citNameGs: json["cit_name_gs"] == null ? null : json["cit_name_gs"],
+    citNameGs: json["cit_name_gs"],
     ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
-    citDetailGs: json["cit_detail_gs"] == null ? null : json["cit_detail_gs"],
+    citDetailGs: json["cit_detail_gs"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
     ugsWorkplace: json["ugs_workplace"] == null ? null : json["ugs_workplace"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
@@ -170,10 +166,8 @@ class InfoTutor {
     asName: json["as_name"] == null ? null : List<String>.from(json["as_name"].map((x) => x)),
     asDetailId: json["as_detail_id"] == null ? null : json["as_detail_id"],
     asDetail: json["as_detail"] == null ? null : List<String>.from(json["as_detail"].map((x) => x)),
-    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsTime: json["ugs_time"] == null ? null : json["ugs_time"],
-    ugsSalary: json["ugs_salary"] == null ? null : json["ugs_salary"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    tutorSalary: json["tutor_salary"] == null ? null : json["tutor_salary"],
+    tutorMonth: json["tutor_month"] == null ? null : json["tutor_month"],
     ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     citDetailId: json["cit_detail_id"] == null ? null : json["cit_detail_id"],
@@ -196,9 +190,9 @@ class InfoTutor {
     "ugs_graduation_year": ugsGraduationYear == null ? null : ugsGraduationYear,
     "ugs_specialized": ugsSpecialized == null ? null : ugsSpecialized,
     "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
-    "cit_name_gs": citNameGs == null ? null : citNameGs,
+    "cit_name_gs": citNameGs,
     "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
-    "cit_detail_gs": citDetailGs == null ? null : citDetailGs,
+    "cit_detail_gs": citDetailGs,
     "ugs_address": ugsAddress == null ? null : ugsAddress,
     "ugs_workplace": ugsWorkplace == null ? null : ugsWorkplace,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
@@ -212,10 +206,8 @@ class InfoTutor {
     "as_name": asName == null ? null : List<dynamic>.from(asName.map((x) => x)),
     "as_detail_id": asDetailId == null ? null : asDetailId,
     "as_detail": asDetail == null ? null : List<dynamic>.from(asDetail.map((x) => x)),
-    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_time": ugsTime == null ? null : ugsTime,
-    "ugs_salary": ugsSalary == null ? null : ugsSalary,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "tutor_salary": tutorSalary == null ? null : tutorSalary,
+    "tutor_month": tutorMonth == null ? null : tutorMonth,
     "ugs_city": ugsCity == null ? null : ugsCity,
     "cit_name": citName == null ? null : citName,
     "cit_detail_id": citDetailId == null ? null : citDetailId,
@@ -226,7 +218,6 @@ class InfoTutor {
 Lichday resultLichDayFromJson(String str) => Lichday.fromJson(json.decode(str));
 
 String resultLichDayToJson(Lichday data) => json.encode(data.toJson());
-
 class Lichday {
   Lichday({
     this.st2,
@@ -325,20 +316,16 @@ class Lichday {
 
 class Error {
   Error({
-    this.code,
     this.message,
   });
 
-  int code;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    code: json["code"] == null ? null : json["code"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
     "message": message == null ? null : message,
   };
 }

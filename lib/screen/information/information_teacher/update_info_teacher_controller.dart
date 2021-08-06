@@ -876,8 +876,8 @@ class UpdateInfoTeacherController extends GetxController {
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
-print('idTime');
-print(idTime);
+    print('idTime');
+    print(idTime);
     if (valueButtonLuong) {
       print('TH1');
       salaryCD.text.isNotEmpty &&
@@ -990,22 +990,25 @@ print(idTime);
       listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
       errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
       getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
-      salaryCD.text = resultGetInfoTeacher.data.infoTutor.ugsUnitPrice;
+
       for (int i = 0; i < listDataClass.length; i++) {
         if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
           idClass = int.parse(listDataClass[i].ctId);
         }
       }
-      valueButtonLuong = resultGetInfoTeacher.data.infoTutor.ugsSalary == '' ? true : false;
-
+      salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
+      valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
       // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
+      selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
+      salaryUL1.text =
+          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
+      salaryUL2.text =
+          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
       idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
       idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
       listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
       listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
-      selectedStatusFee = resultGetInfoTeacher.data.infoTutor.ugsTime;
-      salaryUL1.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').first;
-      salaryUL2.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').last;
+
       idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
       listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
 

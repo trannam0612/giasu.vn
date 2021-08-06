@@ -464,33 +464,35 @@ class InformationTeacherMore extends StatelessWidget {
                             SizedBox(
                               height: AppDimens.space10,
                             ),
-                            controller.resultGetInfoTeacher.data.infoTutor.ugsSalary == ''
-                                ? Row(
+                            // controller.resultGetInfoTeacher.data.infoTutor.ugsSalary == ''
+                            //     ? Row(
+                            //         crossAxisAlignment: CrossAxisAlignment.start,
+                            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //         children: [
+                            //           Text(
+                            //             'Cố định:',
+                            //             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                            //           ),
+                            //           Text(
+                            //             '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data
+                            //                 .infoTutor.ugsTime}',
+                            //             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            //           ),
+                            //         ],
+                            //       )
+                            //     :
+                            Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Cố định:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data
-                                            .infoTutor.ugsTime}',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  )
-                                : Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Ước lượng:',
+                                        'Học phí:',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          '${controller.resultGetInfoTeacher.data.infoTutor.ugsSalary}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
+                                          '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor
+                                              .tutorMonth}',
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
                                           textAlign: TextAlign.right,
