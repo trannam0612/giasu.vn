@@ -474,7 +474,8 @@ class InformationTeacherMore extends StatelessWidget {
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                       Text(
-                                        '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data.infoTutor.ugsMonth}',
+                                        '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data
+                                            .infoTutor.ugsTime}',
                                         style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                       ),
                                     ],

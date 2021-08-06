@@ -876,7 +876,8 @@ class UpdateInfoTeacherController extends GetxController {
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
-
+print('idTime');
+print(idTime);
     if (valueButtonLuong) {
       print('TH1');
       salaryCD.text.isNotEmpty &&
@@ -1116,6 +1117,8 @@ class UpdateInfoTeacherController extends GetxController {
         listIdDetailDistrictSelect.join(','),
         resultLichDayToJson(lichday));
     print('11111');
+    print(idTime);
+    print(selectedStatusFee);
     print(listIdDetailDistrictSelect.join(','));
     ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
