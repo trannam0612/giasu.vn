@@ -194,11 +194,8 @@ class UpdatePostController extends GetxController {
     if (resultListTopic.data != null) {
       listTopic = [];
       listTopic = resultListTopic.data.listSubjectTag;
-      print(resultListTopic.data.listSubjectTag.map((e) => e.nameSubject));
-      print(listTopic.map((e) => e.nameSubject));
       selectedTopicSubject = listTopic[0].nameSubject;
       idTopicSubject = int.parse(listTopic[0].idSubject);
-      Utils.showToast(resultListTopic.data.message);
     } else {}
     update();
   }
@@ -210,12 +207,7 @@ class UpdatePostController extends GetxController {
     if (resultListTopic.data != null) {
       listTopic = [];
       listTopic = resultListTopic.data.listSubjectTag;
-      print('aaaa');
-      print(resultListTopic.data.listSubjectTag.map((e) => e.nameSubject));
-      print(listTopic.map((e) => e.nameSubject));
-      Utils.showToast(resultListTopic.data.message);
     } else {
-      print('11111');
     }
     update();
   }
