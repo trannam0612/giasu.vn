@@ -311,7 +311,7 @@ class RegisterPhuHuynhController extends GetxController {
         back: () => Get.back(),
       ));
     } else {
-      Utils.showToast(resultRegisterParent.data.message);
+      Utils.showToast(resultRegisterParent.error.message);
     }
   }
 
