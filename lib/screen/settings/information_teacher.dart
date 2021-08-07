@@ -121,7 +121,7 @@ class InformationTeacherMore extends StatelessWidget {
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
                           Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.citNameGs,
+                            controller.resultGetInfoTeacher.data.infoTutor.citName == null ? 'Chưa cập nhật' : controller.resultGetInfoTeacher.data.infoTutor.citName,
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                           ),
                         ],

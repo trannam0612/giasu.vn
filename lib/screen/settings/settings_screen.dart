@@ -82,9 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: controller.user == '1'
-                                      ? controller.resultGetInfoParent.data.data.ugsAvatar
-                                      : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
+                                  imageUrl: controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsAvatar : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
                                   width: 80,
                                   height: 80,
                                 ),
@@ -97,19 +95,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      controller.user == '1'
-                                          ? controller.resultGetInfoParent.data.data.ugsName
-                                          : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize22),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsName : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+                                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize22),
+                                          ),
+                                        ),
+                                        controller.user == '1'
+                                            ? Container(
+                                                child: Text(
+                                                  'Điểm: ${controller.resultGetInfoParent.data.data.pointFree}',
+                                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                                ),
+                                              )
+                                            : Container()
+                                      ],
                                     ),
                                     SizedBox(
                                       height: AppDimens.space4,
                                     ),
                                     Text(
-                                      controller.user == '1'
-                                          ? controller.resultGetInfoParent.data.data.ugsEmail
-                                          : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
+                                      controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsEmail : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474),
@@ -134,14 +142,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ],
                                 ),
                               ),
-                              controller.user == '1'
-                                  ? Container(
-                                      child: Text(
-                                        'Điểm: ${controller.resultGetInfoParent.data.data.pointFree}',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
-                                      ),
-                                    )
-                                  : Container()
                             ],
                           ),
                         ),
