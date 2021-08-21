@@ -31,7 +31,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   String timeAgo(int timestamp) {
-    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
+    var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000000);
     var now = new DateTime.now();
     var format = new DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
     var time = DateTime.parse(format.format(date));

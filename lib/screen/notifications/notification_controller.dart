@@ -74,6 +74,7 @@ class NotificationController extends GetxController {
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await notificationRepositories.notification(token);
     resultNotification = resultNotificationFromJson(res.data);
+    resultNotification.data.dataNoti.sort((b, a) => a.notiDate.compareTo(b.notiDate));
     if (resultNotification.data != null) {
       Utils.showToast(resultNotification.data.message);
     } else {

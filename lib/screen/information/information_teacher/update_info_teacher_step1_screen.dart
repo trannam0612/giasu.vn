@@ -382,6 +382,15 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        controller.errorNTN
+                            ? Padding(
+                          padding: const EdgeInsets.only(top: AppDimens.space4),
+                          child: Text(
+                            '\t\tNgày kết thúc phải sau thời gian bắt đầu!',
+                            style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                          ),
+                        )
+                            : Container(),
                         SizedBox(
                           height: AppDimens.space20,
                         ),

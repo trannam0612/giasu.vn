@@ -74,6 +74,7 @@ class UpdateInfoTeacherController extends GetxController {
   bool errorNumberYearExp = false;
   bool errorExp = false;
   bool errorMarriage = false;
+  bool errorNTN = false;
   int idGender = 0;
   int idProvincial = 0;
   int idExp = 0;
@@ -810,50 +811,49 @@ class UpdateInfoTeacherController extends GetxController {
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
-    // errorDateTime = true;
     errorProvincial = true;
     errorDistrict = true;
     errorAddress = true;
-    // errorNumberYearExp = true;
-    // errorTitleExp = true;
-    // errorTimeExpStart = true;
-    // errorTimeExpEnd = true;
-    // errorInformationExp = true;
-    // ignore: deprecated_member_use
-    // errorGender = selectedGender.isNullOrBlank ? true : false;
-    // ignore: deprecated_member_use
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
     print('checkNullButton');
-    if (fullName.text.isNotEmpty &&
-            phone.text.isNotEmpty &&
-            regExp.hasMatch(phone.text) &&
-            // dateTime.text.isNotEmpty &&
-            // errorGender == false &&
-            errorMarriage == false &&
-            provincial.text.isNotEmpty &&
-            district.text.isNotEmpty &&
-            f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text))
-        // &&
-        // address.text.isNotEmpty &&
-        // numberYearExp.text.isNotEmpty &&
-        // numberYearExp.text != '0' &&
-        // titleExp.text.isNotEmpty &&
-        // timeExpStart.text.isNotEmpty &&
-        // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
-        // timeExpEnd.text.isNotEmpty &&
-        // informationExp.text.isNotEmpty
-        ) {
-      Get.to(UpdateInfoTeacherStep2Screen());
+    if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty &&
+          f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text))) {
+        Get.to(UpdateInfoTeacherStep2Screen());
+      } else {
+        errorNTN = true;
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty) {
+        Get.to(UpdateInfoTeacherStep2Screen());
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     }
+
     update();
   }
 
@@ -1100,7 +1100,7 @@ class UpdateInfoTeacherController extends GetxController {
         company.text,
         information.text,
         prize.text,
-        int.parse(numberYearExp.text),
+        numberYearExp.text.isNotEmpty ? int.parse(numberYearExp.text) : null,
         titleExp.text,
         timeExpStart.text,
         timeExpEnd.text,

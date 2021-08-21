@@ -25,8 +25,6 @@ class NavigationController extends GetxController {
   @override
   void onInit() {
     print('NavigationController');
-    print('userType');
-    print(token);
     // TODO: implement onInit
     userType = SpUtil.getString(ConstString.USER_TYPE);
     token = SpUtil.getString(ConstString.token);

@@ -50,7 +50,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsName,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -71,7 +71,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.ugsPhone,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -88,7 +88,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.ugsGender,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -105,7 +105,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.ugsBrithday,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -121,8 +121,10 @@ class InformationTeacherMore extends StatelessWidget {
                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                           ),
                           Text(
-                            controller.resultGetInfoTeacher.data.infoTutor.citName == null ? 'Chưa cập nhật' : controller.resultGetInfoTeacher.data.infoTutor.citName,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            controller.resultGetInfoTeacher.data.infoTutor.citName == null
+                                ? 'Chưa cập nhật'
+                                : controller.resultGetInfoTeacher.data.infoTutor.citName,
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -140,7 +142,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -162,7 +164,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -199,7 +201,7 @@ class InformationTeacherMore extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     controller.resultGetInfoTeacher.data.infoTutor.ugsTitle,
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                                     overflow: TextOverflow.clip,
                                     textAlign: TextAlign.right,
                                     maxLines: null,
@@ -220,7 +222,7 @@ class InformationTeacherMore extends StatelessWidget {
                                 ),
                                 Text(
                                   '${controller.resultGetInfoTeacher.data.infoTutor.ugsYearStart}~${controller.resultGetInfoTeacher.data.infoTutor.ugsYearEnd}',
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                                 ),
                               ],
                             ),
@@ -238,7 +240,7 @@ class InformationTeacherMore extends StatelessWidget {
                                 Expanded(
                                   child: Text(
                                     controller.resultGetInfoTeacher.data.infoTutor.ugsJobDescription,
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                                     overflow: TextOverflow.clip,
                                     textAlign: TextAlign.right,
                                     maxLines: null,
@@ -263,7 +265,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsAchievements,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -285,7 +287,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsWorkplace,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -307,7 +309,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.ugsAboutUs,
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -328,7 +330,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.nametype,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -346,7 +348,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.asName.join(', '),
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -368,7 +370,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.asDetail.join(', '),
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -389,7 +391,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.ctName,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -406,7 +408,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.ugsFormality,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -423,7 +425,7 @@ class InformationTeacherMore extends StatelessWidget {
                           ),
                           Text(
                             controller.resultGetInfoTeacher.data.infoTutor.citName,
-                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                           ),
                         ],
                       ),
@@ -441,7 +443,7 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor.citDetail.join(', '),
-                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.right,
                               maxLines: null,
@@ -476,31 +478,31 @@ class InformationTeacherMore extends StatelessWidget {
                             //           Text(
                             //             '${controller.resultGetInfoTeacher.data.infoTutor.ugsUnitPrice}/${controller.resultGetInfoTeacher.data
                             //                 .infoTutor.ugsTime}',
-                            //             style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                            //                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black,lineHeight: 24),
+
                             //           ),
                             //         ],
                             //       )
                             //     :
                             Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Học phí:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor
-                                              .tutorMonth}',
-                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                          overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
-                                        ),
-                                      ),
-                                    ],
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Học phí:',
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor.tutorMonth}',
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black, lineHeight: 24),
+                                    overflow: TextOverflow.clip,
+                                    textAlign: TextAlign.right,
+                                    maxLines: null,
                                   ),
+                                ),
+                              ],
+                            ),
                           ])),
                     ],
                   ),
