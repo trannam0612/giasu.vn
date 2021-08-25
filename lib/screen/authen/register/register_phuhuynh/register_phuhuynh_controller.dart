@@ -361,7 +361,6 @@ class RegisterPhuHuynhController extends GetxController {
         valueCheckEmailGS.value = true;
       } else {
         valueCheckEmailGS.value = false;
-        Utils.showToast(resultCheckMail.error.message);
       }
     } else {
       return null;

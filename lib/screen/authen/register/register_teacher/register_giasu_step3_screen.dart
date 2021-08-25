@@ -612,7 +612,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               ? Padding(
                                   padding: const EdgeInsets.only(top: AppDimens.space4),
                                   child: Text(
-                                    'Lương bắt đầu phải nhỏ hơn lương kết thúc!',
+                                    controller.stringErrorLuong,
                                     style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
                                   ),
                                 )

@@ -790,6 +790,7 @@ class RegisterGiaSuController extends GetxController {
   }
 
   bool errorBuoiDay = false;
+  String stringErrorLuong;
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
@@ -810,51 +811,71 @@ class RegisterGiaSuController extends GetxController {
 
     if (valueButtonLuong) {
       print('TH1');
-      salaryCD.text.isNotEmpty &&
-              listSubjectSelect.isNotEmpty &&
-              !selectedClass.isNullOrBlank &&
-              listSubjectSelectTopic.isNotEmpty &&
-              !selectedFormTeaching.isNullOrBlank &&
-              provincial.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              valueCheckBox &&
-              salaryCD.text.isNotEmpty &&
-              data != null &&
-              !selectedTime.isNullOrBlank
-          ? registerTeacher()
-          // registerTeacher()
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+      if (salaryCD.text.isNotEmpty &&
+          listSubjectSelect.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          listSubjectSelectTopic.isNotEmpty &&
+          !selectedFormTeaching.isNullOrBlank &&
+          provincial.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          // ignore: deprecated_member_use
+          valueCheckBox &&
+          salaryCD.text.isNotEmpty &&
+          data != null &&
+          !selectedTime.isNullOrBlank &&
+          int.tryParse(salaryCD.text) > 0) {
+        registerTeacher();
+      } else {
+        errorLuong = int.parse(salaryCD.text) <= 0 ? true : false;
+        stringErrorLuong = 'Học phí phải lớn hơn 0';
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+        update();
+      }
     } else {
       print('TH2');
       errorLuong = int.parse(salaryUL1.text) >= int.parse(salaryUL2.text) ? true : false;
-      salaryUL1.text.isNotEmpty &&
-              salaryUL2.text.isNotEmpty &&
-              listSubjectSelect.isNotEmpty &&
-              !selectedClass.isNullOrBlank &&
-              listSubjectSelectTopic.isNotEmpty &&
-              !selectedFormTeaching.isNullOrBlank &&
-              provincial.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              valueCheckBox &&
-              data != null &&
-              int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
-              !selectedTime.isNullOrBlank
-          // ignore: unnecessary_statements
-          ? registerTeacher()
-          // registerTeacher()
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+      if (salaryUL1.text.isNotEmpty &&
+          salaryUL2.text.isNotEmpty &&
+          listSubjectSelect.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          listSubjectSelectTopic.isNotEmpty &&
+          !selectedFormTeaching.isNullOrBlank &&
+          provincial.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          valueCheckBox &&
+          data != null &&
+          int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
+          !selectedTime.isNullOrBlank &&
+          int.tryParse(salaryUL1.text) > 0 &&
+          int.tryParse(salaryUL2.text) > 0) {
+        registerTeacher();
+      } else {
+        if (int.parse(salaryUL1.text) >= int.parse(salaryUL2.text)) {
+          errorLuong = true;
+          stringErrorLuong = 'Học phí bắt đầu phải nhỏ hơn học phí kết thúc!';
+        } else {
+          errorLuong = false;
+        }
+        if (int.parse(salaryUL1.text) < 1 || int.parse(salaryUL2.text) < 1) {
+          stringErrorLuong = 'Học phí phải lớn hơn 0';
+          errorLuong = true;
+        } else {
+          errorLuong = false;
+        }
+
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+        update();
+      }
     }
 
     update();
@@ -944,7 +965,6 @@ class RegisterGiaSuController extends GetxController {
         valueCheckEmailGS.value = true;
       } else {
         valueCheckEmailGS.value = false;
-        Utils.showToast(resultCheckMail.error.message);
       }
     } else {
       return null;
