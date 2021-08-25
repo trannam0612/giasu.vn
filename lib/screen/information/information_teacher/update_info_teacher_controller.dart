@@ -74,6 +74,7 @@ class UpdateInfoTeacherController extends GetxController {
   bool errorNumberYearExp = false;
   bool errorExp = false;
   bool errorMarriage = false;
+  bool errorNTN = false;
   int idGender = 0;
   int idProvincial = 0;
   int idExp = 0;
@@ -293,6 +294,26 @@ class UpdateInfoTeacherController extends GetxController {
   void dispose() {
     // TODO: implement dispose
     fullName.dispose();
+    passWord.dispose();
+    rePassWord.dispose();
+    fullName.dispose();
+    email.dispose();
+    phone.dispose();
+
+    dateTime.dispose();
+    provincial.dispose();
+    district.dispose();
+    address.dispose();
+    numberYearExp.dispose();
+    titleExp.dispose();
+    timeExpStart.dispose();
+    timeExpEnd.dispose();
+    informationExp.dispose();
+    area.dispose();
+    salaryCD.dispose();
+    salaryUL1.dispose();
+    salaryUL2.dispose();
+    search.dispose();
     super.dispose();
   }
 
@@ -380,6 +401,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryCD');
     if (errorSalaryCD && salaryCD.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryCD && int.parse(salaryCD.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -388,6 +411,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL1');
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL1 && int.parse(salaryUL1.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -396,6 +421,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkSalaryUL2');
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
+    } else if (errorSalaryUL2 && int.parse(salaryUL2.text) <= 0) {
+      return 'Lương phải lớn hơn 0';
     }
     return null;
   }
@@ -698,7 +725,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListTopic = resultListTopicFromJson(res.data);
     if (resultListTopic.data != null) {
       listTopic = resultListTopic.data.listSubjectTag;
-      Utils.showToast(resultListTopic.data.message);
+      // Utils.showToast(resultListTopic.data.message);
     } else {
       // Utils.showToast(resultListTopic.error.message);
     }
@@ -725,7 +752,7 @@ class UpdateInfoTeacherController extends GetxController {
           }
         }
       });
-      Utils.showToast(resultListTopic.data.message);
+      // Utils.showToast(resultListTopic.data.message);
     } else {
       // Utils.showToast(resultListTopic.error.message);
     }
@@ -738,7 +765,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
+      // Utils.showToast(resultListDistrict.data.message);
     } else {
       // Utils.showToast(resultListDistrict.error.message);
     }
@@ -751,7 +778,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultListDistrict = resultListDistrictFromJson(res.data);
     if (resultListDistrict.data != null) {
       listDistrictArea = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
+      // Utils.showToast(resultListDistrict.data.message);
     } else {
       // Utils.showToast(resultListDistrict.error.message);
     }
@@ -784,59 +811,54 @@ class UpdateInfoTeacherController extends GetxController {
     errorFullName = true;
     errorPhone = true;
     errorImage = true;
-    // errorDateTime = true;
     errorProvincial = true;
     errorDistrict = true;
     errorAddress = true;
-    // errorNumberYearExp = true;
-    // errorTitleExp = true;
-    // errorTimeExpStart = true;
-    // errorTimeExpEnd = true;
-    // errorInformationExp = true;
-    // ignore: deprecated_member_use
-    // errorGender = selectedGender.isNullOrBlank ? true : false;
-    // ignore: deprecated_member_use
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
     print('checkNullButton');
-    print(fullName.text);
-    print(phone.text);
-    print(errorMarriage);
-    print(provincial.text);
-    print(district.text);
-    print(informationExp.text);
-    if (fullName.text.isNotEmpty &&
-        phone.text.isNotEmpty &&
-        regExp.hasMatch(phone.text) &&
-        // dateTime.text.isNotEmpty &&
-        // errorGender == false &&
-        errorMarriage == false &&
-        provincial.text.isNotEmpty &&
-        district.text.isNotEmpty
-    // &&
-        // address.text.isNotEmpty &&
-        // numberYearExp.text.isNotEmpty &&
-        // numberYearExp.text != '0' &&
-        // titleExp.text.isNotEmpty &&
-        // timeExpStart.text.isNotEmpty &&
-        // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
-        // timeExpEnd.text.isNotEmpty &&
-        // informationExp.text.isNotEmpty
-    ) {
-      Get.to(UpdateInfoTeacherStep2Screen());
+    if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty &&
+          f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text))) {
+        Get.to(UpdateInfoTeacherStep2Screen());
+      } else {
+        errorNTN = true;
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty) {
+        Get.to(UpdateInfoTeacherStep2Screen());
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     }
+
     update();
   }
 
   bool errorBuoiDay = false;
+  bool errorLuong = false;
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
@@ -854,10 +876,12 @@ class UpdateInfoTeacherController extends GetxController {
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
-
+    print('idTime');
+    print(idTime);
     if (valueButtonLuong) {
-      print('11111');
+      print('TH1');
       salaryCD.text.isNotEmpty &&
+              int.parse(salaryCD.text) > 0 &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
               listSubjectSelectTopic.isNotEmpty &&
@@ -878,18 +902,9 @@ class UpdateInfoTeacherController extends GetxController {
               richText: false,
             ));
     } else {
-      print('abc');
-      print(salaryUL1.text);
-      print(salaryUL2.text);
-      print(errorKieuGS);
-      print(listSubjectSelect);
-      print(listSubjectSelectTopic);
-      print(selectedClass);
-      print(selectedFormTeaching);
-      print(area.text);
-      print(listDistrictSelect);
-      print(listDistrictSelect);
+      print('TH2');
 
+      errorLuong = int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               !errorKieuGS &&
@@ -900,6 +915,9 @@ class UpdateInfoTeacherController extends GetxController {
               area.text.isNotEmpty &&
               listDistrictSelect.isNotEmpty &&
               data != null &&
+              int.parse(salaryUL1.text) > 0 &&
+              int.parse(salaryUL2.text) > 0 &&
+              int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
               !selectedStatusFee.isNullOrBlank
           // ignore: unnecessary_statements
           ? updateInfoTeacher()
@@ -930,7 +948,7 @@ class UpdateInfoTeacherController extends GetxController {
     resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
       Get.back();
-      Utils.showToast(resultGetInfoTeacher.data.message);
+      // Utils.showToast(resultGetInfoTeacher.data.message);
       urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
       print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
       fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
@@ -972,21 +990,25 @@ class UpdateInfoTeacherController extends GetxController {
       listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
       errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
       getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
-      salaryCD.text = resultGetInfoTeacher.data.infoTutor.ugsUnitPrice;
+
       for (int i = 0; i < listDataClass.length; i++) {
         if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
           idClass = int.parse(listDataClass[i].ctId);
         }
       }
-
+      salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
+      valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
       // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
+      selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
+      salaryUL1.text =
+          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
+      salaryUL2.text =
+          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
       idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
       idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
       listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
       listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
-      selectedStatusFee = resultGetInfoTeacher.data.infoTutor.ugsTime;
-      salaryUL1.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').first;
-      salaryUL2.text = resultGetInfoTeacher.data.infoTutor.ugsSalary.split('-').last;
+
       idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
       listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
 
@@ -1078,7 +1100,7 @@ class UpdateInfoTeacherController extends GetxController {
         company.text,
         information.text,
         prize.text,
-        int.parse(numberYearExp.text),
+        numberYearExp.text.isNotEmpty ? int.parse(numberYearExp.text) : null,
         titleExp.text,
         timeExpStart.text,
         timeExpEnd.text,
@@ -1098,6 +1120,8 @@ class UpdateInfoTeacherController extends GetxController {
         listIdDetailDistrictSelect.join(','),
         resultLichDayToJson(lichday));
     print('11111');
+    print(idTime);
+    print(selectedStatusFee);
     print(listIdDetailDistrictSelect.join(','));
     ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {

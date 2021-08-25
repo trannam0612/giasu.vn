@@ -9,6 +9,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_teaching/list_tutor_teaching_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -23,6 +24,7 @@ class ListTutorTeachingScreen extends StatefulWidget {
 class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
   ListTutorTeachingController listTutorTeachingController = Get.put(ListTutorTeachingController());
   InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  InformationClassController informationClassController = Get.put(InformationClassController());
   ScrollController _controller = ScrollController();
   int i = 1;
 
@@ -84,7 +86,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
-                      height: height * 0.24,
+                      height: 164,
                       child: Stack(
                         alignment: Alignment.topLeft,
                         children: [
@@ -137,9 +139,12 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                                   SizedBox(
                                     height: AppDimens.space16,
                                   ),
-                                  Text(
-                                    controller.listGSDD[index].pftSummary,
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                  InkWell(
+                                    onTap: () => informationClassController.detailClass(int.parse(controller.listGSDD[index].pftId), 5),
+                                    child: Text(
+                                      controller.listGSDD[index].pftSummary,
+                                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, color: AppColors.primary4C5BD4),
+                                    ),
                                   ),
                                   SizedBox(
                                     height: AppDimens.space6,
@@ -212,7 +217,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                                                 width: AppDimens.space6,
                                               ),
                                               Text(
-                                                "${controller.listGSDD[index].pftPrice}vnđ/${controller.listGSDD[index].pftMonth}",
+                                                "${controller.listGSDD[index].pftPrice} vnđ/${controller.listGSDD[index].pftMonth}",
                                                 style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                               ),
                                             ],
@@ -220,7 +225,7 @@ class _ListTutorTeachingScreenState extends State<ListTutorTeachingScreen> {
                                         ],
                                       ),
                                       SizedBox(
-                                        width: 95,
+                                        width: 120,
                                         height: 30,
                                         child: CustomButton1(
                                           backColor: AppColors.whiteFFFFFF,

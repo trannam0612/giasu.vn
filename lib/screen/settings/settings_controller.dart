@@ -51,7 +51,7 @@ class SettingsController extends GetxController {
     resultGetInfoParent = resultGetInfoParentFromJson(res.data);
     if (resultGetInfoParent.data != null) {
       // Get.back();
-      Utils.showToast(resultGetInfoParent.data.message);
+      // Utils.showToast(resultGetInfoParent.data.message);
     } else {
       // Get.back();
       Utils.showToast(resultGetInfoParent.error.message);
@@ -66,7 +66,7 @@ class SettingsController extends GetxController {
     resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
       // Get.back();
-      Utils.showToast(resultGetInfoTeacher.data.message);
+      // Utils.showToast(resultGetInfoTeacher.data.message);
     } else {
       // Get.back();
       Utils.showToast(resultGetInfoTeacher.error.message);

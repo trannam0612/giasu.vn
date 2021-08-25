@@ -127,7 +127,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                   Get.back();
                                   controller.update();
                                 },
-                                title: 'Bạn có chắc là muốn xoá gia sư này không ?',
+                                title: 'Bạn có chắc muốn xóa lớp này không ?',
                               ));
                             },
                           ),
@@ -262,11 +262,14 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 SizedBox(
                                                   width: AppDimens.space4,
                                                 ),
-                                                Text(
-                                                  convertDate(int.parse(controller.listPHDND[index].receivedDate)),
-                                                  style: AppTextStyles.regular(
-                                                    context,
-                                                    size: AppDimens.textSize14,
+                                                Expanded(
+                                                  child: Text(
+                                                    convertDate(int.parse(controller.listPHDND[index].receivedDate)),
+                                                    style: AppTextStyles.regular(
+                                                      context,
+                                                      size: AppDimens.textSize14,
+                                                    ),
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ],

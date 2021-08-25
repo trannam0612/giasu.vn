@@ -373,7 +373,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        controller.listDataTeacher[index].asName,
+                                        controller.listDataTeacher[index].asName.join(', '),
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,
@@ -422,7 +422,7 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             width: AppDimens.space6,
                                           ),
                                           Text(
-                                            '${controller.listDataTeacher[index].ugsUnitPrice}/${controller.listDataTeacher[index].ugsMonth}',
+                                            '${controller.listDataTeacher[index].tutorSalary}/${controller.listDataTeacher[index].tutorMonth}',
                                             style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                           ),
                                         ],

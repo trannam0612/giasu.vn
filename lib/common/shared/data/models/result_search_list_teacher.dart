@@ -89,12 +89,13 @@ class DataG {
     this.asId,
     this.asName,
     this.asDetail,
+    this.asDetailName,
     this.ugsCity,
     this.citName,
     this.ugsCounty,
     this.ugsAboutUs,
-    this.ugsUnitPrice,
-    this.ugsMonth,
+    this.tutorSalary,
+    this.tutorMonth,
     this.checkSave,
   });
 
@@ -103,14 +104,15 @@ class DataG {
   String ugsName;
   String linkDetailTutor;
   String asId;
-  String asName;
+  List<String> asName;
   String asDetail;
+  List<String> asDetailName;
   String ugsCity;
   String citName;
   String ugsCounty;
   String ugsAboutUs;
-  String ugsUnitPrice;
-  String ugsMonth;
+  String tutorSalary;
+  String tutorMonth;
   bool checkSave;
 
   factory DataG.fromJson(Map<String, dynamic> json) => DataG(
@@ -119,14 +121,15 @@ class DataG {
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
     asId: json["as_id"] == null ? null : json["as_id"],
-    asName: json["as_name"] == null ? null : json["as_name"],
+    asName: json["as_name"] == null ? null : List<String>.from(json["as_name"].map((x) => x)),
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
+    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
     ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
     ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
-    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    tutorSalary: json["tutor_salary"] == null ? null : json["tutor_salary"],
+    tutorMonth: json["tutor_month"] == null ? null : json["tutor_month"],
     checkSave: json["check_save"] == null ? null : json["check_save"],
   );
 
@@ -136,34 +139,35 @@ class DataG {
     "ugs_name": ugsName == null ? null : ugsName,
     "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
     "as_id": asId == null ? null : asId,
-    "as_name": asName == null ? null : asName,
+    "as_name": asName == null ? null : List<dynamic>.from(asName.map((x) => x)),
     "as_detail": asDetail == null ? null : asDetail,
+    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
     "ugs_city": ugsCity == null ? null : ugsCity,
     "cit_name": citName == null ? null : citName,
     "ugs_county": ugsCounty == null ? null : ugsCounty,
     "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
-    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "tutor_salary": tutorSalary == null ? null : tutorSalary,
+    "tutor_month": tutorMonth == null ? null : tutorMonth,
     "check_save": checkSave == null ? null : checkSave,
   };
 }
 
 class Error {
   Error({
-    this.code,
+    this.result,
     this.message,
   });
 
-  int code;
+  bool result;
   String message;
 
   factory Error.fromJson(Map<String, dynamic> json) => Error(
-    code: json["code"] == null ? null : json["code"],
+    result: json["result"] == null ? null : json["result"],
     message: json["message"] == null ? null : json["message"],
   );
 
   Map<String, dynamic> toJson() => {
-    "code": code == null ? null : code,
+    "result": result == null ? null : result,
     "message": message == null ? null : message,
   };
 }

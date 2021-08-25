@@ -139,13 +139,13 @@ class LoginController extends GetxController {
     ResultData res = await authenticationRepositories.listCitySubject();
     resultListProvincialSubjectClass = resultListProvincialSubjectClassFromJson(res.data);
     if (resultListProvincialSubjectClass.data != null) {
-      Utils.showToast(resultListProvincialSubjectClass.data.message);
+      // Utils.showToast(resultListProvincialSubjectClass.data.message);
       listDataCity = resultListProvincialSubjectClass.data.dataCity;
       listDataSubject = resultListProvincialSubjectClass.data.dataSubject;
       listDataClass = resultListProvincialSubjectClass.data.dataClass;
       listStringClass = resultListProvincialSubjectClass.data.dataClass.map((e) => e.ctName).toList();
     } else {
-      Utils.showToast(resultListProvincialSubjectClass.error.message);
+      // Utils.showToast(resultListProvincialSubjectClass.error.message);
     }
   }
 

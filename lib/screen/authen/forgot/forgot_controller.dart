@@ -13,6 +13,7 @@ import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
+import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ForgotController extends GetxController {
@@ -64,7 +65,7 @@ class ForgotController extends GetxController {
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
     } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
+      return 'Mật khẩu sai định dạng!';
     }
     return null;
   }
@@ -151,16 +152,20 @@ class ForgotController extends GetxController {
   void checkButton() {
     errorShowPassword = true;
     errorShowRePassword = true;
-    RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
-        ? newPasswordForgot()
-        // Get.to(RegisterParentStep2Screen())
-        : Get.dialog(DialogError(
-            title: 'Tất cả các thông tin trên là bắt buộc.',
-            onTap: () => Get.back(),
-            textButton: 'Ok',
-            richText: false,
-          ));
-    update();
+    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      Get.dialog(DialogErrorPass());
+    } else {
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
+          ? newPasswordForgot()
+          // Get.to(RegisterParentStep2Screen())
+          : Get.dialog(DialogError(
+              title: 'Tất cả các thông tin trên là bắt buộc.',
+              onTap: () => Get.back(),
+              textButton: 'Ok',
+              richText: false,
+            ));
+      update();
+    }
   }
 
   String checkEmail() {

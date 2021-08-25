@@ -13,6 +13,7 @@ import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -53,6 +54,7 @@ class RegisterGiaSuController extends GetxController {
   //Step1
 
   //Step2
+  bool errorLuong = false;
   bool errorPhone = false;
   bool errorImage = false;
   bool errorDateTime = false;
@@ -63,6 +65,7 @@ class RegisterGiaSuController extends GetxController {
   bool errorAddress = false;
   bool errorNumberYearExp = false;
   bool errorExp = false;
+  bool errorTime = false;
   bool errorMarriage = false;
   int idGender = 0;
   int idProvincial = 0;
@@ -75,7 +78,7 @@ class RegisterGiaSuController extends GetxController {
   bool errorStatusTime = false;
   bool errorSubjectTopic = false;
   bool errorArea = false;
-  bool valueButtonLuong = false;
+  bool valueButtonLuong = true;
   int idClass = 0;
   int idLuong = 0;
   int idFormTeaching = 0;
@@ -423,7 +426,7 @@ class RegisterGiaSuController extends GetxController {
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
     } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu bao gồm chữ hoa, chữ thường và ít nhất một chữ số';
+      return 'Mật khẩu sai định dạng!';
     }
     return null;
   }
@@ -450,7 +453,7 @@ class RegisterGiaSuController extends GetxController {
     print('checkEmail');
     if (errorEmail && email.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@') && !email.text.contains('.')) {
+    } else if (errorEmail && !email.text.contains('@')) {
       return 'Email không hợp lệ!';
     } else if (errorEmail && !email.text.contains('.')) {
       return 'Email không hợp lệ!';
@@ -699,29 +702,33 @@ class RegisterGiaSuController extends GetxController {
 
   void checkButtonStep1() {
     print('checkButton');
-
+    checkEmailGS();
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    if (valueCheckEmailGS.value &&
-        email.text.contains('@') &&
-        email.text.contains('.') &&
-        passWord.text.length >= 8 &&
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
-        passWord.text.isNotEmpty &&
-        passWord.text == rePassWord.text &&
-        rePassWord.text.isNotEmpty) {
-      print('done');
-      Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
+    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+      Get.dialog(DialogErrorPass());
     } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+      if (valueCheckEmailGS.value &&
+          email.text.contains('@') &&
+          email.text.contains('.') &&
+          passWord.text.length >= 8 &&
+          RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
+          passWord.text.isNotEmpty &&
+          passWord.text == rePassWord.text &&
+          rePassWord.text.isNotEmpty) {
+        print('done');
+        Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
+      update();
     }
-    update();
   }
 
   void checkButtonStep2() {
@@ -731,47 +738,54 @@ class RegisterGiaSuController extends GetxController {
     errorPhone = true;
     errorImage = true;
     errorDistrict = true;
-    // errorDateTime = true;
     errorProvincial = true;
-    // errorAddress = true;
-    // errorNumberYearExp = true;
     errorTitleExp = true;
     errorTimeExpStart = true;
     errorTimeExpEnd = true;
     errorInformationExp = true;
-    // ignore: deprecated_member_use
-    // errorGender = selectedGender.isNullOrBlank ? true : false;
-    // ignore: deprecated_member_use
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
+
     print('checkNullButton');
-    if (fullName.text.isNotEmpty &&
-        phone.text.isNotEmpty &&
-        regExp.hasMatch(phone.text) &&
-        // dateTime.text.isNotEmpty &&
-        // errorGender == false &&
-        errorMarriage == false &&
-        provincial.text.isNotEmpty &&
-        district.text.isNotEmpty &&
-        // address.text.isNotEmpty &&
-        // numberYearExp.text.isNotEmpty &&
-        // numberYearExp.text != '0' &&
-        // titleExp.text.isNotEmpty &&
-        // timeExpStart.text.isNotEmpty &&
-        // f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
-        // timeExpEnd.text.isNotEmpty &&
-        // informationExp.text.isNotEmpty &&
-        imageAvatar != null) {
-      Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
+    if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
+      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text)) ? true : false;
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty &&
+          f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
+          imageAvatar != null) {
+        Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     } else {
-      Get.dialog(DialogError(
-        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-        onTap: () => Get.back(),
-        textButton: 'Ok',
-        richText: false,
-      ));
+      if (fullName.text.isNotEmpty &&
+          phone.text.isNotEmpty &&
+          regExp.hasMatch(phone.text) &&
+          errorMarriage == false &&
+          provincial.text.isNotEmpty &&
+          district.text.isNotEmpty &&
+          imageAvatar != null) {
+        Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
     }
+
     update();
   }
 
@@ -779,6 +793,7 @@ class RegisterGiaSuController extends GetxController {
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
+    print(valueButtonLuong);
     errorSalaryCD = true;
     errorSalaryUL1 = true;
     errorSalaryUL2 = true;
@@ -817,6 +832,7 @@ class RegisterGiaSuController extends GetxController {
             ));
     } else {
       print('TH2');
+      errorLuong = int.parse(salaryUL1.text) >= int.parse(salaryUL2.text) ? true : false;
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               listSubjectSelect.isNotEmpty &&
@@ -827,8 +843,8 @@ class RegisterGiaSuController extends GetxController {
               listDistrictSelect.isNotEmpty &&
               // ignore: deprecated_member_use
               valueCheckBox &&
-              salaryCD.text.isNotEmpty &&
               data != null &&
+              int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
               !selectedTime.isNullOrBlank
           // ignore: unnecessary_statements
           ? registerTeacher()

@@ -321,7 +321,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                           Get.back();
                                           controller.update();
                                         },
-                                        title: 'Bạn có chắc là muốn bỏ lưu gia sư này không ?',
+                                        title: 'Bạn có chắc muốn xóa lớp này không ?',
                                       ));
                                     },
                                     color: AppColors.grey747474,

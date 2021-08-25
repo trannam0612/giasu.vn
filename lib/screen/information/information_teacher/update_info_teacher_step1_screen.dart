@@ -212,7 +212,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.provincial,
@@ -314,7 +314,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           iconSuffix: Images.ic_arrow_down,
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -382,8 +382,17 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        controller.errorNTN
+                            ? Padding(
+                          padding: const EdgeInsets.only(top: AppDimens.space4),
+                          child: Text(
+                            '\t\tNgày kết thúc phải sau thời gian bắt đầu!',
+                            style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                          ),
+                        )
+                            : Container(),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextFieldBox(
                           hasTitle: false,

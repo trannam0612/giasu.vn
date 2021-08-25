@@ -44,21 +44,6 @@ class DialogErrorLogin extends StatelessWidget {
             SizedBox(
               height: AppDimens.space10,
             ),
-            SizedBox(
-              height: 30,
-              width: 110,
-              child: CustomButton2(
-                color: AppColors.primary4C5BD4,
-                textColor: AppColors.whiteFFFFFF,
-                title: 'Đồng ý',
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-            ),
-            SizedBox(
-              height: AppDimens.space16,
-            ),
             InkWell(
               onTap: () => Get.toNamed(Routes.select_type_login),
               child: Text(

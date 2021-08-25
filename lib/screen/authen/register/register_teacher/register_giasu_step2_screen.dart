@@ -33,7 +33,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                   backgroundColor: AppColors.primary4C5BD4,
                   title: Text(
                     'Đăng ký',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                    style: AppTextStyles.regularW500(context,
+                        size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                   ),
                   leading: IconButton(
                     icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -103,7 +104,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -149,17 +151,8 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        // controller.errorGender
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
-                        //         child: Text(
-                        //           '\t\tTrường bắt buộc!',
-                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                        //         ),
-                        //       )
-                        //     : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           onTapTextField: () {
@@ -203,7 +196,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                               )
                             : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.provincial,
@@ -221,7 +214,6 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           isShowIcon: true,
                           iconSuffix: Images.ic_arrow_down,
                         ),
-
                         SizedBox(
                           height: AppDimens.space20,
                         ),
@@ -240,7 +232,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           error: controller.checkDistrict(),
                         ),
                         SizedBox(
-                          height: AppDimens.space10,
+                          height: AppDimens.space20,
                         ),
                         CustomTextField(
                           textEditingController: controller.address,
@@ -322,6 +314,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                                   controller.timeExpStart.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
+                                      controller.errorTime = false;
                                       controller.timeExpStart.text = f.format(value);
                                     },
                                   ));
@@ -350,6 +343,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                                   controller.timeExpEnd.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
+                                      controller.errorTime = false;
                                       controller.timeExpEnd.text = f.format(value);
                                     },
                                   ));
@@ -369,9 +363,18 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
+                        controller.errorTime
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: AppDimens.space4),
+                                child: Text(
+                                  'Thời gian bắt đầu phải trước thời gian kết thúc!',
+                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                ),
+                              )
+                            : Container(),
+                        // SizedBox(
+                        //   height: AppDimens.space10,
+                        // ),
                         CustomTextFieldBox(
                           hasTitle: false,
                           textEditingController: controller.informationExp,
@@ -384,7 +387,7 @@ class RegisterGiaSuStep2Screen extends StatelessWidget {
                           iconSuffix: Images.ic_plus,
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
                         CustomTextField(
                           textEditingController: controller.school,
@@ -569,7 +572,9 @@ Widget SelectTinhThanh(BuildContext context) {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.provincial.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.provincial.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -627,7 +632,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrict[index].nameCity == registerGiaSuController.district.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                      registerGiaSuController.listDistrict[index].nameCity == registerGiaSuController.district.text
+                          ? SvgPicture.asset(Images.ic_check_green)
+                          : Container()
                     ],
                   ),
                 ),
@@ -669,7 +676,8 @@ DialogImage() {
                   ? Container(
                       height: 100,
                       width: 100,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space100), border: Border.all(color: AppColors.primary4C5BD4, width: 0.5)),
                       child: Center(
                           child: SvgPicture.asset(
                         Images.ic_add_camera,
