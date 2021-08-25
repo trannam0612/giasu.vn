@@ -1126,7 +1126,7 @@ class UpdateInfoTeacherController extends GetxController {
     ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
     if (resultGetInfoTeacher.data != null) {
       Get.back();
-      Utils.showToast(resultGetInfoTeacher.data.message);
+      Utils.showToast('Cập nhật thông tin thành công!');
       Get.offAndToNamed(Routes.navigation);
     } else {
       Get.back();
