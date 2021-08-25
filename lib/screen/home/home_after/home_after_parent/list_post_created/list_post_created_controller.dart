@@ -16,6 +16,12 @@ class ListPostCreatedController extends GetxController {
   List<ListClass> listClassPosted = [];
   ResultListClassPosted resultListClassPosted = ResultListClassPosted();
   ResultChangeStatusPost resultChangeStatusPost = ResultChangeStatusPost();
+  String statusPost;
+
+  void changeStatusPostLocal(int index) {
+    listClassPosted[index].trangthaiLop = listClassPosted[index].trangthaiLop == '1' ? '0' : '1';
+    update();
+  }
 
   Future<void> classPosted(int currentPage, int limit) async {
     print('classPosted');
@@ -33,6 +39,7 @@ class ListPostCreatedController extends GetxController {
       } else {
         Utils.showToast('Hết');
       }
+      print(resultListClassPosted.data.listClass.map((e) => e.trangthaiLop));
     } else {
       // Get.back();
       Utils.showToast(resultListClassPosted.error.message);
@@ -40,5 +47,20 @@ class ListPostCreatedController extends GetxController {
     update();
   }
 
-
+  Future<void> changeStatusPost(int id, int status) async {
+    print('changeStatusPost');
+    // await Future.delayed(Duration(milliseconds: 1));
+    Get.dialog(DialogLoading());
+    String token = SpUtil.getString(ConstString.token);
+    ResultData res = await postRepositories.changeStatusPost(token, id, status);
+    resultChangeStatusPost = resultChangeStatusPostFromJson(res.data);
+    if (resultChangeStatusPost.data != null) {
+      Get.back();
+      Utils.showToast(resultChangeStatusPost.data.message);
+    } else {
+      Get.back();
+      Utils.showToast(resultChangeStatusPost.error.message);
+    }
+    update();
+  }
 }

@@ -121,16 +121,17 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           height: AppDimens.space10,
                         ),
                         Container(
-                          height: height * 0.17,
+                          height: 120,
                           padding: EdgeInsets.symmetric(horizontal: AppDimens.space10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               InkWell(
                                 onTap: () => Get.to(ListClassInviteScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.145,
+                                  height: 110,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -170,7 +171,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                 onTap: () => Get.to(ListClassTeachingScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.145,
+                                  height: 110,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -210,7 +211,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                 onTap: () => Get.to(ListClassSuggestScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.145,
+                                  height: 110,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -250,7 +251,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                 onTap: () => Get.to(ListClassSavedScreen()),
                                 child: Container(
                                   width: width * 0.2,
-                                  height: height * 0.145,
+                                  height: 110,
                                   padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -305,7 +306,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                           ],
                         ),
                         Container(
-                            height: AppDimens.height * 0.19,
+                            height: 160,
                             child: ListView.separated(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
@@ -326,44 +327,43 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                         SizedBox(
                           height: AppDimens.space14,
                         ),
-                        Container(
-                            height: AppDimens.height * 0.5,
-                            width: AppDimens.width,
-                            child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) => InkWell(
-                                      onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                                          borderRadius: BorderRadius.circular(AppDimens.space16),
-                                        ),
-                                        margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
-                                        child: CardClassHome2(
-                                          title: controller.listLHPB[index].pftSummary,
-                                          time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
-                                          fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
-                                          subject: controller.listLHPB[index].asDetailName,
-                                          address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
-                                          classId: controller.listLHPB[index].pftId,
-                                          methodTeach: controller.listLHPB[index].pftForm,
-                                          numberSuggest: controller.listLHPB[index].countDnd,
-                                          save: controller.listLHPB[index].checkSave,
-                                          onTap: () {
-                                            if (!controller.listLHPB[index].checkSave) {
-                                              controller.listLHPB[index].checkSave = true;
-                                              controller.saveClass(int.parse(controller.listLHPB[index].pftId));
-                                            } else {
-                                              controller.listLHPB[index].checkSave = false;
-                                              controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
-                                            }
-                                            controller.update();
-                                          },
-                                          hasButton: false,
-                                        ),
-                                      ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => InkWell(
+                                  onTap: () => informationClassController.detailClass(int.parse(controller.listLHPB[index].pftId), 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
+                                      borderRadius: BorderRadius.circular(AppDimens.space16),
                                     ),
-                                itemCount: controller.listLHPB.length))
+                                    margin: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space4),
+                                    child: CardClassHome2(
+                                      title: controller.listLHPB[index].pftSummary,
+                                      time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
+                                      fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
+                                      subject: controller.listLHPB[index].asDetailName,
+                                      address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
+                                      classId: controller.listLHPB[index].pftId,
+                                      methodTeach: controller.listLHPB[index].pftForm,
+                                      numberSuggest: controller.listLHPB[index].countDnd,
+                                      save: controller.listLHPB[index].checkSave,
+                                      onTap: () {
+                                        if (!controller.listLHPB[index].checkSave) {
+                                          controller.listLHPB[index].checkSave = true;
+                                          controller.saveClass(int.parse(controller.listLHPB[index].pftId));
+                                        } else {
+                                          controller.listLHPB[index].checkSave = false;
+                                          controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
+                                        }
+                                        controller.update();
+                                      },
+                                      hasButton: false,
+                                    ),
+                                  ),
+                                ),
+                            itemCount: controller.listLHPB.length)
                       ],
                     ),
                   )

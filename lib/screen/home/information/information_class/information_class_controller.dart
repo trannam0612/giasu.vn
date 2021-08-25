@@ -84,21 +84,5 @@ class InformationClassController extends GetxController {
     update();
   }
 
-  Future<void> changeStatusPost(int id, int status) async {
-    print('changeStatusPost');
-    // await Future.delayed(Duration(milliseconds: 1));
-    Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await postRepositories.changeStatusPost(token, id, status);
-    resultChangeStatusPost = resultChangeStatusPostFromJson(res.data);
-    if (resultChangeStatusPost.data != null) {
-      Get.back();
-      changeTextStatus();
-      Utils.showToast(resultChangeStatusPost.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultChangeStatusPost.error.message);
-    }
-    update();
-  }
+
 }

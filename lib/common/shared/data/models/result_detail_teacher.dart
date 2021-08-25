@@ -15,16 +15,16 @@ class ResultDetailTeacher {
   });
 
   ResultDetailTeacherData data;
-  Error error;
+  dynamic error;
 
   factory ResultDetailTeacher.fromJson(Map<String, dynamic> json) => ResultDetailTeacher(
     data: json["data"] == null ? null : ResultDetailTeacherData.fromJson(json["data"]),
-    error: json["error"] == null ? null : Error.fromJson(json["error"]),
+    error: json["error"],
   );
 
   Map<String, dynamic> toJson() => {
     "data": data == null ? null : data.toJson(),
-    "error": error == null ? null : error.toJson(),
+    "error": error,
   };
 }
 
@@ -56,6 +56,7 @@ class DataData {
   DataData({
     this.dataInfo,
     this.lichday,
+    this.dataClassLq,
     this.currentPage,
     this.limit,
     this.total,
@@ -63,6 +64,7 @@ class DataData {
 
   DataInfo dataInfo;
   Lichday lichday;
+  List<DataClassLq> dataClassLq;
   int currentPage;
   int limit;
   int total;
@@ -70,6 +72,7 @@ class DataData {
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     dataInfo: json["dataInfo"] == null ? null : DataInfo.fromJson(json["dataInfo"]),
     lichday: json["lichday"] == null ? null : Lichday.fromJson(json["lichday"]),
+    dataClassLq: json["dataClassLQ"] == null ? null : List<DataClassLq>.from(json["dataClassLQ"].map((x) => DataClassLq.fromJson(x))),
     currentPage: json["current_page"] == null ? null : json["current_page"],
     limit: json["limit"] == null ? null : json["limit"],
     total: json["total"] == null ? null : json["total"],
@@ -78,161 +81,78 @@ class DataData {
   Map<String, dynamic> toJson() => {
     "dataInfo": dataInfo == null ? null : dataInfo.toJson(),
     "lichday": lichday == null ? null : lichday.toJson(),
+    "dataClassLQ": dataClassLq == null ? null : List<dynamic>.from(dataClassLq.map((x) => x.toJson())),
     "current_page": currentPage == null ? null : currentPage,
     "limit": limit == null ? null : limit,
     "total": total == null ? null : total,
   };
 }
 
-class DataInfo {
-  DataInfo({
+class DataClassLq {
+  DataClassLq({
     this.ugsAvatar,
-    this.ugsView,
     this.ugsId,
     this.ugsName,
-    this.ugsEmail,
-    this.ugsPhone,
-    this.ugsAboutUs,
-    this.ugsBrithday,
-    this.ugsGender,
-    this.ugsMarriage,
-    this.nametype,
-    this.ugsAddress,
-    this.ugsDayNow,
-    this.ugsExperienceYear,
-    this.ugsFormality,
-    this.ugsCity,
-    this.cityName,
-    this.ugsCounty,
-    this.cityCouName,
+    this.linkDetailClass,
+    this.citId,
+    this.citName,
     this.asId,
-    this.asIdName,
-    this.asDetail,
-    this.asDetailName,
-    this.ctName,
+    this.asName,
     this.ugsUnitPrice,
-    this.ugsTime,
-    this.ugsSalary,
     this.ugsMonth,
-    this.ugsTitle,
-    this.ugsYearStart,
-    this.ugsYearEnd,
-    this.ugsJobDescription,
-    this.ugsAchievements,
+    this.ugsExperienceYear,
+    this.ugsAboutUs,
+    this.ldgslq,
     this.checkSave,
-    this.checkMinusPoint,
   });
 
   String ugsAvatar;
-  String ugsView;
   String ugsId;
   String ugsName;
-  String ugsEmail;
-  String ugsPhone;
-  String ugsAboutUs;
-  String ugsBrithday;
-  String ugsGender;
-  String ugsMarriage;
-  String nametype;
-  String ugsAddress;
-  String ugsDayNow;
-  String ugsExperienceYear;
-  String ugsFormality;
-  String ugsCity;
-  String cityName;
-  String ugsCounty;
-  List<String> cityCouName;
+  String linkDetailClass;
+  String citId;
+  String citName;
   String asId;
-  List<String> asIdName;
-  String asDetail;
-  List<String> asDetailName;
-  String ctName;
+  String asName;
   String ugsUnitPrice;
-  String ugsTime;
-  String ugsSalary;
   String ugsMonth;
-  String ugsTitle;
-  String ugsYearStart;
-  String ugsYearEnd;
-  String ugsJobDescription;
-  String ugsAchievements;
+  String ugsExperienceYear;
+  String ugsAboutUs;
+  List<Lichday> ldgslq;
   bool checkSave;
-  bool checkMinusPoint;
 
-  factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
+  factory DataClassLq.fromJson(Map<String, dynamic> json) => DataClassLq(
     ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
-    ugsView: json["ugs_view"] == null ? null : json["ugs_view"],
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
-    ugsEmail: json["ugs_email"] == null ? null : json["ugs_email"],
-    ugsPhone: json["ugs_phone"] == null ? null : json["ugs_phone"],
-    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
-    ugsBrithday: json["ugs_brithday"] == null ? null : json["ugs_brithday"],
-    ugsGender: json["ugs_gender"] == null ? null : json["ugs_gender"],
-    ugsMarriage: json["ugs_marriage"] == null ? null : json["ugs_marriage"],
-    nametype: json["nametype"] == null ? null : json["nametype"],
-    ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
-    ugsDayNow: json["ugs_day_now"] == null ? null : json["ugs_day_now"],
-    ugsExperienceYear: json["ugs_experience_year"] == null ? null : json["ugs_experience_year"],
-    ugsFormality: json["ugs_formality"] == null ? null : json["ugs_formality"],
-    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
-    cityName: json["city__name"] == null ? null : json["city__name"],
-    ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
-    cityCouName: json["city_cou_name"] == null ? null : List<String>.from(json["city_cou_name"].map((x) => x)),
+    linkDetailClass: json["link_detailClass"] == null ? null : json["link_detailClass"],
+    citId: json["cit_id"] == null ? null : json["cit_id"],
+    citName: json["cit_name"] == null ? null : json["cit_name"],
     asId: json["as_id"] == null ? null : json["as_id"],
-    asIdName: json["as_id_name"] == null ? null : List<String>.from(json["as_id_name"].map((x) => x)),
-    asDetail: json["as_detail"] == null ? null : json["as_detail"],
-    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
-    ctName: json["ct_name"] == null ? null : json["ct_name"],
+    asName: json["as_name"] == null ? null : json["as_name"],
     ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsTime: json["ugs_time"] == null ? null : json["ugs_time"],
-    ugsSalary: json["ugs_salary"] == null ? null : json["ugs_salary"],
     ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
-    ugsTitle: json["ugs_title"] == null ? null : json["ugs_title"],
-    ugsYearStart: json["ugs_year_start"] == null ? null : json["ugs_year_start"],
-    ugsYearEnd: json["ugs_year_end"] == null ? null : json["ugs_year_end"],
-    ugsJobDescription: json["ugs_job_description"] == null ? null : json["ugs_job_description"],
-    ugsAchievements: json["ugs_achievements"] == null ? null : json["ugs_achievements"],
+    ugsExperienceYear: json["ugs_experience_year"] == null ? null : json["ugs_experience_year"],
+    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
+    ldgslq: json["ldgslq"] == null ? null : List<Lichday>.from(json["ldgslq"].map((x) => Lichday.fromJson(x))),
     checkSave: json["check_save"] == null ? null : json["check_save"],
-    checkMinusPoint: json["check_minus_point"] == null ? null : json["check_minus_point"],
   );
 
   Map<String, dynamic> toJson() => {
     "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
-    "ugs_view": ugsView == null ? null : ugsView,
     "ugs_id": ugsId == null ? null : ugsId,
     "ugs_name": ugsName == null ? null : ugsName,
-    "ugs_email": ugsEmail == null ? null : ugsEmail,
-    "ugs_phone": ugsPhone == null ? null : ugsPhone,
-    "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
-    "ugs_brithday": ugsBrithday == null ? null : ugsBrithday,
-    "ugs_gender": ugsGender == null ? null : ugsGender,
-    "ugs_marriage": ugsMarriage == null ? null : ugsMarriage,
-    "nametype": nametype == null ? null : nametype,
-    "ugs_address": ugsAddress == null ? null : ugsAddress,
-    "ugs_day_now": ugsDayNow == null ? null : ugsDayNow,
-    "ugs_experience_year": ugsExperienceYear == null ? null : ugsExperienceYear,
-    "ugs_formality": ugsFormality == null ? null : ugsFormality,
-    "ugs_city": ugsCity == null ? null : ugsCity,
-    "city__name": cityName == null ? null : cityName,
-    "ugs_county": ugsCounty == null ? null : ugsCounty,
-    "city_cou_name": cityCouName == null ? null : List<dynamic>.from(cityCouName.map((x) => x)),
+    "link_detailClass": linkDetailClass == null ? null : linkDetailClass,
+    "cit_id": citId == null ? null : citId,
+    "cit_name": citName == null ? null : citName,
     "as_id": asId == null ? null : asId,
-    "as_id_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
-    "as_detail": asDetail == null ? null : asDetail,
-    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
-    "ct_name": ctName == null ? null : ctName,
+    "as_name": asName == null ? null : asName,
     "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_time": ugsTime == null ? null : ugsTime,
-    "ugs_salary": ugsSalary == null ? null : ugsSalary,
     "ugs_month": ugsMonth == null ? null : ugsMonth,
-    "ugs_title": ugsTitle == null ? null : ugsTitle,
-    "ugs_year_start": ugsYearStart == null ? null : ugsYearStart,
-    "ugs_year_end": ugsYearEnd == null ? null : ugsYearEnd,
-    "ugs_job_description": ugsJobDescription == null ? null : ugsJobDescription,
-    "ugs_achievements": ugsAchievements == null ? null : ugsAchievements,
+    "ugs_experience_year": ugsExperienceYear == null ? null : ugsExperienceYear,
+    "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
+    "ldgslq": ldgslq == null ? null : List<dynamic>.from(ldgslq.map((x) => x.toJson())),
     "check_save": checkSave == null ? null : checkSave,
-    "check_minus_point": checkMinusPoint == null ? null : checkMinusPoint,
   };
 }
 
@@ -344,22 +264,158 @@ class Lichday {
   };
 }
 
-class Error {
-  Error({
-    this.result,
-    this.message,
+class DataInfo {
+  DataInfo({
+    this.ugsAvatar,
+    this.ugsView,
+    this.ugsId,
+    this.ugsName,
+    this.ugsEmail,
+    this.ugsPhone,
+    this.ugsAboutUs,
+    this.ugsBrithday,
+    this.ugsGender,
+    this.ugsMarriage,
+    this.nametype,
+    this.ugsAddress,
+    this.ugsDayNow,
+    this.ugsExperienceYear,
+    this.ugsFormality,
+    this.ugsCity,
+    this.cityName,
+    this.ugsCounty,
+    this.cityCouName,
+    this.asId,
+    this.asIdName,
+    this.asDetail,
+    this.asDetailName,
+    this.ctName,
+    this.ugsUnitPrice,
+    this.ugsTime,
+    this.ugsSalary,
+    this.ugsMonth,
+    this.ugsTitle,
+    this.ugsYearStart,
+    this.ugsYearEnd,
+    this.ugsJobDescription,
+    this.ugsAchievements,
+    this.checkSave,
+    this.pointFree,
+    this.checkMinusPoint,
   });
 
-  bool result;
-  String message;
+  String ugsAvatar;
+  String ugsView;
+  String ugsId;
+  String ugsName;
+  String ugsEmail;
+  String ugsPhone;
+  String ugsAboutUs;
+  String ugsBrithday;
+  String ugsGender;
+  String ugsMarriage;
+  String nametype;
+  String ugsAddress;
+  String ugsDayNow;
+  String ugsExperienceYear;
+  String ugsFormality;
+  String ugsCity;
+  String cityName;
+  String ugsCounty;
+  List<String> cityCouName;
+  String asId;
+  List<String> asIdName;
+  String asDetail;
+  List<String> asDetailName;
+  String ctName;
+  String ugsUnitPrice;
+  String ugsTime;
+  String ugsSalary;
+  String ugsMonth;
+  String ugsTitle;
+  DateTime ugsYearStart;
+  DateTime ugsYearEnd;
+  String ugsJobDescription;
+  String ugsAchievements;
+  bool checkSave;
+  String pointFree;
+  bool checkMinusPoint;
 
-  factory Error.fromJson(Map<String, dynamic> json) => Error(
-    result: json["result"] == null ? null : json["result"],
-    message: json["message"] == null ? null : json["message"],
+  factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
+    ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
+    ugsView: json["ugs_view"] == null ? null : json["ugs_view"],
+    ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
+    ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
+    ugsEmail: json["ugs_email"] == null ? null : json["ugs_email"],
+    ugsPhone: json["ugs_phone"] == null ? null : json["ugs_phone"],
+    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
+    ugsBrithday: json["ugs_brithday"] == null ? null : json["ugs_brithday"],
+    ugsGender: json["ugs_gender"] == null ? null : json["ugs_gender"],
+    ugsMarriage: json["ugs_marriage"] == null ? null : json["ugs_marriage"],
+    nametype: json["nametype"] == null ? null : json["nametype"],
+    ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
+    ugsDayNow: json["ugs_day_now"] == null ? null : json["ugs_day_now"],
+    ugsExperienceYear: json["ugs_experience_year"] == null ? null : json["ugs_experience_year"],
+    ugsFormality: json["ugs_formality"] == null ? null : json["ugs_formality"],
+    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
+    cityName: json["city__name"] == null ? null : json["city__name"],
+    ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
+    cityCouName: json["city_cou_name"] == null ? null : List<String>.from(json["city_cou_name"].map((x) => x)),
+    asId: json["as_id"] == null ? null : json["as_id"],
+    asIdName: json["as_id_name"] == null ? null : List<String>.from(json["as_id_name"].map((x) => x)),
+    asDetail: json["as_detail"] == null ? null : json["as_detail"],
+    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
+    ctName: json["ct_name"] == null ? null : json["ct_name"],
+    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
+    ugsTime: json["ugs_time"] == null ? null : json["ugs_time"],
+    ugsSalary: json["ugs_salary"] == null ? null : json["ugs_salary"],
+    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+    ugsTitle: json["ugs_title"] == null ? null : json["ugs_title"],
+    ugsYearStart: json["ugs_year_start"] == null ? null : DateTime.parse(json["ugs_year_start"]),
+    ugsYearEnd: json["ugs_year_end"] == null ? null : DateTime.parse(json["ugs_year_end"]),
+    ugsJobDescription: json["ugs_job_description"] == null ? null : json["ugs_job_description"],
+    ugsAchievements: json["ugs_achievements"] == null ? null : json["ugs_achievements"],
+    checkSave: json["check_save"] == null ? null : json["check_save"],
+    pointFree: json["point_free"] == null ? null : json["point_free"],
+    checkMinusPoint: json["check_minus_point"] == null ? null : json["check_minus_point"],
   );
 
   Map<String, dynamic> toJson() => {
-    "result": result == null ? null : result,
-    "message": message == null ? null : message,
+    "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
+    "ugs_view": ugsView == null ? null : ugsView,
+    "ugs_id": ugsId == null ? null : ugsId,
+    "ugs_name": ugsName == null ? null : ugsName,
+    "ugs_email": ugsEmail == null ? null : ugsEmail,
+    "ugs_phone": ugsPhone == null ? null : ugsPhone,
+    "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
+    "ugs_brithday": ugsBrithday == null ? null : ugsBrithday,
+    "ugs_gender": ugsGender == null ? null : ugsGender,
+    "ugs_marriage": ugsMarriage == null ? null : ugsMarriage,
+    "nametype": nametype == null ? null : nametype,
+    "ugs_address": ugsAddress == null ? null : ugsAddress,
+    "ugs_day_now": ugsDayNow == null ? null : ugsDayNow,
+    "ugs_experience_year": ugsExperienceYear == null ? null : ugsExperienceYear,
+    "ugs_formality": ugsFormality == null ? null : ugsFormality,
+    "ugs_city": ugsCity == null ? null : ugsCity,
+    "city__name": cityName == null ? null : cityName,
+    "ugs_county": ugsCounty == null ? null : ugsCounty,
+    "city_cou_name": cityCouName == null ? null : List<dynamic>.from(cityCouName.map((x) => x)),
+    "as_id": asId == null ? null : asId,
+    "as_id_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
+    "as_detail": asDetail == null ? null : asDetail,
+    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
+    "ct_name": ctName == null ? null : ctName,
+    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
+    "ugs_time": ugsTime == null ? null : ugsTime,
+    "ugs_salary": ugsSalary == null ? null : ugsSalary,
+    "ugs_month": ugsMonth == null ? null : ugsMonth,
+    "ugs_title": ugsTitle == null ? null : ugsTitle,
+    "ugs_year_start": ugsYearStart == null ? null : "${ugsYearStart.year.toString().padLeft(4, '0')}-${ugsYearStart.month.toString().padLeft(2, '0')}-${ugsYearStart.day.toString().padLeft(2, '0')}",
+    "ugs_year_end": ugsYearEnd == null ? null : "${ugsYearEnd.year.toString().padLeft(4, '0')}-${ugsYearEnd.month.toString().padLeft(2, '0')}-${ugsYearEnd.day.toString().padLeft(2, '0')}",
+    "ugs_job_description": ugsJobDescription == null ? null : ugsJobDescription,
+    "ugs_achievements": ugsAchievements == null ? null : ugsAchievements,
+    "check_save": checkSave == null ? null : checkSave,
+    "point_free": pointFree == null ? null : pointFree,
+    "check_minus_point": checkMinusPoint == null ? null : checkMinusPoint,
   };
 }

@@ -32,7 +32,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                     backgroundColor: AppColors.primary4C5BD4,
                     title: Text(
                       'Cập nhật thông tin',
-                      style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                      style: AppTextStyles.regularW500(context,
+                          size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                     ),
                     leading: IconButton(
                       icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -84,7 +85,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -101,7 +103,9 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                 ),
                                 padding: EdgeInsets.all(AppDimens.padding8),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
+                                    color: AppColors.whiteFFFFFF,
+                                    borderRadius: BorderRadius.circular(AppDimens.space10),
+                                    border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listSubjectSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
@@ -121,7 +125,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                             child: Container(
                                               alignment: Alignment.topCenter,
                                               padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                              decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   Expanded(
@@ -181,7 +186,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -200,6 +206,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                   ),
                                   padding: EdgeInsets.all(AppDimens.padding8),
                                   decoration: BoxDecoration(
+                                      color: AppColors.whiteFFFFFF,
                                       borderRadius: BorderRadius.circular(AppDimens.space10),
                                       border: Border.all(color: controller.errorSubjectTopic ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                   child: controller.listSubjectSelectTopic.isNotEmpty
@@ -221,7 +228,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                               child: Container(
                                                 alignment: Alignment.topCenter,
                                                 padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                                decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                                 child: Row(
                                                   children: [
                                                     Expanded(
@@ -342,7 +350,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -377,7 +386,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                             },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                              decoration: BoxDecoration(color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   SizedBox(
@@ -437,7 +447,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -456,7 +467,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                     },
                                     child: Text(
                                       'Cố định',
-                                      style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
+                                      style: AppTextStyles.regularW700(context,
+                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
@@ -483,14 +495,17 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                     },
                                     child: Text(
                                       'Ước lượng',
-                                      style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
+                                      style: AppTextStyles.regularW700(context,
+                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
                                       primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
                                       padding: EdgeInsets.all(AppDimens.space8),
                                       onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: AppColors.primary4C5BD4), borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
+                                      shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
+                                          borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
                                     ),
                                   ),
                                 ),
@@ -501,7 +516,7 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                             height: AppDimens.space8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                   child: controller.valueButtonLuong
@@ -533,9 +548,15 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                 isPassword: false,
                                               ),
                                             ),
-                                            Text(
-                                              '~',
-                                              style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
+                                            // Align(
+                                            //   alignment: Alignment.topCenter,
+                                            //   child: Text(
+                                            //     '~',
+                                            //     style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
+                                            //   ),
+                                            // ),
+                                            SizedBox(
+                                              width: 10,
                                             ),
                                             Expanded(
                                               child: CustomTextField(
@@ -556,10 +577,13 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                 width: AppDimens.smallPadding10,
                               ),
                               Container(
+                                margin: EdgeInsets.only(top: 4),
                                 padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                                height: AppDimens.height * 0.07,
-                                decoration:
-                                    BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
+                                height: 52,
+                                decoration: BoxDecoration(
+                                    color: AppColors.whiteFFFFFF,
+                                    borderRadius: BorderRadius.circular(AppDimens.space10),
+                                    border: Border.all(width: 1, color: AppColors.grey747474)),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
                                     hint: Text(
@@ -588,11 +612,20 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          controller.errorLuong
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  child: Text(
+                                    'Lương bắt đầu phải nhỏ hơn lương kết thúc!',
+                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                  ),
+                                )
+                              : Container(),
                           SizedBox(
                             height: AppDimens.space8,
                           ),
                           Text(
-                            'Lưu ý : Học phí tính VNĐ/ ${controller.fee.text == controller.listFee[1] ? '1 Giờ' : '1 Tuần'} ',
+                            'Lưu ý : Học phí tính VNĐ/ ${controller.selectedStatusFee} ',
                             style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
                           ),
                           SizedBox(
@@ -605,7 +638,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -652,7 +686,8 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  color:
+                                                      controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
                                                   textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
                                                   hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
                                                 ),
@@ -667,8 +702,10 @@ class UpdateInfoTeacherStep2Screen extends StatelessWidget {
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                                  color:
+                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                                  textColor:
+                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
                                                   hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
                                                 ),
                                                 SizedBox(
@@ -740,7 +777,8 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học',
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style:
+                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -771,7 +809,9 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index]) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index])
+                                    ? SvgPicture.asset(Images.ic_check_green)
+                                    : Container()
                               ],
                             ),
                           ),
@@ -796,7 +836,8 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học chi tiết',
-                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style:
+                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -824,7 +865,9 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                                   style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject) ? SvgPicture.asset(Images.ic_check_green) : Container()
+                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject)
+                                    ? SvgPicture.asset(Images.ic_check_green)
+                                    : Container()
                               ],
                             ),
                           ),
@@ -879,8 +922,8 @@ Widget SelectTinhThanh(BuildContext context) {
                   itemBuilder: (context, index) => InkWell(
                         // ignore: deprecated_member_use
                         onTap: () {
-                          updateInfoTeacherController.area.text = updateInfoTeacherController.listProvincial [index].citName;
-                          updateInfoTeacherController.idValueArea = int.parse(updateInfoTeacherController.listProvincial [index].citId);
+                          updateInfoTeacherController.area.text = updateInfoTeacherController.listProvincial[index].citName;
+                          updateInfoTeacherController.idValueArea = int.parse(updateInfoTeacherController.listProvincial[index].citId);
                           updateInfoTeacherController.listDistrictSelect.clear();
                           updateInfoTeacherController.listIdDetailDistrictSelect.clear();
                           updateInfoTeacherController.getListDistrictArea(updateInfoTeacherController.idValueArea);
@@ -891,11 +934,13 @@ Widget SelectTinhThanh(BuildContext context) {
                           child: Row(
                             children: [
                               Text(
-                                updateInfoTeacherController.listProvincial [index].citName,
+                                updateInfoTeacherController.listProvincial[index].citName,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                               ),
                               Spacer(),
-                              updateInfoTeacherController.listProvincial [index].citName == updateInfoTeacherController.area.text ? SvgPicture.asset(Images.ic_check_green) : Container()
+                              updateInfoTeacherController.listProvincial[index].citName == updateInfoTeacherController.area.text
+                                  ? SvgPicture.asset(Images.ic_check_green)
+                                  : Container()
                             ],
                           ),
                         ),
@@ -904,7 +949,7 @@ Widget SelectTinhThanh(BuildContext context) {
                         thickness: 1,
                         color: AppColors.black12,
                       ),
-                  itemCount: updateInfoTeacherController.listProvincial .length),
+                  itemCount: updateInfoTeacherController.listProvincial.length),
             ),
           ),
         ],
@@ -940,7 +985,9 @@ Widget SelectDistrict(BuildContext context) {
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () async {
-                  if (updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listDistrictArea[index].nameCity)) {
+                  if (updateInfoTeacherController.listDistrictSelect
+                      .map((e) => e)
+                      .contains(updateInfoTeacherController.listDistrictArea[index].nameCity)) {
                     updateInfoTeacherController.listIdDetailDistrictSelect.remove(updateInfoTeacherController.listDistrictArea[index].idCity);
                   } else {
                     updateInfoTeacherController.listIdDetailDistrictSelect.add(updateInfoTeacherController.listDistrictArea[index].idCity);
@@ -958,7 +1005,9 @@ Widget SelectDistrict(BuildContext context) {
                         style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      updateInfoTeacherController.listDistrictSelect.map((e) => e).contains(updateInfoTeacherController.listDistrictArea[index].nameCity)
+                      updateInfoTeacherController.listDistrictSelect
+                              .map((e) => e)
+                              .contains(updateInfoTeacherController.listDistrictArea[index].nameCity)
                           ? SvgPicture.asset(Images.ic_check_green)
                           : Container()
                     ],

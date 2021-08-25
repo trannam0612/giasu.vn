@@ -106,7 +106,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
                     child: SizedBox(
-                      height: height * 0.25,
+                      height: 180,
                       child: Stack(
                         alignment: Alignment.topLeft,
                         children: [
@@ -171,11 +171,14 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                       SizedBox(
                                         width: AppDimens.space6,
                                       ),
-                                      Text(
-                                        controller.listGSGDMore[index].asDetailName.join(', '),
-                                        style: AppTextStyles.regular(
-                                          context,
-                                          size: AppDimens.textSize14,
+                                      Expanded(
+                                        child: Text(
+                                          controller.listGSGDMore[index].asDetailName.join(', '),
+                                          style: AppTextStyles.regular(
+                                            context,
+                                            size: AppDimens.textSize14,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ],
@@ -221,7 +224,7 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        '${controller.listGSGDMore[index].ugsUnitPrice}vnđ/${controller.listGSGDMore[index].ugsMonth}',
+                                        '${controller.listGSGDMore[index].ugsUnitPrice} vnđ/ ${controller.listGSGDMore[index].ugsMonth}',
                                         style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],

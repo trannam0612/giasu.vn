@@ -60,7 +60,7 @@ class _DropDownSelectState extends State<DropDownSelect> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: AppDimens.padding16),
           width: AppDimens.width,
-          height: AppDimens.height*0.075,
+          height: 52,
           decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: widget.borderColor)),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(

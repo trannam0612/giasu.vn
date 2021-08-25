@@ -280,8 +280,24 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                               height: AppDimens.space10,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                SizedBox(
+                                  height: 30,
+                                  width: AppDimens.width * 0.4,
+                                  child: CustomButton2(
+                                    title: controller.listClassPosted[index].trangthaiLop == '0' ? 'Đang tìm gia sư' : 'Đã có gia sư',
+                                    color: controller.listClassPosted[index].trangthaiLop == '0' ? AppColors.secondaryF8971C : AppColors.grey747474,
+                                    onPressed: () {
+                                      controller.changeStatusPostLocal(index);
+                                      controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId),
+                                          int.parse(controller.listClassPosted[index].trangthaiLop));
+
+                                      // updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
+                                    },
+                                    textColor: AppColors.whiteFFFFFF,
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 30,
                                   width: 110,

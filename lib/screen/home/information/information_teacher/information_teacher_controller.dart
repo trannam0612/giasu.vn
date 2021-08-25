@@ -34,6 +34,7 @@ class InformationTeacherController extends GetxController {
   ];
   bool isShowed = false;
   String idClass;
+  List<String> listIdClass = [];
   bool acepted = false;
   String token;
 
@@ -68,7 +69,7 @@ class InformationTeacherController extends GetxController {
     update();
   }
 
-  Future<void> inviteTeach(int idLop, int idGS) async {
+  Future<void> inviteTeach(String idLop, int idGS) async {
     print('refuseOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());

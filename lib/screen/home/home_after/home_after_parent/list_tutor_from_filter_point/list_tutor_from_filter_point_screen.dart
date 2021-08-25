@@ -85,7 +85,7 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
-                height: AppDimens.height * 0.19,
+                height: 134,
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [

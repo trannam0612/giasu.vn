@@ -194,16 +194,20 @@ class UpdatePostController extends GetxController {
     if (resultListTopic.data != null) {
       listTopic = [];
       listTopic = resultListTopic.data.listSubjectTag;
-      print('aaaa');
-      print(resultListTopic.data.listSubjectTag.map((e) => e.nameSubject));
-      print(listTopic.map((e) => e.nameSubject));
-      // selectedTopicSubject = listTopic[0].nameSubject;
-      // idTopicSubject = int.parse(listTopic[0].idSubject);
-      Utils.showToast(resultListTopic.data.message);
-    } else {
-      print('11111');
+      selectedTopicSubject = listTopic[0].nameSubject;
+      idTopicSubject = int.parse(listTopic[0].idSubject);
+    } else {}
+    update();
+  }
 
-      // Utils.showToast(resultListTopic.error.message);
+  Future<void> getListTopicUpdate(String idTopic) async {
+    listTopic = [];
+    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+    resultListTopic = resultListTopicFromJson(res.data);
+    if (resultListTopic.data != null) {
+      listTopic = [];
+      listTopic = resultListTopic.data.listSubjectTag;
+    } else {
     }
     update();
   }
@@ -568,7 +572,7 @@ class UpdatePostController extends GetxController {
     resultGetInfoPost = resultGetInfoPostFromJson(res.data);
     if (resultGetInfoPost.data != null) {
       Get.back();
-      getListTopic(resultGetInfoPost.data.data.dataInfo.asId);
+      getListTopicUpdate(resultGetInfoPost.data.data.dataInfo.asId);
       print('resultGetInfoPost.data.data.dataInfo.ctId');
       print(resultGetInfoPost.data.data.dataInfo.ctId);
 

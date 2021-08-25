@@ -118,7 +118,7 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                         onTap: () {
 
                           Get.dialog(DialogConfirm(
-                            title: 'Bạn có chắc là muốn xoá gia sư này không ?',
+                            title: 'Bạn có chắc muốn xóa lớp này không ?',
                             onPressed: () {
                               controller.deleteClassOffered(int.parse(controller.listLDDN[index].pftId));
                               controller.listLDDN.remove(controller.listLDDN[index]);
@@ -264,11 +264,14 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                             SizedBox(
                                               width: AppDimens.space4,
                                             ),
-                                            Text(
-                                              convertDate(controller.listLDDN[index].otDate),
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
+                                            Expanded(
+                                              child: Text(
+                                                convertDate(controller.listLDDN[index].otDate),
+                                                overflow: TextOverflow.ellipsis,
+                                                style: AppTextStyles.regular(
+                                                  context,
+                                                  size: AppDimens.textSize14,
+                                                ),
                                               ),
                                             ),
                                           ],

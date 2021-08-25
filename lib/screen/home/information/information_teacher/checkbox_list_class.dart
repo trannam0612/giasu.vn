@@ -106,7 +106,13 @@ class _CheckboxListClassState extends State<CheckboxListClass> {
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         controller.idClass = controller.listPostCreated[index].pftId;
-                        print(controller.idClass);
+                        if(!controller.listIdClass.contains(controller.listPostCreated[index].pftId)) {
+                          controller.listIdClass.add(controller.listPostCreated[index].pftId);
+                        } else {
+                          controller.listIdClass.remove(controller.listPostCreated[index].pftId);
+                        }
+
+                        print(controller.listIdClass);
                         controller.update();
                       },
                       child: Container(
@@ -118,7 +124,7 @@ class _CheckboxListClassState extends State<CheckboxListClass> {
                                   height: 40,
                                   width: 40,
                                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all(width: 1, color: AppColors.primary4C5BD4)),
-                                  child: controller.listPostCreated[index].pftId == controller.idClass ? SvgPicture.asset(Images.ic_check_green) : Container(),
+                                  child: controller.listIdClass.contains(controller.listPostCreated[index].pftId) ? SvgPicture.asset(Images.ic_check_green) : Container(),
                                 ),
                                 SizedBox(
                                   width: AppDimens.space16,
@@ -143,7 +149,7 @@ class _CheckboxListClassState extends State<CheckboxListClass> {
                 title: 'Mời gia sư',
                 textColor: AppColors.whiteFFFFFF,
                 onPressed: () {
-                  controller.inviteTeach(int.parse(controller.idClass),int.parse(widget.idGS));
+                  controller.inviteTeach(controller.listIdClass.join(','),int.parse(widget.idGS));
                 },
               )
             ],

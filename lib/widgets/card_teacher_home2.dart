@@ -26,7 +26,7 @@ class CardTeacherHome2 extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
       child: SizedBox(
-        height: 100,
+        height: 128,
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
@@ -91,7 +91,7 @@ class CardTeacherHome2 extends StatelessWidget {
                     SizedBox(
                       height: AppDimens.space10,
                     ),
-                    Row(
+                    Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +114,9 @@ class CardTeacherHome2 extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,

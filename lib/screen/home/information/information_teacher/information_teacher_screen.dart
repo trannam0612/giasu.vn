@@ -16,6 +16,7 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:giasu_vn/widgets/dialog_error_login.dart';
 import 'package:giasu_vn/widgets/dialog_watch_teacher.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -25,10 +26,24 @@ import '../../../../common/theme/app_dimens.dart';
 import '../../../../common/utils.dart';
 import 'checkbox_list_class.dart';
 
-class InformationTeacherScreen extends StatelessWidget {
+class InformationTeacherScreen extends StatefulWidget {
   final int type;
 
   const InformationTeacherScreen({Key key, this.type = 0}) : super(key: key);
+
+  @override
+  _InformationTeacherScreenState createState() => _InformationTeacherScreenState();
+}
+
+class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
+  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    informationTeacherController.token = SpUtil.getString(ConstString.token);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +104,7 @@ class InformationTeacherScreen extends StatelessWidget {
                     controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.regularW700(context,
-                        size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
+                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -118,7 +132,7 @@ class InformationTeacherScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(AppDimens.space20),
-                    width: AppDimens.width,
+                    width: AppDimens.width * 0.6,
                     decoration: BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(10), boxShadow: [
                       BoxShadow(
                         color: AppColors.black.withOpacity(0.25),
@@ -127,173 +141,115 @@ class InformationTeacherScreen extends StatelessWidget {
                         offset: Offset(0, 2), // changes position of shadow
                       ),
                     ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_book,
-                                  width: 16,
-                                  height: 16,
-                                  color: AppColors.grey747474,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.asIdName.join(', '),
-                                  style: AppTextStyles.regular(
-                                    context,
-                                    size: AppDimens.textSize14,
-                                  ),
-                                ),
-                              ],
+                            SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: SvgPicture.asset(
+                                Images.ic_mail,
+                                width: 18,
+                                height: 18,
+                                color: AppColors.grey747474,
+                              ),
                             ),
                             SizedBox(
-                              height: AppDimens.space8,
+                              width: AppDimens.space6,
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  Images.ic_money,
-                                  width: 16,
-                                  height: 16,
-                                  color: AppColors.secondaryF8971C,
-                                ),
-                                SizedBox(
-                                  width: AppDimens.space6,
-                                ),
-                                Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
-                                  style: AppTextStyles.regular(
-                                    context,
-                                    size: AppDimens.textSize14,
+                            controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                ? Expanded(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
+                                        style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                      ),
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        controller.token != ''
+                                            ? Get.dialog(DialogWatchTeacher(
+                                          point: controller.resultDetailTeacher.data.data.dataInfo.pointFree,
+                                                teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                                ontap: () {
+                                                  controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                                  Get.back();
+                                                  controller.update();
+                                                },
+                                              ))
+                                            : Get.dialog(DialogErrorLogin());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            'Sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
-                        controller.token != ''
-                            ? InkWell(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 18,
-                                          width: 18,
-                                          child: SvgPicture.asset(
-                                            Images.ic_call,
-                                            width: 18,
-                                            height: 18,
-                                            color: AppColors.grey747474,
+                        SizedBox(
+                          height: AppDimens.space10,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: SvgPicture.asset(
+                                Images.ic_call,
+                                width: 18,
+                                height: 18,
+                                color: AppColors.grey747474,
+                              ),
+                            ),
+                            SizedBox(
+                              width: AppDimens.space6,
+                            ),
+                            controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
+                                ? Text(
+                                    controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
+                                    style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
+                                  )
+                                : Expanded(
+                                    child: InkWell(
+                                      onTap: () => controller.token != ''
+                                          ? Get.dialog(DialogWatchTeacher(
+                                              teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                              nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                              ontap: () {
+                                                controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                                Get.back();
+                                                controller.update();
+                                              },
+                                            ))
+                                          : Get.dialog(DialogErrorLogin()),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
+                                        decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            'Sử dụng 1 điểm để xem',
+                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: AppDimens.space6,
-                                        ),
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                            ? Text(
-                                                controller.resultDetailTeacher.data.data.dataInfo.ugsPhone,
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
-                                              )
-                                            : InkWell(
-                                                onTap: () => Get.dialog(DialogWatchTeacher(
-                                                  teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                                  ontap: () {
-                                                    controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                                    Get.back();
-                                                    controller.update();
-                                                  },
-                                                )),
-                                                child: Container(
-                                                  width: AppDimens.width * 0.3,
-                                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                                  decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection: Axis.horizontal,
-                                                    child: Text(
-                                                      'sử dụng 1 điểm để xem',
-                                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                      ],
+                                      ),
                                     ),
-                                    SizedBox(
-                                      height: AppDimens.space6,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 18,
-                                          width: 18,
-                                          child: SvgPicture.asset(
-                                            Images.ic_mail,
-                                            width: 18,
-                                            height: 18,
-                                            color: AppColors.grey747474,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space6,
-                                        ),
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkMinusPoint
-                                            ? Container(
-                                                width: AppDimens.width * 0.3,
-                                                child: SingleChildScrollView(
-                                                  scrollDirection: Axis.horizontal,
-                                                  child: Text(
-                                                    controller.resultDetailTeacher.data.data.dataInfo.ugsEmail,
-                                                    style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.black),
-                                                  ),
-                                                ),
-                                              )
-                                            : InkWell(
-                                                onTap: () => Get.dialog(DialogWatchTeacher(
-                                                  teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                                  ontap: () {
-                                                    controller.minusPoint(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                                    Get.back();
-                                                    controller.update();
-                                                  },
-                                                )),
-                                                child: Container(
-                                                  width: AppDimens.width * 0.3,
-                                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space4, horizontal: AppDimens.space8),
-                                                  decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.circular(5)),
-                                                  child: SingleChildScrollView(
-                                                    scrollDirection: Axis.horizontal,
-                                                    child: Text(
-                                                      'sử dụng 1 điểm để xem',
-                                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.whiteFFFFFF),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container()
+                                  ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -313,8 +269,7 @@ class InformationTeacherScreen extends StatelessWidget {
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
                     child: Text(
                       controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
-                      style: AppTextStyles.regularW400(context,
-                          size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
+                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -528,6 +483,29 @@ class InformationTeacherScreen extends StatelessWidget {
                               Text(
                                 controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.25,
+                          color: AppColors.greyAAAAAA,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Học phí giảng dạy:',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              ),
+                              Text(
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                    ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                    : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                textAlign: TextAlign.right,
                               ),
                             ],
                           ),
@@ -778,8 +756,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                         'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
                                         softWrap: true,
                                         textAlign: TextAlign.left,
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                     ),
                                     SizedBox(
@@ -860,8 +837,9 @@ class InformationTeacherScreen extends StatelessWidget {
                   SizedBox(
                     height: AppDimens.space16,
                   ),
-                  controller.token != ''
-                      ? type == 0
+                  widget.type == 5
+                      ? Container()
+                      : widget.type == 0
                           ? Row(
                               children: [
                                 Spacer(),
@@ -873,11 +851,13 @@ class InformationTeacherScreen extends StatelessWidget {
                                     hasRadius: true,
                                     textColor: AppColors.whiteFFFFFF,
                                     onPressed: () {
-                                      Get.dialog(CheckboxListClass(
-                                        name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                        imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
-                                        idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
-                                      ));
+                                      controller.token != ''
+                                          ? Get.dialog(CheckboxListClass(
+                                              name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                              imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                                              idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
+                                            ))
+                                          : Get.dialog(DialogErrorLogin());
                                     },
                                     title: 'Mời dạy',
                                   ),
@@ -895,15 +875,18 @@ class InformationTeacherScreen extends StatelessWidget {
                                     hasRadius: true,
                                     backColor: AppColors.whiteFFFFFF,
                                     onPressed: () {
-                                      if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
-                                        homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        controller.update();
+                                      if (controller.token != '') {
+                                        if (!controller.resultDetailTeacher.data.data.dataInfo.checkSave) {
+                                          controller.resultDetailTeacher.data.data.dataInfo.checkSave = true;
+                                          homeAfterParentController.saveTutor(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          controller.update();
+                                        } else {
+                                          controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
+                                          homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          controller.update();
+                                        }
                                       } else {
-                                        controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
-                                        homeAfterParentController
-                                            .deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
-                                        controller.update();
+                                        Get.dialog(DialogErrorLogin());
                                       }
                                     },
                                   ),
@@ -927,8 +910,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                             ),
                                             TextSpan(
                                               text: SpUtil.getString(ConstString.NAME_CLASS),
-                                              style: AppTextStyles.regularW500(context,
-                                                  size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
                                             )
                                           ]),
                                     ),
@@ -947,8 +929,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                             textColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.acceptOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
@@ -969,8 +950,7 @@ class InformationTeacherScreen extends StatelessWidget {
                                             backColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.refuseOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
-                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
@@ -981,7 +961,6 @@ class InformationTeacherScreen extends StatelessWidget {
                                     ),
                                   ],
                                 )
-                      : Container()
                 ],
               ),
             ),
