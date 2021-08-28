@@ -105,11 +105,15 @@ class CardTeacherHome2 extends StatelessWidget {
                             SizedBox(
                               width: AppDimens.space6,
                             ),
-                            Text(
-                              subject,
-                              style: AppTextStyles.regular(
-                                context,
-                                size: AppDimens.textSize14,
+                            Expanded(
+                              child: Text(
+                                subject,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: AppTextStyles.regular(
+                                  context,
+                                  size: AppDimens.textSize14,
+                                ),
                               ),
                             ),
                           ],

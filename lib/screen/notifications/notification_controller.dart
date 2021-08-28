@@ -71,6 +71,7 @@ class NotificationController extends GetxController {
   }
 
   Future<void> notification() async {
+    resultNotification.data.dataNoti.clear();
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await notificationRepositories.notification(token);
     resultNotification = resultNotificationFromJson(res.data);

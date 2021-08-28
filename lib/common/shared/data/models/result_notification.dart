@@ -69,7 +69,7 @@ class DataNoti {
   String ugsName;
   String content;
   String ugsAvatar;
-  String notiDate;
+  int notiDate;
   int type;
   String idLop;
 
