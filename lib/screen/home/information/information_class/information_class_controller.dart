@@ -43,36 +43,42 @@ class InformationClassController extends GetxController {
   Future<void> detailClass(int idClass, int type) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.detailClass(token, idClass);
-    resultDetailClass = resultDetailClassFromJson(res.data);
-    if (resultDetailClass.data != null) {
-      listbuoiday[0].sang = resultDetailClass.data.data.lichday.st2;
-      listbuoiday[0].chieu = resultDetailClass.data.data.lichday.ct2;
-      listbuoiday[0].toi = resultDetailClass.data.data.lichday.tt2;
-      listbuoiday[1].sang = resultDetailClass.data.data.lichday.st3;
-      listbuoiday[1].chieu = resultDetailClass.data.data.lichday.ct3;
-      listbuoiday[1].toi = resultDetailClass.data.data.lichday.tt3;
-      listbuoiday[2].sang = resultDetailClass.data.data.lichday.st4;
-      listbuoiday[2].chieu = resultDetailClass.data.data.lichday.ct4;
-      listbuoiday[2].toi = resultDetailClass.data.data.lichday.tt4;
-      listbuoiday[3].sang = resultDetailClass.data.data.lichday.st5;
-      listbuoiday[3].chieu = resultDetailClass.data.data.lichday.ct5;
-      listbuoiday[3].toi = resultDetailClass.data.data.lichday.tt5;
-      listbuoiday[4].sang = resultDetailClass.data.data.lichday.st6;
-      listbuoiday[4].chieu = resultDetailClass.data.data.lichday.ct6;
-      listbuoiday[4].toi = resultDetailClass.data.data.lichday.tt6;
-      listbuoiday[5].sang = resultDetailClass.data.data.lichday.st7;
-      listbuoiday[5].chieu = resultDetailClass.data.data.lichday.ct7;
-      listbuoiday[5].toi = resultDetailClass.data.data.lichday.tt7;
-      listbuoiday[6].sang = resultDetailClass.data.data.lichday.scn;
-      listbuoiday[6].chieu = resultDetailClass.data.data.lichday.ccn;
-      listbuoiday[6].toi = resultDetailClass.data.data.lichday.tcn;
-      textChangeStatus = resultDetailClass.data.data.dataInfo.trangthaiLop;
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.detailClass(token, idClass);
+      resultDetailClass = resultDetailClassFromJson(res.data);
+      if (resultDetailClass.data != null) {
+        listbuoiday[0].sang = resultDetailClass.data.data.lichday.st2;
+        listbuoiday[0].chieu = resultDetailClass.data.data.lichday.ct2;
+        listbuoiday[0].toi = resultDetailClass.data.data.lichday.tt2;
+        listbuoiday[1].sang = resultDetailClass.data.data.lichday.st3;
+        listbuoiday[1].chieu = resultDetailClass.data.data.lichday.ct3;
+        listbuoiday[1].toi = resultDetailClass.data.data.lichday.tt3;
+        listbuoiday[2].sang = resultDetailClass.data.data.lichday.st4;
+        listbuoiday[2].chieu = resultDetailClass.data.data.lichday.ct4;
+        listbuoiday[2].toi = resultDetailClass.data.data.lichday.tt4;
+        listbuoiday[3].sang = resultDetailClass.data.data.lichday.st5;
+        listbuoiday[3].chieu = resultDetailClass.data.data.lichday.ct5;
+        listbuoiday[3].toi = resultDetailClass.data.data.lichday.tt5;
+        listbuoiday[4].sang = resultDetailClass.data.data.lichday.st6;
+        listbuoiday[4].chieu = resultDetailClass.data.data.lichday.ct6;
+        listbuoiday[4].toi = resultDetailClass.data.data.lichday.tt6;
+        listbuoiday[5].sang = resultDetailClass.data.data.lichday.st7;
+        listbuoiday[5].chieu = resultDetailClass.data.data.lichday.ct7;
+        listbuoiday[5].toi = resultDetailClass.data.data.lichday.tt7;
+        listbuoiday[6].sang = resultDetailClass.data.data.lichday.scn;
+        listbuoiday[6].chieu = resultDetailClass.data.data.lichday.ccn;
+        listbuoiday[6].toi = resultDetailClass.data.data.lichday.tcn;
+        textChangeStatus = resultDetailClass.data.data.dataInfo.trangthaiLop;
+        Get.back();
+        Get.to(InformationClassScreen(
+          type: type,
+        ));
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Get.to(InformationClassScreen(
-        type: type,
-      ));
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -83,6 +89,4 @@ class InformationClassController extends GetxController {
     textChangeStatus = resultDetailClass.data.data.dataInfo.trangthaiLop == 'Đã có gia sư' ? 'Đang tìm gia sư' : 'Đã có gia sư';
     update();
   }
-
-
 }

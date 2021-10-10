@@ -32,11 +32,11 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     searchController.displayCurrentLocation();
-    if (searchController.token == '') {
-      SpUtil.putString(ConstString.USER_TYPE, '2');
-    }else{
-      SpUtil.putString(ConstString.USER_TYPE, '1');
-    }
+    // if (searchController.token == '') {
+    //   SpUtil.putString(ConstString.USER_TYPE, '2');
+    // }else{
+    //   SpUtil.putString(ConstString.USER_TYPE, '1');
+    // }
     searchController.token = SpUtil.getString(ConstString.token);
     // TODO: implement initState
     super.initState();
@@ -248,35 +248,39 @@ class _SearchScreenState extends State<SearchScreen> {
                     )
                   : Expanded(
                       child: Center(
-                        child: GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude),
-                              zoom: 15,
-                              bearing: 0.0,
-                              tilt: 0.0),
-                          onMapCreated: (GoogleMapController controller) {
-                            if (!_completer.isCompleted) {
-                              //first calling is false
-                              //call "completer()"
-                              _completer.complete(controller);
-                            } else {
-                              //other calling, later is true,
-                              //don't call again completer()
-                            }
-                          },
-                          zoomGesturesEnabled: true,
-                          tiltGesturesEnabled: false,
-                          onCameraMove: (CameraPosition cameraPosition) {
-                            print(cameraPosition.zoom);
-                          },
-                          markers: {
-                            Marker(
-                                markerId: MarkerId('hn1'),
-                                position: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude),
-                                infoWindow: InfoWindow(title: 'Vị trí của bạn'),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue))
-                          },
+                        child: Text(
+                          'Chức năng đang được phát triển',
+                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, color: AppColors.grey747474),
                         ),
+                        // child: GoogleMap(
+                        //   initialCameraPosition: CameraPosition(
+                        //       target: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude),
+                        //       zoom: 15,
+                        //       bearing: 0.0,
+                        //       tilt: 0.0),
+                        //   onMapCreated: (GoogleMapController controller) {
+                        //     if (!_completer.isCompleted) {
+                        //       //first calling is false
+                        //       //call "completer()"
+                        //       _completer.complete(controller);
+                        //     } else {
+                        //       //other calling, later is true,
+                        //       //don't call again completer()
+                        //     }
+                        //   },
+                        //   zoomGesturesEnabled: true,
+                        //   tiltGesturesEnabled: false,
+                        //   onCameraMove: (CameraPosition cameraPosition) {
+                        //     print(cameraPosition.zoom);
+                        //   },
+                        //   markers: {
+                        //     Marker(
+                        //         markerId: MarkerId('hn1'),
+                        //         position: LatLng(controller.locationDefault.latitude, controller.locationDefault.longitude),
+                        //         infoWindow: InfoWindow(title: 'Vị trí của bạn'),
+                        //         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue))
+                        //   },
+                        // ),
                       ),
                     ),
             ],

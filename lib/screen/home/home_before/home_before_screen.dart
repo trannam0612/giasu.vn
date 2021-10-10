@@ -9,6 +9,7 @@ import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_r
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_screen.dart';
 import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
+import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/search/search_screen.dart';
 import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
@@ -22,6 +23,8 @@ class HomeBeforeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     InformationClassController informationClassController = Get.put(InformationClassController());
+    InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+
     String timeAgo(int timestamp) {
       var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
       var now = new DateTime.now();
@@ -278,7 +281,7 @@ class HomeBeforeScreen extends StatelessWidget {
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) => InkWell(
-                                  onTap: () => Get.dialog(DialogErrorLogin()),
+                                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSGD[index].ugsId), 0),
                                   child: CardTeacherHome(
                                     image: controller.listGSGD[index].ugsAvatar,
                                     name: controller.listGSGD[index].ugsName,

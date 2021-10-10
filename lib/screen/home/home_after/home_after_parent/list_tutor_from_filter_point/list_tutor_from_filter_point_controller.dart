@@ -18,32 +18,44 @@ class ListTutorFromFilterPointController extends GetxController {
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.tutorFromFilterPoint(token, loadMore, limit);
-    resultTutorFromFilterPoint = resultTutorFromFilterPointFromJson(res.data);
-    if (resultTutorFromFilterPoint.data != null) {
-      // Get.back();
-      if (resultTutorFromFilterPoint.data.listGstdl.isNotEmpty) {
-        for (int i = 0; i < resultTutorFromFilterPoint.data.listGstdl.length; i++) {
-          listGSTDL.add(resultTutorFromFilterPoint.data.listGstdl[i]);
+    try {
+      ResultData res = await homeRepositories.tutorFromFilterPoint(token, loadMore, limit);
+      resultTutorFromFilterPoint = resultTutorFromFilterPointFromJson(res.data);
+      if (resultTutorFromFilterPoint.data != null) {
+        // Get.back();
+        if (resultTutorFromFilterPoint.data.listGstdl.isNotEmpty) {
+          for (int i = 0; i < resultTutorFromFilterPoint.data.listGstdl.length; i++) {
+            listGSTDL.add(resultTutorFromFilterPoint.data.listGstdl[i]);
+          }
+        } else {
+          Utils.showToast('Hết');
         }
       } else {
-        Utils.showToast('Hết');
+        Get.back();
+        Utils.showToast(resultTutorFromFilterPoint.error.message);
       }
-    } else {
-      Get.back();
-      Utils.showToast(resultTutorFromFilterPoint.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
-  }Future<void> deleteTutorPointFree(int idGS) async {
+  }
+
+  Future<void> deleteTutorPointFree(int idGS) async {
     print('deleteTutorPointFree');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteTutorPointFree(token,idGS);
-    resultDeleteTutorPointFree = resultDeleteTutorPointFreeFromJson(res.data);
-    if (resultDeleteTutorPointFree.data != null) {
-      Utils.showToast(resultDeleteTutorPointFree.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultDeleteTutorPointFree.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.deleteTutorPointFree(token, idGS);
+      resultDeleteTutorPointFree = resultDeleteTutorPointFreeFromJson(res.data);
+      if (resultDeleteTutorPointFree.data != null) {
+        Utils.showToast(resultDeleteTutorPointFree.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultDeleteTutorPointFree.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

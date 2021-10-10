@@ -27,22 +27,27 @@ class ListPostCreatedController extends GetxController {
     print('classPosted');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.listClassPost(token, currentPage, limit);
-    resultListClassPosted = resultListClassPostedFromJson(res.data);
-    if (resultListClassPosted.data != null) {
-      // Get.back();
-      if (resultListClassPosted.data.listClass.isNotEmpty) {
-        for (int i = 0; i < resultListClassPosted.data.listClass.length; i++) {
-          listClassPosted.add(resultListClassPosted.data.listClass[i]);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.listClassPost(token, currentPage, limit);
+      resultListClassPosted = resultListClassPostedFromJson(res.data);
+      if (resultListClassPosted.data != null) {
+        // Get.back();
+        if (resultListClassPosted.data.listClass.isNotEmpty) {
+          for (int i = 0; i < resultListClassPosted.data.listClass.length; i++) {
+            listClassPosted.add(resultListClassPosted.data.listClass[i]);
+          }
+        } else {
+          Utils.showToast('Hết');
         }
+        print(resultListClassPosted.data.listClass.map((e) => e.trangthaiLop));
       } else {
-        Utils.showToast('Hết');
+        // Get.back();
+        Utils.showToast(resultListClassPosted.error.message);
       }
-      print(resultListClassPosted.data.listClass.map((e) => e.trangthaiLop));
-    } else {
-      // Get.back();
-      Utils.showToast(resultListClassPosted.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -51,15 +56,21 @@ class ListPostCreatedController extends GetxController {
     print('changeStatusPost');
     // await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await postRepositories.changeStatusPost(token, id, status);
-    resultChangeStatusPost = resultChangeStatusPostFromJson(res.data);
-    if (resultChangeStatusPost.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await postRepositories.changeStatusPost(token, id, status);
+      resultChangeStatusPost = resultChangeStatusPostFromJson(res.data);
+      if (resultChangeStatusPost.data != null) {
+        Get.back();
+        Utils.showToast(resultChangeStatusPost.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultChangeStatusPost.error.message);
+      }
+    } catch (e) {
       Get.back();
-      Utils.showToast(resultChangeStatusPost.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultChangeStatusPost.error.message);
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

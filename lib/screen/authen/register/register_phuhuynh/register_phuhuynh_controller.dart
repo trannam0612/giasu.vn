@@ -291,27 +291,37 @@ class RegisterPhuHuynhController extends GetxController {
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-    } else {}
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
   Future<void> registerParent() async {
-    ResultData res = await authenticationRepositories.registerParent(email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text,
-        idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
-    resultRegisterParent = resultRegisterParentFromJson(res.data);
-    if (resultRegisterParent.data != null) {
-      SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
-      SpUtil.putString(ConstString.EMAIL, resultRegisterParent.data.dataUser.email);
-      Utils.showToast(resultRegisterParent.data.message);
-      Get.to(OTPScreen(
-        back: () => Get.back(),
-      ));
-    } else {
-      Utils.showToast(resultRegisterParent.error.message);
+    try {
+      ResultData res = await authenticationRepositories.registerParent(email.text, passWord.text, rePassWord.text, avatar, fullName.text, phone.text,
+          idGender, dateTime.text, idProvincial, idDistrict, address.text, information.text);
+      resultRegisterParent = resultRegisterParentFromJson(res.data);
+      if (resultRegisterParent.data != null) {
+        SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
+        SpUtil.putString(ConstString.EMAIL, resultRegisterParent.data.dataUser.email);
+        Utils.showToast(resultRegisterParent.data.message);
+        Get.to(OTPScreen(
+          back: () => Get.back(),
+        ));
+      } else {
+        Utils.showToast(resultRegisterParent.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
   }
 
@@ -354,16 +364,21 @@ class RegisterPhuHuynhController extends GetxController {
 
   Future<void> checkMailPH() async {
     print('getDataQH');
-    if (email.text.isNotEmpty) {
-      ResultData res = await authenticationRepositories.checkMailPH(email.text);
-      ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
-      if (resultCheckMail.data != null) {
-        valueCheckEmailGS.value = true;
+    try {
+      if (email.text.isNotEmpty) {
+        ResultData res = await authenticationRepositories.checkMailPH(email.text);
+        ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
+        if (resultCheckMail.data != null) {
+          valueCheckEmailGS.value = true;
+        } else {
+          valueCheckEmailGS.value = false;
+        }
       } else {
-        valueCheckEmailGS.value = false;
+        return null;
       }
-    } else {
-      return null;
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

@@ -17,6 +17,7 @@ class HomeAfterParentController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultHomeAfterParent resultHomeAfterParent = ResultHomeAfterParent();
   ResultSaveTutor resultSaveTutor = ResultSaveTutor();
+
   ResultDeleteTutorSaved resultDeleteTutorSaved = ResultDeleteTutorSaved();
   bool checkSave;
   List<DataDsgs> listGSGD = [];
@@ -36,41 +37,61 @@ class HomeAfterParentController extends GetxController {
     print('homeAfterParent');
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
-    if (resultHomeAfterParent.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+      resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
+      if (resultHomeAfterParent.data != null) {
+        print('resultHomeAfterParent.data.tindang');
+        print(resultHomeAfterParent.data.tindang);
+        await SpUtil.putString(ConstString.NUMBER_POST, resultHomeAfterParent.data.tindang);
+
+        Get.back();
+        listGSGD = resultHomeAfterParent.data.dataDsgsgd;
+        listGSPB = resultHomeAfterParent.data.dataDsgspb;
+        // Get.to(HomeAfterParentScreen());
+        Get.toNamed(Routes.navigation);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      listGSGD = resultHomeAfterParent.data.dataDsgsgd;
-      listGSPB = resultHomeAfterParent.data.dataDsgspb;
-      // Get.to(HomeAfterParentScreen());
-      Get.toNamed(Routes.navigation);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> saveTutor(int idGS) async {
     print('homeAfterParent');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.saveTutor(token, idGS);
-    resultSaveTutor = resultSaveTutorFromJson(res.data);
-    if (resultSaveTutor.data != null) {
-      Utils.showToast('Đã lưu');
-    } else {
-      Utils.showToast(resultSaveTutor.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.saveTutor(token, idGS);
+      resultSaveTutor = resultSaveTutorFromJson(res.data);
+      if (resultSaveTutor.data != null) {
+        Utils.showToast('Đã lưu');
+      } else {
+        Utils.showToast(resultSaveTutor.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> deleteTutorSaved(int idGS) async {
     print('homeAfterParent');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteTutorSaved(token, idGS);
-    resultDeleteTutorSaved = resultDeleteTutorSavedFromJson(res.data);
-    if (resultDeleteTutorSaved.data != null) {
-      Utils.showToast('Đã bỏ lưu');
-    } else {
-      Utils.showToast(resultSaveTutor.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.deleteTutorSaved(token, idGS);
+      resultDeleteTutorSaved = resultDeleteTutorSavedFromJson(res.data);
+      if (resultDeleteTutorSaved.data != null) {
+        Utils.showToast('Đã bỏ lưu');
+      } else {
+        Utils.showToast(resultSaveTutor.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

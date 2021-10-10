@@ -40,7 +40,15 @@ class PostController extends GetxController {
   List<String> listStringTopic = [];
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listQH = ['Quận Hai Bà Trưng', 'Quận Hoàng Mai', 'Quận Hoàn Kiếm', 'Huyện Mỹ Hào', 'Quận Thanh Xuân', 'Quận Nam Từ Niêm', 'Quận Tây Hồ'];
+  List<String> listQH = [
+    'Quận Hai Bà Trưng',
+    'Quận Hoàng Mai',
+    'Quận Hoàn Kiếm',
+    'Huyện Mỹ Hào',
+    'Quận Thanh Xuân',
+    'Quận Nam Từ Niêm',
+    'Quận Tây Hồ'
+  ];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
   List<String> listGender = ['Nam', 'Nữ'];
   List<String> listLuong = ['Giờ', 'Tháng'];
@@ -175,13 +183,17 @@ class PostController extends GetxController {
 
   Future<void> getListTopic(String idTopic) async {
     listTopic = [];
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = resultListTopic.data.listSubjectTag;
-      selectedTopicSubject = listTopic[0].nameSubject;
-      idTopicSubject = int.parse(listTopic[0].idSubject);
-    } else {
+    try {
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = resultListTopic.data.listSubjectTag;
+        selectedTopicSubject = listTopic[0].nameSubject;
+        idTopicSubject = int.parse(listTopic[0].idSubject);
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -456,11 +468,15 @@ class PostController extends GetxController {
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-    } else {
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -468,37 +484,42 @@ class PostController extends GetxController {
   Future<void> createPost() async {
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await postRepositories.createPost(
-        token,
-        title.text,
-        idFormTeaching,
-        // time,l
-        idTime,
-        int.parse(numberStudent.text),
-        int.parse(selectedDayTeaching),
-        idGender,
-        phone.text,
-        address.text,
-        salaryCD.text,
-        valueStatusFee,
-        contentTitle.text,
-        idSubject,
-        idClass,
-        idTopicSubject,
-        idProvincial,
-        idDistrict,
-        idExp,
-        test.join(','));
-    ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
-    if (resultCreatePost.data != null) {
-      Get.off(ListPostCreatedScreen(
-        back: () {
-          homeAfterParentController.homeAfterParent(1, 10);
-        },
-      ));
-      Utils.showToast(resultCreatePost.data.message);
-    } else {
-      Utils.showToast(resultCreatePost.error.message);
+    try {
+      ResultData res = await postRepositories.createPost(
+          token,
+          title.text,
+          idFormTeaching,
+          // time,l
+          idTime,
+          int.parse(numberStudent.text),
+          int.parse(selectedDayTeaching),
+          idGender,
+          phone.text,
+          address.text,
+          salaryCD.text,
+          valueStatusFee,
+          contentTitle.text,
+          idSubject,
+          idClass,
+          idTopicSubject,
+          idProvincial,
+          idDistrict,
+          idExp,
+          test.join(','));
+      ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
+      if (resultCreatePost.data != null) {
+        Get.off(ListPostCreatedScreen(
+          back: () {
+            homeAfterParentController.homeAfterParent(1, 10);
+          },
+        ));
+        Utils.showToast(resultCreatePost.data.message);
+      } else {
+        Utils.showToast(resultCreatePost.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
   }
 }

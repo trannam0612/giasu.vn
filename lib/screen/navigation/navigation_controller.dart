@@ -29,7 +29,11 @@ class NavigationController extends GetxController {
     userType = SpUtil.getString(ConstString.USER_TYPE);
     token = SpUtil.getString(ConstString.token);
 
-    currentPage.value = token == '' ? HomeBeforeScreen() : userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
+    currentPage.value = token == ''
+        ? HomeBeforeScreen()
+        : userType == '1'
+            ? HomeAfterParentScreen()
+            : HomeAfterTeacherScreen();
     super.onInit();
     update();
   }
@@ -39,8 +43,12 @@ class NavigationController extends GetxController {
     pageIndex.value = index;
     switch (index) {
       case 0:
-      // if (token != '') {
+        // if (token != '') {
+        userType = SpUtil.getString(ConstString.USER_TYPE);
+
         pageIndex.value = 0;
+        print('userType');
+        print(userType);
         currentPage.value = userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen();
         // } else {
         //   Get.dialog(DialogError2(
@@ -53,7 +61,7 @@ class NavigationController extends GetxController {
 
         break;
       case 1:
-      // if (token != '') {
+        // if (token != '') {
         pageIndex.value = 1;
         currentPage.value = MessageScreen();
         // } else {
@@ -70,7 +78,7 @@ class NavigationController extends GetxController {
         currentPage.value = NotificationsScreen();
         break;
       case 3:
-      // if (token != '') {
+        // if (token != '') {
         pageIndex.value = 3;
         currentPage.value = SettingsScreen();
         // } else {

@@ -17,38 +17,53 @@ class ListClassInvitedController extends GetxController {
 
   Future<void> parentInvited(int currentPage, int limit) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.parentInvited(token, currentPage, limit);
-    resultParentInvited = resultParentInvitedFromJson(res.data);
-    if (resultParentInvited.data != null) {
-      for (int i = 0; i < resultParentInvited.data.listPhmd.length; i++) {
-        listPHMD.add(resultParentInvited.data.listPhmd[i]);
+    try {
+      ResultData res = await homeRepositories.parentInvited(token, currentPage, limit);
+      resultParentInvited = resultParentInvitedFromJson(res.data);
+      if (resultParentInvited.data != null) {
+        for (int i = 0; i < resultParentInvited.data.listPhmd.length; i++) {
+          listPHMD.add(resultParentInvited.data.listPhmd[i]);
+        }
+      } else {
+        Utils.showToast(resultParentInvited.error.message);
       }
-    } else {
-      Utils.showToast(resultParentInvited.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> acceptInviteTeach(int idLop) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.acceptInviteTeach(token, idLop);
-    resultAcceptInviteTeach = resultAcceptInviteTeachFromJson(res.data);
-    if (resultAcceptInviteTeach.data != null) {
-      Utils.showToast(resultAcceptInviteTeach.data.message);
-    } else {
-      Utils.showToast(resultAcceptInviteTeach.error.message);
+    try {
+      ResultData res = await homeRepositories.acceptInviteTeach(token, idLop);
+      resultAcceptInviteTeach = resultAcceptInviteTeachFromJson(res.data);
+      if (resultAcceptInviteTeach.data != null) {
+        Utils.showToast(resultAcceptInviteTeach.data.message);
+      } else {
+        Utils.showToast(resultAcceptInviteTeach.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> refuseInviteTeach(int idLop) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.refuseInviteTeach(token, idLop);
-    resultRefuseInviteTeach = resultRefuseInviteTeachFromJson(res.data);
-    if (resultRefuseInviteTeach.data != null) {
-      Utils.showToast(resultRefuseInviteTeach.data.message);
-    } else {
-      Utils.showToast(resultRefuseInviteTeach.error.message);
+    try {
+      ResultData res = await homeRepositories.refuseInviteTeach(token, idLop);
+      resultRefuseInviteTeach = resultRefuseInviteTeachFromJson(res.data);
+      if (resultRefuseInviteTeach.data != null) {
+        Utils.showToast(resultRefuseInviteTeach.data.message);
+      } else {
+        Utils.showToast(resultRefuseInviteTeach.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

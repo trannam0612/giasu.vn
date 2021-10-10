@@ -13,6 +13,7 @@ import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
+import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -382,6 +383,9 @@ class RegisterGiaSuController extends GetxController {
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
+    if (errorSalaryUL1 && (int.tryParse(salaryUL1.text ?? '0') ?? 0) > (int.tryParse(salaryUL2.text ?? '0') ?? 0)) {
+      return 'Học phí sai định dạng!';
+    }
     return null;
   }
 
@@ -389,6 +393,9 @@ class RegisterGiaSuController extends GetxController {
     print('checkSalaryUL2');
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
+    }
+    if (errorSalaryUL1 && int.tryParse(salaryUL1.text ?? '0') > int.tryParse(salaryUL2.text ?? '0')) {
+      return 'Học phí sai định dạng!';
     }
     return null;
   }
@@ -588,12 +595,17 @@ class RegisterGiaSuController extends GetxController {
   Future<void> getListTopic(String idTopic) async {
     listTopic = [];
     print('getListTopic');
-    print(listSubjectSelect.join(','));
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = resultListTopic.data.listSubjectTag;
-    } else {}
+    try {
+      print(listSubjectSelect.join(','));
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = resultListTopic.data.listSubjectTag;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
@@ -838,7 +850,7 @@ class RegisterGiaSuController extends GetxController {
       }
     } else {
       print('TH2');
-      errorLuong = int.parse(salaryUL1.text) >= int.parse(salaryUL2.text) ? true : false;
+      errorLuong = int.parse(salaryUL1.text ?? "0") >= int.parse(salaryUL2.text ?? "0") ? true : false;
       if (salaryUL1.text.isNotEmpty &&
           salaryUL2.text.isNotEmpty &&
           listSubjectSelect.isNotEmpty &&
@@ -883,11 +895,16 @@ class RegisterGiaSuController extends GetxController {
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-    } else {}
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
@@ -900,74 +917,88 @@ class RegisterGiaSuController extends GetxController {
   }
 
   Future<void> registerTeacher() async {
-    // Get.dialog(DialogLoading());
+    Get.dialog(DialogLoading());
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+    try {
+      ResultData res = await authenticationRepositories.registerTeacher(
+          phone.text,
+          email.text,
+          passWord.text,
+          rePassWord.text,
+          avatar,
+          fullName.text,
+          idGender,
+          dateTime.text,
+          idMariage,
+          // tutorStyle,
+          idExp,
+          // classTeach,
+          idClass,
+          school.text,
+          // graduationYear, năm tốt nghiệp
+          graduationYear.text,
+          // specialized, Chuyên ngành
+          specialized.text,
+          idProvincial,
+          idDistrict,
+          address.text,
+          company.text,
+          information.text,
+          prize.text,
+          int.parse(numberYearExp.text = '0'),
+          titleExp.text,
+          timeExpStart.text,
+          timeExpEnd.text,
+          informationExp.text,
+          // asId, id môn học
+          listSubjectSelect.map((e) => e.asId).join(','),
+          listSubjectSelectTopic.map((e) => e.idSubject).join(','),
+          idFormTeaching,
+          salaryCD.text,
+          idTime,
+          salaryUL1.text,
+          salaryUL2.text,
+          idArea,
+          listDistrictSelect.map((e) => e.idCity).join(','),
+          test.join(','));
+      ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
+      if (resultRegisterTeacher.data != null) {
+        Get.back();
+        Utils.showToast(resultRegisterTeacher.data.message);
+        SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
+        SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+        Get.toNamed(Routes.verify_register);
+      } else {
+        Get.back();
 
-    ResultData res = await authenticationRepositories.registerTeacher(
-        phone.text,
-        email.text,
-        passWord.text,
-        rePassWord.text,
-        avatar,
-        fullName.text,
-        idGender,
-        dateTime.text,
-        idMariage,
-        // tutorStyle,
-        idExp,
-        // classTeach,
-        idClass,
-        school.text,
-        // graduationYear, năm tốt nghiệp
-        graduationYear.text,
-        // specialized, Chuyên ngành
-        specialized.text,
-        idProvincial,
-        idDistrict,
-        address.text,
-        company.text,
-        information.text,
-        prize.text,
-        int.parse(numberYearExp.text = '0'),
-        titleExp.text,
-        timeExpStart.text,
-        timeExpEnd.text,
-        informationExp.text,
-        // asId, id môn học
-        listSubjectSelect.map((e) => e.asId).join(','),
-        listSubjectSelectTopic.map((e) => e.idSubject).join(','),
-        idFormTeaching,
-        salaryCD.text,
-        idTime,
-        salaryUL1.text,
-        salaryUL2.text,
-        idArea,
-        listDistrictSelect.map((e) => e.idCity).join(','),
-        test.join(','));
-    ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
-    if (resultRegisterTeacher.data != null) {
-      Utils.showToast(resultRegisterTeacher.data.message);
-      SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
-      SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
-      Get.toNamed(Routes.verify_register);
-    } else {
-      Utils.showToast(resultRegisterTeacher.error.message);
+        Utils.showToast(resultRegisterTeacher.error.message);
+      }
+    } catch (e) {
+      Get.back();
+
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> checkEmailGS() async {
     print('getDataQH');
-    if (email.text.isNotEmpty) {
-      ResultData res = await authenticationRepositories.checkMailGS(email.text);
-      ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
-      if (resultCheckMail.data != null) {
-        valueCheckEmailGS.value = true;
+    try {
+      if (email.text.isNotEmpty) {
+        ResultData res = await authenticationRepositories.checkMailGS(email.text);
+        ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
+        if (resultCheckMail.data != null) {
+          valueCheckEmailGS.value = true;
+        } else {
+          valueCheckEmailGS.value = false;
+        }
       } else {
-        valueCheckEmailGS.value = false;
+        return null;
       }
-    } else {
-      return null;
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

@@ -114,6 +114,7 @@ class ForgotController extends GetxController {
 
   Future<void> verifyForgotPassword() async {
     Get.dialog(DialogLoading());
+    try{
     String tokenForgot = SpUtil.getString(ConstString.token_forgot);
     ResultData res = await authenticationRepositories.verifyForgotPassword(tokenForgot, otpUser.text);
     ResultVerifyForgot resultVerifyForgot = resultVerifyForgotFromJson(res.data);
@@ -127,11 +128,17 @@ class ForgotController extends GetxController {
       Utils.showToast(resultVerifyForgot.error.message);
       otpUser.clear();
     }
+    } catch (e) {
+      print(e);
+      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
   Future<void> newPasswordForgot() async {
     Get.dialog(DialogLoading());
+    try{
     String tokenForgot = SpUtil.getString(ConstString.token_forgot);
     ResultData res = await authenticationRepositories.newPasswordForgot(tokenForgot, passWord.text, rePassWord.text);
     ResultNewPasswordForgot resultNewPasswordForgot = resultNewPasswordForgotFromJson(res.data);
@@ -145,6 +152,11 @@ class ForgotController extends GetxController {
       Utils.showToast(resultNewPasswordForgot.error.message);
       passWord.clear();
       rePassWord.clear();
+    }
+    } catch (e) {
+      print(e);
+      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -189,6 +201,7 @@ class ForgotController extends GetxController {
   Future<void> emailForgotPassword() async {
     // await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
+    try{
     ResultData res = await authenticationRepositories.mailForgotPassword(email.text);
     ResultEmailForgot resultEmailForgot = resultEmailForgotFromJson(res.data);
     if (resultEmailForgot.data != null) {
@@ -201,6 +214,11 @@ class ForgotController extends GetxController {
       Get.back();
       email.clear();
       Utils.showToast(resultEmailForgot.error.message);
+    }
+    } catch (e) {
+      print(e);
+      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

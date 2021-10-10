@@ -7,27 +7,29 @@ import 'package:giasu_vn/common/utils.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ListClassRecentlyController extends GetxController {
- HomeRepositories homeRepositories = HomeRepositories();
- ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
- List<DataDslh>listLHGDMore = [];
- Future<void> recentlyClass(int currentPage, int limit) async {
-   print('recentlyClass');
-   String token = SpUtil.getString(ConstString.token);
-   ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-   resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-   if (resultHomeAfterTeacher.data != null) {
-     if(resultHomeAfterTeacher.data.dataDslhpb.isNotEmpty) {
-       for (int i = 0; i < resultHomeAfterTeacher.data.dataDslhgd.length; i++) {
-         listLHGDMore.add(resultHomeAfterTeacher.data.dataDslhgd[i]);
-       }
-     }
-     else {
-       Utils.showToast('Đã hết!');
-     }
-   }
-   else {
+  HomeRepositories homeRepositories = HomeRepositories();
+  ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
+  List<DataDslh> listLHGDMore = [];
 
-   }
-   update();
- }
+  Future<void> recentlyClass(int currentPage, int limit) async {
+    print('recentlyClass');
+    String token = SpUtil.getString(ConstString.token);
+    try {
+      ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+      resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
+      if (resultHomeAfterTeacher.data != null) {
+        if (resultHomeAfterTeacher.data.dataDslhpb.isNotEmpty) {
+          for (int i = 0; i < resultHomeAfterTeacher.data.dataDslhgd.length; i++) {
+            listLHGDMore.add(resultHomeAfterTeacher.data.dataDslhgd[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết!');
+        }
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
+    update();
+  }
 }

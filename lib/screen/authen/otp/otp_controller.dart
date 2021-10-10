@@ -42,32 +42,44 @@ class OTPController extends GetxController {
 
   Future<void> verifyRegister(String token) async {
     Get.dialog(DialogLoading());
-    ResultData res = await authenticationRepositories.verifyRegister(token, otpUser.text);
-    resultVerifyRegister = resultVerifyRegisterFromJson(res.data);
-    if (resultVerifyRegister.data != null) {
+    try {
+      ResultData res = await authenticationRepositories.verifyRegister(token, otpUser.text);
+      resultVerifyRegister = resultVerifyRegisterFromJson(res.data);
+      if (resultVerifyRegister.data != null) {
+        Get.back();
+        Utils.showToast(resultVerifyRegister.data.message);
+        Get.to(LoginScreen());
+      } else {
+        Get.back();
+        Utils.showToast(resultVerifyRegister.error.message);
+        otpUser.clear();
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultVerifyRegister.data.message);
-      Get.to(LoginScreen());
-    } else {
-      Get.back();
-      Utils.showToast(resultVerifyRegister.error.message);
-      otpUser.clear();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> reSendOTPRegister() async {
     Get.dialog(DialogLoading());
-    String email = SpUtil.getString(ConstString.EMAIL);
-    ResultData res = await authenticationRepositories.reSendOTPRegister(email);
-    ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
-    if (resultReSendOtpRegister.data != null) {
-      SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
+    try {
+      String email = SpUtil.getString(ConstString.EMAIL);
+      ResultData res = await authenticationRepositories.reSendOTPRegister(email);
+      ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
+      if (resultReSendOtpRegister.data != null) {
+        SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
+        Get.back();
+        Utils.showToast(resultReSendOtpRegister.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultReSendOtpRegister.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultReSendOtpRegister.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultReSendOtpRegister.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

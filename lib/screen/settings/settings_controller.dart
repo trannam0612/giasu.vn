@@ -46,30 +46,40 @@ class SettingsController extends GetxController {
   Future<void> getInfoParent() async {
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoParent(token);
-    resultGetInfoParent = resultGetInfoParentFromJson(res.data);
-    if (resultGetInfoParent.data != null) {
-      // Get.back();
-      // Utils.showToast(resultGetInfoParent.data.message);
-    } else {
-      // Get.back();
-      Utils.showToast(resultGetInfoParent.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.getInfoParent(token);
+      resultGetInfoParent = resultGetInfoParentFromJson(res.data);
+      if (resultGetInfoParent.data != null) {
+        // Get.back();
+        // Utils.showToast(resultGetInfoParent.data.message);
+      } else {
+        // Get.back();
+        Utils.showToast(resultGetInfoParent.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> getInfoTeacher() async {
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoTeacher(token);
-    resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
-    if (resultGetInfoTeacher.data != null) {
-      // Get.back();
-      // Utils.showToast(resultGetInfoTeacher.data.message);
-    } else {
-      // Get.back();
-      Utils.showToast(resultGetInfoTeacher.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.getInfoTeacher(token);
+      resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+      if (resultGetInfoTeacher.data != null) {
+        // Get.back();
+        // Utils.showToast(resultGetInfoTeacher.data.message);
+      } else {
+        // Get.back();
+        Utils.showToast(resultGetInfoTeacher.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

@@ -13,35 +13,44 @@ class ListTeacherRecentlyController extends GetxController {
   ResultHomeBefore resultHomeBefore = ResultHomeBefore();
   List<DataDsgs> listGSGDMore = [];
   List<DataG> listGSGDBefore = [];
+
   Future<void> listTeacherRecently(int currentPage, int limit) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
-    if (resultHomeAfterParent.data != null) {
-      if(resultHomeAfterParent.data.dataDsgsgd.length > 0) {
-        for (int i = 0; i < resultHomeAfterParent.data.dataDsgsgd.length; i++) {
-          listGSGDMore.add(resultHomeAfterParent.data.dataDsgsgd[i]);
+    try {
+      ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+      resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
+      if (resultHomeAfterParent.data != null) {
+        if (resultHomeAfterParent.data.dataDsgsgd.length > 0) {
+          for (int i = 0; i < resultHomeAfterParent.data.dataDsgsgd.length; i++) {
+            listGSGDMore.add(resultHomeAfterParent.data.dataDsgsgd[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết');
         }
       }
-      else {
-        Utils.showToast('Đã hết');
-      }
-
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
-  }Future<void> listTeacherRecentlyBefore() async {
-    ResultData res = await homeRepositories.homeBefore();
-    resultHomeBefore = resultHomeBeforeFromJson(res.data);
-    if (resultHomeBefore.data != null) {
-      if(resultHomeBefore.data.dataGs.length > 0) {
-        for (int i = 0; i < resultHomeBefore.data.dataGs.length; i++) {
-          listGSGDBefore.add(resultHomeBefore.data.dataGs[i]);
+  }
+
+  Future<void> listTeacherRecentlyBefore() async {
+    try {
+      ResultData res = await homeRepositories.homeBefore();
+      resultHomeBefore = resultHomeBeforeFromJson(res.data);
+      if (resultHomeBefore.data != null) {
+        if (resultHomeBefore.data.dataGs.length > 0) {
+          for (int i = 0; i < resultHomeBefore.data.dataGs.length; i++) {
+            listGSGDBefore.add(resultHomeBefore.data.dataGs[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết');
         }
       }
-      else {
-        Utils.showToast('Đã hết');
-      }
-
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

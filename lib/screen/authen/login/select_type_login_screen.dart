@@ -84,7 +84,9 @@ class SelectTypeLoginScreen extends StatelessWidget {
                         },
                         child: Container(
                           width: AppDimens.width * 0.35,
-                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                          decoration: BoxDecoration(
+                              color: AppColors.primary4C5BD4,
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -112,7 +114,9 @@ class SelectTypeLoginScreen extends StatelessWidget {
                         },
                         child: Container(
                           width: AppDimens.width * 0.35,
-                          decoration: BoxDecoration(color: AppColors.primary4C5BD4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                          decoration: BoxDecoration(
+                              color: AppColors.primary4C5BD4,
+                              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -135,6 +139,20 @@ class SelectTypeLoginScreen extends StatelessWidget {
                   ),
                   Container(
                     width: AppDimens.width,
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.primary4C5BD4,
+                    ),
+                    onPressed: () => Get.to(IntroLoginScreen()),
+                    child: Text(
+                      'Đăng ký',
+                      style: AppTextStyles.regularW500(context,
+                          size: AppDimens.textSize18, lineHeight: AppDimens.textSize18, color: AppColors.whiteFFFFFF),
+                    ),
+                  ),
+                  SizedBox(
+                    height: AppDimens.space32,
                   ),
                   InkWell(
                     onTap: () {

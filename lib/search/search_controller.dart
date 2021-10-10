@@ -133,11 +133,16 @@ class SearchController extends GetxController {
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-    } else {}
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
@@ -145,13 +150,20 @@ class SearchController extends GetxController {
 
   Future<void> searchParent(int i) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await searchRepositories.searchParent(token, 1, idSubject, idClass, idProvincial, i, 10);
-    resultSearchListTeacher = resultSearchListTeacherFromJson(res.data);
-    if (resultSearchListTeacher.data != null) {
-      listDataTeacher = listDataTeacher + resultSearchListTeacher.data.data.dataGs;
-      // Get.to(ListResultSearchScreen());
-    } else {
-      print(resultSearchListTeacher.error.message);
+    try {
+      ResultData res = await searchRepositories.searchParent(token, 1, idSubject, idClass, idProvincial, i, 10);
+      resultSearchListTeacher = resultSearchListTeacherFromJson(res.data);
+      if (resultSearchListTeacher.data != null) {
+        listDataTeacher = listDataTeacher + resultSearchListTeacher.data.data.dataGs;
+        print('listDataTeacher.length');
+        print(listDataTeacher.length);
+        // Get.to(ListResultSearchScreen());
+      } else {
+        print(resultSearchListTeacher.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -160,13 +172,18 @@ class SearchController extends GetxController {
 
   Future<void> deleteTutorSaved(int idGS) async {
     print('homeAfterParent');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteTutorSaved(token, idGS);
-    resultDeleteTutorSaved = resultDeleteTutorSavedFromJson(res.data);
-    if (resultDeleteTutorSaved.data != null) {
-      Utils.showToast('Đã bỏ lưu');
-    } else {
-      Utils.showToast(resultSaveTutor.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.deleteTutorSaved(token, idGS);
+      resultDeleteTutorSaved = resultDeleteTutorSavedFromJson(res.data);
+      if (resultDeleteTutorSaved.data != null) {
+        Utils.showToast('Đã bỏ lưu');
+      } else {
+        Utils.showToast(resultSaveTutor.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -174,27 +191,37 @@ class SearchController extends GetxController {
   List<DataLh> listDataParent = [];
 
   Future<void> searchTeacher(int i) async {
-    ResultData res = await searchRepositories.searchClass(1, idSubject, idClass, idProvincial, i, 10);
-    resultSearchClassTeacher = resultSearchClassTeacherFromJson(res.data);
-    if (resultSearchClassTeacher.data != null) {
-      print(resultSearchClassTeacher.data.message);
-      listDataParent = listDataParent + resultSearchClassTeacher.data.data.dataLh;
-      // Get.to(ListResultSearchScreen());
-    } else {
-      print(resultSearchClassTeacher.error.message);
+    try {
+      ResultData res = await searchRepositories.searchClass(1, idSubject, idClass, idProvincial, i, 10);
+      resultSearchClassTeacher = resultSearchClassTeacherFromJson(res.data);
+      if (resultSearchClassTeacher.data != null) {
+        print(resultSearchClassTeacher.data.message);
+        listDataParent = listDataParent + resultSearchClassTeacher.data.data.dataLh;
+        // Get.to(ListResultSearchScreen());
+      } else {
+        print(resultSearchClassTeacher.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> saveTutor(int idGS) async {
     print('homeAfterParent');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.saveTutor(token, idGS);
-    resultSaveTutor = resultSaveTutorFromJson(res.data);
-    if (resultSaveTutor.data != null) {
-      Utils.showToast('Đã lưu');
-    } else {
-      Utils.showToast(resultSaveTutor.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.saveTutor(token, idGS);
+      resultSaveTutor = resultSaveTutorFromJson(res.data);
+      if (resultSaveTutor.data != null) {
+        Utils.showToast('Đã lưu');
+      } else {
+        Utils.showToast(resultSaveTutor.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

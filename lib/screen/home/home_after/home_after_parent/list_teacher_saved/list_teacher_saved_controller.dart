@@ -10,26 +10,31 @@ class ListTeacherSavedController extends GetxController {
   HomeRepositories homeRepositories = HomeRepositories();
   ResultTutorSaved resultTutorSaved = ResultTutorSaved();
   List<ListGsdl> listGSDL = [];
+
   Future<void> tutorSaved(int loadMore, int limit) async {
     print('tutorSaved');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.tutorSaved(token, loadMore, limit);
-    resultTutorSaved = resultTutorSavedFromJson(res.data);
-    if (resultTutorSaved.data != null) {
-      // Get.back();
-      if(resultTutorSaved.data.listGsdl.isNotEmpty) {
-        for (int i = 0; i < resultTutorSaved.data.listGsdl.length; i++) {
-          listGSDL.add(resultTutorSaved.data.listGsdl[i]);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.tutorSaved(token, loadMore, limit);
+      resultTutorSaved = resultTutorSavedFromJson(res.data);
+      if (resultTutorSaved.data != null) {
+        // Get.back();
+        if (resultTutorSaved.data.listGsdl.isNotEmpty) {
+          for (int i = 0; i < resultTutorSaved.data.listGsdl.length; i++) {
+            listGSDL.add(resultTutorSaved.data.listGsdl[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết');
         }
+      } else {
+        Get.back();
+        Utils.showToast(resultTutorSaved.error.message);
       }
-      else {
-        Utils.showToast('Đã hết');
-      }
-    } else {
-      Get.back();
-      Utils.showToast(resultTutorSaved.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
