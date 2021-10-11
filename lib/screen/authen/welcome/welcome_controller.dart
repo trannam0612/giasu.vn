@@ -63,14 +63,19 @@ class WelcomeController extends GetxController {
 
   Future<void> checkToken() async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await authenticationRepositories.checkToken(token);
-    ResultCheckToken resultCheckToken = resultCheckTokenFromJson(res.data);
-    if (resultCheckToken.data != null) {
-      Get.to(NavigationScreen());
-      Utils.showToast(resultCheckToken.data.message);
-    } else {
-      Get.to(SelectTypeLoginScreen());
-      // Utils.showToast(resultCheckToken.error.message);
+    try {
+      ResultData res = await authenticationRepositories.checkToken(token);
+      ResultCheckToken resultCheckToken = resultCheckTokenFromJson(res.data);
+      if (resultCheckToken.data != null) {
+        Get.to(NavigationScreen());
+        Utils.showToast(resultCheckToken.data.message);
+      } else {
+        Get.to(SelectTypeLoginScreen());
+        // Utils.showToast(resultCheckToken.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

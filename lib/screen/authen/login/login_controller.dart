@@ -56,96 +56,120 @@ class LoginController extends GetxController {
 
   Future<void> loginParent() async {
     Get.dialog(DialogLoading());
-    ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
-    ResultLogin resultLogin = resultLoginFromJson(res.data);
-    if (resultLogin.data != null) {
-      Get.back();
-      SpUtil.putString(ConstString.Status_user, '1');
-      print(resultLogin.data.data.token);
-      print(resultLogin.data.data.email);
-      print(resultLogin.data.data.id);
-      SpUtil.putString(ConstString.token, resultLogin.data.data.token);
-      SpUtil.putString(ConstString.ID_USER, resultLogin.data.data.id);
-      SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
-      SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
-      SpUtil.putString(ConstString.USER_TYPE, '1');
-      Utils.showToast(resultLogin.data.message);
-      homeAfterParentController.homeAfterParent(1, 10);
-      // Get.toNamed(Routes.navigation);
-      // homeAfterParent(1, 10);
-    } else {
-      if (resultLogin.error.code == 401) {
-        reSendOTPRegister();
+    try {
+      ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
+      ResultLogin resultLogin = resultLoginFromJson(res.data);
+      if (resultLogin.data != null) {
         Get.back();
+        SpUtil.putString(ConstString.Status_user, '1');
+        print(resultLogin.data.data.token);
+        print(resultLogin.data.data.email);
+        print(resultLogin.data.data.id);
+        SpUtil.putString(ConstString.token, resultLogin.data.data.token);
+        SpUtil.putString(ConstString.ID_USER, resultLogin.data.data.id);
+        SpUtil.putString(ConstString.EMAIL, resultLogin.data.data.email);
+        SpUtil.putString(ConstString.NAME, resultLogin.data.data.nameParent);
+        SpUtil.putString(ConstString.USER_TYPE, '1');
+        Utils.showToast(resultLogin.data.message);
+        homeAfterParentController.homeAfterParent(1, 10);
+        // Get.toNamed(Routes.navigation);
+        // homeAfterParent(1, 10);
       } else {
-        Get.back();
-        Utils.showToast(resultLogin.error.message);
+        if (resultLogin.error.code == 401) {
+          reSendOTPRegister();
+          Get.back();
+        } else {
+          Get.back();
+          Utils.showToast(resultLogin.error.message);
+        }
       }
+    } catch (e) {
+      print(e);
+      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> reSendOTPRegister() async {
     Get.dialog(DialogLoading());
-    String email = SpUtil.getString(ConstString.EMAIL);
-    ResultData res = await authenticationRepositories.reSendOTPRegister(email);
-    ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
-    if (resultReSendOtpRegister.data != null) {
-      Get.back();
-      Get.to(OTPScreen());
-      SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
+    try {
+      String email = SpUtil.getString(ConstString.EMAIL);
+      ResultData res = await authenticationRepositories.reSendOTPRegister(email);
+      ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
+      if (resultReSendOtpRegister.data != null) {
+        Get.back();
+        Get.to(OTPScreen(
+          back: () => Get.back(),
+        ));
+        SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
 
-      Utils.showToast(resultReSendOtpRegister.data.message);
-    } else {
+        Utils.showToast(resultReSendOtpRegister.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultReSendOtpRegister.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultReSendOtpRegister.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> loginTeacher() async {
     Get.dialog(DialogLoading());
+    try {
+      ResultData res = await authenticationRepositories.loginTeacher(email.text, pass.text);
 
-    ResultData res = await authenticationRepositories.loginTeacher(email.text, pass.text);
-
-    ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
-    if (resultLoginTeacher.data != null) {
-      Get.back();
-      SpUtil.putString(ConstString.Status_user, '1');
-      print(resultLoginTeacher.data.data.token);
-      print(resultLoginTeacher.data.data.email);
-      print(resultLoginTeacher.data.data.id);
-      SpUtil.putString(ConstString.token, resultLoginTeacher.data.data.token);
-      SpUtil.putString(ConstString.ID_USER, resultLoginTeacher.data.data.id);
-      SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
-      SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
-      SpUtil.putString(ConstString.USER_TYPE, '2');
-      Utils.showToast(resultLoginTeacher.data.message);
-      homeAfterTeacherController.homeAfterTeacher(1, 10);
-      // Get.toNamed(Routes.navigation);
-    } else {
-      if (resultLoginTeacher.error.code == 401) {
-        reSendOTPRegister();
+      ResultLoginTeacher resultLoginTeacher = resultLoginTeacherFromJson(res.data);
+      if (resultLoginTeacher.data != null) {
         Get.back();
+        SpUtil.putString(ConstString.Status_user, '1');
+        print(resultLoginTeacher.data.data.token);
+        print(resultLoginTeacher.data.data.email);
+        print(resultLoginTeacher.data.data.id);
+        SpUtil.putString(ConstString.token, resultLoginTeacher.data.data.token);
+        SpUtil.putString(ConstString.ID_USER, resultLoginTeacher.data.data.id);
+        SpUtil.putString(ConstString.EMAIL, resultLoginTeacher.data.data.email);
+        SpUtil.putString(ConstString.NAME, resultLoginTeacher.data.data.nameTutor);
+        SpUtil.putString(ConstString.USER_TYPE, '2');
+        Utils.showToast(resultLoginTeacher.data.message);
+        homeAfterTeacherController.homeAfterTeacher(1, 10);
+        // Get.toNamed(Routes.navigation);
       } else {
-        Get.back();
-        Utils.showToast(resultLoginTeacher.error.message);
+        if (resultLoginTeacher.error.code == 401) {
+          reSendOTPRegister();
+          Get.back();
+        } else {
+          Get.back();
+          Utils.showToast(resultLoginTeacher.error.message);
+        }
       }
+    } catch (e) {
+      print(e);
+      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> listCitySubject() async {
-    ResultData res = await authenticationRepositories.listCitySubject();
-    resultListProvincialSubjectClass = resultListProvincialSubjectClassFromJson(res.data);
-    if (resultListProvincialSubjectClass.data != null) {
-      // Utils.showToast(resultListProvincialSubjectClass.data.message);
-      listDataCity = resultListProvincialSubjectClass.data.dataCity;
-      listDataSubject = resultListProvincialSubjectClass.data.dataSubject;
-      listDataClass = resultListProvincialSubjectClass.data.dataClass;
-      listStringClass = resultListProvincialSubjectClass.data.dataClass.map((e) => e.ctName).toList();
-    } else {
-      // Utils.showToast(resultListProvincialSubjectClass.error.message);
+    try {
+      ResultData res = await authenticationRepositories.listCitySubject();
+      resultListProvincialSubjectClass = resultListProvincialSubjectClassFromJson(res.data);
+      if (resultListProvincialSubjectClass.data != null) {
+        // Utils.showToast(resultListProvincialSubjectClass.data.message);
+        listDataCity = resultListProvincialSubjectClass.data.dataCity;
+        listDataSubject = resultListProvincialSubjectClass.data.dataSubject;
+        listDataClass = resultListProvincialSubjectClass.data.dataClass;
+        listStringClass = resultListProvincialSubjectClass.data.dataClass.map((e) => e.ctName).toList();
+      } else {
+        // Utils.showToast(resultListProvincialSubjectClass.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
   }
 

@@ -22,21 +22,26 @@ class ListTeacherSuggestController extends GetxController {
     print('invitedTutor');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.tutorOfferedTeach(token, currentPage, limit);
-    resultTutorOfferedTeach = resultTutorOfferedTeachFromJson(res.data);
-    if (resultTutorOfferedTeach.data != null) {
-      // Get.back();
-      if (resultTutorOfferedTeach.data.listGsdd.isNotEmpty) {
-        for (int i = 0; i < resultTutorOfferedTeach.data.listGsdd.length; i++) {
-          listGSDD.add(resultTutorOfferedTeach.data.listGsdd[i]);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.tutorOfferedTeach(token, currentPage, limit);
+      resultTutorOfferedTeach = resultTutorOfferedTeachFromJson(res.data);
+      if (resultTutorOfferedTeach.data != null) {
+        // Get.back();
+        if (resultTutorOfferedTeach.data.listGsdd.isNotEmpty) {
+          for (int i = 0; i < resultTutorOfferedTeach.data.listGsdd.length; i++) {
+            listGSDD.add(resultTutorOfferedTeach.data.listGsdd[i]);
+          }
+        } else {
+          Utils.showToast('Hết');
         }
       } else {
-        Utils.showToast('Hết');
+        // Get.back();
+        Utils.showToast(resultTutorOfferedTeach.error.message);
       }
-    } else {
-      // Get.back();
-      Utils.showToast(resultTutorOfferedTeach.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -45,15 +50,20 @@ class ListTeacherSuggestController extends GetxController {
     print('refuseOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.refuseOffer(token, idGS, idLop);
-    resultRefuseOffer = resultRefuseOfferFromJson(res.data);
-    if (resultRefuseOffer.data != null) {
-      // Get.back();
-      Utils.showToast('Đã từ chối');
-    } else {
-      // Get.back();
-      Utils.showToast(resultRefuseOffer.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.refuseOffer(token, idGS, idLop);
+      resultRefuseOffer = resultRefuseOfferFromJson(res.data);
+      if (resultRefuseOffer.data != null) {
+        // Get.back();
+        Utils.showToast('Đã từ chối');
+      } else {
+        // Get.back();
+        Utils.showToast(resultRefuseOffer.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -62,15 +72,20 @@ class ListTeacherSuggestController extends GetxController {
     print('acceptOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.acceptOffer(token, idGS, idLop);
-    resultAcceptOffer = resultAcceptOfferFromJson(res.data);
-    if (resultAcceptOffer.data != null) {
-      // Get.back();
-      Utils.showToast('Đã đồng ý');
-    } else {
-      // Get.back();
-      Utils.showToast(resultAcceptOffer.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.acceptOffer(token, idGS, idLop);
+      resultAcceptOffer = resultAcceptOfferFromJson(res.data);
+      if (resultAcceptOffer.data != null) {
+        // Get.back();
+        Utils.showToast('Đã đồng ý');
+      } else {
+        // Get.back();
+        Utils.showToast(resultAcceptOffer.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -79,15 +94,20 @@ class ListTeacherSuggestController extends GetxController {
     print('tutorDeleteOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.tutorDeleteOffer(token, idGS, idLop);
-    resultTutorDeleteOffer = resultTutorDeleteOfferFromJson(res.data);
-    if (resultTutorDeleteOffer.data != null) {
-      // Get.back();
-      Utils.showToast('Đã Xoá');
-    } else {
-      // Get.back();
-      Utils.showToast(resultTutorDeleteOffer.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.tutorDeleteOffer(token, idGS, idLop);
+      resultTutorDeleteOffer = resultTutorDeleteOfferFromJson(res.data);
+      if (resultTutorDeleteOffer.data != null) {
+        // Get.back();
+        Utils.showToast('Đã Xoá');
+      } else {
+        // Get.back();
+        Utils.showToast(resultTutorDeleteOffer.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

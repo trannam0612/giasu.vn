@@ -236,24 +236,30 @@ class UpdateInformationParentController extends GetxController {
   Future<void> getInfoParent() async {
     Get.dialog(DialogLoading());
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoParent(token);
-    ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
-    if (resultGetInfoParent.data != null) {
+    try {
+      ResultData res = await userRepositories.getInfoParent(token);
+      ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
+      if (resultGetInfoParent.data != null) {
+        Get.back();
+        Utils.showToast(resultGetInfoParent.data.message);
+        urlAvatar = resultGetInfoParent.data.data.ugsAvatar;
+        fullName.text = resultGetInfoParent.data.data.ugsName;
+        phone.text = resultGetInfoParent.data.data.ugsPhone;
+        gender = resultGetInfoParent.data.data.ugsGender;
+        dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
+        provincial.text = resultGetInfoParent.data.data.citName;
+        address.text = resultGetInfoParent.data.data.ugsAddress;
+        idGender = int.parse(resultGetInfoParent.data.data.ugsGenderId);
+        idProvincial = int.parse(resultGetInfoParent.data.data.ugsCity);
+        Get.to(UpdateInformationParentScreen());
+      } else {
+        Get.back();
+        Utils.showToast(resultGetInfoParent.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultGetInfoParent.data.message);
-      urlAvatar = resultGetInfoParent.data.data.ugsAvatar;
-      fullName.text = resultGetInfoParent.data.data.ugsName;
-      phone.text = resultGetInfoParent.data.data.ugsPhone;
-      gender = resultGetInfoParent.data.data.ugsGender;
-      dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
-      provincial.text = resultGetInfoParent.data.data.citName;
-      address.text = resultGetInfoParent.data.data.ugsAddress;
-      idGender = int.parse(resultGetInfoParent.data.data.ugsGenderId);
-      idProvincial = int.parse(resultGetInfoParent.data.data.ugsCity);
-      Get.to(UpdateInformationParentScreen());
-    } else {
-      Get.back();
-      Utils.showToast(resultGetInfoParent.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -270,30 +276,42 @@ class UpdateInformationParentController extends GetxController {
 
   Future<void> updateAvatar() async {
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.updateAvatar(token, avatar);
-    ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
-    if (resultUpdateAvatar.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.updateAvatar(token, avatar);
+      ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+      if (resultUpdateAvatar.data != null) {
+        Get.back();
+        Utils.showToast(resultUpdateAvatar.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultUpdateAvatar.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultUpdateAvatar.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultUpdateAvatar.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> updateInfoParent() async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.updateInfoParent(token, phone.text, fullName.text, idGender, dateTime.text, idProvincial, address.text);
-    ResultUpdateInfoParent resultUpdateInfoParent = resultUpdateInfoParentFromJson(res.data);
-    if (resultUpdateInfoParent.data != null) {
-      Utils.showToast(resultUpdateInfoParent.data.message);
-      settingsController.getInfoParent();
-      Get.offAndToNamed(Routes.navigation);
-    } else {
-      Utils.showToast(resultUpdateInfoParent.error.message);
+    try {
+      ResultData res = await userRepositories.updateInfoParent(token, phone.text, fullName.text, idGender, dateTime.text, idProvincial, address.text);
+      ResultUpdateInfoParent resultUpdateInfoParent = resultUpdateInfoParentFromJson(res.data);
+      if (resultUpdateInfoParent.data != null) {
+        Utils.showToast(resultUpdateInfoParent.data.message);
+        settingsController.getInfoParent();
+        Get.offAndToNamed(Routes.navigation);
+      } else {
+        Utils.showToast(resultUpdateInfoParent.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
+    Get.back();
     update();
   }
 

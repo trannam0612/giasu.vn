@@ -196,15 +196,21 @@ class UpdateInfoTeacherController extends GetxController {
 
   Future<void> updateAvatar() async {
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.updateAvatar(token, avatar);
-    ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
-    if (resultUpdateAvatar.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.updateAvatar(token, avatar);
+      ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+      if (resultUpdateAvatar.data != null) {
+        Get.back();
+        Utils.showToast(resultUpdateAvatar.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultUpdateAvatar.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultUpdateAvatar.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultUpdateAvatar.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -720,14 +726,19 @@ class UpdateInfoTeacherController extends GetxController {
   Future<void> getListTopic(String idTopic) async {
     listTopic = [];
     print('getListTopic');
-    print(listSubjectSelect.join(','));
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = resultListTopic.data.listSubjectTag;
-      // Utils.showToast(resultListTopic.data.message);
-    } else {
-      // Utils.showToast(resultListTopic.error.message);
+    try {
+      print(listSubjectSelect.join(','));
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = resultListTopic.data.listSubjectTag;
+        // Utils.showToast(resultListTopic.data.message);
+      } else {
+        // Utils.showToast(resultListTopic.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -737,50 +748,65 @@ class UpdateInfoTeacherController extends GetxController {
     listSubjectSelectTopic.clear();
     print('getListTopic');
     print(listSubjectSelect.join(','));
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = resultListTopic.data.listSubjectTag;
-      resultGetInfoTeacher.data.infoTutor.asDetail.forEach((element) {
-        // listDataSubject.map((e) => e.asName == element);
-        print('element');
-        print(element);
-        print(listTopic.map((e) => e.nameSubject));
-        for (int i = 0; i < listTopic.length; i++) {
-          if (listTopic[i].nameSubject == element) {
-            listSubjectSelectTopic.add(listTopic[i]);
+    try {
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = resultListTopic.data.listSubjectTag;
+        resultGetInfoTeacher.data.infoTutor.asDetail.forEach((element) {
+          // listDataSubject.map((e) => e.asName == element);
+          print('element');
+          print(element);
+          print(listTopic.map((e) => e.nameSubject));
+          for (int i = 0; i < listTopic.length; i++) {
+            if (listTopic[i].nameSubject == element) {
+              listSubjectSelectTopic.add(listTopic[i]);
+            }
           }
-        }
-      });
-      // Utils.showToast(resultListTopic.data.message);
-    } else {
-      // Utils.showToast(resultListTopic.error.message);
+        });
+        // Utils.showToast(resultListTopic.data.message);
+      } else {
+        // Utils.showToast(resultListTopic.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-      // Utils.showToast(resultListDistrict.data.message);
-    } else {
-      // Utils.showToast(resultListDistrict.error.message);
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+        // Utils.showToast(resultListDistrict.data.message);
+      } else {
+        // Utils.showToast(resultListDistrict.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> getListDistrictArea(int idCity) async {
     listDistrictArea = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrictArea = resultListDistrict.data.listCity;
-      // Utils.showToast(resultListDistrict.data.message);
-    } else {
-      // Utils.showToast(resultListDistrict.error.message);
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrictArea = resultListDistrict.data.listCity;
+        // Utils.showToast(resultListDistrict.data.message);
+      } else {
+        // Utils.showToast(resultListDistrict.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -943,104 +969,110 @@ class UpdateInfoTeacherController extends GetxController {
 
   Future<void> getInfoTeacher() async {
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.getInfoTeacher(token);
-    resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
-    if (resultGetInfoTeacher.data != null) {
-      Get.back();
-      // Utils.showToast(resultGetInfoTeacher.data.message);
-      urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
-      print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
-      fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
-      phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
-      selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender;
-      dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
-      selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
-      provincial.text = resultGetInfoTeacher.data.infoTutor.citNameGs;
-      district.text = resultGetInfoTeacher.data.infoTutor.citDetailGs;
-      address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
-      numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
-      graduationYear.text = resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
-      titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
-      timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
-      timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
-      // end = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearEnd);
-      // start = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearStart);
-      informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
-      school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
-      prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;
-      company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
-      information.text = resultGetInfoTeacher.data.infoTutor.ugsAboutUs;
-      selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
-      listSubjectSelect.clear();
-      resultGetInfoTeacher.data.infoTutor.asName.forEach((element) {
-        // listDataSubject.map((e) => e.asName == element);
-        for (int i = 0; i < listDataSubject.length; i++) {
-          if (listDataSubject[i].asName == element) {
-            listSubjectSelect.add(listDataSubject[i]);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.getInfoTeacher(token);
+      resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+      if (resultGetInfoTeacher.data != null) {
+        Get.back();
+        // Utils.showToast(resultGetInfoTeacher.data.message);
+        urlAvatar = resultGetInfoTeacher.data.infoTutor.ugsAvatar;
+        print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
+        fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
+        phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
+        selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender;
+        dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
+        selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
+        provincial.text = resultGetInfoTeacher.data.infoTutor.citNameGs;
+        district.text = resultGetInfoTeacher.data.infoTutor.citDetailGs;
+        address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
+        numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
+        graduationYear.text = resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
+        titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
+        timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
+        timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
+        // end = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearEnd);
+        // start = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearStart);
+        informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
+        school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
+        prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;
+        company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
+        information.text = resultGetInfoTeacher.data.infoTutor.ugsAboutUs;
+        selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
+        listSubjectSelect.clear();
+        resultGetInfoTeacher.data.infoTutor.asName.forEach((element) {
+          // listDataSubject.map((e) => e.asName == element);
+          for (int i = 0; i < listDataSubject.length; i++) {
+            if (listDataSubject[i].asName == element) {
+              listSubjectSelect.add(listDataSubject[i]);
+            }
+          }
+        });
+        // getListTopic(listSubjectSelect.map((e) => e.asId).join(','));
+        getListDataTopic(listSubjectSelect.map((e) => e.asId).join(','));
+        // listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
+        selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
+        selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ugsFormality;
+        area.text = resultGetInfoTeacher.data.infoTutor.citName;
+        listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
+        errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
+        getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
+
+        for (int i = 0; i < listDataClass.length; i++) {
+          if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
+            idClass = int.parse(listDataClass[i].ctId);
           }
         }
-      });
-      // getListTopic(listSubjectSelect.map((e) => e.asId).join(','));
-      getListDataTopic(listSubjectSelect.map((e) => e.asId).join(','));
-      // listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
-      selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
-      selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ugsFormality;
-      area.text = resultGetInfoTeacher.data.infoTutor.citName;
-      listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
-      errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
-      getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
+        salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
+        valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
+        // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
+        selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
+        salaryUL1.text =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
+        salaryUL2.text =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
+        idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
+        idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
+        listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
+        listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
 
-      for (int i = 0; i < listDataClass.length; i++) {
-        if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
-          idClass = int.parse(listDataClass[i].ctId);
-        }
+        idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
+        listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
+
+        listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
+        listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
+        listbuoiday[0].toi = resultGetInfoTeacher.data.lichday.tt2;
+        listbuoiday[1].sang = resultGetInfoTeacher.data.lichday.st3;
+        listbuoiday[1].chieu = resultGetInfoTeacher.data.lichday.ct3;
+        listbuoiday[1].toi = resultGetInfoTeacher.data.lichday.tt3;
+        listbuoiday[2].sang = resultGetInfoTeacher.data.lichday.st4;
+        listbuoiday[2].chieu = resultGetInfoTeacher.data.lichday.ct4;
+        listbuoiday[2].toi = resultGetInfoTeacher.data.lichday.tt4;
+        listbuoiday[3].sang = resultGetInfoTeacher.data.lichday.st5;
+        listbuoiday[3].chieu = resultGetInfoTeacher.data.lichday.ct5;
+        listbuoiday[3].toi = resultGetInfoTeacher.data.lichday.tt5;
+        listbuoiday[4].sang = resultGetInfoTeacher.data.lichday.st6;
+        listbuoiday[4].chieu = resultGetInfoTeacher.data.lichday.ct6;
+        listbuoiday[4].toi = resultGetInfoTeacher.data.lichday.tt6;
+        listbuoiday[5].sang = resultGetInfoTeacher.data.lichday.st7;
+        listbuoiday[5].chieu = resultGetInfoTeacher.data.lichday.ct7;
+        listbuoiday[5].toi = resultGetInfoTeacher.data.lichday.tt7;
+        listbuoiday[6].sang = resultGetInfoTeacher.data.lichday.scn;
+        listbuoiday[6].chieu = resultGetInfoTeacher.data.lichday.ccn;
+        listbuoiday[6].toi = resultGetInfoTeacher.data.lichday.tcn;
+        lichday = resultGetInfoTeacher.data.lichday;
+
+        // provincial.text = resultGetInfoTeacher.data.data.citName;
+        // address.text = resultGetInfoTeacher.data.data.ugsAddress;
+        Get.to(UpdateInfoTeacherStep1Screen());
+      } else {
+        Get.back();
+        Utils.showToast(resultGetInfoTeacher.error.message);
       }
-      salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
-      valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
-      // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
-      selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
-      salaryUL1.text =
-          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
-      salaryUL2.text =
-          resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
-      idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
-      idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
-      listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
-      listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
-
-      idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
-      listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
-
-      listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
-      listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
-      listbuoiday[0].toi = resultGetInfoTeacher.data.lichday.tt2;
-      listbuoiday[1].sang = resultGetInfoTeacher.data.lichday.st3;
-      listbuoiday[1].chieu = resultGetInfoTeacher.data.lichday.ct3;
-      listbuoiday[1].toi = resultGetInfoTeacher.data.lichday.tt3;
-      listbuoiday[2].sang = resultGetInfoTeacher.data.lichday.st4;
-      listbuoiday[2].chieu = resultGetInfoTeacher.data.lichday.ct4;
-      listbuoiday[2].toi = resultGetInfoTeacher.data.lichday.tt4;
-      listbuoiday[3].sang = resultGetInfoTeacher.data.lichday.st5;
-      listbuoiday[3].chieu = resultGetInfoTeacher.data.lichday.ct5;
-      listbuoiday[3].toi = resultGetInfoTeacher.data.lichday.tt5;
-      listbuoiday[4].sang = resultGetInfoTeacher.data.lichday.st6;
-      listbuoiday[4].chieu = resultGetInfoTeacher.data.lichday.ct6;
-      listbuoiday[4].toi = resultGetInfoTeacher.data.lichday.tt6;
-      listbuoiday[5].sang = resultGetInfoTeacher.data.lichday.st7;
-      listbuoiday[5].chieu = resultGetInfoTeacher.data.lichday.ct7;
-      listbuoiday[5].toi = resultGetInfoTeacher.data.lichday.tt7;
-      listbuoiday[6].sang = resultGetInfoTeacher.data.lichday.scn;
-      listbuoiday[6].chieu = resultGetInfoTeacher.data.lichday.ccn;
-      listbuoiday[6].toi = resultGetInfoTeacher.data.lichday.tcn;
-      lichday = resultGetInfoTeacher.data.lichday;
-
-      // provincial.text = resultGetInfoTeacher.data.data.citName;
-      // address.text = resultGetInfoTeacher.data.data.ugsAddress;
-      Get.to(UpdateInfoTeacherStep1Screen());
-    } else {
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast(resultGetInfoTeacher.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -1077,60 +1109,66 @@ class UpdateInfoTeacherController extends GetxController {
     final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
     print(test.join(','));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await userRepositories.updateInfoTeacher(
-        token,
-        phone.text,
-        fullName.text,
-        idGender = selectedGender == "Nam" ? 1 : 2,
-        dateTime.text,
-        idMariage = selectedMarriage == 'Chưa kết hôn' ? 0 : 1,
-        idExp = selectedKieuGS == 'Sinh viên'
-            ? 1
-            : selectedKieuGS == 'Người đi làm'
-                ? 2
-                : 3,
-        idClass,
-        school.text,
-        numberYearExp.text,
-        'specialized',
-        idProvincial,
-        idDistrict,
-        address.text,
-        company.text,
-        information.text,
-        prize.text,
-        numberYearExp.text.isNotEmpty ? int.parse(numberYearExp.text) : null,
-        titleExp.text,
-        timeExpStart.text,
-        timeExpEnd.text,
-        informationExp.text,
-        listSubjectSelect.map((e) => e.asId).join(','),
-        listSubjectSelectTopic.map((e) => e.idSubject).join(','),
-        idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2,
-        salaryCD.text,
-        idTime = selectedStatusFee == 'Giờ'
-            ? 1
-            : selectedStatusFee == 'Ngày'
-                ? 2
-                : 3,
-        salaryUL1.text,
-        salaryUL2.text,
-        idValueArea,
-        listIdDetailDistrictSelect.join(','),
-        resultLichDayToJson(lichday));
-    print('11111');
-    print(idTime);
-    print(selectedStatusFee);
-    print(listIdDetailDistrictSelect.join(','));
-    ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
-    if (resultGetInfoTeacher.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await userRepositories.updateInfoTeacher(
+          token,
+          phone.text,
+          fullName.text,
+          idGender = selectedGender == "Nam" ? 1 : selectedGender == "Nữ" ?2:null,
+          dateTime.text,
+          idMariage = selectedMarriage == 'Chưa kết hôn' ? 0 : 1,
+          idExp = selectedKieuGS == 'Sinh viên'
+              ? 1
+              : selectedKieuGS == 'Người đi làm'
+                  ? 2
+                  : 3,
+          idClass,
+          school.text,
+          numberYearExp.text,
+          'specialized',
+          idProvincial,
+          idDistrict,
+          address.text,
+          company.text,
+          information.text,
+          prize.text,
+          numberYearExp.text.isNotEmpty ? int.parse(numberYearExp.text) : null,
+          titleExp.text,
+          timeExpStart.text,
+          timeExpEnd.text,
+          informationExp.text,
+          listSubjectSelect.map((e) => e.asId).join(','),
+          listSubjectSelectTopic.map((e) => e.idSubject).join(','),
+          idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2,
+          salaryCD.text,
+          idTime = selectedStatusFee == 'Giờ'
+              ? 1
+              : selectedStatusFee == 'Ngày'
+                  ? 2
+                  : 3,
+          salaryUL1.text,
+          salaryUL2.text,
+          idValueArea,
+          listIdDetailDistrictSelect.join(','),
+          resultLichDayToJson(lichday));
+      print('11111');
+      print(idTime);
+      print(selectedStatusFee);
+      print(listIdDetailDistrictSelect.join(','));
+      ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+      if (resultGetInfoTeacher.data != null) {
+        Get.back();
+        Utils.showToast('Cập nhật thông tin thành công!');
+        Get.offAndToNamed(Routes.navigation);
+      } else {
+        Get.back();
+        Utils.showToast(resultGetInfoTeacher.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Utils.showToast('Cập nhật thông tin thành công!');
-      Get.offAndToNamed(Routes.navigation);
-    } else {
-      Get.back();
-      Utils.showToast(resultGetInfoTeacher.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

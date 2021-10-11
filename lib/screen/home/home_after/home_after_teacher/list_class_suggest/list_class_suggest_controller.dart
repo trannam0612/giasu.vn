@@ -4,6 +4,7 @@ import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_class_offered.dart';
 import 'package:giasu_vn/common/shared/data/models/result_delete_class_offered.dart';
 import 'package:giasu_vn/common/shared/data/models/result_offer_teach.dart';
+
 // import 'package:giasu_vn/common/shared/data/models/result_offered_teach.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
@@ -19,31 +20,40 @@ class ListClassSuggestController extends GetxController {
 
   Future<void> classOffered(int currentPage, int limit) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.classOffered(token, currentPage, limit);
-    resultClassOffered = resultClassOfferedFromJson(res.data);
-    if (resultClassOffered.data != null) {
-      if(resultClassOffered.data.listLddn.isNotEmpty) {
-        for (int i = 0; i < resultClassOffered.data.listLddn.length; i++) {
-          listLDDN.add(resultClassOffered.data.listLddn[i]);
+    try {
+      ResultData res = await homeRepositories.classOffered(token, currentPage, limit);
+      resultClassOffered = resultClassOfferedFromJson(res.data);
+      if (resultClassOffered.data != null) {
+        if (resultClassOffered.data.listLddn.isNotEmpty) {
+          for (int i = 0; i < resultClassOffered.data.listLddn.length; i++) {
+            listLDDN.add(resultClassOffered.data.listLddn[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết');
         }
+      } else {
+        Utils.showToast(resultClassOffered.error.message);
       }
-      else {
-        Utils.showToast('Đã hết');
-      }
-    } else {
-      Utils.showToast(resultClassOffered.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> deleteClassOffered(int idClass) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteClassOffered(token, idClass);
-    resultDeleteClassOffered = resultDeleteClassOfferedFromJson(res.data);
-    if (resultDeleteClassOffered.data != null) {
-      Utils.showToast('Đã xoá');
-    } else {
-      Utils.showToast(resultDeleteClassOffered.error.message);
+    try {
+      ResultData res = await homeRepositories.deleteClassOffered(token, idClass);
+      resultDeleteClassOffered = resultDeleteClassOfferedFromJson(res.data);
+      if (resultDeleteClassOffered.data != null) {
+        Utils.showToast('Đã xoá');
+      } else {
+        Utils.showToast(resultDeleteClassOffered.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

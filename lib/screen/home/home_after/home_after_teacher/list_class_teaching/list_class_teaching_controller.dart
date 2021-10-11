@@ -17,31 +17,40 @@ class ListClassTeachingController extends GetxController {
 
   Future<void> classAccepted(int currentPage, int limit) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.classAccepted(token, currentPage, limit);
-    resultClassAccepted = resultClassAcceptedFromJson(res.data);
-    if (resultClassAccepted.data != null) {
-      if(resultClassAccepted.data.listPhdnd.isNotEmpty) {
-        for (int i = 0; i < resultClassAccepted.data.listPhdnd.length; i++) {
-          listPHDND.add(resultClassAccepted.data.listPhdnd[i]);
+    try {
+      ResultData res = await homeRepositories.classAccepted(token, currentPage, limit);
+      resultClassAccepted = resultClassAcceptedFromJson(res.data);
+      if (resultClassAccepted.data != null) {
+        if (resultClassAccepted.data.listPhdnd.isNotEmpty) {
+          for (int i = 0; i < resultClassAccepted.data.listPhdnd.length; i++) {
+            listPHDND.add(resultClassAccepted.data.listPhdnd[i]);
+          }
+        } else {
+          Utils.showToast('Đã hết!');
         }
+      } else {
+        Utils.showToast(resultClassAccepted.error.message);
       }
-      else {
-        Utils.showToast('Đã hết!');
-      }
-    } else {
-      Utils.showToast(resultClassAccepted.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
 
   Future<void> deleteClassAccepted(int idLop) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteClassAccepted(token, idLop);
-    resultDeleteClassAccept = resultDeleteClassAcceptFromJson(res.data);
-    if (resultDeleteClassAccept.data != null) {
-      Utils.showToast(resultDeleteClassAccept.data.message);
-    } else {
-      Utils.showToast(resultDeleteClassAccept.error.message);
+    try {
+      ResultData res = await homeRepositories.deleteClassAccepted(token, idLop);
+      resultDeleteClassAccept = resultDeleteClassAcceptFromJson(res.data);
+      if (resultDeleteClassAccept.data != null) {
+        Utils.showToast(resultDeleteClassAccept.data.message);
+      } else {
+        Utils.showToast(resultDeleteClassAccept.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

@@ -82,7 +82,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsAvatar : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
+                                  imageUrl: controller.user == '1'
+                                      ? controller.resultGetInfoParent.data.data.ugsAvatar
+                                      : controller.resultGetInfoTeacher.data.infoTutor.ugsAvatar,
                                   width: 80,
                                   height: 80,
                                 ),
@@ -99,7 +101,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsName : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+                                            controller.user == '1'
+                                                ? controller.resultGetInfoParent.data.data.ugsName
+                                                : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
                                             style: AppTextStyles.regularW500(context, size: AppDimens.textSize22),
                                           ),
                                         ),
@@ -107,7 +111,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             ? Container(
                                                 child: Text(
                                                   'Điểm: ${controller.resultGetInfoParent.data.data.pointFree}',
-                                                  style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                                  style:
+                                                      AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                                 ),
                                               )
                                             : Container()
@@ -117,7 +122,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       height: AppDimens.space4,
                                     ),
                                     Text(
-                                      controller.user == '1' ? controller.resultGetInfoParent.data.data.ugsEmail : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
+                                      controller.user == '1'
+                                          ? controller.resultGetInfoParent.data.data.ugsEmail
+                                          : controller.resultGetInfoTeacher.data.infoTutor.ugsEmail,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474),
@@ -169,17 +176,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Họ và tên:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      Expanded(
+                                        child: Text(
+                                          'Họ và tên:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoParent.data.data.ugsName,
+                                          controller.resultGetInfoParent.data.data.ugsName == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.ugsName,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ],
@@ -190,81 +201,121 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Số điện thoại:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.ugsPhone,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Giới tính:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.ugsGender,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Ngày sinh:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.ugsBrithday,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Tỉnh, thành phố:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoParent.data.data.citName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Địa chỉ:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      Expanded(
+                                        child: Text(
+                                          'Số điện thoại:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoParent.data.data.ugsAddress,
+                                          controller.resultGetInfoParent.data.data.ugsPhone == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.ugsPhone,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Giới tính:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.ugsGender == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.ugsGender,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Ngày sinh:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.ugsBrithday == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.ugsBrithday,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Tỉnh, thành phố:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.citName == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.citName,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Địa chỉ:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoParent.data.data.ugsAddress == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoParent.data.data.ugsAddress,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ],
@@ -291,18 +342,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Họ và tên:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      Expanded(
+                                        child: Text(
+                                          'Họ và tên:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoTeacher.data.infoTutor.ugsName,
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsName == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsName,
 
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
                                           // softWrap: false,
                                         ),
                                       ),
@@ -314,81 +369,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Số điện thoại:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsPhone,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Giới tính:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsGender,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Ngày sinh:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.ugsBrithday,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Tỉnh, thành phố:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                      Text(
-                                        controller.resultGetInfoTeacher.data.infoTutor.citName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: AppDimens.space20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Địa chỉ:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      Expanded(
+                                        child: Text(
+                                          'Số điện thoại:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsPhone == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsPhone,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ],
@@ -399,17 +394,121 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        'Trường học:',
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                      Expanded(
+                                        child: Text(
+                                          'Giới tính:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsGender == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsGender,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
-                                          textAlign: TextAlign.right,
-                                          maxLines: null,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Ngày sinh:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsBrithday == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsBrithday,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Tỉnh, thành phố:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.citName == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.citName,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Địa chỉ:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsAddress == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsAddress,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: AppDimens.space20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'Trường học:',
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          controller.resultGetInfoTeacher.data.infoTutor.ugsSchool == ''
+                                              ? 'Chưa cập nhật'
+                                              : controller.resultGetInfoTeacher.data.infoTutor.ugsSchool,
+                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
+                                          overflow: TextOverflow.clip,
+                                          textAlign: TextAlign.end,
+                                          maxLines: 2,
                                         ),
                                       ),
                                     ],

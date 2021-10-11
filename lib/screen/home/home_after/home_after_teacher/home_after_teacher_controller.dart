@@ -51,17 +51,23 @@ class HomeAfterTeacherController extends GetxController {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
     print('homeAfterTeacher');
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
-    resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
-    if (resultHomeAfterTeacher.data != null) {
-      listLHGD = resultHomeAfterTeacher.data.dataDslhgd;
-      listLHPB = resultHomeAfterTeacher.data.dataDslhpb;
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
+      resultHomeAfterTeacher = resultHomeAfterTeacherFromJson(res.data);
+      if (resultHomeAfterTeacher.data != null) {
+        listLHGD = resultHomeAfterTeacher.data.dataDslhgd;
+        listLHPB = resultHomeAfterTeacher.data.dataDslhpb;
+        Get.back();
+        Get.toNamed(Routes.navigation);
+        // Get.to(HomeAfterTeacherScreen());
+      } else {
+        Get.back();
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Get.toNamed(Routes.navigation);
-      // Get.to(HomeAfterTeacherScreen());
-    } else {
-      Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -69,12 +75,18 @@ class HomeAfterTeacherController extends GetxController {
   Future<void> detailClass(int idClass) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.detailClass(token,idClass);
-    resultDetailClass = resultDetailClassFromJson(res.data);
-    if (resultDetailClass.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.detailClass(token, idClass);
+      resultDetailClass = resultDetailClassFromJson(res.data);
+      if (resultDetailClass.data != null) {
+        Get.back();
+        Get.to(InformationClassScreen());
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Get.to(InformationClassScreen());
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -82,27 +94,37 @@ class HomeAfterTeacherController extends GetxController {
   Future<void> saveClass(int idClass) async {
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.saveClass(token, idClass);
-    resultSaveClass = resultSaveClassFromJson(res.data);
-    if (resultSaveClass.data != null) {
-      Utils.showToast('Đã lưu');
-    }
-    else {
-      Utils.showToast(resultSaveClass.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.saveClass(token, idClass);
+      resultSaveClass = resultSaveClassFromJson(res.data);
+      if (resultSaveClass.data != null) {
+        Utils.showToast('Đã lưu');
+      } else {
+        Utils.showToast(resultSaveClass.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
-  }Future<void> deleteClassSaved(int idClass) async {
+  }
+
+  Future<void> deleteClassSaved(int idClass) async {
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.deleteClassSaved(token, idClass);
-    resultDeleteClassSaved = resultDeleteClassSavedFromJson(res.data);
-    if (resultDeleteClassSaved.data != null) {
-      Utils.showToast('Đã bỏ lưu');
-    }
-    else {
-      Utils.showToast(resultDeleteClassSaved.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.deleteClassSaved(token, idClass);
+      resultDeleteClassSaved = resultDeleteClassSavedFromJson(res.data);
+      if (resultDeleteClassSaved.data != null) {
+        Utils.showToast('Đã bỏ lưu');
+      } else {
+        Utils.showToast(resultDeleteClassSaved.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

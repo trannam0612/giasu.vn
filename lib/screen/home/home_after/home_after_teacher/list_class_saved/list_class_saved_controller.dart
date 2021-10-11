@@ -19,30 +19,40 @@ class ListClassSavedController extends GetxController {
   Future<void> classSaved(int currentPage, int limit) async {
     print('recentlyClass');
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.classSaved(token, currentPage, limit);
-    resultClassSaved = resultClassSavedFromJson(res.data);
-    if (resultClassSaved.data != null) {
-      if(resultClassSaved.data.listLdl.isNotEmpty) {
-        for (int i = 0; i < resultClassSaved.data.listLdl.length; i++) {
-          listLDL.add(resultClassSaved.data.listLdl[i]);
+    try {
+      ResultData res = await homeRepositories.classSaved(token, currentPage, limit);
+      resultClassSaved = resultClassSavedFromJson(res.data);
+      if (resultClassSaved.data != null) {
+        if (resultClassSaved.data.listLdl.isNotEmpty) {
+          for (int i = 0; i < resultClassSaved.data.listLdl.length; i++) {
+            listLDL.add(resultClassSaved.data.listLdl[i]);
+          }
+        } else {
+          Utils.showToast("Đã hết");
         }
+      } else {
+        Utils.showToast('Trống!');
       }
-      else {
-        Utils.showToast("Đã hết");
-      }
-    } else {
-      Utils.showToast('Trống!');
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
+
   Future<void> offerTeach(int idClass) async {
     String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.offerTeach(token, idClass);
-    resultOfferTeach = resultOfferTeachFromJson(res.data);
-    if (resultOfferTeach.data != null) {
-      Utils.showToast('Đã đề nghị');
-    } else {
-      Utils.showToast(resultOfferTeach.error.message);
+    try {
+      ResultData res = await homeRepositories.offerTeach(token, idClass);
+      resultOfferTeach = resultOfferTeachFromJson(res.data);
+      if (resultOfferTeach.data != null) {
+        Utils.showToast('Đã đề nghị');
+      } else {
+        Utils.showToast(resultOfferTeach.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

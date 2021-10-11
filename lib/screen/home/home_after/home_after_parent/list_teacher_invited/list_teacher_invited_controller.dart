@@ -15,6 +15,7 @@ class ListTeacherInvitedController extends GetxController {
     print('invitedTutor');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
+    try{
     String token = SpUtil.getString(ConstString.token);
     ResultData res = await homeRepositories.invitedTutor(token, currentPage, limit);
     resultTutorInvited = resultTutorInvitedFromJson(res.data);
@@ -31,6 +32,10 @@ class ListTeacherInvitedController extends GetxController {
     } else {
       // Get.back();
       Utils.showToast(resultTutorInvited.error.message);
+    }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

@@ -114,19 +114,25 @@ class ChangePasswordController extends GetxController {
 
   Future<void> changePassword() async {
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await authenticationRepositories.changePassword(token, oldPassWord.text, passWord.text, rePassWord.text);
-    ResultChangePassword resultChangePassword = resultChangePasswordFromJson(res.data);
-    if (resultChangePassword.data != null) {
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await authenticationRepositories.changePassword(token, oldPassWord.text, passWord.text, rePassWord.text);
+      ResultChangePassword resultChangePassword = resultChangePasswordFromJson(res.data);
+      if (resultChangePassword.data != null) {
+        Get.back();
+        Get.dialog(DialogPassword());
+        Utils.showToast(resultChangePassword.data.message);
+      } else {
+        Get.back();
+        passWord.clear();
+        rePassWord.clear();
+        oldPassWord.clear();
+        Utils.showToast(resultChangePassword.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Get.dialog(DialogPassword());
-      Utils.showToast(resultChangePassword.data.message);
-    } else {
-      Get.back();
-      passWord.clear();
-      rePassWord.clear();
-      oldPassWord.clear();
-      Utils.showToast(resultChangePassword.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
   }
 }

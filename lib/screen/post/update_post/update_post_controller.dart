@@ -189,25 +189,34 @@ class UpdatePostController extends GetxController {
 
   Future<void> getListTopic(String idTopic) async {
     // listTopic = [];
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = [];
-      listTopic = resultListTopic.data.listSubjectTag;
-      selectedTopicSubject = listTopic[0].nameSubject;
-      idTopicSubject = int.parse(listTopic[0].idSubject);
-    } else {}
+    try {
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = [];
+        listTopic = resultListTopic.data.listSubjectTag;
+        selectedTopicSubject = listTopic[0].nameSubject;
+        idTopicSubject = int.parse(listTopic[0].idSubject);
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+    }
     update();
   }
 
   Future<void> getListTopicUpdate(String idTopic) async {
     listTopic = [];
-    ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
-    resultListTopic = resultListTopicFromJson(res.data);
-    if (resultListTopic.data != null) {
-      listTopic = [];
-      listTopic = resultListTopic.data.listSubjectTag;
-    } else {
+    try {
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      resultListTopic = resultListTopicFromJson(res.data);
+      if (resultListTopic.data != null) {
+        listTopic = [];
+        listTopic = resultListTopic.data.listSubjectTag;
+      } else {}
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -484,13 +493,18 @@ class UpdatePostController extends GetxController {
 
   Future<void> getListDistrict(int idCity) async {
     listDistrict = [];
-    ResultData res = await authenticationRepositories.listDistrict(idCity);
-    resultListDistrict = resultListDistrictFromJson(res.data);
-    if (resultListDistrict.data != null) {
-      listDistrict = resultListDistrict.data.listCity;
-      Utils.showToast(resultListDistrict.data.message);
-    } else {
-      // Utils.showToast(resultListDistrict.error.message);
+    try {
+      ResultData res = await authenticationRepositories.listDistrict(idCity);
+      resultListDistrict = resultListDistrictFromJson(res.data);
+      if (resultListDistrict.data != null) {
+        listDistrict = resultListDistrict.data.listCity;
+        Utils.showToast(resultListDistrict.data.message);
+      } else {
+        // Utils.showToast(resultListDistrict.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -498,40 +512,45 @@ class UpdatePostController extends GetxController {
   Future<void> updatePost(int id) async {
     print('updatePost');
     setDataLichDay();
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await postRepositories.updatePost(
-        token,
-        id,
-        title.text,
-        idFormTeaching,
-        // time,l
-        idTime,
-        int.parse(numberStudent.text),
-        int.parse(selectedDayTeaching),
-        idGender,
-        phone.text,
-        address.text,
-        salaryCD.text,
-        valueStatusFee,
-        contentTitle.text,
-        idSubject,
-        idClass,
-        idTopicSubject,
-        idProvincial,
-        idDistrict,
-        idExp,
-        lichdayToJson(lichDay));
-    ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
-    if (resultCreatePost.data != null) {
-      Utils.showToast(resultCreatePost.data.message);
-      print(111111);
-      Get.off(ListPostCreatedScreen(
-        back: () {
-          homeAfterParentController.homeAfterParent(1, 10);
-        },
-      ));
-    } else {
-      Utils.showToast(resultCreatePost.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await postRepositories.updatePost(
+          token,
+          id,
+          title.text,
+          idFormTeaching,
+          // time,l
+          idTime,
+          int.parse(numberStudent.text),
+          int.parse(selectedDayTeaching),
+          idGender,
+          phone.text,
+          address.text,
+          salaryCD.text,
+          valueStatusFee,
+          contentTitle.text,
+          idSubject,
+          idClass,
+          idTopicSubject,
+          idProvincial,
+          idDistrict,
+          idExp,
+          lichdayToJson(lichDay));
+      ResultCreatePost resultCreatePost = resultCreatePostFromJson(res.data);
+      if (resultCreatePost.data != null) {
+        Utils.showToast(resultCreatePost.data.message);
+        print(111111);
+        Get.off(ListPostCreatedScreen(
+          back: () {
+            homeAfterParentController.homeAfterParent(1, 10);
+          },
+        ));
+      } else {
+        Utils.showToast(resultCreatePost.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -567,85 +586,92 @@ class UpdatePostController extends GetxController {
 
   Future<void> getDetailClass(int idInfoClass) async {
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.detailClass(token, idInfoClass);
-    resultGetInfoPost = resultGetInfoPostFromJson(res.data);
-    if (resultGetInfoPost.data != null) {
-      Get.back();
-      getListTopicUpdate(resultGetInfoPost.data.data.dataInfo.asId);
-      print('resultGetInfoPost.data.data.dataInfo.ctId');
-      print(resultGetInfoPost.data.data.dataInfo.ctId);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.detailClass(token, idInfoClass);
+      resultGetInfoPost = resultGetInfoPostFromJson(res.data);
+      if (resultGetInfoPost.data != null) {
+        Get.back();
+        getListTopicUpdate(resultGetInfoPost.data.data.dataInfo.asId);
+        print('resultGetInfoPost.data.data.dataInfo.ctId');
+        print(resultGetInfoPost.data.data.dataInfo.ctId);
 
-      idPost = int.parse(resultGetInfoPost.data.data.dataInfo.pftId);
-      title.text = resultGetInfoPost.data.data.dataInfo.pftSummary;
-      contentTitle.text = resultGetInfoPost.data.data.dataInfo.pftDetail;
-      selectedKieuGS = resultGetInfoPost.data.data.dataInfo.nametype;
-      selectedGender = resultGetInfoPost.data.data.dataInfo.pftGender;
-      selectedSubject = resultGetInfoPost.data.data.dataInfo.asName;
-      selectedTopicSubject = resultGetInfoPost.data.data.dataInfo.asDetailName;
-      selectedClass = resultGetInfoPost.data.data.dataInfo.ctName;
-      numberStudent.text = resultGetInfoPost.data.data.dataInfo.pftNbStudent;
-      selectedTimeTeaching = resultGetInfoPost.data.data.dataInfo.pftTime == '1'
-          ? '1,5'
-          : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
-              ? '2'
-              : resultGetInfoPost.data.data.dataInfo.pftTime == '3'
-                  ? '2,5'
-                  : '3';
-      selectedDayTeaching = resultGetInfoPost.data.data.dataInfo.pftNbLesson;
-      selectMethodTeach = resultGetInfoPost.data.data.dataInfo.pftForm;
-      salaryCD.text = resultGetInfoPost.data.data.dataInfo.pftPrice;
-      selectedStatusFee = resultGetInfoPost.data.data.dataInfo.pftMonth;
-      phone.text = resultGetInfoPost.data.data.dataInfo.pftPhone;
-      provincial.text = resultGetInfoPost.data.data.dataInfo.cityName;
-      district.text = resultGetInfoPost.data.data.dataInfo.ctyDetailName;
-      address.text = resultGetInfoPost.data.data.dataInfo.pftAddress;
-      listbuoiday[0].sang = resultGetInfoPost.data.data.lichday.st2;
-      listbuoiday[0].chieu = resultGetInfoPost.data.data.lichday.ct2;
-      listbuoiday[0].toi = resultGetInfoPost.data.data.lichday.tt2;
-      listbuoiday[1].sang = resultGetInfoPost.data.data.lichday.st3;
-      listbuoiday[1].chieu = resultGetInfoPost.data.data.lichday.ct3;
-      listbuoiday[1].toi = resultGetInfoPost.data.data.lichday.tt3;
-      listbuoiday[2].sang = resultGetInfoPost.data.data.lichday.st4;
-      listbuoiday[2].chieu = resultGetInfoPost.data.data.lichday.ct4;
-      listbuoiday[2].toi = resultGetInfoPost.data.data.lichday.tt4;
-      listbuoiday[3].sang = resultGetInfoPost.data.data.lichday.st5;
-      listbuoiday[3].chieu = resultGetInfoPost.data.data.lichday.ct5;
-      listbuoiday[3].toi = resultGetInfoPost.data.data.lichday.tt5;
-      listbuoiday[4].sang = resultGetInfoPost.data.data.lichday.st6;
-      listbuoiday[4].chieu = resultGetInfoPost.data.data.lichday.ct6;
-      listbuoiday[4].toi = resultGetInfoPost.data.data.lichday.tt6;
-      listbuoiday[5].sang = resultGetInfoPost.data.data.lichday.st7;
-      listbuoiday[5].chieu = resultGetInfoPost.data.data.lichday.ct7;
-      listbuoiday[5].toi = resultGetInfoPost.data.data.lichday.tt7;
-      listbuoiday[6].sang = resultGetInfoPost.data.data.lichday.scn;
-      listbuoiday[6].chieu = resultGetInfoPost.data.data.lichday.ccn;
-      listbuoiday[6].toi = resultGetInfoPost.data.data.lichday.tcn;
-      lichDay = resultGetInfoPost.data.data.lichday;
-      idFormTeaching = resultGetInfoPost.data.data.dataInfo.pftForm == "Gặp mặt" ? 1 : 2;
-      idTime = resultGetInfoPost.data.data.dataInfo.pftTime == '1,5'
-          ? 1
-          : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
-              ? 2
-              : resultGetInfoPost.data.data.dataInfo.pftTime == '2,5'
-                  ? 3
-                  : 4;
-      idGender = resultGetInfoPost.data.data.dataInfo.pftGender == "Nam" ? 1 : 2;
-      idSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asId);
-      idClass = int.parse(resultGetInfoPost.data.data.dataInfo.ctId);
-      idTopicSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asDetail);
-      idProvincial = int.parse(resultGetInfoPost.data.data.dataInfo.cityId);
-      idDistrict = int.parse(resultGetInfoPost.data.data.dataInfo.cityDetail);
-      idExp = resultGetInfoPost.data.data.dataInfo.nametype == 'Sinh viên'
-          ? 1
-          : resultGetInfoPost.data.data.dataInfo.nametype == 'Người đi làm'
-              ? 2
-              : 3;
+        idPost = int.parse(resultGetInfoPost.data.data.dataInfo.pftId);
+        title.text = resultGetInfoPost.data.data.dataInfo.pftSummary;
+        contentTitle.text = resultGetInfoPost.data.data.dataInfo.pftDetail;
+        selectedKieuGS = resultGetInfoPost.data.data.dataInfo.nametype;
+        selectedGender = resultGetInfoPost.data.data.dataInfo.pftGender;
+        selectedSubject = resultGetInfoPost.data.data.dataInfo.asName;
+        selectedTopicSubject = resultGetInfoPost.data.data.dataInfo.asDetailName;
+        selectedClass = resultGetInfoPost.data.data.dataInfo.ctName;
+        numberStudent.text = resultGetInfoPost.data.data.dataInfo.pftNbStudent;
+        selectedTimeTeaching = resultGetInfoPost.data.data.dataInfo.pftTime == '1'
+            ? '1,5'
+            : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
+                ? '2'
+                : resultGetInfoPost.data.data.dataInfo.pftTime == '3'
+                    ? '2,5'
+                    : '3';
+        selectedDayTeaching = resultGetInfoPost.data.data.dataInfo.pftNbLesson;
+        selectMethodTeach = resultGetInfoPost.data.data.dataInfo.pftForm;
+        salaryCD.text = resultGetInfoPost.data.data.dataInfo.pftPrice;
+        selectedStatusFee = resultGetInfoPost.data.data.dataInfo.pftMonth;
+        phone.text = resultGetInfoPost.data.data.dataInfo.pftPhone;
+        provincial.text = resultGetInfoPost.data.data.dataInfo.cityName;
+        district.text = resultGetInfoPost.data.data.dataInfo.ctyDetailName;
+        address.text = resultGetInfoPost.data.data.dataInfo.pftAddress;
+        listbuoiday[0].sang = resultGetInfoPost.data.data.lichday.st2;
+        listbuoiday[0].chieu = resultGetInfoPost.data.data.lichday.ct2;
+        listbuoiday[0].toi = resultGetInfoPost.data.data.lichday.tt2;
+        listbuoiday[1].sang = resultGetInfoPost.data.data.lichday.st3;
+        listbuoiday[1].chieu = resultGetInfoPost.data.data.lichday.ct3;
+        listbuoiday[1].toi = resultGetInfoPost.data.data.lichday.tt3;
+        listbuoiday[2].sang = resultGetInfoPost.data.data.lichday.st4;
+        listbuoiday[2].chieu = resultGetInfoPost.data.data.lichday.ct4;
+        listbuoiday[2].toi = resultGetInfoPost.data.data.lichday.tt4;
+        listbuoiday[3].sang = resultGetInfoPost.data.data.lichday.st5;
+        listbuoiday[3].chieu = resultGetInfoPost.data.data.lichday.ct5;
+        listbuoiday[3].toi = resultGetInfoPost.data.data.lichday.tt5;
+        listbuoiday[4].sang = resultGetInfoPost.data.data.lichday.st6;
+        listbuoiday[4].chieu = resultGetInfoPost.data.data.lichday.ct6;
+        listbuoiday[4].toi = resultGetInfoPost.data.data.lichday.tt6;
+        listbuoiday[5].sang = resultGetInfoPost.data.data.lichday.st7;
+        listbuoiday[5].chieu = resultGetInfoPost.data.data.lichday.ct7;
+        listbuoiday[5].toi = resultGetInfoPost.data.data.lichday.tt7;
+        listbuoiday[6].sang = resultGetInfoPost.data.data.lichday.scn;
+        listbuoiday[6].chieu = resultGetInfoPost.data.data.lichday.ccn;
+        listbuoiday[6].toi = resultGetInfoPost.data.data.lichday.tcn;
+        lichDay = resultGetInfoPost.data.data.lichday;
+        idFormTeaching = resultGetInfoPost.data.data.dataInfo.pftForm == "Gặp mặt" ? 1 : 2;
+        idTime = resultGetInfoPost.data.data.dataInfo.pftTime == '1,5'
+            ? 1
+            : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
+                ? 2
+                : resultGetInfoPost.data.data.dataInfo.pftTime == '2,5'
+                    ? 3
+                    : 4;
+        idGender = resultGetInfoPost.data.data.dataInfo.pftGender == "Nam" ? 1 : 2;
+        idSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asId);
+        idClass = int.parse(resultGetInfoPost.data.data.dataInfo.ctId);
+        idTopicSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asDetail);
+        idProvincial = int.parse(resultGetInfoPost.data.data.dataInfo.cityId);
+        idDistrict = int.parse(resultGetInfoPost.data.data.dataInfo.cityDetail);
+        idExp = resultGetInfoPost.data.data.dataInfo.nametype == 'Sinh viên'
+            ? 1
+            : resultGetInfoPost.data.data.dataInfo.nametype == 'Người đi làm'
+                ? 2
+                : 3;
 
-      await Get.to(UpdatePostScreen());
-    } else {
+        await Get.to(UpdatePostScreen());
+      } else {
+        Get.back();
+      }
+    } catch (e) {
+      print(e);
       Get.back();
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
+
     update();
   }
 }

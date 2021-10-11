@@ -9,9 +9,12 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
+import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
+import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
@@ -104,7 +107,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                     controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
+                    style: AppTextStyles.regularW700(context,
+                        size: AppDimens.textSize20, color: AppColors.whiteFFFFFF, lineHeight: AppDimens.textSize24),
                   ),
                   SizedBox(
                     height: AppDimens.space6,
@@ -173,7 +177,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                       onTap: () {
                                         controller.token != ''
                                             ? Get.dialog(DialogWatchTeacher(
-                                          point: controller.resultDetailTeacher.data.data.dataInfo.pointFree,
+                                                point: controller.resultDetailTeacher.data.data.dataInfo.pointFree,
                                                 teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                                                 nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                                                 ontap: () {
@@ -269,7 +273,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
                     child: Text(
                       controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
-                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
+                      style: AppTextStyles.regularW400(context,
+                          size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -756,7 +761,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                         'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
                                         softWrap: true,
                                         textAlign: TextAlign.left,
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
+                                        style: AppTextStyles.regularW400(context,
+                                            size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
                                       ),
                                     ),
                                     SizedBox(
@@ -851,13 +857,21 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                     hasRadius: true,
                                     textColor: AppColors.whiteFFFFFF,
                                     onPressed: () {
-                                      controller.token != ''
-                                          ? Get.dialog(CheckboxListClass(
-                                              name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
-                                              imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
-                                              idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
-                                            ))
-                                          : Get.dialog(DialogErrorLogin());
+                                      print('controller.numberPost');
+                                      print(controller.numberPost);
+                                      if (controller.token != '') {
+                                        controller.numberPost == '0' ? Utils.showToast('Bạn chưa có lớp. Vui lòng tạo lớp') : print('');
+
+                                        controller.numberPost != '0'
+                                            ? Get.dialog(CheckboxListClass(
+                                                name: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
+                                                imageUrl: controller.resultDetailTeacher.data.data.dataInfo.ugsAvatar,
+                                                idGS: controller.resultDetailTeacher.data.data.dataInfo.ugsId,
+                                              ))
+                                            : Get.to(PostScreen());
+                                      } else {
+                                        Get.dialog(DialogErrorLogin());
+                                      }
                                     },
                                     title: 'Mời dạy',
                                   ),
@@ -882,7 +896,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                           controller.update();
                                         } else {
                                           controller.resultDetailTeacher.data.data.dataInfo.checkSave = false;
-                                          homeAfterParentController.deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
+                                          homeAfterParentController
+                                              .deleteTutorSaved(int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId));
                                           controller.update();
                                         }
                                       } else {
@@ -910,7 +925,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             ),
                                             TextSpan(
                                               text: SpUtil.getString(ConstString.NAME_CLASS),
-                                              style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
+                                              style: AppTextStyles.regularW500(context,
+                                                  size: AppDimens.textSize16, color: AppColors.primary4C5BD4, lineHeight: 24),
                                             )
                                           ]),
                                     ),
@@ -929,7 +945,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             textColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.acceptOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },
@@ -950,7 +967,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                             backColor: AppColors.whiteFFFFFF,
                                             onPressed: () {
                                               listTeacherSuggestController.refuseOffer(
-                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId), int.parse(SpUtil.getString(ConstString.ID_CLASS)));
+                                                  int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
+                                                  int.parse(SpUtil.getString(ConstString.ID_CLASS)));
                                               controller.acepted = true;
                                               controller.update();
                                             },

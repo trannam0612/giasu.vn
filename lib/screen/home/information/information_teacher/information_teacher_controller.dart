@@ -37,10 +37,12 @@ class InformationTeacherController extends GetxController {
   List<String> listIdClass = [];
   bool acepted = false;
   String token;
+  String numberPost;
 
   @override
   void onInit() {
     token = SpUtil.getString(ConstString.token);
+    numberPost = SpUtil.getString(ConstString.NUMBER_POST);
 
     // TODO: implement onInit
     super.onInit();
@@ -50,21 +52,26 @@ class InformationTeacherController extends GetxController {
     print('classPosted');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.listClassPost(token, currentPage, limit);
-    resultListClassPosted = resultListClassPostedFromJson(res.data);
-    if (resultListClassPosted.data != null) {
-      // Get.back();
-      if (resultListClassPosted.data.listClass.isNotEmpty) {
-        for (int i = 0; i < resultListClassPosted.data.listClass.length; i++) {
-          listPostCreated.add(resultListClassPosted.data.listClass[i]);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.listClassPost(token, currentPage, limit);
+      resultListClassPosted = resultListClassPostedFromJson(res.data);
+      if (resultListClassPosted.data != null) {
+        // Get.back();
+        if (resultListClassPosted.data.listClass.isNotEmpty) {
+          for (int i = 0; i < resultListClassPosted.data.listClass.length; i++) {
+            listPostCreated.add(resultListClassPosted.data.listClass[i]);
+          }
+        } else {
+          Utils.showToast('Hết');
         }
       } else {
-        Utils.showToast('Hết');
+        // Get.back();
+        Utils.showToast(resultListClassPosted.error.message);
       }
-    } else {
-      // Get.back();
-      Utils.showToast(resultListClassPosted.error.message);
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -73,15 +80,20 @@ class InformationTeacherController extends GetxController {
     print('refuseOffer');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.inviteTeach(token, idLop, idGS);
-    resultInviteTeach = resultInviteTeachFromJson(res.data);
-    if (resultInviteTeach.data != null) {
-      Get.back();
-      Utils.showToast(resultInviteTeach.data.message);
-    } else {
-      Get.back();
-      Utils.showToast(resultInviteTeach.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.inviteTeach(token, idLop, idGS);
+      resultInviteTeach = resultInviteTeachFromJson(res.data);
+      if (resultInviteTeach.data != null) {
+        Get.back();
+        Utils.showToast(resultInviteTeach.data.message);
+      } else {
+        Get.back();
+        Utils.showToast(resultInviteTeach.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -92,14 +104,19 @@ class InformationTeacherController extends GetxController {
     print('minusPoint');
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.minusPoint(token, idGS);
-    resultMinusPoint = resultMinusPointFromJson(res.data);
-    if (resultMinusPoint.data != null) {
-      resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
-      Utils.showToast(resultMinusPoint.data.message);
-    } else {
-      Utils.showToast(resultMinusPoint.error.message);
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.minusPoint(token, idGS);
+      resultMinusPoint = resultMinusPointFromJson(res.data);
+      if (resultMinusPoint.data != null) {
+        resultDetailTeacher.data.data.dataInfo.checkMinusPoint = true;
+        Utils.showToast(resultMinusPoint.data.message);
+      } else {
+        Utils.showToast(resultMinusPoint.error.message);
+      }
+    } catch (e) {
+      print(e);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }
@@ -107,37 +124,43 @@ class InformationTeacherController extends GetxController {
   Future<void> detailTeacher(int idGS, int type) async {
     await Future.delayed(Duration(milliseconds: 1));
     Get.dialog(DialogLoading());
-    String token = SpUtil.getString(ConstString.token);
-    ResultData res = await homeRepositories.detailTutor(token, idGS);
-    resultDetailTeacher = resultDetailTeacherFromJson(res.data);
-    if (resultDetailTeacher.data != null) {
-      listbuoiday[0].sang = resultDetailTeacher.data.data.lichday.st2;
-      listbuoiday[0].chieu = resultDetailTeacher.data.data.lichday.ct2;
-      listbuoiday[0].toi = resultDetailTeacher.data.data.lichday.tt2;
-      listbuoiday[1].sang = resultDetailTeacher.data.data.lichday.st3;
-      listbuoiday[1].chieu = resultDetailTeacher.data.data.lichday.ct3;
-      listbuoiday[1].toi = resultDetailTeacher.data.data.lichday.tt3;
-      listbuoiday[2].sang = resultDetailTeacher.data.data.lichday.st4;
-      listbuoiday[2].chieu = resultDetailTeacher.data.data.lichday.ct4;
-      listbuoiday[2].toi = resultDetailTeacher.data.data.lichday.tt4;
-      listbuoiday[3].sang = resultDetailTeacher.data.data.lichday.st5;
-      listbuoiday[3].chieu = resultDetailTeacher.data.data.lichday.ct5;
-      listbuoiday[3].toi = resultDetailTeacher.data.data.lichday.tt5;
-      listbuoiday[4].sang = resultDetailTeacher.data.data.lichday.st6;
-      listbuoiday[4].chieu = resultDetailTeacher.data.data.lichday.ct6;
-      listbuoiday[4].toi = resultDetailTeacher.data.data.lichday.tt6;
-      listbuoiday[5].sang = resultDetailTeacher.data.data.lichday.st7;
-      listbuoiday[5].chieu = resultDetailTeacher.data.data.lichday.ct7;
-      listbuoiday[5].toi = resultDetailTeacher.data.data.lichday.tt7;
-      listbuoiday[6].sang = resultDetailTeacher.data.data.lichday.scn;
-      listbuoiday[6].chieu = resultDetailTeacher.data.data.lichday.ccn;
-      listbuoiday[6].toi = resultDetailTeacher.data.data.lichday.tcn;
+    try {
+      String token = SpUtil.getString(ConstString.token);
+      ResultData res = await homeRepositories.detailTutor(token, idGS);
+      resultDetailTeacher = resultDetailTeacherFromJson(res.data);
+      if (resultDetailTeacher.data != null) {
+        listbuoiday[0].sang = resultDetailTeacher.data.data.lichday.st2;
+        listbuoiday[0].chieu = resultDetailTeacher.data.data.lichday.ct2;
+        listbuoiday[0].toi = resultDetailTeacher.data.data.lichday.tt2;
+        listbuoiday[1].sang = resultDetailTeacher.data.data.lichday.st3;
+        listbuoiday[1].chieu = resultDetailTeacher.data.data.lichday.ct3;
+        listbuoiday[1].toi = resultDetailTeacher.data.data.lichday.tt3;
+        listbuoiday[2].sang = resultDetailTeacher.data.data.lichday.st4;
+        listbuoiday[2].chieu = resultDetailTeacher.data.data.lichday.ct4;
+        listbuoiday[2].toi = resultDetailTeacher.data.data.lichday.tt4;
+        listbuoiday[3].sang = resultDetailTeacher.data.data.lichday.st5;
+        listbuoiday[3].chieu = resultDetailTeacher.data.data.lichday.ct5;
+        listbuoiday[3].toi = resultDetailTeacher.data.data.lichday.tt5;
+        listbuoiday[4].sang = resultDetailTeacher.data.data.lichday.st6;
+        listbuoiday[4].chieu = resultDetailTeacher.data.data.lichday.ct6;
+        listbuoiday[4].toi = resultDetailTeacher.data.data.lichday.tt6;
+        listbuoiday[5].sang = resultDetailTeacher.data.data.lichday.st7;
+        listbuoiday[5].chieu = resultDetailTeacher.data.data.lichday.ct7;
+        listbuoiday[5].toi = resultDetailTeacher.data.data.lichday.tt7;
+        listbuoiday[6].sang = resultDetailTeacher.data.data.lichday.scn;
+        listbuoiday[6].chieu = resultDetailTeacher.data.data.lichday.ccn;
+        listbuoiday[6].toi = resultDetailTeacher.data.data.lichday.tcn;
+        Get.back();
+        Get.to(InformationTeacherScreen(
+          type: type,
+        ));
+      } else {
+        Utils.showToast(resultDetailTeacher.error.message);
+      }
+    } catch (e) {
+      print(e);
       Get.back();
-      Get.to(InformationTeacherScreen(
-        type: type,
-      ));
-    } else {
-      Utils.showToast(resultDetailTeacher.error.message);
+      Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
   }

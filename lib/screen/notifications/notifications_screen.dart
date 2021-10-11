@@ -97,7 +97,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           title: controller.resultNotification.data.dataNoti[index].ugsName,
                           content: controller.resultNotification.data.dataNoti[index].content,
                           image: controller.resultNotification.data.dataNoti[index].ugsAvatar,
-                          time: timeAgo(int.parse(controller.resultNotification.data.dataNoti[index].notiDate)),
+                          time: timeAgo(controller.resultNotification.data.dataNoti[index].notiDate),
                         ),
                         separatorBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.only(left: 80),

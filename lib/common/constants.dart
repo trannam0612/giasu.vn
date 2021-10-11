@@ -23,4 +23,5 @@ class ConstString {
   static const String NAME_CLASS = "NAME_CLASS";
   static const String ID_CLASS = "ID_CLASS";
   static const String NAME_PARENT = "NAME_PARENT";
+  static const String NUMBER_POST = "NUMBER_POST";
 }
