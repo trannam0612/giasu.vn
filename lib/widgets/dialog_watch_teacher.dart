@@ -19,9 +19,7 @@ class DialogWatchTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0))
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16.0))),
       insetPadding: EdgeInsets.symmetric(horizontal: AppDimens.padding16),
       backgroundColor: AppColors.whiteFFFFFF,
       child: Container(
@@ -42,7 +40,8 @@ class DialogWatchTeacher extends StatelessWidget {
                 children: <TextSpan>[
                   TextSpan(
                     text: ' 1 điểm\n',
-                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
+                    style: AppTextStyles.regularW400(context,
+                        size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.secondaryF8971C),
                   ),
                   TextSpan(
                     text: ' để xem hồ sơ',
@@ -50,11 +49,13 @@ class DialogWatchTeacher extends StatelessWidget {
                   ),
                   TextSpan(
                     text: ' Gia Sư ',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                    style:
+                        AppTextStyles.regularW500(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
                   ),
                   TextSpan(
                     text: '${nameUser} ',
-                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
+                    style: AppTextStyles.regularW400(context,
+                        size: AppDimens.textSize14, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4, fontStyle: FontStyle.italic),
                   ),
                 ],
               ),
@@ -62,9 +63,16 @@ class DialogWatchTeacher extends StatelessWidget {
             // SizedBox(
             //   height: AppDimens.space10,
             // ),
-            SizedBox(height: 2,),
-            Text('(Bạn đang có $point điểm)', style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),),
-            SizedBox(height: AppDimens.space20,),
+            SizedBox(
+              height: 2,
+            ),
+            Text(
+              '(Bạn đang có ${point ?? 0} điểm)',
+              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+            ),
+            SizedBox(
+              height: AppDimens.space20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -83,19 +91,20 @@ class DialogWatchTeacher extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 10,),
-                Flexible(
-                  flex: 5,
-                  child: SizedBox(
-                    width: AppDimens.height * 0.4,
-                    child: CustomButton2(
-                      title: 'ĐỒNG Ý',
-                      textColor: AppColors.whiteFFFFFF,
-                      onPressed: ontap,
-                      color: AppColors.primary4C5BD4,
-                    ),
-                  )
+                SizedBox(
+                  width: 10,
                 ),
+                Flexible(
+                    flex: 5,
+                    child: SizedBox(
+                      width: AppDimens.height * 0.4,
+                      child: CustomButton2(
+                        title: 'ĐỒNG Ý',
+                        textColor: AppColors.whiteFFFFFF,
+                        onPressed: ontap,
+                        color: AppColors.primary4C5BD4,
+                      ),
+                    )),
               ],
             )
           ],

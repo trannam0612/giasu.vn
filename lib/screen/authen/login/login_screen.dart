@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
@@ -15,6 +16,7 @@ import 'package:giasu_vn/screen/home/home_before/home_before_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../../../common/theme/app_colors.dart';
 import '../../../common/theme/app_colors.dart';
@@ -24,6 +26,8 @@ import 'login_controller.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Get.find<LoginController>().userType = SpUtil.getString(ConstString.USER_TYPE);
+    print(Get.find<LoginController>().userType);
     HomeBeforeController homeBeforeController = Get.put(HomeBeforeController());
     return GetBuilder<LoginController>(
       init: LoginController(),

@@ -33,7 +33,9 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                     title: Text(
                       'Đăng ký',
                       style: AppTextStyles.regularW500(context,
-                          size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                          size: AppDimens.textSize24,
+                          lineHeight: AppDimens.textSize28,
+                          color: AppColors.whiteFFFFFF),
                     ),
                     leading: IconButton(
                       icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -51,7 +53,9 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                         children: [
                           Text(
                             '3. Thông tin giảng dạy (Gia sư)',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
+                            style: AppTextStyles.regularW400(context,
+                                size: AppDimens.textSize18,
+                                color: AppColors.secondaryF8971C),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
@@ -62,18 +66,50 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             isTitle: true,
                             hint: 'Chọn kiểu gia sư',
                             dropdownValue: controller.selectedKieuGS,
-                            onChanged: (String value) => controller.onSelectedKieuGS(value),
+                            onChanged: (String value) =>
+                                controller.onSelectedKieuGS(value),
                             list: controller.listKieuGS,
-                            borderColor: controller.errorKieuGS ? AppColors.redFF0033 : AppColors.grey747474,
+                            borderColor: controller.errorKieuGS
+                                ? AppColors.redFF0033
+                                : AppColors.grey747474,
                           ),
                           controller.errorKieuGS
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
+                              : Container(),
+                          SizedBox(
+                            height: AppDimens.space30,
+                          ),
+                          DropDownSelect(
+                            title: 'Lớp học giảng dạy',
+                            isTitle: true,
+                            obligatory: true,
+                            hint: 'Chọn lớp học giảng dạy',
+                            dropdownValue: controller.selectedClass,
+                            onChanged: (String value) =>
+                                controller.onSelectedClass(value),
+                            list: listStringClass,
+                            borderColor: controller.errorClass
+                                ? AppColors.redFF0033
+                                : AppColors.grey747474,
+                          ),
+                          controller.errorClass
+                              ? Padding(
+                            padding: const EdgeInsets.only(
+                                top: AppDimens.space4),
+                            child: Text(
+                              'Trường bắt buộc!',
+                              style: AppTextStyles.regularW400(context,
+                                  size: 12, color: AppColors.redFF0033),
+                            ),
+                          )
                               : Container(),
                           SizedBox(
                             height: AppDimens.space30,
@@ -81,12 +117,16 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Môn học giảng dạy ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16,
+                                  lineHeight: AppDimens.space18),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
                                   style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                      size: AppDimens.textSize16,
+                                      lineHeight: AppDimens.space18,
+                                      color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -95,7 +135,9 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space4,
                           ),
                           InkWell(
-                            onTap: () => controller.listSubjectSelect.length < 3 ? Get.to(SelectSubjectGSScreen(context)) : null,
+                            onTap: () => controller.listSubjectSelect.length < 3
+                                ? Get.to(SelectSubjectGSScreen(context))
+                                : null,
                             child: Container(
                                 constraints: BoxConstraints(
                                   minHeight: 50,
@@ -104,42 +146,70 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 padding: EdgeInsets.all(AppDimens.padding8),
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
-                                    borderRadius: BorderRadius.circular(AppDimens.space10),
-                                    border: Border.all(color: controller.errorSubject ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimens.space10),
+                                    border: Border.all(
+                                        color: controller.errorSubject
+                                            ? AppColors.redFF0033
+                                            : AppColors.grey747474,
+                                        width: 1)),
                                 child: controller.listSubjectSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
-                                        itemCount: controller.listSubjectSelect.length,
-                                        gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: AppDimens.width * 0.5,
+                                        itemCount:
+                                            controller.listSubjectSelect.length,
+                                        gridDelegate:
+                                            new SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent:
+                                              AppDimens.width * 0.5,
                                           mainAxisSpacing: 10,
                                           crossAxisSpacing: 10,
                                           mainAxisExtent: AppDimens.space32,
                                         ),
-                                        itemBuilder: (BuildContext context, int index) {
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              controller.listSubjectSelect.remove(controller.listSubjectSelect[index]);
+                                              controller.listSubjectSelect
+                                                  .remove(controller
+                                                          .listSubjectSelect[
+                                                      index]);
                                               controller.update();
                                             },
                                             child: Container(
                                               alignment: Alignment.topCenter,
-                                              padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      AppDimens.padding12,
+                                                  vertical: AppDimens.space8),
                                               decoration: BoxDecoration(
-                                                  color: AppColors.greyC4C4C4, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                                  color: AppColors.greyC4C4C4,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      controller.listSubjectSelect[index].asName,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      controller
+                                                          .listSubjectSelect[
+                                                              index]
+                                                          .asName,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       maxLines: 1,
-                                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
+                                                      style: AppTextStyles
+                                                          .regularW400(context,
+                                                              size: AppDimens
+                                                                  .textSize14),
                                                     ),
                                                     flex: 8,
                                                   ),
                                                   // Spacer(),
-                                                  Flexible(flex: 2, child: SvgPicture.asset(Images.ic_close))
+                                                  Flexible(
+                                                      flex: 2,
+                                                      child: SvgPicture.asset(
+                                                          Images.ic_close))
                                                 ],
                                               ),
                                             ),
@@ -150,7 +220,10 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                         children: [
                                           Text(
                                             'Chọn môn học',
-                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                            style: AppTextStyles.regularW400(
+                                                context,
+                                                size: AppDimens.textSize16,
+                                                color: AppColors.grey747474),
                                           ),
                                           Spacer(),
                                           SvgPicture.asset(
@@ -162,10 +235,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           controller.errorSubject
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
                               : Container(),
@@ -174,154 +249,227 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           Text(
                             'Lưu ý :Chỉ chọn tối đa 3 môn học',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
+                            style: AppTextStyles.regularW400(context,
+                                size: AppDimens.textSize10,
+                                color: AppColors.redEB5757),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
                           ),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Môn học chi tiết ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: '*',
-                                  style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: AppDimens.space4,
-                          ),
-                          InkWell(
-                              onTap: controller.listSubjectSelectTopic.length < 5
-                                  ? () {
-                                      controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
-                                      controller.listSubjectSelectTopic.length < 5 ? Get.to(SelectTopicSubjectGSScreen(context)) : null;
-                                    }
-                                  : null,
-                              child: Container(
-                                  constraints: BoxConstraints(
-                                    minHeight: 50,
-                                    minWidth: double.infinity,
-                                  ),
-                                  padding: EdgeInsets.all(AppDimens.padding8),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.whiteFFFFFF,
-                                      borderRadius: BorderRadius.circular(AppDimens.space10),
-                                      border: Border.all(color: controller.errorSubjectTopic ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
-                                  child: controller.listSubjectSelectTopic.isNotEmpty
-                                      ? GridView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: controller.listSubjectSelectTopic.length,
-                                          gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                            maxCrossAxisExtent: AppDimens.width * 0.5,
-                                            mainAxisSpacing: 10,
-                                            crossAxisSpacing: 10,
-                                            mainAxisExtent: AppDimens.space32,
+                          controller.listTopic.isNotEmpty
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text: 'Môn học chi tiết ',
+                                        style: AppTextStyles.regularW400(
+                                            context,
+                                            size: AppDimens.textSize16,
+                                            lineHeight: AppDimens.space18),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: '*',
+                                            style: AppTextStyles.regularW400(
+                                                context,
+                                                size: AppDimens.textSize16,
+                                                lineHeight: AppDimens.space18,
+                                                color: AppColors.redEB5757),
                                           ),
-                                          itemBuilder: (BuildContext context, int index) {
-                                            return InkWell(
-                                              onTap: () {
-                                                controller.listSubjectSelectTopic.remove(controller.listSubjectSelectTopic[index]);
-                                                controller.update();
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.topCenter,
-                                                padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
-                                                decoration: BoxDecoration(
-                                                    color: AppColors.greyC4C4C4, borderRadius: BorderRadius.circular(AppDimens.padding16)),
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        controller.listSubjectSelectTopic[index].nameSubject,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        maxLines: 1,
-                                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
-                                                      ),
-                                                      flex: 8,
-                                                    ),
-                                                    // Spacer(),
-                                                    Flexible(flex: 2, child: SvgPicture.asset(Images.ic_close))
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        )
-                                      : Row(
-                                          children: [
-                                            Text(
-                                              'Chọn môn học chi tiêt',
-                                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: AppDimens.space4,
+                                    ),
+                                    InkWell(
+                                        onTap: controller.listSubjectSelectTopic
+                                                    .length <
+                                                5
+                                            ? () {
+                                                controller.getListTopic(
+                                                    controller.listSubjectSelect
+                                                        .map((e) => e.asId)
+                                                        .join(','));
+                                                controller.listSubjectSelectTopic
+                                                            .length <
+                                                        5
+                                                    ? Get.to(
+                                                        SelectTopicSubjectGSScreen(
+                                                            context))
+                                                    : null;
+                                              }
+                                            : null,
+                                        child: Container(
+                                            constraints: BoxConstraints(
+                                              minHeight: 50,
+                                              minWidth: double.infinity,
                                             ),
-                                            Spacer(),
-                                            SvgPicture.asset(
-                                              Images.ic_arrow_down,
-                                              color: AppColors.black12,
-                                            )
-                                          ],
-                                        ))),
-                          controller.errorSubjectTopic
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
-                                  child: Text(
-                                    'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                  ),
+                                            padding: EdgeInsets.all(
+                                                AppDimens.padding8),
+                                            decoration: BoxDecoration(
+                                                color: AppColors.whiteFFFFFF,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        AppDimens.space10),
+                                                border: Border.all(
+                                                    color: controller
+                                                            .errorSubjectTopic
+                                                        ? AppColors.redFF0033
+                                                        : AppColors.grey747474,
+                                                    width: 1)),
+                                            child:
+                                                controller
+                                                        .listSubjectSelectTopic
+                                                        .isNotEmpty
+                                                    ? GridView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: controller
+                                                            .listSubjectSelectTopic
+                                                            .length,
+                                                        gridDelegate:
+                                                            new SliverGridDelegateWithMaxCrossAxisExtent(
+                                                          maxCrossAxisExtent:
+                                                              AppDimens.width *
+                                                                  0.5,
+                                                          mainAxisSpacing: 10,
+                                                          crossAxisSpacing: 10,
+                                                          mainAxisExtent:
+                                                              AppDimens.space32,
+                                                        ),
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .listSubjectSelectTopic
+                                                                  .remove(controller
+                                                                          .listSubjectSelectTopic[
+                                                                      index]);
+                                                              controller
+                                                                  .update();
+                                                            },
+                                                            child: Container(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .topCenter,
+                                                              padding: EdgeInsets.symmetric(
+                                                                  horizontal:
+                                                                      AppDimens
+                                                                          .padding12,
+                                                                  vertical:
+                                                                      AppDimens
+                                                                          .space8),
+                                                              decoration: BoxDecoration(
+                                                                  color: AppColors
+                                                                      .greyC4C4C4,
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          AppDimens
+                                                                              .padding16)),
+                                                              child: Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      controller
+                                                                          .listSubjectSelectTopic[
+                                                                              index]
+                                                                          .nameSubject,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      maxLines:
+                                                                          1,
+                                                                      style: AppTextStyles.regularW400(
+                                                                          context,
+                                                                          size:
+                                                                              AppDimens.textSize14),
+                                                                    ),
+                                                                    flex: 8,
+                                                                  ),
+                                                                  // Spacer(),
+                                                                  Flexible(
+                                                                      flex: 2,
+                                                                      child: SvgPicture.asset(
+                                                                          Images
+                                                                              .ic_close))
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      )
+                                                    : Row(
+                                                        children: [
+                                                          Text(
+                                                            'Chọn môn học chi tiêt',
+                                                            style: AppTextStyles.regularW400(
+                                                                context,
+                                                                size: AppDimens
+                                                                    .textSize16,
+                                                                color: AppColors
+                                                                    .grey747474),
+                                                          ),
+                                                          Spacer(),
+                                                          SvgPicture.asset(
+                                                            Images
+                                                                .ic_arrow_down,
+                                                            color: AppColors
+                                                                .black12,
+                                                          )
+                                                        ],
+                                                      ))),
+                                    controller.errorSubjectTopic
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: AppDimens.space4),
+                                            child: Text(
+                                              'Trường bắt buộc!',
+                                              style: AppTextStyles.regularW400(
+                                                  context,
+                                                  size: 12,
+                                                  color: AppColors.redFF0033),
+                                            ),
+                                          )
+                                        : Container(),
+                                    SizedBox(
+                                      height: AppDimens.space8,
+                                    ),
+                                    Text(
+                                      'Lưu ý :Chỉ chọn tối đa 5 môn học chi tiết',
+                                      style: AppTextStyles.regularW400(context,
+                                          size: AppDimens.textSize10,
+                                          color: AppColors.redEB5757),
+                                    ),
+                                    SizedBox(
+                                      height: AppDimens.space20,
+                                    ),
+                                  ],
                                 )
-                              : Container(),
-                          SizedBox(
-                            height: AppDimens.space8,
-                          ),
-                          Text(
-                            'Lưu ý :Chỉ chọn tối đa 5 môn học chi tiết',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
-                          ),
-                          SizedBox(
-                            height: AppDimens.space20,
-                          ),
-                          DropDownSelect(
-                            title: 'Lớp học giảng dạy',
-                            isTitle: true,
-                            obligatory: true,
-                            hint: 'Chọn lớp học giảng dạy',
-                            dropdownValue: controller.selectedClass,
-                            onChanged: (String value) => controller.onSelectedClass(value),
-                            list: listStringClass,
-                            borderColor: controller.errorClass ? AppColors.redFF0033 : AppColors.grey747474,
-                          ),
-                          controller.errorClass
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
-                                  child: Text(
-                                    'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                                  ),
-                                )
-                              : Container(),
-                          SizedBox(
-                            height: AppDimens.space30,
-                          ),
+                              : SizedBox.shrink(),
                           DropDownSelect(
                             title: 'Hình thức giảng dạy',
                             isTitle: true,
                             obligatory: true,
                             hint: 'Chọn hình thức giảng dạy',
                             dropdownValue: controller.selectedFormTeaching,
-                            onChanged: (String value) => controller.onSelectedFormTeaching(value),
+                            onChanged: (String value) =>
+                                controller.onSelectedFormTeaching(value),
                             list: controller.listFormTeaching,
-                            borderColor: controller.errorFormTeaching ? AppColors.redFF0033 : AppColors.grey747474,
+                            borderColor: controller.errorFormTeaching
+                                ? AppColors.redFF0033
+                                : AppColors.grey747474,
                           ),
                           controller.errorFormTeaching
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
                               : Container(),
@@ -349,12 +497,16 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Quận huyện ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16,
+                                  lineHeight: AppDimens.space18),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
                                   style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                      size: AppDimens.textSize16,
+                                      lineHeight: AppDimens.space18,
+                                      color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -363,47 +515,80 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space4,
                           ),
                           InkWell(
-                            onTap: () => controller.listDistrictSelect.length < 5 ? Get.to(SelectDistrict(context)) : null,
+                            onTap: () =>
+                                controller.listDistrictSelect.length < 5
+                                    ? Get.to(SelectDistrict(context))
+                                    : null,
                             child: Container(
-                                constraints: BoxConstraints(minHeight: 50, minWidth: double.infinity, maxHeight: AppDimens.height * 0.25),
+                                constraints: BoxConstraints(
+                                    minHeight: 50,
+                                    minWidth: double.infinity,
+                                    maxHeight: AppDimens.height * 0.25),
                                 padding: EdgeInsets.all(AppDimens.padding12),
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
-                                    borderRadius: BorderRadius.circular(AppDimens.space10),
-                                    border: Border.all(color: controller.errorDistrict ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimens.space10),
+                                    border: Border.all(
+                                        color: controller.errorDistrict
+                                            ? AppColors.redFF0033
+                                            : AppColors.grey747474,
+                                        width: 1)),
                                 child: controller.listDistrictSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
-                                        itemCount: controller.listDistrictSelect.length,
-                                        gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: AppDimens.width * 0.5,
+                                        itemCount: controller
+                                            .listDistrictSelect.length,
+                                        gridDelegate:
+                                            new SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent:
+                                              AppDimens.width * 0.5,
                                           mainAxisSpacing: 10,
                                           crossAxisSpacing: 10,
                                           mainAxisExtent: AppDimens.space32,
                                         ),
-                                        itemBuilder: (BuildContext context, int index) {
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              controller.listDistrictSelect.remove(controller.listDistrictSelect[index]);
+                                              controller.listDistrictSelect
+                                                  .remove(controller
+                                                          .listDistrictSelect[
+                                                      index]);
                                               controller.update();
                                             },
                                             child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      AppDimens.padding12,
+                                                  vertical: AppDimens.space8),
                                               decoration: BoxDecoration(
-                                                  color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
+                                                  color: AppColors.whiteF2F2F2,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   SizedBox(
                                                     child: Text(
-                                                      controller.listDistrictSelect[index].nameCity,
-                                                      overflow: TextOverflow.ellipsis,
+                                                      controller
+                                                          .listDistrictSelect[
+                                                              index]
+                                                          .nameCity,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
                                                       maxLines: 1,
-                                                      style: AppTextStyles.regularW400(context, size: AppDimens.textSize14),
+                                                      style: AppTextStyles
+                                                          .regularW400(context,
+                                                              size: AppDimens
+                                                                  .textSize14),
                                                     ),
-                                                    width: AppDimens.width * 0.27,
+                                                    width:
+                                                        AppDimens.width * 0.27,
                                                   ),
                                                   Spacer(),
-                                                  SvgPicture.asset(Images.ic_close)
+                                                  SvgPicture.asset(
+                                                      Images.ic_close)
                                                 ],
                                               ),
                                             ),
@@ -414,7 +599,10 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                         children: [
                                           Text(
                                             'Chọn quận huyện',
-                                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                            style: AppTextStyles.regularW400(
+                                                context,
+                                                size: AppDimens.textSize16,
+                                                color: AppColors.grey747474),
                                           ),
                                           Spacer(),
                                           SvgPicture.asset(
@@ -426,10 +614,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           controller.errorDistrictS3
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
                               : Container(),
@@ -438,7 +628,9 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           Text(
                             'Lưu ý :Chỉ chọn tối đa 5 quận huyện',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
+                            style: AppTextStyles.regularW400(context,
+                                size: AppDimens.textSize10,
+                                color: AppColors.redEB5757),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
@@ -446,12 +638,16 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Học phí giảng dạy ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16,
+                                  lineHeight: AppDimens.space18),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
                                   style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                      size: AppDimens.textSize16,
+                                      lineHeight: AppDimens.space18,
+                                      color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -471,16 +667,24 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     child: Text(
                                       'Cố định',
                                       style: AppTextStyles.regularW700(context,
-                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
+                                          size: AppDimens.textSize16,
+                                          color: controller.valueButtonLuong
+                                              ? AppColors.whiteFFFFFF
+                                              : AppColors.black12),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      primary: controller.valueButtonLuong ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
+                                      primary: controller.valueButtonLuong
+                                          ? AppColors.primary4C5BD4
+                                          : AppColors.whiteFFFFFF,
                                       padding: EdgeInsets.all(AppDimens.space8),
                                       onPrimary: Colors.white,
                                       shape: RoundedRectangleBorder(
-                                        side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
-                                        borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10)),
+                                        side: BorderSide(
+                                            width: 1,
+                                            color: AppColors.primary4C5BD4),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(AppDimens.space10)),
                                       ),
                                     ),
                                   ),
@@ -499,16 +703,25 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     child: Text(
                                       'Ước lượng',
                                       style: AppTextStyles.regularW700(context,
-                                          size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
+                                          size: AppDimens.textSize16,
+                                          color: controller.valueButtonLuong
+                                              ? AppColors.black12
+                                              : AppColors.whiteFFFFFF),
                                       textAlign: TextAlign.center,
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
+                                      primary: controller.valueButtonLuong
+                                          ? AppColors.whiteFFFFFF
+                                          : AppColors.primary4C5BD4,
                                       padding: EdgeInsets.all(AppDimens.space8),
                                       onPrimary: Colors.white,
                                       shape: RoundedRectangleBorder(
-                                          side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
-                                          borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
+                                          side: BorderSide(
+                                              width: 1,
+                                              color: AppColors.primary4C5BD4),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(
+                                                  AppDimens.space10))),
                                     ),
                                   ),
                                 ),
@@ -524,9 +737,13 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               Expanded(
                                   child: controller.valueButtonLuong
                                       ? CustomTextField(
-                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                           error: controller.checkSalaryCD(),
-                                          textEditingController: controller.salaryCD,
+                                          textEditingController:
+                                              controller.salaryCD,
                                           obligatory: false,
                                           isTitle: false,
                                           keyboardType: TextInputType.number,
@@ -536,32 +753,48 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                           isPassword: false,
                                         )
                                       : Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Expanded(
                                               child: CustomTextField(
-                                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                                error: controller.checkSalaryUL1(),
-                                                textEditingController: controller.salaryUL1,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
+                                                error:
+                                                    controller.checkSalaryUL1(),
+                                                textEditingController:
+                                                    controller.salaryUL1,
                                                 obligatory: false,
                                                 isTitle: false,
                                                 onPressed: () {},
                                                 title: '',
-                                                keyboardType: TextInputType.number,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 hintText: '1.000.000VNĐ',
                                                 isPassword: false,
                                               ),
                                             ),
-                                            SizedBox(width: 10,),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             Expanded(
                                               child: CustomTextField(
-                                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                                error: controller.checkSalaryUL2(),
-                                                textEditingController: controller.salaryUL2,
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly
+                                                ],
+                                                error:
+                                                    controller.checkSalaryUL2(),
+                                                textEditingController:
+                                                    controller.salaryUL2,
                                                 obligatory: false,
                                                 isTitle: false,
-                                                keyboardType: TextInputType.number,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 onPressed: () {},
                                                 title: '',
                                                 hintText: '6.000.000VNĐ',
@@ -574,28 +807,38 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                 width: AppDimens.smallPadding10,
                               ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                                margin: EdgeInsets.symmetric(vertical: AppDimens.space4),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppDimens.space4),
+                                margin: EdgeInsets.symmetric(
+                                    vertical: AppDimens.space4),
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
-                                    borderRadius: BorderRadius.circular(AppDimens.space10),
-                                    border: Border.all(width: 1, color: AppColors.grey747474)),
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimens.space10),
+                                    border: Border.all(
+                                        width: 1, color: AppColors.grey747474)),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
                                     hint: Text(
-                                      'Giờ',
-                                      style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.grey747474),
+                                      'Buổi',
+                                      style: AppTextStyles.regularW500(context,
+                                          size: AppDimens.padding16,
+                                          color: AppColors.grey747474),
                                     ),
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.black),
+                                    style: AppTextStyles.regularW500(context,
+                                        size: AppDimens.padding16,
+                                        color: AppColors.black),
                                     icon: SvgPicture.asset(
                                       Images.ic_arrow_down,
                                       color: AppColors.black12,
                                     ),
                                     value: controller.selectedTime,
-                                    onChanged: (value) => controller.onSelectedStatusFee(value),
+                                    onChanged: (value) =>
+                                        controller.onSelectedStatusFee(value),
                                     dropdownColor: AppColors.whiteFFFFFF,
                                     elevation: 10,
-                                    items: controller.listLuong.values.map((selectedType) {
+                                    items: controller.listLuong.values
+                                        .map((selectedType) {
                                       return DropdownMenuItem(
                                         child: new Text(
                                           selectedType,
@@ -610,10 +853,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           controller.errorLuong
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     controller.stringErrorLuong,
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
                               : Container(),
@@ -621,8 +866,10 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space8,
                           ),
                           Text(
-                            'Lưu ý : Học phí tính VNĐ/ ${controller.fee.text == controller.listFee[1] ? '1 Giờ' : '1 Tuần'} ',
-                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize10, color: AppColors.redEB5757),
+                            'Lưu ý : Học phí tính VNĐ/ ${controller.selectedTime} ',
+                            style: AppTextStyles.regularW400(context,
+                                size: AppDimens.textSize10,
+                                color: AppColors.redEB5757),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
@@ -630,12 +877,16 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               text: 'Buổi có thể dạy ',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                              style: AppTextStyles.regularW400(context,
+                                  size: AppDimens.textSize16,
+                                  lineHeight: AppDimens.space18),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: '*',
                                   style: AppTextStyles.regularW400(context,
-                                      size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                      size: AppDimens.textSize16,
+                                      lineHeight: AppDimens.space18,
+                                      color: AppColors.redEB5757),
                                 ),
                               ],
                             ),
@@ -643,49 +894,92 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              border: controller.errorBuoiDay ? Border.all(color: AppColors.redFF0033, width: 1) : null,
-                              borderRadius: BorderRadius.circular(AppDimens.space10),
+                              border: controller.errorBuoiDay
+                                  ? Border.all(
+                                      color: AppColors.redFF0033, width: 1)
+                                  : null,
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.space10),
                               color: AppColors.whiteFFFFFF,
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 1,
                                   blurRadius: 1,
-                                  offset: Offset(0, 3), // changes position of shadow
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
                                 ),
                               ],
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding20),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: AppDimens.padding20),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.symmetric(vertical: AppDimens.smallPadding10),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: AppDimens.smallPadding10),
                                     child: ListView.separated(
                                         shrinkWrap: true,
                                         physics: NeverScrollableScrollPhysics(),
                                         itemBuilder: (context, index) => Row(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  controller.listbuoiday[index].thu,
+                                                  controller
+                                                      .listbuoiday[index].thu,
                                                   textAlign: TextAlign.center,
-                                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.black),
+                                                  style:
+                                                      AppTextStyles.regularW400(
+                                                          context,
+                                                          size: AppDimens
+                                                              .textSize14,
+                                                          color:
+                                                              AppColors.black),
                                                 ),
                                                 Spacer(),
                                                 CustomButton3(
                                                   title: 'Sáng',
                                                   onPressed: () {
-                                                    controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].sang = controller.listbuoiday[index].sang == '0' ? "1" : "0";
+                                                    controller.errorBuoiDay =
+                                                        false;
+                                                    controller
+                                                        .listbuoiday[index]
+                                                        .sang = controller
+                                                                .listbuoiday[
+                                                                    index]
+                                                                .sang ==
+                                                            '0'
+                                                        ? "1"
+                                                        : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color:
-                                                      controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
+                                                  color: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .sang ==
+                                                          "1"
+                                                      ? AppColors
+                                                          .secondaryF8971C
+                                                      : AppColors.whiteFFFFFF,
+                                                  textColor: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .sang ==
+                                                          "1"
+                                                      ? AppColors.whiteFFFFFF
+                                                      : AppColors.grey747474,
+                                                  hasSide: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .sang ==
+                                                          "1"
+                                                      ? false
+                                                      : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -693,16 +987,42 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 CustomButton3(
                                                   title: 'Chiều',
                                                   onPressed: () {
-                                                    controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].chieu = controller.listbuoiday[index].chieu == "0" ? "1" : "0";
+                                                    controller.errorBuoiDay =
+                                                        false;
+                                                    controller
+                                                        .listbuoiday[index]
+                                                        .chieu = controller
+                                                                .listbuoiday[
+                                                                    index]
+                                                                .chieu ==
+                                                            "0"
+                                                        ? "1"
+                                                        : "0";
                                                     controller.update();
                                                     // controller.update();
                                                   },
-                                                  color:
-                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor:
-                                                      controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
+                                                  color: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .chieu ==
+                                                          "1"
+                                                      ? AppColors
+                                                          .secondaryF8971C
+                                                      : AppColors.whiteFFFFFF,
+                                                  textColor: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .chieu ==
+                                                          "1"
+                                                      ? AppColors.whiteFFFFFF
+                                                      : AppColors.grey747474,
+                                                  hasSide: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .chieu ==
+                                                          "1"
+                                                      ? false
+                                                      : true,
                                                 ),
                                                 SizedBox(
                                                   width: AppDimens.padding16,
@@ -710,20 +1030,50 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                                 CustomButton3(
                                                   title: 'Tối',
                                                   onPressed: () {
-                                                    controller.errorBuoiDay = false;
-                                                    controller.listbuoiday[index].toi = controller.listbuoiday[index].toi == "0" ? "1" : "0";
+                                                    controller.errorBuoiDay =
+                                                        false;
+                                                    controller
+                                                        .listbuoiday[index]
+                                                        .toi = controller
+                                                                .listbuoiday[
+                                                                    index]
+                                                                .toi ==
+                                                            "0"
+                                                        ? "1"
+                                                        : "0";
                                                     controller.update();
                                                   },
-                                                  color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
-                                                  textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
-                                                  hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
+                                                  color: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .toi ==
+                                                          "1"
+                                                      ? AppColors
+                                                          .secondaryF8971C
+                                                      : AppColors.whiteFFFFFF,
+                                                  textColor: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .toi ==
+                                                          "1"
+                                                      ? AppColors.whiteFFFFFF
+                                                      : AppColors.grey747474,
+                                                  hasSide: controller
+                                                              .listbuoiday[
+                                                                  index]
+                                                              .toi ==
+                                                          "1"
+                                                      ? false
+                                                      : true,
                                                 ),
                                               ],
                                             ),
-                                        separatorBuilder: (context, index) => SizedBox(
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
                                               height: AppDimens.space10,
                                             ),
-                                        itemCount: controller.listbuoiday.length),
+                                        itemCount:
+                                            controller.listbuoiday.length),
                                   ),
                                 ],
                               ),
@@ -731,10 +1081,12 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           ),
                           controller.errorBuoiDay
                               ? Padding(
-                                  padding: const EdgeInsets.only(top: AppDimens.space4),
+                                  padding: const EdgeInsets.only(
+                                      top: AppDimens.space4),
                                   child: Text(
                                     'Trường bắt buộc!',
-                                    style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: 12, color: AppColors.redFF0033),
                                   ),
                                 )
                               : Container(),
@@ -755,28 +1107,40 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                   ),
                                   data: ThemeData(
                                     primarySwatch: Colors.blue,
-                                    unselectedWidgetColor: AppColors.greyAAAAAA, // Your color
+                                    unselectedWidgetColor:
+                                        AppColors.greyAAAAAA, // Your color
                                   ),
                                 ),
                                 RichText(
                                   text: TextSpan(
                                     text: 'Tôi đã đọc và đồng ý với ',
-                                    style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18),
+                                    style: AppTextStyles.regularW400(context,
+                                        size: AppDimens.textSize16,
+                                        lineHeight: AppDimens.space18),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: 'Điều khoản \nsử dụng ',
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regularW400(
+                                            context,
+                                            size: AppDimens.textSize16,
+                                            lineHeight: AppDimens.space18,
+                                            color: AppColors.primary4C5BD4),
                                       ),
                                       TextSpan(
                                         text: 'và ',
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.black),
+                                        style: AppTextStyles.regularW400(
+                                            context,
+                                            size: AppDimens.textSize16,
+                                            lineHeight: AppDimens.space18,
+                                            color: AppColors.black),
                                       ),
                                       TextSpan(
                                         text: 'Chính sách bảo mật',
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.primary4C5BD4),
+                                        style: AppTextStyles.regularW400(
+                                            context,
+                                            size: AppDimens.textSize16,
+                                            lineHeight: AppDimens.space18,
+                                            color: AppColors.primary4C5BD4),
                                       ),
                                     ],
                                   ),
@@ -824,8 +1188,10 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học',
-                  style:
-                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style: AppTextStyles.regularW500(context,
+                      size: AppDimens.textSize24,
+                      lineHeight: AppDimens.textSize28,
+                      color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -835,7 +1201,9 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                 ),
               ),
               body: Container(
-                padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+                padding: EdgeInsets.symmetric(
+                    vertical: AppDimens.space32,
+                    horizontal: AppDimens.padding16),
                 child: ListView.separated(
                     shrinkWrap: true,
                     physics: BouncingScrollPhysics(),
@@ -843,7 +1211,9 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                           // ignore: deprecated_member_use
                           onTap: () {
                             controller.onSelectSubject(listDataSubject[index]);
-                            controller.getListTopic(controller.listSubjectSelect.map((e) => e.asId).join(','));
+                            controller.getListTopic(controller.listSubjectSelect
+                                .map((e) => e.asId)
+                                .join(','));
                             Get.back();
                           },
                           child: SizedBox(
@@ -852,10 +1222,14 @@ Widget SelectSubjectGSScreen(BuildContext context) {
                               children: [
                                 Text(
                                   listDataSubject[index].asName,
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.padding16,
+                                      color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelect.map((e) => e).contains(listDataSubject[index])
+                                controller.listSubjectSelect
+                                        .map((e) => e)
+                                        .contains(listDataSubject[index])
                                     ? SvgPicture.asset(Images.ic_check_green)
                                     : Container()
                               ],
@@ -882,8 +1256,10 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                 backgroundColor: AppColors.primary4C5BD4,
                 title: Text(
                   'Môn học chi tiết',
-                  style:
-                      AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+                  style: AppTextStyles.regularW500(context,
+                      size: AppDimens.textSize24,
+                      lineHeight: AppDimens.textSize28,
+                      color: AppColors.whiteFFFFFF),
                 ),
                 leading: IconButton(
                   icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -893,13 +1269,16 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                 ),
               ),
               body: Container(
-                padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+                padding: EdgeInsets.symmetric(
+                    vertical: AppDimens.space32,
+                    horizontal: AppDimens.padding16),
                 child: ListView.separated(
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) => InkWell(
                           // ignore: deprecated_member_use
                           onTap: () {
-                            controller.onSelectSubjectTopic(controller.listTopic[index]);
+                            controller.onSelectSubjectTopic(
+                                controller.listTopic[index]);
                             Get.back();
                           },
                           child: SizedBox(
@@ -908,10 +1287,15 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
                               children: [
                                 Text(
                                   controller.listTopic[index].nameSubject,
-                                  style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                                  style: AppTextStyles.regularW400(context,
+                                      size: AppDimens.padding16,
+                                      color: AppColors.black),
                                 ),
                                 Spacer(),
-                                controller.listSubjectSelectTopic.map((e) => e.nameSubject).contains(controller.listTopic[index].nameSubject)
+                                controller.listSubjectSelectTopic
+                                        .map((e) => e.nameSubject)
+                                        .contains(controller
+                                            .listTopic[index].nameSubject)
                                     ? SvgPicture.asset(Images.ic_check_green)
                                     : Container()
                               ],
@@ -929,7 +1313,8 @@ Widget SelectTopicSubjectGSScreen(BuildContext context) {
 }
 
 Widget SelectTinhThanh(BuildContext context) {
-  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
+  RegisterGiaSuController registerGiaSuController =
+      Get.put(RegisterGiaSuController());
   // List<String> list = ['Hà Nội', 'Hưng Yên', 'Thái Bình', 'Thanh Hóa'];
   return SafeArea(
       child: Scaffold(
@@ -938,7 +1323,10 @@ Widget SelectTinhThanh(BuildContext context) {
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
         'TỈNH, THÀNH PHỐ',
-        style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+        style: AppTextStyles.regularW500(context,
+            size: AppDimens.textSize24,
+            lineHeight: AppDimens.textSize28,
+            color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
         icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -962,16 +1350,23 @@ Widget SelectTinhThanh(BuildContext context) {
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+              padding: EdgeInsets.symmetric(
+                  vertical: AppDimens.space32, horizontal: AppDimens.padding16),
               child: ListView.separated(
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) => InkWell(
                         // ignore: deprecated_member_use
                         onTap: () {
-                          registerGiaSuController.areaTeaching.text = registerGiaSuController.listProvincial[index].citName;
-                          registerGiaSuController.idArea = int.parse(registerGiaSuController.listProvincial[index].citId);
+                          registerGiaSuController.areaTeaching.text =
+                              registerGiaSuController
+                                  .listProvincial[index].citName;
+                          registerGiaSuController.idArea = int.parse(
+                              registerGiaSuController
+                                  .listProvincial[index].citId);
                           registerGiaSuController.listDistrictSelect.clear();
-                          registerGiaSuController.getListDistrict(int.parse(registerGiaSuController.listProvincial[index].citId));
+                          registerGiaSuController.getListDistrict(int.parse(
+                              registerGiaSuController
+                                  .listProvincial[index].citId));
                           Get.back();
                         },
                         child: SizedBox(
@@ -979,11 +1374,16 @@ Widget SelectTinhThanh(BuildContext context) {
                           child: Row(
                             children: [
                               Text(
-                                registerGiaSuController.listProvincial[index].citName,
-                                style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                                registerGiaSuController
+                                    .listProvincial[index].citName,
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.padding16,
+                                    color: AppColors.black),
                               ),
                               Spacer(),
-                              registerGiaSuController.listProvincial[index].citName == registerGiaSuController.areaTeaching.text
+                              registerGiaSuController
+                                          .listProvincial[index].citName ==
+                                      registerGiaSuController.areaTeaching.text
                                   ? SvgPicture.asset(Images.ic_check_green)
                                   : Container()
                             ],
@@ -1004,7 +1404,8 @@ Widget SelectTinhThanh(BuildContext context) {
 }
 
 Widget SelectDistrict(BuildContext context) {
-  RegisterGiaSuController registerGiaSuController = Get.put(RegisterGiaSuController());
+  RegisterGiaSuController registerGiaSuController =
+      Get.put(RegisterGiaSuController());
   return SafeArea(
       child: Scaffold(
     backgroundColor: AppColors.greyf6f6f6,
@@ -1012,7 +1413,10 @@ Widget SelectDistrict(BuildContext context) {
       backgroundColor: AppColors.primary4C5BD4,
       title: Text(
         'Quận/huyện',
-        style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+        style: AppTextStyles.regularW500(context,
+            size: AppDimens.textSize24,
+            lineHeight: AppDimens.textSize28,
+            color: AppColors.whiteFFFFFF),
       ),
       leading: IconButton(
         icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
@@ -1022,13 +1426,15 @@ Widget SelectDistrict(BuildContext context) {
       ),
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(vertical: AppDimens.space32, horizontal: AppDimens.padding16),
+      padding: EdgeInsets.symmetric(
+          vertical: AppDimens.space32, horizontal: AppDimens.padding16),
       child: ListView.separated(
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) => InkWell(
                 // ignore: deprecated_member_use
                 onTap: () {
-                  registerGiaSuController.onSelectQH(registerGiaSuController.listDistrict[index]);
+                  registerGiaSuController
+                      .onSelectQH(registerGiaSuController.listDistrict[index]);
                   Get.back();
                 },
                 child: SizedBox(
@@ -1037,10 +1443,14 @@ Widget SelectDistrict(BuildContext context) {
                     children: [
                       Text(
                         registerGiaSuController.listDistrict[index].nameCity,
-                        style: AppTextStyles.regularW400(context, size: AppDimens.padding16, color: AppColors.black),
+                        style: AppTextStyles.regularW400(context,
+                            size: AppDimens.padding16, color: AppColors.black),
                       ),
                       Spacer(),
-                      registerGiaSuController.listDistrictSelect.map((e) => e).contains(registerGiaSuController.listDistrict[index])
+                      registerGiaSuController.listDistrictSelect
+                              .map((e) => e)
+                              .contains(
+                                  registerGiaSuController.listDistrict[index])
                           ? SvgPicture.asset(Images.ic_check_green)
                           : Container()
                     ],

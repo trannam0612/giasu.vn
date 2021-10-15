@@ -314,7 +314,7 @@ class HomeBeforeScreen extends StatelessWidget {
                                     title: controller.listLHPB[index].pftSummary,
                                     time: timeAgo(int.parse(controller.listLHPB[index].dayPost)),
                                     fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
-                                    subject: controller.listLHPB[index].asDetailName,
+                                    subject: controller.listLHPB[index].asDetailName??"Chưa cập nhật",
                                     address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
                                     classId: controller.listLHPB[index].pftId,
                                     methodTeach: controller.listLHPB[index].pftForm,
@@ -351,6 +351,7 @@ class HomeBeforeScreen extends StatelessWidget {
               ))),
     );
   }
+
   String timeAgo(int timestamp) {
     var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000 * 1000);
     var now = new DateTime.now();

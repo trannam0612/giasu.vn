@@ -12,6 +12,7 @@ import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
+import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:giasu_vn/widgets/dialog_pass.dart';
@@ -22,7 +23,8 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class RegisterGiaSuController extends GetxController {
-  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  AuthenticationRepositories authenticationRepositories =
+      AuthenticationRepositories();
   ResultListDistrict resultListDistrict = ResultListDistrict();
   ResultListTopic resultListTopic = ResultListTopic();
   String valueErrorPassword = '';
@@ -129,14 +131,20 @@ class RegisterGiaSuController extends GetxController {
   bool valueCheckBox = false;
   bool errorKieuGS = false;
   RxBool valueCheckEmailGS = true.obs;
-  String selectedTime = 'Giờ';
+  String selectedTime = 'Buổi';
   List<ListDistrict> listDistrict = [];
   List<ListSubjectTag> listTopic = [];
   List<DataSubject> listSubjectSelect = [];
   List<ListDistrict> listDistrictSelect = [];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chưa kết hôn', 'Đã kết hôn'];
-  List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
+  List<String> listSubjectTopic = [
+    'Toán cấp 1',
+    'Toán Cấp 2',
+    'Văn cấp 1',
+    'Lý cấp 2',
+    'Hóa cấp 2'
+  ];
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
@@ -154,8 +162,7 @@ class RegisterGiaSuController extends GetxController {
 
   // List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
   Map<int, String> listLuong = {
-    1: 'Giờ',
-    2: 'Ngày',
+    2: 'Buổi',
     3: 'Tháng',
   };
 
@@ -383,7 +390,9 @@ class RegisterGiaSuController extends GetxController {
     if (errorSalaryUL1 && salaryUL1.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
-    if (errorSalaryUL1 && (int.tryParse(salaryUL1.text ?? '0') ?? 0) > (int.tryParse(salaryUL2.text ?? '0') ?? 0)) {
+    if (errorSalaryUL1 &&
+        (int.tryParse(salaryUL1.text ?? '0') ?? 0) >
+            (int.tryParse(salaryUL2.text ?? '0') ?? 0)) {
       return 'Học phí sai định dạng!';
     }
     return null;
@@ -394,7 +403,9 @@ class RegisterGiaSuController extends GetxController {
     if (errorSalaryUL2 && salaryUL2.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
-    if (errorSalaryUL1 && int.tryParse(salaryUL1.text ?? '0') > int.tryParse(salaryUL2.text ?? '0')) {
+    if (errorSalaryUL1 &&
+        int.tryParse(salaryUL1.text ?? '0') >
+            int.tryParse(salaryUL2.text ?? '0')) {
       return 'Học phí sai định dạng!';
     }
     return null;
@@ -432,7 +443,9 @@ class RegisterGiaSuController extends GetxController {
       return 'Trường bắt buộc!';
     } else if (errorShowPassword && passWord.text.length < 8) {
       return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+    } else if (errorShowPassword &&
+        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])')
+            .hasMatch(passWord.text)) {
       return 'Mật khẩu sai định dạng!';
     }
     return null;
@@ -473,7 +486,8 @@ class RegisterGiaSuController extends GetxController {
   }
 
   imgFromGallery() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
 
     imageAvatar = File(image.path);
     update();
@@ -494,7 +508,8 @@ class RegisterGiaSuController extends GetxController {
   }
 
   imgFromGalleryImageInfor() async {
-    final galleryImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final galleryImage =
+        await ImagePicker.pickImage(source: ImageSource.gallery);
     imageInfor = File(galleryImage.path);
     image.text = imageInfor.path.split('image_picker').last.toString();
     print(imageInfor.path.split('image_picker').last.toString());
@@ -502,7 +517,11 @@ class RegisterGiaSuController extends GetxController {
   }
 
   Future<Null> selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(context: context, initialDate: valueDate, firstDate: DateTime(1970, 8), lastDate: DateTime(2101));
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: valueDate,
+        firstDate: DateTime(1970, 8),
+        lastDate: DateTime(2101));
     if (picked != null && picked != valueDate) valueDate = picked;
     dateTime.text = f.format(valueDate);
   }
@@ -597,7 +616,8 @@ class RegisterGiaSuController extends GetxController {
     print('getListTopic');
     try {
       print(listSubjectSelect.join(','));
-      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res =
+          await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
@@ -701,7 +721,9 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
-    if (!listSubjectSelectTopic.map((e) => e.idSubject).contains(value.idSubject)) {
+    if (!listSubjectSelectTopic
+        .map((e) => e.idSubject)
+        .contains(value.idSubject)) {
       listSubjectSelectTopic.add(value);
     } else {
       listSubjectSelectTopic.remove(value);
@@ -718,14 +740,17 @@ class RegisterGiaSuController extends GetxController {
     errorEmail = true;
     errorShowPassword = true;
     errorShowRePassword = true;
-    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
+    if (passWord.text.length >= 8 &&
+        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])')
+            .hasMatch(passWord.text)) {
       Get.dialog(DialogErrorPass());
     } else {
       if (valueCheckEmailGS.value &&
           email.text.contains('@') &&
           email.text.contains('.') &&
           passWord.text.length >= 8 &&
-          RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
+          RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])')
+              .hasMatch(passWord.text) &&
           passWord.text.isNotEmpty &&
           passWord.text == rePassWord.text &&
           rePassWord.text.isNotEmpty) {
@@ -744,7 +769,8 @@ class RegisterGiaSuController extends GetxController {
   }
 
   void checkButtonStep2() {
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    String pattern =
+        r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
     RegExp regExp = new RegExp(pattern);
     errorFullName = true;
     errorPhone = true;
@@ -761,7 +787,9 @@ class RegisterGiaSuController extends GetxController {
 
     print('checkNullButton');
     if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
-      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text)) ? true : false;
+      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))
+          ? true
+          : false;
       if (fullName.text.isNotEmpty &&
           phone.text.isNotEmpty &&
           regExp.hasMatch(phone.text) &&
@@ -818,7 +846,9 @@ class RegisterGiaSuController extends GetxController {
     errorDistrictS3 = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
+    final data = listbuoiday.firstWhere(
+        (e) => e.sang == '1' || e.chieu == '1' || e.toi == '1',
+        orElse: () => null);
     errorBuoiDay = data == null ? true : false;
 
     if (valueButtonLuong) {
@@ -826,7 +856,7 @@ class RegisterGiaSuController extends GetxController {
       if (salaryCD.text.isNotEmpty &&
           listSubjectSelect.isNotEmpty &&
           !selectedClass.isNullOrBlank &&
-          listSubjectSelectTopic.isNotEmpty &&
+          (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
           !selectedFormTeaching.isNullOrBlank &&
           provincial.text.isNotEmpty &&
           listDistrictSelect.isNotEmpty &&
@@ -850,12 +880,15 @@ class RegisterGiaSuController extends GetxController {
       }
     } else {
       print('TH2');
-      errorLuong = int.parse(salaryUL1.text ?? "0") >= int.parse(salaryUL2.text ?? "0") ? true : false;
+      errorLuong =
+          int.parse(salaryUL1.text ?? "0") >= int.parse(salaryUL2.text ?? "0")
+              ? true
+              : false;
       if (salaryUL1.text.isNotEmpty &&
           salaryUL2.text.isNotEmpty &&
           listSubjectSelect.isNotEmpty &&
           !selectedClass.isNullOrBlank &&
-          listSubjectSelectTopic.isNotEmpty &&
+          (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
           !selectedFormTeaching.isNullOrBlank &&
           provincial.text.isNotEmpty &&
           listDistrictSelect.isNotEmpty &&
@@ -918,7 +951,9 @@ class RegisterGiaSuController extends GetxController {
 
   Future<void> registerTeacher() async {
     Get.dialog(DialogLoading());
-    final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+    final test = listbuoiday.map((e) => e.sang).toList() +
+        listbuoiday.map((e) => e.chieu).toList() +
+        listbuoiday.map((e) => e.toi).toList();
     try {
       ResultData res = await authenticationRepositories.registerTeacher(
           phone.text,
@@ -961,12 +996,17 @@ class RegisterGiaSuController extends GetxController {
           idArea,
           listDistrictSelect.map((e) => e.idCity).join(','),
           test.join(','));
-      ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
+      ResultRegisterTeacher resultRegisterTeacher =
+          resultRegisterTeacherFromJson(res.data);
       if (resultRegisterTeacher.data != null) {
         Get.back();
         Utils.showToast(resultRegisterTeacher.data.message);
-        SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
-        SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+        SpUtil.putString(ConstString.token_register,
+            resultRegisterTeacher.data.dataUser.token);
+        SpUtil.putString(
+            ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+        Get.find<LoginController>().email.text =
+            SpUtil.getString(ConstString.EMAIL);
         Get.toNamed(Routes.verify_register);
       } else {
         Get.back();
@@ -986,7 +1026,8 @@ class RegisterGiaSuController extends GetxController {
     print('getDataQH');
     try {
       if (email.text.isNotEmpty) {
-        ResultData res = await authenticationRepositories.checkMailGS(email.text);
+        ResultData res =
+            await authenticationRepositories.checkMailGS(email.text);
         ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
         if (resultCheckMail.data != null) {
           valueCheckEmailGS.value = true;

@@ -12,6 +12,7 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
+import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
 import 'package:giasu_vn/screen/authen/welcome/welcome_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
@@ -75,6 +76,7 @@ class WelcomeController extends GetxController {
       }
     } catch (e) {
       print(e);
+      Get.offAll(LoginScreen());
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();

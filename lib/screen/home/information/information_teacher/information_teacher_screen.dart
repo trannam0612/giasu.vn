@@ -303,7 +303,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsGender,
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsGender == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsGender,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -323,7 +325,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsBrithday,
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsBrithday == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsBrithday,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -348,7 +352,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                               Container(
                                 width: AppDimens.width * 0.6,
                                 child: Text(
-                                  controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
+                                  controller.resultDetailTeacher.data.data.dataInfo.ugsAddress == ''
+                                      ? 'Chưa cập nhật'
+                                      : controller.resultDetailTeacher.data.data.dataInfo.ugsAddress,
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.end,
                                   style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
@@ -371,7 +377,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsMarriage,
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsMarriage == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsMarriage,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -405,7 +413,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.nametype,
+                                controller.resultDetailTeacher.data.data.dataInfo.nametype == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.nametype,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -425,7 +435,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n'),
+                                controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n') == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n'),
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
                               ),
                             ],
@@ -445,7 +457,10 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')},\n ${controller.resultDetailTeacher.data.data.dataInfo.cityName}',
+                                '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')},\n ${controller.resultDetailTeacher.data.data.dataInfo.cityName}' ==
+                                        ''
+                                    ? 'Chưa cập nhật'
+                                    : '${controller.resultDetailTeacher.data.data.dataInfo.cityCouName.join(',\n')},\n ${controller.resultDetailTeacher.data.data.dataInfo.cityName}',
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
                                 textAlign: TextAlign.right,
                               ),
@@ -466,7 +481,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ctName,
+                                controller.resultDetailTeacher.data.data.dataInfo.ctName == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ctName,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -486,7 +503,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
+                                controller.resultDetailTeacher.data.data.dataInfo.ugsFormality == ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsFormality,
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                               ),
                             ],
@@ -506,9 +525,14 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
                               Text(
-                                controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                    ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                    : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
+                                (controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                            ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                            : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}') ==
+                                        ''
+                                    ? 'Chưa cập nhật'
+                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                        ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                        : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                                 textAlign: TextAlign.right,
                               ),

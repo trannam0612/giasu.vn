@@ -26,9 +26,11 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdatePostController extends GetxController {
-  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  AuthenticationRepositories authenticationRepositories =
+      AuthenticationRepositories();
   HomeRepositories homeRepositories = HomeRepositories();
-  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
+  HomeAfterParentController homeAfterParentController =
+      Get.put(HomeAfterParentController());
   PostRepositories postRepositories = PostRepositories();
   ResultListTopic resultListTopic = ResultListTopic();
   List<ListDistrict> listDistrict = [];
@@ -37,7 +39,22 @@ class UpdatePostController extends GetxController {
   int idDistrict;
   int idFormTeaching;
   int idExp;
-  List<String> listDay = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'];
+  List<String> listDay = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14'
+  ];
   List<String> listTime = ['1,5', '2', '2,5', '3'];
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
@@ -55,7 +72,7 @@ class UpdatePostController extends GetxController {
     'Quận Tây Hồ'
   ];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
-  List<String> listGender = ['Nam', 'Nữ'];
+  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
   List<String> listLuong = ['Giờ', 'Tháng'];
 
   List<buoiday> listbuoiday = [
@@ -190,7 +207,8 @@ class UpdatePostController extends GetxController {
   Future<void> getListTopic(String idTopic) async {
     // listTopic = [];
     try {
-      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res =
+          await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = [];
@@ -208,7 +226,8 @@ class UpdatePostController extends GetxController {
   Future<void> getListTopicUpdate(String idTopic) async {
     listTopic = [];
     try {
-      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res =
+          await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = [];
@@ -274,7 +293,11 @@ class UpdatePostController extends GetxController {
 
   void onSelectedGender(String value) {
     selectedGender = value;
-    idGender = value == "Nam" ? 1 : 2;
+    idGender = value == "Nam"
+        ? 1
+        : value == "Nữ"
+            ? 2
+            : 0;
     errorGender = false;
     update();
   }
@@ -378,7 +401,8 @@ class UpdatePostController extends GetxController {
 
   String checkPhone() {
     print('checkPassword');
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    String pattern =
+        r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
     RegExp regExp = new RegExp(pattern);
     if (errorPhone && phone.text.isEmpty) {
       return 'Trường bắt buộc!';
@@ -435,7 +459,8 @@ class UpdatePostController extends GetxController {
 
   void checkButton() {
     print('checkButton');
-    String pattern = r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
+    String pattern =
+        r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
     RegExp regExp = new RegExp(pattern);
     errorTitle = true;
     errorNumberStudent = true;
@@ -458,7 +483,9 @@ class UpdatePostController extends GetxController {
     errorTimeTeaching = selectedTimeTeaching.isNull ? true : false;
     errorDayTeaching = selectedDayTeaching.isNull ? true : false;
     errorMethodTeach = selectMethodTeach.isNull ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
+    final data = listbuoiday.firstWhere(
+        (e) => e.sang == '1' || e.chieu == '1' || e.toi == '1',
+        orElse: () => null);
     errorbuoiday = data == null ? true : false;
     if (contentTitle.text.isNotEmpty &&
         title.text.isNotEmpty &&
@@ -600,18 +627,22 @@ class UpdatePostController extends GetxController {
         title.text = resultGetInfoPost.data.data.dataInfo.pftSummary;
         contentTitle.text = resultGetInfoPost.data.data.dataInfo.pftDetail;
         selectedKieuGS = resultGetInfoPost.data.data.dataInfo.nametype;
-        selectedGender = resultGetInfoPost.data.data.dataInfo.pftGender;
+        selectedGender = resultGetInfoPost.data.data.dataInfo.pftGender == ''
+            ? 'Khác'
+            : resultGetInfoPost.data.data.dataInfo.pftGender;
         selectedSubject = resultGetInfoPost.data.data.dataInfo.asName;
-        selectedTopicSubject = resultGetInfoPost.data.data.dataInfo.asDetailName;
+        selectedTopicSubject =
+            resultGetInfoPost.data.data.dataInfo.asDetailName;
         selectedClass = resultGetInfoPost.data.data.dataInfo.ctName;
         numberStudent.text = resultGetInfoPost.data.data.dataInfo.pftNbStudent;
-        selectedTimeTeaching = resultGetInfoPost.data.data.dataInfo.pftTime == '1'
-            ? '1,5'
-            : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
-                ? '2'
-                : resultGetInfoPost.data.data.dataInfo.pftTime == '3'
-                    ? '2,5'
-                    : '3';
+        selectedTimeTeaching =
+            resultGetInfoPost.data.data.dataInfo.pftTime == '1'
+                ? '1,5'
+                : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
+                    ? '2'
+                    : resultGetInfoPost.data.data.dataInfo.pftTime == '3'
+                        ? '2,5'
+                        : '3';
         selectedDayTeaching = resultGetInfoPost.data.data.dataInfo.pftNbLesson;
         selectMethodTeach = resultGetInfoPost.data.data.dataInfo.pftForm;
         salaryCD.text = resultGetInfoPost.data.data.dataInfo.pftPrice;
@@ -642,7 +673,8 @@ class UpdatePostController extends GetxController {
         listbuoiday[6].chieu = resultGetInfoPost.data.data.lichday.ccn;
         listbuoiday[6].toi = resultGetInfoPost.data.data.lichday.tcn;
         lichDay = resultGetInfoPost.data.data.lichday;
-        idFormTeaching = resultGetInfoPost.data.data.dataInfo.pftForm == "Gặp mặt" ? 1 : 2;
+        idFormTeaching =
+            resultGetInfoPost.data.data.dataInfo.pftForm == "Gặp mặt" ? 1 : 2;
         idTime = resultGetInfoPost.data.data.dataInfo.pftTime == '1,5'
             ? 1
             : resultGetInfoPost.data.data.dataInfo.pftTime == '2'
@@ -650,10 +682,12 @@ class UpdatePostController extends GetxController {
                 : resultGetInfoPost.data.data.dataInfo.pftTime == '2,5'
                     ? 3
                     : 4;
-        idGender = resultGetInfoPost.data.data.dataInfo.pftGender == "Nam" ? 1 : 2;
+        idGender =
+            resultGetInfoPost.data.data.dataInfo.pftGender == "Nam" ? 1 : 2;
         idSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asId);
         idClass = int.parse(resultGetInfoPost.data.data.dataInfo.ctId);
-        idTopicSubject = int.parse(resultGetInfoPost.data.data.dataInfo.asDetail);
+        idTopicSubject =
+            int.parse(resultGetInfoPost.data.data.dataInfo.asDetail);
         idProvincial = int.parse(resultGetInfoPost.data.data.dataInfo.cityId);
         idDistrict = int.parse(resultGetInfoPost.data.data.dataInfo.cityDetail);
         idExp = resultGetInfoPost.data.data.dataInfo.nametype == 'Sinh viên'

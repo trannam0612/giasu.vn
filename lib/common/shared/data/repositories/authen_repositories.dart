@@ -22,7 +22,9 @@ class AuthenticationRepositories {
     ResultData rest = await httpManager.netFetch(Address.check_mail_gs, body, header, Options(method: 'post'));
 
     return rest;
-  }Future<ResultData> checkMailPH(String email) async {
+  }
+
+  Future<ResultData> checkMailPH(String email) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -289,7 +291,13 @@ class AuthenticationRepositories {
       'lichday': lichday,
     };
 
-    ResultData rest = await httpManager.netFetch(Address.REGISTER_TEACHER, body, null, Options(method: 'post'), isFormData: true);
+    ResultData rest = await httpManager.netFetch(
+      Address.REGISTER_TEACHER,
+      body,
+      null,
+      Options(method: 'post'),
+      isFormData: true,
+    );
 
     return rest;
   }

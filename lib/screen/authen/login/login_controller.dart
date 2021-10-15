@@ -34,7 +34,6 @@ class LoginController extends GetxController {
   TextEditingController pass = TextEditingController();
   ResultHomeAfterParent resultHomeAfterParent = ResultHomeAfterParent();
   ResultHomeAfterTeacher resultHomeAfterTeacher = ResultHomeAfterTeacher();
-  String userType = SpUtil.getString(ConstString.USER_TYPE);
 
   // ResultListData resultListData = ResultListData();
   List<String> listGender = [];
@@ -45,7 +44,7 @@ class LoginController extends GetxController {
   List<String> listLuong = [];
   List<String> listClass = [];
   List<String> listSubject = [];
-
+  String userType;
   bool isShowPass = true;
 
   void changeValuePassword() {
@@ -192,6 +191,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     email.text = SpUtil.getString(ConstString.EMAIL);
+     userType = SpUtil.getString(ConstString.USER_TYPE);
+     print('userType${userType}');
     print(userType);
     listCitySubject();
 

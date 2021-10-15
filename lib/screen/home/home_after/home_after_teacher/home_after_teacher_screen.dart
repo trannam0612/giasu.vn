@@ -343,7 +343,7 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                       title: controller.listLHPB[index].pftSummary,
                                       time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
                                       fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
-                                      subject: controller.listLHPB[index].asDetailName,
+                                      subject: controller.listLHPB[index].asDetailName??'Chưa cập nhật',
                                       address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
                                       classId: controller.listLHPB[index].pftId,
                                       methodTeach: controller.listLHPB[index].pftForm,
