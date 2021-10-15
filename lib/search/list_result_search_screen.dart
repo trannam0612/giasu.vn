@@ -20,29 +20,8 @@ import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ListResultSearchScreen extends StatefulWidget {
-  final String title;
-  final String fee;
-  final String subject;
-  final String address;
-  final String classId;
-  final String methodTeach;
-  final String date;
-  final String name;
-  final int rate;
-  final String image;
-
   ListResultSearchScreen({
     Key key,
-    this.title = 'Tìm gia sư có kinh nghiệm trên 3 năm dạy môn hoá học lớp 10',
-    this.fee = '300.000 vnđ/giờ',
-    this.subject = 'Hóa học lớp 10',
-    this.address = 'Thanh Xuân, Hà Nội',
-    this.classId = '01234',
-    this.methodTeach = 'Gặp mặt',
-    this.date = '05/07/2019',
-    this.name = 'Nguyễn Văn Tuấn Anh',
-    this.rate = 3,
-    this.image = 'https://nghesiviet.vn/storage/files/7/phuongly/phuong-ly.jpg',
   }) : super(key: key);
 
   @override
@@ -52,9 +31,11 @@ class ListResultSearchScreen extends StatefulWidget {
 class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
   ScrollController _controller = ScrollController();
   SearchController searchController = Get.find();
-  InformationClassController informationClassController = Get.put(InformationClassController());
+  InformationClassController informationClassController =
+      Get.put(InformationClassController());
 
-  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
+  InformationTeacherController informationTeacherController =
+      Get.put(InformationTeacherController());
   int i = 1;
 
   @override
@@ -66,14 +47,18 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
     print(searchController.userType);
     searchController.listDataTeacher = [];
     searchController.listDataParent = [];
-    searchController.userType == '1' ? searchController.searchParent(1) : searchController.searchTeacher(1);
+    searchController.userType == '1'
+        ? searchController.searchParent(1)
+        : searchController.searchTeacher(1);
 
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         // homeAfterController.homeParent();
         i++;
         print(i);
-        searchController.userType == '1' ? searchController.searchParent(i) : searchController.searchTeacher(i);
+        searchController.userType == '1'
+            ? searchController.searchParent(i)
+            : searchController.searchTeacher(i);
       }
     });
   }
@@ -87,7 +72,10 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
         appBar: AppBar(
           title: Text(
             'Kết quả tìm kiếm',
-            style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
+            style: AppTextStyles.regularW500(context,
+                size: AppDimens.textSize24,
+                lineHeight: AppDimens.textSize28,
+                color: AppColors.whiteFFFFFF),
           ),
           backgroundColor: AppColors.primary4C5BD4,
           elevation: 0,
@@ -106,24 +94,30 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
         ),
         body: controller.userType == '2'
             ? Container(
-                padding: EdgeInsets.symmetric(horizontal: AppDimens.space16, vertical: AppDimens.space6),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppDimens.space16, vertical: AppDimens.space6),
                 width: AppDimens.width,
                 child: ListView.builder(
                     controller: _controller,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) => InkWell(
-                          onTap: () => informationClassController.detailClass(int.parse(controller.listDataParent[index].pftId), 0),
+                          onTap: () => informationClassController.detailClass(
+                              int.parse(controller.listDataParent[index].pftId),
+                              0),
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10),
                             decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.primary4C5BD4, width: 0.5),
-                              borderRadius: BorderRadius.circular(AppDimens.space16),
+                              border: Border.all(
+                                  color: AppColors.primary4C5BD4, width: 0.5),
+                              borderRadius:
+                                  BorderRadius.circular(AppDimens.space16),
                             ),
                             child: Container(
                               padding: EdgeInsets.all(AppDimens.padding12),
                               width: AppDimens.width,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(AppDimens.space16),
+                                borderRadius:
+                                    BorderRadius.circular(AppDimens.space16),
                                 color: AppColors.whiteFFFFFF,
                               ),
                               child: Column(
@@ -133,9 +127,13 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          controller.listDataParent[index].pftSummary,
+                                          controller
+                                              .listDataParent[index].pftSummary,
                                           overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize18, color: AppColors.primary4C5BD4),
+                                          style: AppTextStyles.regularW500(
+                                              context,
+                                              size: AppDimens.textSize18,
+                                              color: AppColors.primary4C5BD4),
                                         ),
                                       ),
                                     ],
@@ -144,14 +142,18 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                     height: AppDimens.space10,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               SvgPicture.asset(
                                                 Images.ic_money,
@@ -174,8 +176,10 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             height: AppDimens.space6,
                                           ),
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               SvgPicture.asset(
                                                 Images.ic_book,
@@ -186,7 +190,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.listDataParent[index].asName,
+                                                controller.listDataParent[index]
+                                                    .asName,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -198,8 +203,10 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             height: AppDimens.space6,
                                           ),
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               SvgPicture.asset(
                                                 Images.ic_location,
@@ -210,7 +217,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.listDataParent[index].citName,
+                                                controller.listDataParent[index]
+                                                    .citName,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -221,21 +229,29 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         ],
                                       ),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Ngày tạo:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize16,
+                                                    color:
+                                                        AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space4,
                                               ),
                                               Text(
-                                                controller.listDataParent[index].dayPost,
+                                                controller.listDataParent[index]
+                                                    .dayPost,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize16,
@@ -247,19 +263,28 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             height: AppDimens.space6,
                                           ),
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Mã lớp:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize16,
+                                                    color:
+                                                        AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space6,
                                               ),
                                               Text(
-                                                controller.listDataParent[index].pftId,
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16),
+                                                controller.listDataParent[index]
+                                                    .pftId,
+                                                style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize16),
                                               ),
                                             ],
                                           ),
@@ -267,19 +292,30 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             height: AppDimens.space6,
                                           ),
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Hình thức:',
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                                                style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize16,
+                                                    color:
+                                                        AppColors.grey747474),
                                               ),
                                               SizedBox(
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.listDataParent[index].pftForm,
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
+                                                controller.listDataParent[index]
+                                                    .pftForm,
+                                                style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize16,
+                                                    color: AppColors
+                                                        .primary4C5BD4),
                                               ),
                                             ],
                                           ),
@@ -298,10 +334,13 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                 controller: _controller,
                 itemCount: controller.listDataTeacher.length,
                 itemBuilder: (context, index) => InkWell(
-                  onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listDataTeacher[index].ugsId), 0),
+                  onTap: () => informationTeacherController.detailTeacher(
+                      int.parse(controller.listDataTeacher[index].ugsId), 0),
                   child: Container(
                     height: AppDimens.height * 0.25,
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: AppDimens.space6,
+                        vertical: AppDimens.space6),
                     child: SizedBox(
                       height: AppDimens.height * 0.20,
                       child: Stack(
@@ -311,25 +350,36 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                             left: 30,
                             child: Container(
                               padding: EdgeInsets.only(
-                                  left: AppDimens.space48, top: AppDimens.space16, right: AppDimens.space16, bottom: AppDimens.space16),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF, boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.black.withOpacity(0.25),
-                                  spreadRadius: 0,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ]),
+                                  left: AppDimens.space48,
+                                  top: AppDimens.space16,
+                                  right: AppDimens.space16,
+                                  bottom: AppDimens.space16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColors.whiteFFFFFF,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.black.withOpacity(0.25),
+                                      spreadRadius: 0,
+                                      blurRadius: 4,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ]),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        controller.listDataTeacher[index].ugsName,
-                                        style: AppTextStyles.regularW500(context, size: AppDimens.textSize14),
+                                        controller
+                                            .listDataTeacher[index].ugsName,
+                                        style: AppTextStyles.regularW500(
+                                            context,
+                                            size: AppDimens.textSize14),
                                         overflow: TextOverflow.clip,
                                         textAlign: TextAlign.left,
                                         maxLines: 1,
@@ -338,17 +388,20 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         height: AppDimens.space6,
                                       ),
                                       RatingBar(
-                                        initialRating: widget.rate.toDouble(),
+                                        initialRating: 4.0,
                                         itemSize: 12,
                                         minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: false,
                                         itemCount: 5,
                                         ignoreGestures: true,
-                                        itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 2.0),
                                         ratingWidget: RatingWidget(
-                                          full: SvgPicture.asset(Images.ic_star),
-                                          empty: SvgPicture.asset(Images.ic_star_border),
+                                          full:
+                                              SvgPicture.asset(Images.ic_star),
+                                          empty: SvgPicture.asset(
+                                              Images.ic_star_border),
                                         ),
                                         unratedColor: AppColors.greyAAAAAA,
                                         onRatingUpdate: (rating) {
@@ -361,7 +414,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                     height: AppDimens.space6,
                                   ),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SvgPicture.asset(
@@ -373,7 +427,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        controller.listDataTeacher[index].asName.join(', '),
+                                        controller.listDataTeacher[index].asName
+                                            .join(', '),
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,
@@ -385,11 +440,14 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                     height: AppDimens.space6,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           SvgPicture.asset(
                                             Images.ic_location,
@@ -400,7 +458,8 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.listDataTeacher[index].citName,
+                                            controller
+                                                .listDataTeacher[index].citName,
                                             style: AppTextStyles.regular(
                                               context,
                                               size: AppDimens.textSize14,
@@ -409,8 +468,10 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                         ],
                                       ),
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           SvgPicture.asset(
                                             Images.ic_money,
@@ -423,7 +484,11 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                           ),
                                           Text(
                                             '${controller.listDataTeacher[index].tutorSalary}/${controller.listDataTeacher[index].tutorMonth}',
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                            style: AppTextStyles.regular(
+                                                context,
+                                                size: AppDimens.textSize14,
+                                                color:
+                                                    AppColors.secondaryF8971C),
                                           ),
                                         ],
                                       ),
@@ -443,15 +508,27 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                                   width: 95,
                                                   child: CustomButton2(
                                                     title: 'Mời dạy',
-                                                    color: AppColors.primary4C5BD4,
+                                                    color:
+                                                        AppColors.primary4C5BD4,
                                                     onPressed: () {
-                                                      Get.dialog(CheckboxListClass(
-                                                        imageUrl: controller.listDataTeacher[index].ugsAvatar,
-                                                        idGS: controller.listDataTeacher[index].ugsId,
-                                                        name: controller.listDataTeacher[index].ugsName,
+                                                      Get.dialog(
+                                                          CheckboxListClass(
+                                                        imageUrl: controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .ugsAvatar,
+                                                        idGS: controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .ugsId,
+                                                        name: controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .ugsName,
                                                       ));
                                                     },
-                                                    textColor: AppColors.whiteFFFFFF,
+                                                    textColor:
+                                                        AppColors.whiteFFFFFF,
                                                   ),
                                                 ),
                                                 SizedBox(
@@ -461,22 +538,57 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                                   height: 30,
                                                   width: 95,
                                                   child: CustomButton1(
-                                                    textColor: !controller.listDataTeacher[index].checkSave
-                                                        ? AppColors.secondaryF8971C
+                                                    textColor: !controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .checkSave
+                                                        ? AppColors
+                                                            .secondaryF8971C
                                                         : AppColors.whiteFFFFFF,
                                                     onPressed: () {
-                                                      controller.listDataTeacher[index].checkSave = !controller.listDataTeacher[index].checkSave;
-                                                      controller.listDataTeacher[index].checkSave
-                                                          ? controller.saveTutor(int.parse(controller.listDataTeacher[index].ugsId))
-                                                          : controller.deleteTutorSaved(int.parse(controller.listDataTeacher[index].ugsId));
+                                                      controller
+                                                              .listDataTeacher[
+                                                                  index]
+                                                              .checkSave =
+                                                          !controller
+                                                              .listDataTeacher[
+                                                                  index]
+                                                              .checkSave;
+                                                      controller
+                                                              .listDataTeacher[
+                                                                  index]
+                                                              .checkSave
+                                                          ? controller.saveTutor(
+                                                              int.parse(controller
+                                                                  .listDataTeacher[
+                                                                      index]
+                                                                  .ugsId))
+                                                          : controller.deleteTutorSaved(
+                                                              int.parse(controller
+                                                                  .listDataTeacher[
+                                                                      index]
+                                                                  .ugsId));
                                                     },
-                                                    color: !controller.listDataTeacher[index].checkSave
-                                                        ? AppColors.secondaryF8971C
+                                                    color: !controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .checkSave
+                                                        ? AppColors
+                                                            .secondaryF8971C
                                                         : AppColors.whiteFFFFFF,
-                                                    title: !controller.listDataTeacher[index].checkSave ? 'Lưu' : 'Đã lưu',
-                                                    backColor: !controller.listDataTeacher[index].checkSave
+                                                    title: !controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .checkSave
+                                                        ? 'Lưu'
+                                                        : 'Đã lưu',
+                                                    backColor: !controller
+                                                            .listDataTeacher[
+                                                                index]
+                                                            .checkSave
                                                         ? AppColors.whiteFFFFFF
-                                                        : AppColors.secondaryF8971C,
+                                                        : AppColors
+                                                            .secondaryF8971C,
                                                   ),
                                                 )
                                               ],
@@ -498,21 +610,27 @@ class _ListResultSearchScreenState extends State<ListResultSearchScreen> {
                                     color: AppColors.black.withOpacity(0.25),
                                     spreadRadius: 0,
                                     blurRadius: 3,
-                                    offset: Offset(0, 3), // changes position of shadow
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
                                   ),
                                 ],
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(80),
                                 child: CachedNetworkImage(
-                                  imageUrl: controller.listDataTeacher[index].ugsAvatar,
+                                  imageUrl: controller
+                                      .listDataTeacher[index].ugsAvatar,
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,
-                                  progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                    child: CircularProgressIndicator(value: downloadProgress.progress),
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
                                   ),
-                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
                               ),
                             ),

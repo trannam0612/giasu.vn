@@ -9,6 +9,7 @@ import 'package:giasu_vn/common/shared/data/models/result_verify_forgot.dart';
 import 'package:giasu_vn/common/shared/data/models/result_verify_register.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/login_screen.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 
@@ -48,7 +49,7 @@ class OTPController extends GetxController {
       if (resultVerifyRegister.data != null) {
         Get.back();
         Utils.showToast(resultVerifyRegister.data.message);
-        Get.to(LoginScreen());
+        Get.offAndToNamed(Routes.LOGIN );
       } else {
         Get.back();
         Utils.showToast(resultVerifyRegister.error.message);

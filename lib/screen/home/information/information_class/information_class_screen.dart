@@ -153,7 +153,7 @@ class InformationClassScreen extends StatelessWidget {
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                             ),
                             Text(
-                              '${controller.resultDetailClass.data.data.dataInfo.ctyDetailName}, ${controller.resultDetailClass.data.data.dataInfo.cityName}',
+                              '${controller.resultDetailClass.data.data.dataInfo.pftAddress}, ${controller.resultDetailClass.data.data.dataInfo.ctyDetailName}, ${controller.resultDetailClass.data.data.dataInfo.cityName}',
                               style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
                             ),
                           ],
@@ -393,7 +393,9 @@ class InformationClassScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: AppDimens.space12,),
+                SizedBox(
+                  height: AppDimens.space12,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(AppDimens.space24),
                   child: Text(

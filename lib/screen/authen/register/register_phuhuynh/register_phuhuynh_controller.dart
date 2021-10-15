@@ -11,6 +11,7 @@ import 'package:giasu_vn/common/shared/data/models/result_register_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
+import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/authen/otp/otp_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
@@ -312,6 +313,7 @@ class RegisterPhuHuynhController extends GetxController {
       if (resultRegisterParent.data != null) {
         SpUtil.putString(ConstString.token_register, resultRegisterParent.data.dataUser.token);
         SpUtil.putString(ConstString.EMAIL, resultRegisterParent.data.dataUser.email);
+        Get.find<LoginController>().email.text = SpUtil.getString(ConstString.EMAIL);
         Utils.showToast(resultRegisterParent.data.message);
         Get.to(OTPScreen(
           back: () => Get.back(),

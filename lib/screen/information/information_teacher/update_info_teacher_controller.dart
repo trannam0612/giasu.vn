@@ -24,7 +24,8 @@ import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdateInfoTeacherController extends GetxController {
-  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
+  AuthenticationRepositories authenticationRepositories =
+      AuthenticationRepositories();
   ResultListDistrict resultListDistrict = ResultListDistrict();
   UserRepositories userRepositories = UserRepositories();
   ResultGetInfoTeacher resultGetInfoTeacher = ResultGetInfoTeacher();
@@ -125,7 +126,7 @@ class UpdateInfoTeacherController extends GetxController {
   String selectedLuong;
   bool valueCheckBox = false;
   bool errorKieuGS = false;
-  String selectedStatusFee = 'Giờ';
+  String selectedStatusFee = 'Buổi';
 
   List<DataSubject> listSubjectSelect = [];
   List<String> listIdSubjectSelect = [];
@@ -138,8 +139,8 @@ class UpdateInfoTeacherController extends GetxController {
   List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Đã kết hôn', 'Chưa kết hôn'];
   List<String> listFormTeaching = ['Online', 'Gặp mặt'];
-  List<String> listGender = ['Nam', 'Nữ'];
-  List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
+  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
+  List<String> listLuong = ['Buổi', 'Tháng'];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
 
   //Step1
@@ -199,7 +200,8 @@ class UpdateInfoTeacherController extends GetxController {
     try {
       String token = SpUtil.getString(ConstString.token);
       ResultData res = await userRepositories.updateAvatar(token, avatar);
-      ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+      ResultUpdateAvatar resultUpdateAvatar =
+          resultUpdateAvatarFromJson(res.data);
       if (resultUpdateAvatar.data != null) {
         Get.back();
         Utils.showToast(resultUpdateAvatar.data.message);
@@ -375,7 +377,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkTimeExp');
     if (errorTimeExpStart && timeExpStart.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorTimeExpStart && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+    } else if (errorTimeExpStart &&
+        f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
       return 'Thời gian bắt đầu sai!';
     }
     return null;
@@ -385,7 +388,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkTimeExp');
     if (errorTimeExpEnd && timeExpEnd.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorTimeExpEnd && f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
+    } else if (errorTimeExpEnd &&
+        f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))) {
       return 'Thời gian kết thúc sai!';
     }
     return null;
@@ -491,7 +495,9 @@ class UpdateInfoTeacherController extends GetxController {
     print('checkEmail');
     if (errorEmail && email.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@') && !email.text.contains('.')) {
+    } else if (errorEmail &&
+        !email.text.contains('@') &&
+        !email.text.contains('.')) {
       return 'Email không hợp lệ!';
     } else if (errorEmail && !email.text.contains('.')) {
       return 'Email không hợp lệ!';
@@ -502,7 +508,8 @@ class UpdateInfoTeacherController extends GetxController {
   }
 
   imgFromGallery() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
 
     imageAvatar = File(image.path);
     update();
@@ -523,7 +530,8 @@ class UpdateInfoTeacherController extends GetxController {
   }
 
   imgFromGalleryImageInfor() async {
-    final galleryImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final galleryImage =
+        await ImagePicker.pickImage(source: ImageSource.gallery);
     imageInfor = File(galleryImage.path);
     image.text = imageInfor.path.split('image_picker').last.toString();
     print(imageInfor.path.split('image_picker').last.toString());
@@ -531,7 +539,11 @@ class UpdateInfoTeacherController extends GetxController {
   }
 
   Future<Null> selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(context: context, initialDate: valueDate, firstDate: DateTime(1970, 8), lastDate: DateTime(2101));
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: valueDate,
+        firstDate: DateTime(1970, 8),
+        lastDate: DateTime(2101));
     if (picked != null && picked != valueDate) valueDate = picked;
     dateTime.text = f.format(valueDate);
   }
@@ -592,11 +604,11 @@ class UpdateInfoTeacherController extends GetxController {
 
   void onSelectedStatusFee(String value) {
     selectedStatusFee = value;
-    idTime = selectedStatusFee == 'Giờ'
-        ? 1
-        : selectedStatusFee == 'Ngày'
-            ? 2
-            : 3;
+    idTime = selectedStatusFee == 'Buổi'
+        ? 2
+        : selectedStatusFee == 'Tháng'
+            ? 3
+            : 1;
     errorStatusFee = false;
     update();
   }
@@ -711,7 +723,9 @@ class UpdateInfoTeacherController extends GetxController {
 
   void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
-    if (!listSubjectSelectTopic.map((e) => e.idSubject).contains(value.idSubject)) {
+    if (!listSubjectSelectTopic
+        .map((e) => e.idSubject)
+        .contains(value.idSubject)) {
       listSubjectSelectTopic.add(value);
     } else {
       listSubjectSelectTopic.remove(value);
@@ -728,7 +742,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('getListTopic');
     try {
       print(listSubjectSelect.join(','));
-      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res =
+          await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
@@ -749,7 +764,8 @@ class UpdateInfoTeacherController extends GetxController {
     print('getListTopic');
     print(listSubjectSelect.join(','));
     try {
-      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res =
+          await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
@@ -900,7 +916,9 @@ class UpdateInfoTeacherController extends GetxController {
     errorKieuGS = selectedKieuGS.isNullOrBlank ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
+    final data = listbuoiday.firstWhere(
+        (e) => e.sang == '1' || e.chieu == '1' || e.toi == '1',
+        orElse: () => null);
     errorBuoiDay = data == null ? true : false;
     print('idTime');
     print(idTime);
@@ -910,7 +928,9 @@ class UpdateInfoTeacherController extends GetxController {
               int.parse(salaryCD.text) > 0 &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
-              listSubjectSelectTopic.isNotEmpty &&
+              (listTopic.isNotEmpty
+                  ? listSubjectSelectTopic.isNotEmpty
+                  : true) &&
               !selectedClass.isNullOrBlank &&
               !selectedFormTeaching.isNullOrBlank &&
               area.text.isNotEmpty &&
@@ -930,12 +950,15 @@ class UpdateInfoTeacherController extends GetxController {
     } else {
       print('TH2');
 
-      errorLuong = int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
+      errorLuong =
+          int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
       salaryUL1.text.isNotEmpty &&
               salaryUL2.text.isNotEmpty &&
               !errorKieuGS &&
               listSubjectSelect.isNotEmpty &&
-              listSubjectSelectTopic.isNotEmpty &&
+              (listTopic.isNotEmpty
+                  ? listSubjectSelectTopic.isNotEmpty
+                  : true) &&
               !selectedClass.isNullOrBlank &&
               !selectedFormTeaching.isNullOrBlank &&
               area.text.isNotEmpty &&
@@ -980,20 +1003,24 @@ class UpdateInfoTeacherController extends GetxController {
         print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
         fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
         phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
-        selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender;
+        selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender == ''
+            ? "Khác"
+            : resultGetInfoTeacher.data.infoTutor.ugsGender;
         dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
         selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
         provincial.text = resultGetInfoTeacher.data.infoTutor.citNameGs;
         district.text = resultGetInfoTeacher.data.infoTutor.citDetailGs;
         address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
         numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
-        graduationYear.text = resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
+        graduationYear.text =
+            resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
         titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
         timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
         timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
         // end = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearEnd);
         // start = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearStart);
-        informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
+        informationExp.text =
+            resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
         school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
         prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;
         company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
@@ -1016,28 +1043,43 @@ class UpdateInfoTeacherController extends GetxController {
         area.text = resultGetInfoTeacher.data.infoTutor.citName;
         listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
         errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
-        getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
+        getListDistrictArea(
+            int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
 
         for (int i = 0; i < listDataClass.length; i++) {
-          if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
+          if (resultGetInfoTeacher.data.infoTutor.ctName ==
+              listDataClass[i].ctName) {
             idClass = int.parse(listDataClass[i].ctId);
           }
         }
-        salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
-        valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
+        salaryCD.text =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-')
+                ? ''
+                : resultGetInfoTeacher.data.infoTutor.tutorSalary;
+        valueButtonLuong =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-')
+                ? false
+                : true;
         // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
         selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
-        salaryUL1.text =
-            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
-        salaryUL2.text =
-            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
+        salaryUL1.text = resultGetInfoTeacher.data.infoTutor.tutorSalary
+                .contains('-')
+            ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first
+            : '';
+        salaryUL2.text = resultGetInfoTeacher.data.infoTutor.tutorSalary
+                .contains('-')
+            ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last
+            : '';
         idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
         idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
-        listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
-        listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
+        listIdSubjectSelect =
+            resultGetInfoTeacher.data.infoTutor.asId.split(',');
+        listIdDistrictSelect =
+            resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
 
         idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
-        listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
+        listIdDetailDistrictSelect =
+            resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
 
         listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
         listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
@@ -1106,7 +1148,9 @@ class UpdateInfoTeacherController extends GetxController {
     setDataLichDay();
     print('resultLichDayToJson(lichday)');
     print(resultLichDayToJson(lichday));
-    final test = listbuoiday.map((e) => e.sang).toList() + listbuoiday.map((e) => e.chieu).toList() + listbuoiday.map((e) => e.toi).toList();
+    final test = listbuoiday.map((e) => e.sang).toList() +
+        listbuoiday.map((e) => e.chieu).toList() +
+        listbuoiday.map((e) => e.toi).toList();
     print(test.join(','));
     Get.dialog(DialogLoading());
     try {
@@ -1115,7 +1159,11 @@ class UpdateInfoTeacherController extends GetxController {
           token,
           phone.text,
           fullName.text,
-          idGender = selectedGender == "Nam" ? 1 : selectedGender == "Nữ" ?2:null,
+          idGender = selectedGender == "Nam"
+              ? 1
+              : selectedGender == "Nữ"
+                  ? 2
+                  : 0,
           dateTime.text,
           idMariage = selectedMarriage == 'Chưa kết hôn' ? 0 : 1,
           idExp = selectedKieuGS == 'Sinh viên'
@@ -1142,11 +1190,11 @@ class UpdateInfoTeacherController extends GetxController {
           listSubjectSelectTopic.map((e) => e.idSubject).join(','),
           idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2,
           salaryCD.text,
-          idTime = selectedStatusFee == 'Giờ'
-              ? 1
-              : selectedStatusFee == 'Ngày'
-                  ? 2
-                  : 3,
+          idTime = selectedStatusFee == 'Buổi'
+              ? 2
+              : selectedStatusFee == 'Tháng'
+                  ? 3
+                  : 1,
           salaryUL1.text,
           salaryUL2.text,
           idValueArea,
@@ -1156,7 +1204,8 @@ class UpdateInfoTeacherController extends GetxController {
       print(idTime);
       print(selectedStatusFee);
       print(listIdDetailDistrictSelect.join(','));
-      ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
+      ResultGetInfoTeacher resultGetInfoTeacher =
+          resultGetInfoTeacherFromJson(res.data);
       if (resultGetInfoTeacher.data != null) {
         Get.back();
         Utils.showToast('Cập nhật thông tin thành công!');

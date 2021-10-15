@@ -45,8 +45,10 @@ class HomeAfterParentScreen extends StatefulWidget {
 }
 
 class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
-  InformationTeacherController informationTeacherController = Get.put(InformationTeacherController());
-  HomeAfterParentController homeAfterParentController = Get.put(HomeAfterParentController());
+  InformationTeacherController informationTeacherController =
+      Get.put(InformationTeacherController());
+  HomeAfterParentController homeAfterParentController =
+      Get.put(HomeAfterParentController());
   LoginController loginController = Get.put(LoginController());
 
   @override
@@ -71,9 +73,13 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                     // height: height * 0.,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.fitWidth, alignment: Alignment.topCenter, image: ExactAssetImage(Images.bg_background_container)),
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.topCenter,
+                          image:
+                              ExactAssetImage(Images.bg_background_container)),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.space10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: AppDimens.space10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -102,14 +108,16 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         ),
                         Text(
                           'Chào mừng',
-                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: Colors.white),
+                          style: AppTextStyles.regularW500(context,
+                              size: AppDimens.textSize16, color: Colors.white),
                         ),
                         SizedBox(
                           height: AppDimens.space4,
                         ),
                         Text(
                           SpUtil.getString(ConstString.NAME),
-                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, color: Colors.white),
+                          style: AppTextStyles.regularW500(context,
+                              size: AppDimens.textSize24, color: Colors.white),
                         ),
                         SizedBox(
                           height: AppDimens.space24,
@@ -117,7 +125,10 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         Text(
                           'Danh sách của bạn',
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF, lineHeight: 19),
+                          style: AppTextStyles.regularW500(context,
+                              size: AppDimens.textSize16,
+                              color: AppColors.whiteFFFFFF,
+                              lineHeight: 19),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
@@ -134,21 +145,26 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_add_friend,
@@ -158,14 +174,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Gia sư đã mời dạy',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize12),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.gsmd})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.gsmd})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -174,25 +196,31 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 width: AppDimens.space10,
                               ),
                               InkWell(
-                                onTap: () => Get.to(ListTeacherSuggestedScreen()),
+                                onTap: () =>
+                                    Get.to(ListTeacherSuggestedScreen()),
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_presentation,
@@ -202,14 +230,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Gia sư đề nghị dạy',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize12),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.gsdnd})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.gsdnd})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -224,21 +258,26 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_document,
@@ -248,14 +287,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Tin đã đăng',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize14),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize14),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.tindang})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.tindang})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -268,21 +313,26 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_like,
@@ -292,14 +342,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Gia sư đã lưu',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize12),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.gsdl})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.gsdl})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -312,21 +368,26 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_teaching,
@@ -336,14 +397,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Gia sư đang dạy',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize12),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.gsdd})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.gsdd})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -352,25 +419,31 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                 width: AppDimens.space10,
                               ),
                               InkWell(
-                                onTap: () => Get.to(ListTutorFromFilterPointScreen()),
+                                onTap: () =>
+                                    Get.to(ListTutorFromFilterPointScreen()),
                                 child: Container(
                                   width: width * 0.2,
                                   height: 104,
-                                  padding: EdgeInsets.symmetric(vertical: AppDimens.space10, horizontal: AppDimens.space6),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: AppDimens.space10,
+                                      horizontal: AppDimens.space6),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: AppColors.whiteFFFFFF,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.black.withOpacity(0.25),
+                                        color:
+                                            AppColors.black.withOpacity(0.25),
                                         spreadRadius: 0,
                                         blurRadius: 3,
-                                        offset: Offset(2, 2), // changes position of shadow
+                                        offset: Offset(
+                                            2, 2), // changes position of shadow
                                       ),
                                     ],
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         Images.ic_tutor,
@@ -380,14 +453,20 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                       Text(
                                         'Gia sư từ điểm lọc',
                                         textAlign: TextAlign.center,
-                                        style: AppTextStyles.regular(context, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12),
+                                        style: AppTextStyles.regular(context,
+                                            size: AppDimens.textSize12,
+                                            lineHeight: AppDimens.textSize12),
                                       ),
                                       SizedBox(
                                         height: AppDimens.space4,
                                       ),
-                                      Text('(${controller.resultHomeAfterParent.data.gstdl})',
+                                      Text(
+                                          '(${controller.resultHomeAfterParent.data.gstdl})',
                                           style: AppTextStyles.regular(context,
-                                              color: AppColors.greyAAAAAA, size: AppDimens.textSize12, lineHeight: AppDimens.textSize12)),
+                                              color: AppColors.greyAAAAAA,
+                                              size: AppDimens.textSize12,
+                                              lineHeight:
+                                                  AppDimens.textSize12)),
                                     ],
                                   ),
                                 ),
@@ -404,12 +483,18 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Gia sư gần đây', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                            Text('Gia sư gần đây',
+                                style: AppTextStyles.regularW500(context,
+                                    size: AppDimens.textSize24,
+                                    lineHeight: 21)),
                             InkWell(
                               onTap: () => Get.to(ListTeacherRecentlyScreen()),
                               child: Text(
                                 'xem thêm >>',
-                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: 14),
+                                style: AppTextStyles.regular(context,
+                                    size: AppDimens.textSize14,
+                                    color: AppColors.grey747474,
+                                    lineHeight: 14),
                               ),
                             )
                           ],
@@ -420,12 +505,18 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) => InkWell(
-                                    onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSGD[index].ugsId), 0),
+                                    onTap: () => informationTeacherController
+                                        .detailTeacher(
+                                            int.parse(controller
+                                                .listGSGD[index].ugsId),
+                                            0),
                                     child: CardTeacherHome(
-                                      image: controller.listGSGD[index].ugsAvatar,
+                                      image:
+                                          controller.listGSGD[index].ugsAvatar,
                                       name: controller.listGSGD[index].ugsName,
                                       rate: 4,
-                                      content: controller.listGSGD[index].ugsAboutUs,
+                                      content:
+                                          controller.listGSGD[index].ugsAboutUs,
                                     ),
                                   ),
                               separatorBuilder: (context, index) => SizedBox(
@@ -433,7 +524,9 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                                   ),
                               itemCount: controller.listGSGD.length),
                         ),
-                        Text('Gia sư nổi bật', style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: 21)),
+                        Text('Gia sư nổi bật',
+                            style: AppTextStyles.regularW500(context,
+                                size: AppDimens.textSize24, lineHeight: 21)),
                         SizedBox(
                           height: AppDimens.space14,
                         ),
@@ -441,22 +534,29 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) => InkWell(
-                            onTap: () => informationTeacherController.detailTeacher(int.parse(controller.listGSPB[index].ugsId), 0),
+                            onTap: () =>
+                                informationTeacherController.detailTeacher(
+                                    int.parse(controller.listGSPB[index].ugsId),
+                                    0),
                             child: CardTeacherHome2(
                               name: controller.listGSPB[index].ugsName,
                               rate: 3,
-                              subject: controller.listGSPB[index].asDetailName.join(', '),
-                              address: "${controller.listGSPB[index].cityDetailNameGs}, ${controller.listGSPB[index].citName}",
+                              subject: controller.listGSPB[index].asDetailName
+                                  .join(', '),
+                              address:
+                                  "${controller.listGSPB[index].cityDetailNameGs ?? ''}, ${controller.listGSPB[index].citName}",
                               image: controller.listGSPB[index].ugsAvatar,
                               saved: controller.listGSPB[index].checkSave,
                               onTap: () {
                                 if (!controller.listGSPB[index].checkSave) {
                                   controller.listGSPB[index].checkSave = true;
-                                  controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
+                                  controller.saveTutor(int.parse(
+                                      controller.listGSPB[index].ugsId));
                                   controller.update();
                                 } else {
                                   controller.listGSPB[index].checkSave = false;
-                                  controller.deleteTutorSaved(int.parse(controller.listGSPB[index].ugsId));
+                                  controller.deleteTutorSaved(int.parse(
+                                      controller.listGSPB[index].ugsId));
                                   controller.update();
                                 }
                               },

@@ -150,6 +150,8 @@ class InformationTeacherController extends GetxController {
         listbuoiday[6].sang = resultDetailTeacher.data.data.lichday.scn;
         listbuoiday[6].chieu = resultDetailTeacher.data.data.lichday.ccn;
         listbuoiday[6].toi = resultDetailTeacher.data.data.lichday.tcn;
+        print('resultDetailTeacher.data.data.dataInfo.ugsGender');
+        print(resultDetailTeacher.data.data.dataInfo.ugsGender);
         Get.back();
         Get.to(InformationTeacherScreen(
           type: type,

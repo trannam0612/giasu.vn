@@ -233,7 +233,7 @@ class PostScreen extends StatelessWidget {
                           title: 'Hình thức học',
                           list: controller.listFormTeaching,
                           onChanged: (String value) => controller.onSelectMethodTeach(value),
-                          dropdownValue: controller.selectMethodTeach,
+                          dropdownValue: controller.selectedFormTeaching,
                           borderColor: controller.errorMethodTeach ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
                         controller.errorMethodTeach
@@ -382,7 +382,7 @@ class PostScreen extends StatelessWidget {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<String>(
                                   hint: Text(
-                                    'Giờ',
+                                    'Buổi',
                                     style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.grey747474),
                                   ),
                                   style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.black),

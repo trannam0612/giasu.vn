@@ -38,7 +38,7 @@ class PostController extends GetxController {
   List<String> listMarriage = ['Chọn tình trạng', 'Đã kết hôn', 'Cô đơn'];
   List<ListSubjectTag> listTopic = [];
   List<String> listStringTopic = [];
-  List<String> listFormTeaching = ['Online', 'Tại nhà'];
+  List<String> listFormTeaching = ['Online', 'Gặp mặt'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
   List<String> listQH = [
     'Quận Hai Bà Trưng',
@@ -51,7 +51,7 @@ class PostController extends GetxController {
   ];
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
   List<String> listGender = ['Nam', 'Nữ'];
-  List<String> listLuong = ['Giờ', 'Tháng'];
+  List<String> listLuong = ['Buổi', 'Tháng'];
 
   List<buoiday> listbuoiday = [
     buoiday('Thứ 2', '0', "0", "0"),
@@ -81,7 +81,7 @@ class PostController extends GetxController {
 
   String selectedDayTeaching;
 
-  String selectMethodTeach;
+  // String selectMethodTeach;
 
   String selectedFormTeaching;
 
@@ -213,7 +213,7 @@ class PostController extends GetxController {
   bool errorSalaryUL1 = false;
   bool errorSalaryUL2 = false;
   bool errorStatusFee = false;
-  String selectedStatusFee = 'Giờ';
+  String selectedStatusFee = 'Buổi';
   String valueStatusFee = 'time';
 
   void onSelectedStatusFee(String value) {
@@ -312,7 +312,7 @@ class PostController extends GetxController {
   }
 
   void onSelectMethodTeach(String value) {
-    selectMethodTeach = value;
+    selectedFormTeaching = value;
     // for (int i = 0; i < loginController.resultListData.data.danhSachHinhThucGiangDay.length; i++) {
     //   if (value == loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodName) {
     //     idMethodTeach = loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodId;
@@ -430,7 +430,7 @@ class PostController extends GetxController {
     errorClass = selectedSubject.isNull ? true : false;
     errorTimeTeaching = selectedTimeTeaching.isNull ? true : false;
     errorDayTeaching = selectedDayTeaching.isNull ? true : false;
-    errorMethodTeach = selectMethodTeach.isNull ? true : false;
+    errorMethodTeach = selectedFormTeaching.isNull ? true : false;
     final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorbuoiday = data == null ? true : false;
     if (contentTitle.text.isNotEmpty &&

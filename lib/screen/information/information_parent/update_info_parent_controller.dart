@@ -57,7 +57,7 @@ class UpdateInformationParentController extends GetxController {
   TextEditingController district = TextEditingController();
   TextEditingController address = TextEditingController();
   String gender;
-  List<String> listGender = ['Nam', 'Nữ'];
+  List<String> listGender = ['Nam', 'Nữ', 'Khác'];
 
   @override
   void onInit() {
@@ -109,7 +109,8 @@ class UpdateInformationParentController extends GetxController {
   }
 
   imgFromGallery() async {
-    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
 
     imageAvatar = File(image.path);
     update();
@@ -134,7 +135,11 @@ class UpdateInformationParentController extends GetxController {
     //     idGender = loginController.resultListData.data.danhSachGioiTinh[i].sexId;
     //   }
     // }
-    idGender = value == "Nam" ? 1 : 2;
+    idGender = value == "Nam"
+        ? 1
+        : value == "Nữ"
+            ? 2
+            : 0;
     errorGender = false;
     update();
   }
@@ -168,7 +173,9 @@ class UpdateInformationParentController extends GetxController {
   String checkEmail() {
     if (errorEmail && email.text.isEmpty) {
       return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@') && !email.text.contains('.')) {
+    } else if (errorEmail &&
+        !email.text.contains('@') &&
+        !email.text.contains('.')) {
       return 'Email không hợp lệ!';
     } else if (errorEmail && !email.text.contains('.')) {
       return 'Email không hợp lệ!';
@@ -238,14 +245,17 @@ class UpdateInformationParentController extends GetxController {
     String token = SpUtil.getString(ConstString.token);
     try {
       ResultData res = await userRepositories.getInfoParent(token);
-      ResultGetInfoParent resultGetInfoParent = resultGetInfoParentFromJson(res.data);
+      ResultGetInfoParent resultGetInfoParent =
+          resultGetInfoParentFromJson(res.data);
       if (resultGetInfoParent.data != null) {
         Get.back();
         Utils.showToast(resultGetInfoParent.data.message);
         urlAvatar = resultGetInfoParent.data.data.ugsAvatar;
         fullName.text = resultGetInfoParent.data.data.ugsName;
         phone.text = resultGetInfoParent.data.data.ugsPhone;
-        gender = resultGetInfoParent.data.data.ugsGender;
+        gender = resultGetInfoParent.data.data.ugsGender == ''
+            ? 'Khác'
+            : resultGetInfoParent.data.data.ugsGender;
         dateTime.text = resultGetInfoParent.data.data.ugsBrithday;
         provincial.text = resultGetInfoParent.data.data.citName;
         address.text = resultGetInfoParent.data.data.ugsAddress;
@@ -279,7 +289,8 @@ class UpdateInformationParentController extends GetxController {
     try {
       String token = SpUtil.getString(ConstString.token);
       ResultData res = await userRepositories.updateAvatar(token, avatar);
-      ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
+      ResultUpdateAvatar resultUpdateAvatar =
+          resultUpdateAvatarFromJson(res.data);
       if (resultUpdateAvatar.data != null) {
         Get.back();
         Utils.showToast(resultUpdateAvatar.data.message);
@@ -298,8 +309,16 @@ class UpdateInformationParentController extends GetxController {
   Future<void> updateInfoParent() async {
     String token = SpUtil.getString(ConstString.token);
     try {
-      ResultData res = await userRepositories.updateInfoParent(token, phone.text, fullName.text, idGender, dateTime.text, idProvincial, address.text);
-      ResultUpdateInfoParent resultUpdateInfoParent = resultUpdateInfoParentFromJson(res.data);
+      ResultData res = await userRepositories.updateInfoParent(
+          token,
+          phone.text,
+          fullName.text,
+          idGender,
+          dateTime.text,
+          idProvincial,
+          address.text);
+      ResultUpdateInfoParent resultUpdateInfoParent =
+          resultUpdateInfoParentFromJson(res.data);
       if (resultUpdateInfoParent.data != null) {
         Utils.showToast(resultUpdateInfoParent.data.message);
         settingsController.getInfoParent();
