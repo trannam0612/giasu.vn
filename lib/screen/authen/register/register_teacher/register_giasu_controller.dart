@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
@@ -15,16 +18,12 @@ import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
-import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class RegisterGiaSuController extends GetxController {
-  AuthenticationRepositories authenticationRepositories =
-      AuthenticationRepositories();
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   ResultListDistrict resultListDistrict = ResultListDistrict();
   ResultListTopic resultListTopic = ResultListTopic();
   String valueErrorPassword = '';
@@ -32,8 +31,6 @@ class RegisterGiaSuController extends GetxController {
   bool errorShowPassword = false;
   bool isShowRePassword = true;
   bool errorShowRePassword = false;
-  bool errorFullName = false;
-  bool errorEmail = false;
   File imageAvatar;
   File imageInfor;
   File avatar;
@@ -67,7 +64,6 @@ class RegisterGiaSuController extends GetxController {
   bool errorDistrictS3 = false;
   bool errorAddress = false;
   bool errorNumberYearExp = false;
-  bool errorExp = false;
   bool errorTime = false;
   bool errorMarriage = false;
   int idGender = 0;
@@ -130,37 +126,22 @@ class RegisterGiaSuController extends GetxController {
   String selectedLuong;
   bool valueCheckBox = false;
   bool errorKieuGS = false;
-  RxBool valueCheckEmailGS = true.obs;
-  String selectedTime = 'Buổi';
+  RxBool valueCheckEmailGS = false.obs;
+  String selectedTime  = 'Buổi';
   List<ListDistrict> listDistrict = [];
   List<ListSubjectTag> listTopic = [];
   List<DataSubject> listSubjectSelect = [];
   List<ListDistrict> listDistrictSelect = [];
-  List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
+  // List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Chưa kết hôn', 'Đã kết hôn'];
-  List<String> listSubjectTopic = [
-    'Toán cấp 1',
-    'Toán Cấp 2',
-    'Văn cấp 1',
-    'Lý cấp 2',
-    'Hóa cấp 2'
-  ];
+  List<String> listSubjectTopic = ['Toán cấp 1', 'Toán Cấp 2', 'Văn cấp 1', 'Lý cấp 2', 'Hóa cấp 2'];
   List<String> listFormTeaching = ['Online', 'Tại nhà'];
   List<String> listClass = ['Lớp 1', 'Lớp 2', 'Lớp 3'];
   List<String> listSubject = ['Chọn hình thức dạy', 'Online', 'Tại nhà'];
-  List<String> listQH = [
-    'Quận Hai Bà Trưng',
-    'Quận Hoàng Mai',
-    'Quận Hoàn Kiếm',
-    'Huyện Mỹ Hào',
-    'Quận Thanh Xuân',
-    'Quận Nam Từ Niêm',
-    'Quận Tây Hồ'
-  ];
+
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
   List<String> listGender = ['Nam', 'Nữ'];
 
-  // List<String> listLuong = ['Giờ', 'Ngày', 'Tháng'];
   Map<int, String> listLuong = {
     2: 'Buổi',
     3: 'Tháng',
@@ -169,10 +150,14 @@ class RegisterGiaSuController extends GetxController {
   //Step1
   TextEditingController passWord = TextEditingController();
   TextEditingController rePassWord = TextEditingController();
-  TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
 
+  final GlobalKey<FormState> formEmailKey = GlobalKey();
+  final GlobalKey<FormState> passWordKey = GlobalKey();
+  final GlobalKey<FormState> rePassWordKey = GlobalKey();
+
   //Step2
+  TextEditingController fullName = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController image = TextEditingController();
   TextEditingController dateTime = TextEditingController();
@@ -195,6 +180,13 @@ class RegisterGiaSuController extends GetxController {
   TextEditingController experienceTeaching = TextEditingController();
   TextEditingController achievements = TextEditingController();
 
+  final GlobalKey<FormState> fullNameKey = GlobalKey();
+  final GlobalKey<FormState> phoneKey = GlobalKey();
+  final GlobalKey<FormState> provincialKey = GlobalKey();
+  final GlobalKey<FormState> districtKey = GlobalKey();
+  final GlobalKey<FormState> addressKey = GlobalKey();
+  final GlobalKey<FormState> numberYearExpKey = GlobalKey();
+
   //Step3
   TextEditingController informationSubject = TextEditingController();
   TextEditingController formTeach = TextEditingController();
@@ -203,6 +195,12 @@ class RegisterGiaSuController extends GetxController {
   TextEditingController salaryCD = TextEditingController();
   TextEditingController salaryUL1 = TextEditingController();
   TextEditingController salaryUL2 = TextEditingController();
+
+  final GlobalKey<FormState> salaryCDKey = GlobalKey();
+  final GlobalKey<FormState> salaryUL1Key = GlobalKey();
+  final GlobalKey<FormState> salaryUL2Key = GlobalKey();
+  final GlobalKey<FormState> areaTeachingKey = GlobalKey();
+
   FocusNode focusEmail = FocusNode();
   String valueProvincial;
   int idValueProvincial;
@@ -221,69 +219,14 @@ class RegisterGiaSuController extends GetxController {
 
   @override
   void onInit() {
+    selectedKieuGS = listKieuGS.values.first;
+    print('selectedTime: $selectedTime');
     // TODO: implement onInit
     search.addListener(() {
       // checkPassword();
       update();
     });
-    passWord.addListener(() {
-      // checkPassword();
-      update();
-    });
-    rePassWord.addListener(() {
-      // checkRePassword();
-      update();
-    });
-    fullName.addListener(() {
-      update();
-    });
-    email.addListener(() {
-      // checkEmail();
-      update();
-    });
-    phone.addListener(() {
-      update();
-    });
 
-    dateTime.addListener(() {
-      update();
-    });
-    provincial.addListener(() {
-      update();
-    });
-    address.addListener(() {
-      update();
-    });
-    numberYearExp.addListener(() {
-      update();
-    });
-    titleExp.addListener(() {
-      update();
-    });
-    timeExpStart.addListener(() {
-      update();
-    });
-    timeExpEnd.addListener(() {
-      update();
-    });
-    informationExp.addListener(() {
-      update();
-    });
-    areaTeaching.addListener(() {
-      update();
-    });
-    salaryCD.addListener(() {
-      update();
-    });
-    salaryUL1.addListener(() {
-      update();
-    });
-    salaryUL2.addListener(() {
-      update();
-    });
-    focusEmail.addListener(() {
-      checkEmailGS();
-    });
     super.onInit();
     update();
   }
@@ -461,30 +404,6 @@ class RegisterGiaSuController extends GetxController {
     return null;
   }
 
-  String checkFullName() {
-    if (errorFullName && fullName.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    }
-    return null;
-    update();
-  }
-
-  String checkEmail() {
-    print('checkEmail');
-    if (errorEmail && email.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@')) {
-      return 'Email không hợp lệ!';
-    } else if (errorEmail && !email.text.contains('.')) {
-      return 'Email không hợp lệ!';
-    } else if (!valueCheckEmailGS.value) {
-      return 'Email đã tồn tại!';
-    } else {
-      return null;
-    }
-    update();
-  }
-
   imgFromGallery() async {
     File image = await ImagePicker.pickImage(
         source: ImageSource.gallery, imageQuality: 50);
@@ -508,8 +427,7 @@ class RegisterGiaSuController extends GetxController {
   }
 
   imgFromGalleryImageInfor() async {
-    final galleryImage =
-        await ImagePicker.pickImage(source: ImageSource.gallery);
+    final galleryImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     imageInfor = File(galleryImage.path);
     image.text = imageInfor.path.split('image_picker').last.toString();
     print(imageInfor.path.split('image_picker').last.toString());
@@ -586,6 +504,17 @@ class RegisterGiaSuController extends GetxController {
     errorStatusTime = false;
     update();
   }
+  void onSelectedKieuGs(String value) {
+    listKieuGS.forEach((key, values) {
+      if (values == value) {
+        idExp = key;
+        selectedKieuGS = listKieuGS[key];
+
+      }
+    });
+    errorKieuGS = false;
+    update();
+  }
 
   void onSelectedSubject(String value) {
     selectedSubject = value;
@@ -600,24 +529,23 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
-  void onSelectedKieuGS(String value) {
-    selectedKieuGS = value;
-    idExp = selectedKieuGS == 'Sinh viên'
-        ? 1
-        : selectedKieuGS == 'Người đi làm'
-            ? 2
-            : 3;
-    errorKieuGS = false;
-    update();
-  }
+  // void onSelectedKieuGS(String value) {
+  //   selectedKieuGS = value;
+  //   idExp = selectedKieuGS == 'Sinh viên'
+  //       ? 1
+  //       : selectedKieuGS == 'Người đi làm'
+  //       ? 2
+  //       : 3;
+  //   errorKieuGS = false;
+  //   update();
+  // }
 
   Future<void> getListTopic(String idTopic) async {
     listTopic = [];
     print('getListTopic');
     try {
       print(listSubjectSelect.join(','));
-      ResultData res =
-          await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
@@ -702,7 +630,7 @@ class RegisterGiaSuController extends GetxController {
     } else {
       listDistrictSelect.add(value);
     }
-    errorDistrict = false;
+    errorDistrictS3 = false;
     update();
   }
 
@@ -721,9 +649,7 @@ class RegisterGiaSuController extends GetxController {
 
   void onSelectSubjectTopic(ListSubjectTag value) {
     print('onSelectSubject');
-    if (!listSubjectSelectTopic
-        .map((e) => e.idSubject)
-        .contains(value.idSubject)) {
+    if (!listSubjectSelectTopic.map((e) => e.idSubject).contains(value.idSubject)) {
       listSubjectSelectTopic.add(value);
     } else {
       listSubjectSelectTopic.remove(value);
@@ -732,47 +658,37 @@ class RegisterGiaSuController extends GetxController {
     update();
   }
 
+  Timer searchOnStoppedTyping;
+
+  onChangeHandler(value) {
+    const duration = Duration(milliseconds: 800); // set the duration that you want call search() after that.
+    if (searchOnStoppedTyping != null) {
+      searchOnStoppedTyping.cancel(); // clear timer
+    }
+    searchOnStoppedTyping = new Timer(duration, () => checkEmailGS());
+  }
+
 //Step3
 
   void checkButtonStep1() {
-    print('checkButton');
-    checkEmailGS();
-    errorEmail = true;
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    if (passWord.text.length >= 8 &&
-        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])')
-            .hasMatch(passWord.text)) {
-      Get.dialog(DialogErrorPass());
+    print('checkButtonStep1');
+
+    if (formEmailKey.currentState.validate() && passWordKey.currentState.validate() && rePassWordKey.currentState.validate()) {
+      print('done');
+      Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
     } else {
-      if (valueCheckEmailGS.value &&
-          email.text.contains('@') &&
-          email.text.contains('.') &&
-          passWord.text.length >= 8 &&
-          RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])')
-              .hasMatch(passWord.text) &&
-          passWord.text.isNotEmpty &&
-          passWord.text == rePassWord.text &&
-          rePassWord.text.isNotEmpty) {
-        print('done');
-        Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
-      } else {
-        Get.dialog(DialogError(
-          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-          onTap: () => Get.back(),
-          textButton: 'Ok',
-          richText: false,
-        ));
-      }
-      update();
+      Get.dialog(DialogError(
+        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+        onTap: () => Get.back(),
+        textButton: 'Ok',
+        richText: false,
+      ));
     }
+
+    update();
   }
 
   void checkButtonStep2() {
-    String pattern =
-        r'^((09[0-9])|(03[0-9])|(07[0-9])|(08[0-9])|(05[0-9]))\d{7}$';
-    RegExp regExp = new RegExp(pattern);
-    errorFullName = true;
     errorPhone = true;
     errorImage = true;
     errorDistrict = true;
@@ -781,25 +697,31 @@ class RegisterGiaSuController extends GetxController {
     errorTimeExpStart = true;
     errorTimeExpEnd = true;
     errorInformationExp = true;
-    errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
     errorImage = imageAvatar.isNullOrBlank ? true : false;
-
+    errorNumberYearExp = numberYearExp.text.isNotEmpty && int.parse(numberYearExp.text == '' ? '0' : numberYearExp.text) <= 0 ? true : false;
     print('checkNullButton');
     if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
-      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text))
-          ? true
-          : false;
-      if (fullName.text.isNotEmpty &&
-          phone.text.isNotEmpty &&
-          regExp.hasMatch(phone.text) &&
+      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text)) ? true : false;
+      if (fullNameKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
           errorMarriage == false &&
-          provincial.text.isNotEmpty &&
-          district.text.isNotEmpty &&
+          errorNumberYearExp == false &&
+          provincialKey.currentState.validate() &&
+          districtKey.currentState.validate() &&
+          addressKey.currentState.validate() &&
           f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
           imageAvatar != null) {
         Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
       } else {
+        fullNameKey.currentState.validate();
+        phoneKey.currentState.validate();
+        phoneKey.currentState.validate();
+        provincialKey.currentState.validate();
+        districtKey.currentState.validate();
+        addressKey.currentState.validate();
+
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
@@ -808,15 +730,24 @@ class RegisterGiaSuController extends GetxController {
         ));
       }
     } else {
-      if (fullName.text.isNotEmpty &&
-          phone.text.isNotEmpty &&
-          regExp.hasMatch(phone.text) &&
+      if (fullNameKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
           errorMarriage == false &&
-          provincial.text.isNotEmpty &&
-          district.text.isNotEmpty &&
+          errorNumberYearExp == false &&
+          provincialKey.currentState.validate() &&
+          districtKey.currentState.validate() &&
+          addressKey.currentState.validate() &&
           imageAvatar != null) {
         Get.toNamed(Routes.REGISTER_TEACHER_STEP3);
       } else {
+        fullNameKey.currentState.validate();
+        phoneKey.currentState.validate();
+        phoneKey.currentState.validate();
+        provincialKey.currentState.validate();
+        addressKey.currentState.validate();
+
+        districtKey.currentState.validate();
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
@@ -830,62 +761,47 @@ class RegisterGiaSuController extends GetxController {
   }
 
   bool errorBuoiDay = false;
-  String stringErrorLuong;
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
-    print(valueButtonLuong);
-    errorSalaryCD = true;
-    errorSalaryUL1 = true;
-    errorSalaryUL2 = true;
+
     errorArea = true;
     errorProvincial = true;
-    errorExp = true;
     errorSubject = listSubjectSelect.isEmpty ? true : false;
+    errorKieuGS = selectedKieuGS.isNullOrBlank||selectedKieuGS == listKieuGS.values.first ? true : false;
     errorSubjectTopic = listSubjectSelectTopic.isEmpty ? true : false;
     errorDistrictS3 = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere(
-        (e) => e.sang == '1' || e.chieu == '1' || e.toi == '1',
-        orElse: () => null);
+    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
-
     if (valueButtonLuong) {
-      print('TH1');
-      if (salaryCD.text.isNotEmpty &&
+      if (salaryCDKey.currentState.validate() &&
+          areaTeachingKey.currentState.validate() &&
           listSubjectSelect.isNotEmpty &&
           !selectedClass.isNullOrBlank &&
           (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
           !selectedFormTeaching.isNullOrBlank &&
           provincial.text.isNotEmpty &&
           listDistrictSelect.isNotEmpty &&
-          // ignore: deprecated_member_use
           valueCheckBox &&
-          salaryCD.text.isNotEmpty &&
           data != null &&
-          !selectedTime.isNullOrBlank &&
-          int.tryParse(salaryCD.text) > 0) {
+          !selectedTime.isNullOrBlank) {
         registerTeacher();
       } else {
-        errorLuong = int.parse(salaryCD.text) <= 0 ? true : false;
-        stringErrorLuong = 'Học phí phải lớn hơn 0';
+        areaTeachingKey.currentState.validate() && salaryCDKey.currentState.validate();
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
           textButton: 'Ok',
           richText: false,
         ));
-        update();
       }
+      update();
     } else {
-      print('TH2');
-      errorLuong =
-          int.parse(salaryUL1.text ?? "0") >= int.parse(salaryUL2.text ?? "0")
-              ? true
-              : false;
-      if (salaryUL1.text.isNotEmpty &&
-          salaryUL2.text.isNotEmpty &&
+      if (salaryUL1Key.currentState.validate() &&
+          salaryUL2Key.currentState.validate() &&
+          areaTeachingKey.currentState.validate() &&
           listSubjectSelect.isNotEmpty &&
           !selectedClass.isNullOrBlank &&
           (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
@@ -894,34 +810,90 @@ class RegisterGiaSuController extends GetxController {
           listDistrictSelect.isNotEmpty &&
           valueCheckBox &&
           data != null &&
-          int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
-          !selectedTime.isNullOrBlank &&
-          int.tryParse(salaryUL1.text) > 0 &&
-          int.tryParse(salaryUL2.text) > 0) {
+          !selectedTime.isNullOrBlank) {
         registerTeacher();
       } else {
-        if (int.parse(salaryUL1.text) >= int.parse(salaryUL2.text)) {
-          errorLuong = true;
-          stringErrorLuong = 'Học phí bắt đầu phải nhỏ hơn học phí kết thúc!';
-        } else {
-          errorLuong = false;
-        }
-        if (int.parse(salaryUL1.text) < 1 || int.parse(salaryUL2.text) < 1) {
-          stringErrorLuong = 'Học phí phải lớn hơn 0';
-          errorLuong = true;
-        } else {
-          errorLuong = false;
-        }
-
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
           textButton: 'Ok',
           richText: false,
         ));
-        update();
+        salaryUL1Key.currentState.validate();
+        areaTeachingKey.currentState.validate() && salaryUL2Key.currentState.validate();
       }
+      update();
     }
+
+    // if (valueButtonLuong) {
+    //   print('TH1');
+    //   if (salaryCD.text.isNotEmpty &&
+    //       listSubjectSelect.isNotEmpty &&
+    //       !selectedClass.isNullOrBlank &&
+    //       (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
+    //       !selectedFormTeaching.isNullOrBlank &&
+    //       provincial.text.isNotEmpty &&
+    //       listDistrictSelect.isNotEmpty &&
+    //       // ignore: deprecated_member_use
+    //       valueCheckBox &&
+    //       salaryCD.text.isNotEmpty &&
+    //       data != null &&
+    //       !selectedTime.isNullOrBlank &&
+    //       int.tryParse(salaryCD.text) > 0) {
+    //     registerTeacher();
+    //   } else {
+    //     errorLuong = int.parse(salaryCD.text) <= 0 ? true : false;
+    //     stringErrorLuong = 'Học phí phải lớn hơn 0';
+    //     Get.dialog(DialogError(
+    //       title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+    //       onTap: () => Get.back(),
+    //       textButton: 'Ok',
+    //       richText: false,
+    //     ));
+    //     update();
+    //   }
+    // } else
+    //   {
+    //   print('TH2');
+    //   errorLuong = int.parse(salaryUL1.text ?? "0") >= int.parse(salaryUL2.text ?? "0") ? true : false;
+    //   if (salaryUL1.text.isNotEmpty &&
+    //       salaryUL2.text.isNotEmpty &&
+    //       listSubjectSelect.isNotEmpty &&
+    //       !selectedClass.isNullOrBlank &&
+    //       (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
+    //       !selectedFormTeaching.isNullOrBlank &&
+    //       provincial.text.isNotEmpty &&
+    //       listDistrictSelect.isNotEmpty &&
+    //       valueCheckBox &&
+    //       data != null &&
+    //       int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
+    //       !selectedTime.isNullOrBlank &&
+    //       int.tryParse(salaryUL1.text) > 0 &&
+    //       int.tryParse(salaryUL2.text) > 0) {
+    //     registerTeacher();
+    //   } else {
+    //     if (int.parse(salaryUL1.text) >= int.parse(salaryUL2.text)) {
+    //       errorLuong = true;
+    //       stringErrorLuong = 'Học phí bắt đầu phải nhỏ hơn học phí kết thúc!';
+    //     } else {
+    //       errorLuong = false;
+    //     }
+    //     if (int.parse(salaryUL1.text) < 1 || int.parse(salaryUL2.text) < 1) {
+    //       stringErrorLuong = 'Học phí phải lớn hơn 0';
+    //       errorLuong = true;
+    //     } else {
+    //       errorLuong = false;
+    //     }
+    //
+    //     Get.dialog(DialogError(
+    //       title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+    //       onTap: () => Get.back(),
+    //       textButton: 'Ok',
+    //       richText: false,
+    //     ));
+    //     update();
+    //   }
+    // }
 
     update();
   }
@@ -980,7 +952,7 @@ class RegisterGiaSuController extends GetxController {
           company.text,
           information.text,
           prize.text,
-          int.parse(numberYearExp.text = '0'),
+          int.parse(numberYearExp.text.isNotEmpty && errorNumberYearExp == false ? numberYearExp.text : '0'),
           titleExp.text,
           timeExpStart.text,
           timeExpEnd.text,
@@ -996,17 +968,13 @@ class RegisterGiaSuController extends GetxController {
           idArea,
           listDistrictSelect.map((e) => e.idCity).join(','),
           test.join(','));
-      ResultRegisterTeacher resultRegisterTeacher =
-          resultRegisterTeacherFromJson(res.data);
+      ResultRegisterTeacher resultRegisterTeacher = resultRegisterTeacherFromJson(res.data);
       if (resultRegisterTeacher.data != null) {
         Get.back();
         Utils.showToast(resultRegisterTeacher.data.message);
-        SpUtil.putString(ConstString.token_register,
-            resultRegisterTeacher.data.dataUser.token);
-        SpUtil.putString(
-            ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
-        Get.find<LoginController>().email.text =
-            SpUtil.getString(ConstString.EMAIL);
+        SpUtil.putString(ConstString.token_register, resultRegisterTeacher.data.dataUser.token);
+        SpUtil.putString(ConstString.EMAIL, resultRegisterTeacher.data.dataUser.email);
+        Get.find<LoginController>().email.text = SpUtil.getString(ConstString.EMAIL);
         Get.toNamed(Routes.verify_register);
       } else {
         Get.back();
@@ -1023,16 +991,15 @@ class RegisterGiaSuController extends GetxController {
   }
 
   Future<void> checkEmailGS() async {
-    print('getDataQH');
+    print('checkEmailGS');
     try {
       if (email.text.isNotEmpty) {
-        ResultData res =
-            await authenticationRepositories.checkMailGS(email.text);
+        ResultData res = await authenticationRepositories.checkMailGS(email.text);
         ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
         if (resultCheckMail.data != null) {
-          valueCheckEmailGS.value = true;
-        } else {
           valueCheckEmailGS.value = false;
+        } else {
+          valueCheckEmailGS.value = true;
         }
       } else {
         return null;

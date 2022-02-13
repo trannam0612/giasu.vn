@@ -44,6 +44,9 @@ class ListClassTeachingController extends GetxController {
       ResultData res = await homeRepositories.deleteClassAccepted(token, idLop);
       resultDeleteClassAccept = resultDeleteClassAcceptFromJson(res.data);
       if (resultDeleteClassAccept.data != null) {
+        print('123:${listPHDND.indexWhere((element) => element.asId == idLop.toString())}');
+        listPHDND.remove(listPHDND[listPHDND.indexWhere((element) => element.itClassCode == idLop.toString())]);
+
         Utils.showToast(resultDeleteClassAccept.data.message);
       } else {
         Utils.showToast(resultDeleteClassAccept.error.message);

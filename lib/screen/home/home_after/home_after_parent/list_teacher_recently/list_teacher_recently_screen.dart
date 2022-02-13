@@ -10,7 +10,6 @@ import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_recently/list_teacher_recently_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
@@ -173,7 +172,9 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.listGSGDMore[index].asDetailName.join(', '),
+                                          controller.listGSGDMore[index].asDetailName != ''
+                                              ? controller.listGSGDMore[index].asDetailName
+                                              : controller.listGSGDMore[index].asIdName.join(', '),
                                           style: AppTextStyles.regular(
                                             context,
                                             size: AppDimens.textSize14,
@@ -199,7 +200,8 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                         width: AppDimens.space8,
                                       ),
                                       Text(
-                                        '${controller.listGSGDMore[index].cityDetailNameGs}, ${controller.listGSGDMore[index].cityNameGs}',
+                                        '${controller.listGSGDMore[index].ugsCountyGs}, '
+                                            '${controller.listGSGDMore[index].cityNameGs}',
                                         style: AppTextStyles.regular(
                                           context,
                                           size: AppDimens.textSize14,
@@ -224,7 +226,9 @@ class _ListTeacherRecentlyScreenState extends State<ListTeacherRecentlyScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                        '${controller.listGSGDMore[index].ugsUnitPrice} vnđ/ ${controller.listGSGDMore[index].ugsMonth}',
+                                        controller.listGSGDMore[index].ugsUnitPrice == '0'
+                                            ? '${controller.listGSGDMore[index].ugsSalary} vnđ/${controller.listGSGDMore[index].ugsMonth}'
+                                            : '${controller.listGSGDMore[index].ugsUnitPrice} vnđ/${controller.listGSGDMore[index].ugsTime}',
                                         style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                       ),
                                     ],

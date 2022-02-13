@@ -4,6 +4,7 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/settings/settings_controller.dart';
+import 'package:giasu_vn/widgets/custom_button_3.dart';
 
 class InformationTeacherMore extends StatelessWidget {
   const InformationTeacherMore({Key key}) : super(key: key);
@@ -176,6 +177,38 @@ class InformationTeacherMore extends StatelessWidget {
                       ),
                       SizedBox(
                         height: AppDimens.space20,
+                      ),Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Tình trạng hôn nhân:',
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.grey747474),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor
+                                          .ugsMarriage ==
+                                      ''
+                                  ? 'Chưa cập nhật'
+                                  : controller.resultGetInfoTeacher.data
+                                      .infoTutor.ugsMarriage,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.end,
+                              maxLines: 2,
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: AppDimens.space20,
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,11 +225,35 @@ class InformationTeacherMore extends StatelessWidget {
                           Expanded(
                             child: Text(
                               controller.resultGetInfoTeacher.data.infoTutor
-                                          .citName ==
-                                      ''
-                                  ? 'Chưa cập nhật'
-                                  : controller.resultGetInfoTeacher.data
-                                      .infoTutor.citName,
+                                          .citNameGs ,
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.end,
+                              maxLines: 2,
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: AppDimens.space20,
+                      ),Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Quận, huyện:',
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.grey747474),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor
+                                          .citDetailGs ,
                               overflow: TextOverflow.clip,
                               textAlign: TextAlign.end,
                               maxLines: 2,
@@ -263,6 +320,39 @@ class InformationTeacherMore extends StatelessWidget {
                                   ? 'Chưa cập nhật'
                                   : controller.resultGetInfoTeacher.data
                                       .infoTutor.ugsSchool,
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.black),
+                              overflow: TextOverflow.clip,
+                              textAlign: TextAlign.end,
+                              maxLines: 2,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: AppDimens.space20,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Chuyên ngành:',
+                              style: AppTextStyles.regularW500(context,
+                                  size: AppDimens.textSize16,
+                                  color: AppColors.grey747474),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              controller.resultGetInfoTeacher.data.infoTutor
+                                          .ugsSpecialized ==
+                                      ''
+                                  ? 'Chưa cập nhật'
+                                  : controller.resultGetInfoTeacher.data
+                                      .infoTutor.ugsSpecialized,
                               style: AppTextStyles.regularW500(context,
                                   size: AppDimens.textSize16,
                                   color: AppColors.black),
@@ -793,21 +883,110 @@ class InformationTeacherMore extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor.tutorMonth}' ==
-                                            ''
-                                        ? 'Chưa cập nhật'
-                                        : '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor.tutorMonth}',
+                                    '${controller.resultGetInfoTeacher.data.infoTutor.tutorSalary}/${controller.resultGetInfoTeacher.data.infoTutor.tutorMonth}',
                                     style: AppTextStyles.regularW500(context,
                                         size: AppDimens.textSize16,
                                         color: AppColors.black),
                                     overflow: TextOverflow.clip,
                                     textAlign: TextAlign.end,
-                                    maxLines: 2,
+                                    maxLines: 1,
                                   ),
                                 ),
                               ],
                             ),
                           ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: AppDimens.space12,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(AppDimens.space24),
+                        child: Text(
+                          'Số buổi có thể dạy',
+                          style: AppTextStyles.regularW500(context,
+                              size: AppDimens.textSize18,
+                              color: AppColors.black),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(AppDimens.space10),
+                          color: AppColors.whiteFFFFFF,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: AppDimens.smallPadding10),
+                                child: ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) => Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          controller.listbuoiday[index].thu,
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.black),
+                                        ),
+                                        Spacer(),
+                                        CustomButton3(
+                                          title: 'Sáng',
+                                          onPressed: () {
+                                            // controller.listbuoiday[index].sang = controller.listbuoiday[index].sang;
+                                            // controller.update();
+                                          },
+                                          color: controller.listbuoiday[index].sang == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].sang == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].sang == "1" ? false : true,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.padding20,
+                                        ),
+                                        CustomButton3(
+                                          title: 'Chiều',
+                                          onPressed: () {
+                                            // controller.listbuoiday[index].chieu = !controller.listbuoiday[index].chieu;
+                                            // controller.update();
+                                          },
+                                          color: controller.listbuoiday[index].chieu == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].chieu == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].chieu == "1" ? false : true,
+                                        ),
+                                        SizedBox(
+                                          width: AppDimens.padding20,
+                                        ),
+                                        CustomButton3(
+                                          title: 'Tối',
+                                          onPressed: () {
+                                            // controller.listbuoiday[index].toi = !controller.listbuoiday[index].toi;
+                                            // controller.update();
+                                          },
+                                          color: controller.listbuoiday[index].toi == "1" ? AppColors.secondaryF8971C : AppColors.whiteFFFFFF,
+                                          textColor: controller.listbuoiday[index].toi == "1" ? AppColors.whiteFFFFFF : AppColors.grey747474,
+                                          hasSide: controller.listbuoiday[index].toi == "1" ? false : true,
+                                        ),
+                                      ],
+                                    ),
+                                    separatorBuilder: (context, index) => SizedBox(
+                                      height: AppDimens.space10,
+                                    ),
+                                    itemCount: controller.listbuoiday.length),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

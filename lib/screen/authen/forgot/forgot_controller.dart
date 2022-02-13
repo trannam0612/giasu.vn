@@ -11,7 +11,6 @@ import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dar
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
-import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:sp_util/sp_util.dart';
@@ -22,6 +21,11 @@ class ForgotController extends GetxController {
   TextEditingController otpUser = TextEditingController();
   TextEditingController passWord = TextEditingController();
   TextEditingController rePassWord = TextEditingController();
+
+  final GlobalKey<FormState> emailKey = GlobalKey();
+  final GlobalKey<FormState> passWordKey = GlobalKey();
+  final GlobalKey<FormState> rePassWordKey = GlobalKey();
+
   bool errorShowPassword = false;
   bool errorShowRePassword = false;
   bool isShowRePassword = true;
@@ -58,27 +62,7 @@ class ForgotController extends GetxController {
     update();
   }
 
-  String checkPassword() {
-    print('checkPassword');
-    if (errorShowPassword && passWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 8) {
-      return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu sai định dạng!';
-    }
-    return null;
-  }
 
-  String checkRePassword() {
-    print('checkRePassword');
-    if (errorShowRePassword && rePassWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowRePassword && passWord.text != rePassWord.text) {
-      return 'Mật khẩu không khớp!';
-    }
-    return null;
-  }
 
   void checkButtonOTP() {
     print('checkButtonOTP');
@@ -162,20 +146,13 @@ class ForgotController extends GetxController {
   }
 
   void checkButton() {
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      Get.dialog(DialogErrorPass());
+    if (passWordKey.currentState.validate() && rePassWordKey.currentState.validate()) {
+      newPasswordForgot();
     } else {
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) && rePassWord.text == passWord.text
-          ? newPasswordForgot()
-          // Get.to(RegisterParentStep2Screen())
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+      Get.dialog(DialogErrorPass());
+
+      passWordKey.currentState.validate();
+      rePassWordKey.currentState.validate();
       update();
     }
   }
@@ -193,8 +170,13 @@ class ForgotController extends GetxController {
   }
 
   void checkButtonSendEmail() {
-    errorEmail = true;
-    email.text.isNotEmpty ? {emailForgotPassword(), startTimer()} : Utils.showToast('Email không được để trống!');
+    if (emailKey.currentState.validate()) {
+      emailForgotPassword();
+      startTimer();
+    } else {
+      emailKey.currentState.validate();
+      Utils.showToast('Email không được để trống!');
+    }
     update();
   }
 

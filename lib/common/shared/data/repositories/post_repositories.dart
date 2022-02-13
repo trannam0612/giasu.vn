@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:giasu_vn/common/shared/data/http/address.dart';
 import 'package:giasu_vn/common/shared/data/http/api.dart';
@@ -15,6 +17,7 @@ class PostRepositories {
     String phone,
     String address,
     String price,
+    String priceType,
     String month,
     String detail,
     int asId,
@@ -40,6 +43,7 @@ class PostRepositories {
       'pft_phone': phone,
       'pft_address': address,
       'pft_price': price,
+      'pft_price_type': priceType,
       'pft_month': month,
       'pft_detail': detail,
       'as_id': asId,
@@ -50,14 +54,13 @@ class PostRepositories {
       'tutor_style': tutorStyle,
       'lichday': lichday,
     };
-
+    log(body.toString());
     ResultData rest = await httpManager.netFetch(Address.created_class_post, body, header, Options(method: 'post'));
 
     return rest;
   }
 
-  Future<ResultData> updatePost(
-    String token,
+  Future<ResultData> updatePost(String token,
     int id,
     String summary,
     int form,
@@ -68,6 +71,7 @@ class PostRepositories {
     String phone,
     String address,
     String price,
+    String priceType,
     String month,
     String detail,
     int asId,
@@ -94,6 +98,7 @@ class PostRepositories {
       'pft_phone': phone,
       'pft_address': address,
       'pft_price': price,
+      'pft_price_type': priceType,
       'pft_month': month,
       'pft_detail': detail,
       'as_id': asId,
@@ -101,20 +106,18 @@ class PostRepositories {
       'as_detail': asDetail,
       'city_id': cityId,
       'city_detail': cityDetail,
-      // 'tutor_style': tutorStyle,
       'lichday': lichday,
     };
+    log(body.toString());
 
     ResultData rest = await httpManager.netFetch(Address.update_class_post, body, header, Options(method: 'post'));
 
     return rest;
   }
 
-  Future<ResultData> changeStatusPost(
-    String token,
-    int id,
-    int status,
-  ) async {
+  Future<ResultData> changeStatusPost(String token,
+      int id,
+      int status,) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',

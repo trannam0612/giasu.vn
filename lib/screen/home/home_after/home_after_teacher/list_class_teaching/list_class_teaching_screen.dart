@@ -9,12 +9,9 @@ import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
-import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:intl/intl.dart';
 
-import '../home_after_teacher_controller.dart';
 import '../home_after_teacher_controller.dart';
 
 class ListClassTeachingScreen extends StatefulWidget {
@@ -123,9 +120,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                               Get.dialog(DialogConfirm(
                                 onPressed: () {
                                   controller.deleteClassAccepted(int.parse(controller.listPHDND[index].itClassCode));
-                                  controller.listPHDND.remove(controller.listPHDND[index]);
                                   Get.back();
-                                  controller.update();
                                 },
                                 title: 'Bạn có chắc muốn xóa lớp này không ?',
                               ));
@@ -166,8 +161,7 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Flexible(
-                                        flex: 7,
+                                      Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -183,11 +177,15 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                 SizedBox(
                                                   width: AppDimens.space8,
                                                 ),
-                                                Text(
-                                                  '${controller.listPHDND[index].pftPrice} vnđ/${controller.listPHDND[index].pftMonth}',
-                                                  style: AppTextStyles.regular(
-                                                    context,
-                                                    size: AppDimens.textSize14,
+                                                Flexible(
+                                                  child: Text(
+                                                    '${controller.listPHDND[index].pftPrice} vnđ/${controller.listPHDND[index].pftMonth}',
+                                                    style: AppTextStyles.regular(
+                                                      context,
+                                                      size: AppDimens.textSize14,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ],
@@ -208,7 +206,11 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                                   width: AppDimens.space8,
                                                 ),
                                                 Text(
-                                                  controller.listPHDND[index].asDetailName,
+                                                  // controller.listPHDND[index].asDetailName,
+                                                  controller.listPHDND[index].asDetailName == ''
+                                                      ? controller.listPHDND[index].asName
+                                                      : controller.listPHDND[index].asDetailName,
+
                                                   style: AppTextStyles.regular(
                                                     context,
                                                     size: AppDimens.textSize14,
@@ -246,8 +248,10 @@ class _ListClassTeachingScreenState extends State<ListClassTeachingScreen> {
                                           ],
                                         ),
                                       ),
-                                      Flexible(
-                                        flex: 6,
+                                      SizedBox(
+                                        width: AppDimens.space6,
+                                      ),
+                                      Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [

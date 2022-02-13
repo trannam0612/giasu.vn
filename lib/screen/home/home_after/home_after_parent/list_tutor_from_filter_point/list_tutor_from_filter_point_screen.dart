@@ -176,7 +176,8 @@ class _ListTutorFromFilterPointScreenState extends State<ListTutorFromFilterPoin
                                     ),
                                     Text(
                                       controller.listGSTDL[index].suStatus,
-                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.redFF0033),
+                                      style: AppTextStyles.regular(context, size: AppDimens.textSize14, color:controller.listGSTDL[index].suStatus =='Mất phí'
+                                          ? AppColors.redFF0033:AppColors.green5DC22D),
                                     ),
                                   ],
                                 ),

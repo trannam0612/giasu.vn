@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
@@ -14,6 +15,7 @@ import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
@@ -101,11 +103,12 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.fullName,
                           obligatory: true,
-                          error: controller.checkFullName(),
-                          onPressed: () {
+                          keyText: controller.fullNameKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),
+                          onPressedIcon: () {
                             // controller.imgFromGallery();
                           },
                           title: 'Họ tên',
@@ -117,17 +120,15 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
                           obligatory: true,
-                          onPressed: () {
-                            controller.changeValuePassword();
-                          },
+                          keyText: controller.phoneKey,
+                          validator: (p0) => Validate.validatePhone(p0),
                           title: 'Số điện thoại',
                           textEditingController: controller.phone,
                           hintText: 'Nhập số điện thoại',
-                          error: controller.checkPhone(),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
@@ -154,7 +155,7 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             // controller.dateTime.text.isEmpty
                             // controller.dateTime.text = f.format(DateTime.now());
@@ -168,16 +169,15 @@ class UpdateInformationParentScreen extends StatelessWidget {
                           isShowIcon: true,
                           obligatory: true,
                           textEditingController: controller.dateTime,
-                          onPressed: () {},
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
-                          error: controller.checkDate(),
-                        ),
+                          keyText: controller.dateTimeKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),                        ),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
@@ -186,16 +186,16 @@ class UpdateInformationParentScreen extends StatelessWidget {
                           isShowIcon: true,
                           obligatory: true,
                           textEditingController: controller.provincial,
-                          onPressed: () {},
                           title: 'Tỉnh, thành phố',
                           hintText: 'Chọn tỉnh, thành phố',
                           iconSuffix: Images.ic_arrow_down,
-                          error: controller.checkProvincial(),
+                          keyText: controller.provincialKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        // CustomTextField(
+                        // CustomTxf(
                         //   onTapTextField: () {
                         //     Get.to(SelectDistrict(context));
                         //   },
@@ -212,16 +212,16 @@ class UpdateInformationParentScreen extends StatelessWidget {
                         // SizedBox(
                         //   height: AppDimens.space10,
                         // ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {},
                           isShowIcon: false,
                           obligatory: true,
                           textEditingController: controller.address,
-                          onPressed: () {},
                           title: 'Địa chỉ',
                           hintText: 'Địa chỉ của bạn',
                           iconSuffix: Images.ic_arrow_down,
-                          error: controller.checkAddress(),
+                          keyText: controller.addressKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                         ),
                         SizedBox(
                           height: AppDimens.height * 0.07,

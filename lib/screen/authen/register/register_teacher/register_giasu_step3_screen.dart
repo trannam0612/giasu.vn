@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,17 +5,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
+import 'package:giasu_vn/widgets/drop_down_select_map.dart';
 
 class RegisterGiaSuStep3Screen extends StatelessWidget {
   @override
@@ -53,25 +53,20 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                         children: [
                           Text(
                             '3. Thông tin giảng dạy (Gia sư)',
-                            style: AppTextStyles.regularW400(context,
-                                size: AppDimens.textSize18,
-                                color: AppColors.secondaryF8971C),
+                            style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
                           ),
-                          DropDownSelect(
-                            obligatory: true,
+                          DropDownSelectMap(
                             title: 'Kiểu gia sư',
                             isTitle: true,
+                            obligatory: true,
                             hint: 'Chọn kiểu gia sư',
                             dropdownValue: controller.selectedKieuGS,
-                            onChanged: (String value) =>
-                                controller.onSelectedKieuGS(value),
-                            list: controller.listKieuGS,
-                            borderColor: controller.errorKieuGS
-                                ? AppColors.redFF0033
-                                : AppColors.grey747474,
+                            onChanged: (String value) => controller.onSelectedKieuGs(value),
+                            list: listKieuGS,
+                            borderColor: controller.errorKieuGS ? AppColors.redFF0033 : AppColors.grey747474,
                           ),
                           controller.errorKieuGS
                               ? Padding(
@@ -170,10 +165,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              controller.listSubjectSelect
-                                                  .remove(controller
-                                                          .listSubjectSelect[
-                                                      index]);
+                                              controller.listSubjectSelect.remove(controller.listSubjectSelect[index]);
+                                              controller.listSubjectSelectTopic.clear();
                                               controller.update();
                                             },
                                             child: Container(
@@ -476,7 +469,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           SizedBox(
                             height: AppDimens.space30,
                           ),
-                          CustomTextField(
+                          CustomTxf(
                             onTapTextField: () {
                               controller.changeSearchProvincial('');
                               Get.to(SelectTinhThanh(context));
@@ -485,11 +478,11 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             isShowIcon: true,
                             obligatory: true,
                             textEditingController: controller.areaTeaching,
-                            onPressed: () {},
+                            keyText: controller.areaTeachingKey,
                             title: 'Khu vực giảng dạy',
                             hintText: 'Chọn tỉnh, thành phố',
                             iconSuffix: Images.ic_arrow_down,
-                            error: controller.checkArea(),
+                            validator: (p0) => Validate.validateIsEmpty(p0),
                           ),
                           SizedBox(
                             height: AppDimens.space20,
@@ -515,64 +508,41 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space4,
                           ),
                           InkWell(
-                            onTap: () =>
-                                controller.listDistrictSelect.length < 5
-                                    ? Get.to(SelectDistrict(context))
-                                    : null,
+                            onTap: () => controller.listDistrictSelect.length < 5 && controller.areaTeachingKey.currentState.validate()
+                                ? Get.to(SelectDistrict(context))
+                                : null,
                             child: Container(
-                                constraints: BoxConstraints(
-                                    minHeight: 50,
-                                    minWidth: double.infinity,
-                                    maxHeight: AppDimens.height * 0.25),
+                                constraints: BoxConstraints(minHeight: 50, minWidth: double.infinity, maxHeight: AppDimens.height * 0.25),
                                 padding: EdgeInsets.all(AppDimens.padding12),
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
-                                    borderRadius: BorderRadius.circular(
-                                        AppDimens.space10),
-                                    border: Border.all(
-                                        color: controller.errorDistrict
-                                            ? AppColors.redFF0033
-                                            : AppColors.grey747474,
-                                        width: 1)),
+                                    borderRadius: BorderRadius.circular(AppDimens.space10),
+                                    border: Border.all(color: controller.errorDistrictS3 ? AppColors.redFF0033 : AppColors.grey747474, width: 1)),
                                 child: controller.listDistrictSelect.isNotEmpty
                                     ? GridView.builder(
                                         shrinkWrap: true,
-                                        itemCount: controller
-                                            .listDistrictSelect.length,
-                                        gridDelegate:
-                                            new SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent:
-                                              AppDimens.width * 0.5,
+                                        itemCount: controller.listDistrictSelect.length,
+                                        gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: AppDimens.width * 0.5,
                                           mainAxisSpacing: 10,
                                           crossAxisSpacing: 10,
                                           mainAxisExtent: AppDimens.space32,
                                         ),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
+                                        itemBuilder: (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              controller.listDistrictSelect
-                                                  .remove(controller
-                                                          .listDistrictSelect[
-                                                      index]);
+                                              controller.listDistrictSelect.remove(controller.listDistrictSelect[index]);
                                               controller.update();
                                             },
                                             child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      AppDimens.padding12,
-                                                  vertical: AppDimens.space8),
+                                              padding: EdgeInsets.symmetric(horizontal: AppDimens.padding12, vertical: AppDimens.space8),
                                               decoration: BoxDecoration(
-                                                  color: AppColors.whiteF2F2F2,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppDimens.padding16)),
+                                                  color: AppColors.whiteF2F2F2, borderRadius: BorderRadius.circular(AppDimens.padding16)),
                                               child: Row(
                                                 children: [
                                                   SizedBox(
                                                     child: Text(
-                                                      controller
-                                                          .listDistrictSelect[
+                                                      controller.listDistrictSelect[
                                                               index]
                                                           .nameCity,
                                                       overflow:
@@ -732,75 +702,52 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                             height: AppDimens.space8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Expanded(
                                   child: controller.valueButtonLuong
-                                      ? CustomTextField(
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
-                                          error: controller.checkSalaryCD(),
-                                          textEditingController:
-                                              controller.salaryCD,
+                                      ? CustomTxf(
+                                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                          keyText: controller.salaryCDKey,
+                                          validator: (p0) => Validate.validateSalaryCD(p0),
+                                          textEditingController: controller.salaryCD,
                                           obligatory: false,
                                           isTitle: false,
                                           keyboardType: TextInputType.number,
-                                          onPressed: () {},
                                           title: '',
                                           hintText: '1.000.000VNĐ',
-                                          isPassword: false,
                                         )
                                       : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Expanded(
-                                              child: CustomTextField(
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .digitsOnly
-                                                ],
-                                                error:
-                                                    controller.checkSalaryUL1(),
-                                                textEditingController:
-                                                    controller.salaryUL1,
-                                                obligatory: false,
-                                                isTitle: false,
-                                                onPressed: () {},
-                                                title: '',
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                hintText: '1.000.000VNĐ',
-                                                isPassword: false,
-                                              ),
-                                            ),
+                                                child: CustomTxf(
+                                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                              keyText: controller.salaryUL1Key,
+                                              validator: (p0) => Validate.validateSalaryUL1(p0, controller.salaryUL2.text),
+                                              textEditingController: controller.salaryUL1,
+                                              obligatory: false,
+                                              isTitle: false,
+                                              keyboardType: TextInputType.number,
+                                              title: '',
+                                              hintText: '1.000.000VNĐ',
+                                            )),
                                             SizedBox(
                                               width: 10,
                                             ),
                                             Expanded(
-                                              child: CustomTextField(
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .digitsOnly
-                                                ],
-                                                error:
-                                                    controller.checkSalaryUL2(),
-                                                textEditingController:
-                                                    controller.salaryUL2,
-                                                obligatory: false,
-                                                isTitle: false,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                onPressed: () {},
-                                                title: '',
-                                                hintText: '6.000.000VNĐ',
-                                                isPassword: false,
-                                              ),
-                                            ),
+                                                child: CustomTxf(
+                                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                              keyText: controller.salaryUL2Key,
+                                              validator: (p0) => Validate.validateSalaryUL2(p0, controller.salaryUL1.text),
+                                              textEditingController: controller.salaryUL2,
+                                              obligatory: false,
+                                              isTitle: false,
+                                              keyboardType: TextInputType.number,
+                                              title: '',
+                                              hintText: '6.000.000VNĐ',
+                                            )),
                                           ],
                                         )),
                               SizedBox(
@@ -809,8 +756,8 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: AppDimens.space4),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: AppDimens.space4),
+                                // margin: EdgeInsets.symmetric(
+                                //     vertical: AppDimens.space4),
                                 decoration: BoxDecoration(
                                     color: AppColors.whiteFFFFFF,
                                     borderRadius: BorderRadius.circular(
@@ -818,6 +765,7 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                                     border: Border.all(
                                         width: 1, color: AppColors.grey747474)),
                                 child: DropdownButtonHideUnderline(
+
                                   child: DropdownButton<String>(
                                     hint: Text(
                                       'Buổi',
@@ -851,17 +799,6 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          controller.errorLuong
-                              ? Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: AppDimens.space4),
-                                  child: Text(
-                                    controller.stringErrorLuong,
-                                    style: AppTextStyles.regularW400(context,
-                                        size: 12, color: AppColors.redFF0033),
-                                  ),
-                                )
-                              : Container(),
                           SizedBox(
                             height: AppDimens.space8,
                           ),
@@ -1151,15 +1088,6 @@ class RegisterGiaSuStep3Screen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomButton1(
-                                onPressed: () {},
-                                title: 'LÀM LẠI',
-                                textColor: AppColors.primary4C5BD4,
-                                color: AppColors.primary4C5BD4,
-                              ),
-                              SizedBox(
-                                width: AppDimens.space8,
-                              ),
                               CustomButton2(
                                 onPressed: () {
                                   controller.checkButtonStep3();

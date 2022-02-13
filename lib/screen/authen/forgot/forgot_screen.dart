@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
-import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
-import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
 import 'package:giasu_vn/screen/authen/forgot/forgot_controller.dart';
-import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'package:giasu_vn/screen/authen/login/select_type_login_screen.dart';
+import 'package:giasu_vn/widgets/custom_button2.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 
 class ForgotScreen extends StatelessWidget {
   @override
@@ -56,8 +54,9 @@ class ForgotScreen extends StatelessWidget {
                     SizedBox(
                       height: AppDimens.height * 0.05,
                     ),
-                    CustomTextField(
-                      error: controller.checkEmail(),
+                    CustomTxf(
+                      keyText: controller.emailKey,
+                      validator: (p0) => Validate.validateEmail(p0),
                       textEditingController: controller.email,
                       title: 'Email',
                       isTitle: true,

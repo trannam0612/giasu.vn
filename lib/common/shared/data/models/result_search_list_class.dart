@@ -89,6 +89,7 @@ class DataLh {
     this.cityId,
     this.citName,
     this.cityDetail,
+    this.cityDetailName,
     this.asId,
     this.asName,
     this.asDetail,
@@ -106,6 +107,7 @@ class DataLh {
   String cityId;
   String citName;
   String cityDetail;
+  String cityDetailName;
   String asId;
   String asName;
   String asDetail;
@@ -123,6 +125,7 @@ class DataLh {
     cityId: json["city_id"] == null ? null : json["city_id"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     cityDetail: json["city_detail"] == null ? null : json["city_detail"],
+    cityDetailName: json["city_detail_name"] == null ? null : json["city_detail_name"],
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
     asDetail: json["as_detail"] == null ? null : json["as_detail"],

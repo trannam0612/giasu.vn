@@ -158,15 +158,30 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                           ),
                                         ],
                                       ),
-                                      InkWell(child: controller.listGSMD[index].checkSave ? SvgPicture.asset(Images.ic_saved) : SvgPicture.asset(Images.ic_save),
-                                      onTap: () {
-                                        if (!controller.listGSMD[index].checkSave) {
-                                          controller.listGSMD[index].checkSave = true;
-                                          homeAfterParentController.saveTutor(int.parse(controller.listGSMD[index].ugsId));
-                                          controller.update();
-                                        } else {
-                                          controller.listGSMD[index].checkSave = false;
-                                          homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSMD[index].ugsId));
+                                      InkWell(
+                                        child: controller.listGSMD[index].checkSave
+                                            ? SvgPicture.asset(Images.ic_saved)
+                                            : SvgPicture.asset(Images.ic_save),
+                                        onTap: () async {
+                                          if (!controller.listGSMD[index].checkSave) {
+                                            final res = await homeAfterParentController.saveTutor(int.parse(controller.listGSMD[index].ugsId));
+                                            if (res) {
+                                              var list = controller.listGSMD.where((e) => e.ugsId == controller.listGSMD[index].ugsId);
+                                              print('list:${list.length}');
+                                              for (var item in list) {
+                                                item.checkSave = true;
+                                              }
+                                            } else {}
+                                            controller.update();
+                                          } else {
+                                          final res = await  homeAfterParentController.deleteTutorSaved(int.parse(controller.listGSMD[index].ugsId));
+                                          if (res) {
+                                            var list = controller.listGSMD.where((e) => e.ugsId == controller.listGSMD[index].ugsId);
+                                            print('list:${list.length}');
+                                            for (var item in list) {
+                                              item.checkSave = false;
+                                            }
+                                          } else {}
                                           controller.update();
                                         }
                                       },)
@@ -210,7 +225,7 @@ class _ListTeacherInvitedScreenState extends State<ListTeacherInvitedScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.listGSMD[index].asDetailName.join(', '),
+                                          controller.listGSMD[index].pftSummary,
                                           overflow: TextOverflow.ellipsis,
                                           style: AppTextStyles.regular(
                                             context,

@@ -7,9 +7,14 @@ import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
+import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
+import 'package:giasu_vn/screen/message/message_screen.dart';
+import 'package:giasu_vn/screen/notifications/notifications_screen.dart';
 import 'package:giasu_vn/screen/post/post_screen.dart';
-import 'package:giasu_vn/widgets/dialog_error_login.dart';
+import 'package:giasu_vn/screen/settings/settings_screen.dart';
 import 'package:sp_util/sp_util.dart';
+
 import 'navigation_controller.dart';
 
 // ignore: must_be_immutable
@@ -23,8 +28,9 @@ class NavigationScreen extends StatefulWidget {
 class _NavigationScreenState extends State<NavigationScreen> {
   DateTime currentBackPressTime;
 
-  NavigationController navigationController = Get.put(NavigationController());
 
+  NavigationController navigationController = Get.put(NavigationController());
+  final PageController pageController = PageController();
   @override
   void initState() {
     navigationController.userType = SpUtil.getString(ConstString.USER_TYPE);
@@ -66,41 +72,76 @@ class _NavigationScreenState extends State<NavigationScreen> {
                     backgroundColor: AppColors.secondaryF8971C,
                   )
                 : null,
-            body: NavigationController.to.currentPage.value,
+            // body: NavigationController.to.currentPage.value,
+            body: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: [
+                controller.userType == '1' ? HomeAfterParentScreen() : HomeAfterTeacherScreen(),
+                MessageScreen(),
+                NotificationsScreen(),
+                SettingsScreen()
+              ],
+            ),
             backgroundColor: AppColors.whiteFFFFFF,
             bottomNavigationBar: BottomNavigationBar(
-              showSelectedLabels: controller.token !='' ? true : false,
+              showSelectedLabels: controller.token != '' ? true : false,
               showUnselectedLabels: false,
               backgroundColor: AppColors.whiteFFFFFF,
-              currentIndex: NavigationController.to.pageIndex.value,
-              onTap: controller.token != '' ? NavigationController.to.changePage : null,
+              currentIndex: controller.pageIndex.value,
+              onTap: (index) {
+                pageController.jumpToPage(index);
+                setState(() {
+                  controller.pageIndex.value = index;
+                });
+              },
               items: [
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_home,
                       width: 20,
-                      color: controller.pageIndex.value == 0 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: AppColors.greyAAAAAA,
+                    ),
+                    SvgPicture.asset(
+                      Images.ic_home,
+                      width: 20,
+                      color: AppColors.primary4C5BD4,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_message,
                       width: 20,
-                      color: controller.token =='' ? AppColors.greyAAAAAA : controller.pageIndex.value == 1 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: AppColors.greyAAAAAA,
+                    ),
+                    SvgPicture.asset(
+                      Images.ic_message,
+                      width: 20,
+                      color: AppColors.primary4C5BD4,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_notification,
                       width: 20,
-                      color:controller.token =='' ? AppColors.greyAAAAAA :  controller.pageIndex.value == 2 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: AppColors.greyAAAAAA,
+                    ),
+                    SvgPicture.asset(
+                      Images.ic_notification,
+                      width: 20,
+                      color: AppColors.primary4C5BD4,
                     ),
                     context),
                 _buildBottomNavItem(
                     SvgPicture.asset(
                       Images.ic_setting,
                       width: 20,
-                      color: controller.token =='' ? AppColors.greyAAAAAA : controller.pageIndex.value == 3 ? AppColors.primary4C5BD4 : AppColors.greyAAAAAA,
+                      color: AppColors.greyAAAAAA,
+                    ),
+                    SvgPicture.asset(
+                      Images.ic_setting,
+                      width: 20,
+                      color: AppColors.primary4C5BD4,
                     ),
                     context),
               ],
@@ -110,10 +151,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 }
 
-BottomNavigationBarItem _buildBottomNavItem(icon, BuildContext context) {
+BottomNavigationBarItem _buildBottomNavItem(icon, iconActive, BuildContext context) {
   return BottomNavigationBarItem(
     backgroundColor: AppColors.whiteFFFFFF,
     icon: icon,
+    activeIcon: iconActive,
     label: '',
   );
 }

@@ -4,17 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/data_off/provincial_subject.dart';
-import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
+import 'package:giasu_vn/widgets/custom_txtbox.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
@@ -55,27 +54,23 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           '1. Thông tin cá nhân',
                           style: AppTextStyles.regularW400(context, size: AppDimens.textSize18, color: AppColors.secondaryF8971C),
                         ),
-                        SizedBox(
-                          height: AppDimens.space10,
-                        ),
                         InkWell(
                           onTap: () {
                             Get.dialog(DialogImage());
                           },
-                          child: controller.urlAvatar == ''
-                              ? controller.avatar == null
+                          child: controller.avatar == null && controller.urlAvatar == ''
+                              ? Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    padding: EdgeInsets.all(30),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(AppDimens.space100),
+                                        border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
+                                    child: SvgPicture.asset(Images.ic_add_camera),
+                                  ),
+                                )
+                              : controller.avatar != null
                                   ? Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        padding: EdgeInsets.all(30),
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(AppDimens.space100),
-                                            border:
-                                                Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
-                                        child: SvgPicture.asset(Images.ic_add_camera),
-                                      ),
-                                    )
-                                  : Align(
                                       alignment: Alignment.center,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(100),
@@ -83,23 +78,33 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                                           controller.avatar,
                                           width: 100,
                                           height: 100,
-                                          fit: BoxFit.fill,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) => Icon(Icons.person,),
                                         ),
                                       ),
                                     )
-                              : Align(
-                                  alignment: Alignment.center,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: CachedNetworkImage(
-                                      imageUrl: controller.urlAvatar,
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.fill,
+                                  : Align(
+                                      alignment: Alignment.center,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: CachedNetworkImage(
+                                          imageUrl: controller.urlAvatar,
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
                         ),
+                        controller.errorImage
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: AppDimens.space4),
+                                child: Text(
+                                  '\t\tTrường bắt buộc!',
+                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                ),
+                              )
+                            : Container(),
                         SizedBox(
                           height: 4,
                         ),
@@ -121,11 +126,11 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
-                          error: controller.checkFullName(),
+                        CustomTxf(
                           textEditingController: controller.fullName,
+                          keyText: controller.fullNameKey,
                           obligatory: true,
-                          onPressed: () {},
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                           title: 'Họ tên',
                           hintText: 'Trần Văn A',
                           isPassword: false,
@@ -134,10 +139,11 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          validator: (p0) => Validate.validatePhone(p0),
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
-                          error: controller.checkPhone(),
+                          keyText: controller.phoneKey,
                           keyboardType: TextInputType.phone,
                           obligatory: true,
                           title: 'Số điện thoại',
@@ -158,19 +164,10 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        // controller.errorGender
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
-                        //         child: Text(
-                        //           '\t\tTrường bắt buộc!',
-                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                        //         ),
-                        //       )
-                        //     : Container(),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             controller.dateTime.text = f.format(DateTime.now());
                             Get.dialog(DialogTime(
@@ -183,7 +180,7 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           isShowIcon: true,
                           obligatory: false,
                           textEditingController: controller.dateTime,
-                          onPressed: () {},
+
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
@@ -214,16 +211,16 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space30,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.provincial,
+                          keyText: controller.provincialKey,
                           readOnly: true,
-                          error: controller.checkProvincial(),
                           onTapTextField: () {
                             controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
-                          onPressed: () {},
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                           title: 'Tỉnh, Thành Phố',
                           hintText: 'Chọn tỉnh, thành phố',
                           isPassword: false,
@@ -233,28 +230,29 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             Get.to(SelectDistrict(context));
                           },
+                          keyText: controller.districtKey,
                           readOnly: true,
                           isShowIcon: true,
                           obligatory: true,
                           textEditingController: controller.district,
-                          onPressed: () {},
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                           title: 'Quận/huyện',
                           hintText: 'Chọn Quận/huyện',
                           iconSuffix: Images.ic_arrow_down,
-                          error: controller.checkDistrict(),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.address,
                           obligatory: false,
                           // error: controller.checkAddress(),
-                          onPressed: () {},
+                          validator: (p0) => Validate.validateIsEmpty(p0),
+                          keyText: controller.addressKey,
                           title: 'Địa chỉ',
                           hintText: 'Nhập địa chỉ cụ thể',
                           isPassword: false,
@@ -286,27 +284,35 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         // SizedBox(
                         //   height: AppDimens.space20,
                         // ),
-                        CustomTextField(
+                        CustomTxf(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.numberYearExp,
                           obligatory: false,
                           keyboardType: TextInputType.number,
-                          // error: controller.checkNumberYearExp(),
-                          onPressed: () {},
                           title: 'Số năm kinh nghiệm',
                           hintText: 'Số năm kinh nghiệm',
                           isPassword: false,
                           isShowIcon: false,
                           iconSuffix: Images.ic_arrow_down,
                         ),
+                        controller.errorNumberYearExp
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: AppDimens.space4),
+                                child: Text(
+                                  'Thời gian phải lớn hơn 0!',
+                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                ),
+                              )
+                            : Container(),
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.titleExp,
                           obligatory: false,
+                          // keyboardType: TextInputType.number,
                           // error: controller.checkTitleExp(),
-                          onPressed: () {},
+
                           title: 'Kinh nghiệm giảng dạy',
                           hintText: 'Tiêu đề',
                           isPassword: false,
@@ -314,32 +320,29 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                           iconSuffix: Images.ic_arrow_down,
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Flexible(
                               flex: 5,
-                              child: CustomTextField(
+                              child: CustomTxf(
                                 readOnly: true,
                                 onTapTextField: () {
-                                  controller.errorTimeExpStart = true;
-                                  controller.errorTimeExpEnd = true;
                                   controller.timeExpStart.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
-                                      controller.start = value;
-                                      print(controller.start.microsecond);
+                                      controller.errorTime = false;
                                       controller.timeExpStart.text = f.format(value);
                                     },
                                   ));
                                 },
                                 textEditingController: controller.timeExpStart,
                                 obligatory: false,
-                                // error: controller.checkTimeExpStart(),
-                                onPressed: () {},
+                                keyboardType: TextInputType.number,
                                 title: '',
                                 isTitle: false,
                                 hintText: 'Thời gian bắt đầu',
@@ -353,25 +356,22 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             ),
                             Flexible(
                               flex: 5,
-                              child: CustomTextField(
+                              child: CustomTxf(
                                 readOnly: true,
                                 onTapTextField: () {
-                                  controller.errorTimeExpStart = true;
-                                  controller.errorTimeExpEnd = true;
-
                                   controller.timeExpEnd.text = f.format(DateTime.now());
                                   Get.dialog(DialogTime(
                                     onChanged: (DateTime value) {
-                                      controller.end = value;
-                                      print(controller.end.microsecond);
+                                      controller.errorTime = false;
                                       controller.timeExpEnd.text = f.format(value);
                                     },
                                   ));
                                 },
                                 textEditingController: controller.timeExpEnd,
                                 obligatory: false,
+                                keyboardType: TextInputType.number,
                                 // error: controller.checkTimeExpEnd(),
-                                onPressed: () {},
+
                                 title: '',
                                 isTitle: false,
                                 hintText: 'Thời gian kết thúc',
@@ -382,36 +382,36 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        controller.errorNTN
+                        controller.errorTime
                             ? Padding(
-                          padding: const EdgeInsets.only(top: AppDimens.space4),
-                          child: Text(
-                            '\t\tNgày kết thúc phải sau thời gian bắt đầu!',
-                            style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                          ),
-                        )
+                                padding: const EdgeInsets.only(top: AppDimens.space4),
+                                child: Text(
+                                  'Thời gian bắt đầu phải trước thời gian kết thúc!',
+                                  style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
+                                ),
+                              )
                             : Container(),
+                        // SizedBox(
+                        //   height: AppDimens.space10,
+                        // ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
-                        CustomTextFieldBox(
-                          hasTitle: false,
+                        CustomTxfBox(
                           textEditingController: controller.informationExp,
                           obligatory: false,
-                          // error: controller.checkInformationExp(),
-                          onPressed: () {},
-                          title: '',
+                          title: 'Mô tả',
                           hintText: 'Mô tả',
                           isPassword: false,
-                          iconSuffix: Images.ic_plus,
+                          isShowIcon: false,
+                          iconSuffix: Images.ic_arrow_down,
                         ),
                         SizedBox(
-                          height: AppDimens.space20,
+                          height: AppDimens.space30,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.school,
                           obligatory: false,
-                          onPressed: () {},
                           title: 'Trường học',
                           hintText: 'Đại học Hà Nội',
                           isPassword: false,
@@ -420,10 +420,33 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                          textEditingController: controller.graduationYear,
+                          obligatory: false,
+                          keyboardType: TextInputType.number,
+                          title: 'Năm tốt nghiệp',
+                          hintText: 'Nhập năm tốt nghiệp',
+                          isPassword: false,
+                          iconSuffix: Images.ic_plus,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
+                        CustomTxf(
+                          textEditingController: controller.specialized,
+                          obligatory: false,
+                          title: 'Chuyên ngành',
+                          hintText: 'Nhập chuyên ngành',
+                          isPassword: false,
+                          iconSuffix: Images.ic_plus,
+                        ),
+                        SizedBox(
+                          height: AppDimens.space20,
+                        ),
+                        CustomTxf(
                           textEditingController: controller.prize,
                           obligatory: false,
-                          onPressed: () {},
                           title: 'Thành tích bản thân',
                           hintText: 'Nhập thành tích bản thân',
                           isPassword: false,
@@ -432,24 +455,22 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          textEditingController: controller.graduationYear,
-                          obligatory: false,
-                          onPressed: () {},
-                          title: 'Năm tốt nghiệp',
-                          hintText: '2012',
-                          isPassword: false,
-                          isShowIcon: true,
-                          iconSuffix: Images.ic_date,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
-                        CustomTextField(
+                        // CustomTxf(
+                        //   textEditingController: controller.graduationYear,
+                        //   obligatory: false,
+                        //
+                        //   title: 'Năm tốt nghiệp',
+                        //   hintText: '05/2012',
+                        //   isPassword: false,
+                        //   isShowIcon: true,
+                        //   iconSuffix: Images.ic_date,
+                        // ),
+                        // SizedBox(
+                        //   height: AppDimens.space20,
+                        // ),
+                        CustomTxf(
                           textEditingController: controller.company,
                           obligatory: false,
-                          onPressed: () {},
                           title: 'Nơi công tác hiện tại (nếu có)',
                           hintText: 'Nhập nơi công tác hiện tại',
                           isPassword: false,
@@ -458,39 +479,16 @@ class UpdateInfoTeacherStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextFieldBox(
+
+                        CustomTxfBox(
                           textEditingController: controller.information,
                           obligatory: false,
-                          onPressed: () {},
                           title: 'Mô tả về bản thân',
-                          hintText: 'Nhập mô tả',
+                          hintText: 'Mô tảNhập mô tả',
                           isPassword: false,
-                          iconSuffix: Images.ic_plus,
+                          isShowIcon: false,
+                          iconSuffix: Images.ic_arrow_down,
                         ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        // CustomTextFieldBox(
-                        //   textEditingController: controller.experienceTeaching,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Kinh nghiệm đi dạy',
-                        //   hintText: '',
-                        //   isPassword: false,
-                        //   iconSuffix: Images.ic_plus,
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space20,
-                        // ),
-                        // CustomTextFieldBox(
-                        //   textEditingController: controller.achievements,
-                        //   obligatory: false,
-                        //   onPressed: () {},
-                        //   title: 'Thành tích',
-                        //   hintText: '',
-                        //   isPassword: false,
-                        //   iconSuffix: Images.ic_plus,
-                        // ),
                         SizedBox(
                           height: AppDimens.space20,
                         ),

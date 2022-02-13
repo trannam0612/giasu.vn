@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
@@ -18,18 +16,8 @@ import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_s
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_from_filter_point/list_tutor_from_filter_point_screen.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_tutor_teaching/list_tutor_teaching_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_controller.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_invite/list_class_invite_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_recently/list_class_recently_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_saved/list_class_saved_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_suggest/list_class_suggest_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/list_class_teaching/list_class_teaching_screen.dart';
-import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
-import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_screen.dart';
 import 'package:giasu_vn/search/search_screen.dart';
-import 'package:giasu_vn/widgets/card_class_home.dart';
-import 'package:giasu_vn/widgets/card_class_home2.dart';
 import 'package:giasu_vn/widgets/card_teacher_home.dart';
 import 'package:giasu_vn/widgets/card_teacher_home2.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
@@ -541,17 +529,16 @@ class _HomeAfterParentScreenState extends State<HomeAfterParentScreen> {
                             child: CardTeacherHome2(
                               name: controller.listGSPB[index].ugsName,
                               rate: 3,
-                              subject: controller.listGSPB[index].asDetailName
-                                  .join(', '),
-                              address:
-                                  "${controller.listGSPB[index].cityDetailNameGs ?? ''}, ${controller.listGSPB[index].citName}",
+                              subject: controller.listGSPB[index].asDetailName == ''
+                                  ? controller.listGSPB[index].asIdName.join(',')
+                                  : controller.listGSPB[index].asDetailName,
+                              address: "${controller.listGSPB[index].cityDetailNameGs ?? ''}, ${controller.listGSPB[index].citName}",
                               image: controller.listGSPB[index].ugsAvatar,
                               saved: controller.listGSPB[index].checkSave,
                               onTap: () {
                                 if (!controller.listGSPB[index].checkSave) {
                                   controller.listGSPB[index].checkSave = true;
-                                  controller.saveTutor(int.parse(
-                                      controller.listGSPB[index].ugsId));
+                                  controller.saveTutor(int.parse(controller.listGSPB[index].ugsId));
                                   controller.update();
                                 } else {
                                   controller.listGSPB[index].checkSave = false;

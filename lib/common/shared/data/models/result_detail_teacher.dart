@@ -301,6 +301,7 @@ class DataInfo {
     this.ugsAchievements,
     this.checkSave,
     this.pointFree,
+    this.pointBuy,
     this.checkMinusPoint,
   });
 
@@ -339,6 +340,7 @@ class DataInfo {
   String ugsAchievements;
   bool checkSave;
   String pointFree;
+  String pointBuy;
   bool checkMinusPoint;
 
   factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
@@ -348,7 +350,7 @@ class DataInfo {
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     ugsEmail: json["ugs_email"] == null ? null : json["ugs_email"],
     ugsPhone: json["ugs_phone"] == null ? null : json["ugs_phone"],
-    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
+    ugsAboutUs: json["ugs_about_us"] == null ? '' : json["ugs_about_us"],
     ugsBrithday: json["ugs_brithday"] == null ? null : json["ugs_brithday"],
     ugsGender: json["ugs_gender"] == null ? null : json["ugs_gender"],
     ugsMarriage: json["ugs_marriage"] == null ? null : json["ugs_marriage"],
@@ -376,7 +378,8 @@ class DataInfo {
     ugsJobDescription: json["ugs_job_description"] == null ? null : json["ugs_job_description"],
     ugsAchievements: json["ugs_achievements"] == null ? null : json["ugs_achievements"],
     checkSave: json["check_save"] == null ? null : json["check_save"],
-    pointFree: json["point_free"] == null ? null : json["point_free"],
+    pointFree: json["point_free"] == null ? '0' : json["point_free"],
+    pointBuy: json["point_buy"] == null ? '0' : json["point_buy"],
     checkMinusPoint: json["check_minus_point"] == null ? null : json["check_minus_point"],
   );
 

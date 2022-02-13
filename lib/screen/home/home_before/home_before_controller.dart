@@ -29,7 +29,7 @@ class HomeBeforeController extends GetxController {
         Get.to(HomeBeforeScreen());
       }
     } catch (e) {
-      print(e);
+      print('E: ${e.toString()}');
       Get.back();
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }

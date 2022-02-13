@@ -109,6 +109,9 @@ class DataDsgs {
     this.ugsAboutUs,
     this.ugsUnitPrice,
     this.ugsMonth,
+    this.ugsTime,
+
+    this.ugsSalary,
     this.checkSave,
   });
 
@@ -119,7 +122,7 @@ class DataDsgs {
   String asId;
   List<String> asIdName;
   String asDetail;
-  List<String> asDetailName;
+  String asDetailName;
   String ugsCity;
   String citName;
   String ugsCounty;
@@ -131,51 +134,61 @@ class DataDsgs {
   String ugsAboutUs;
   String ugsUnitPrice;
   String ugsMonth;
+  String ugsTime;
+
+  String ugsSalary;
   bool checkSave;
 
   factory DataDsgs.fromJson(Map<String, dynamic> json) => DataDsgs(
     ugsId: json["ugs_id"] == null ? null : json["ugs_id"],
-    ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
-    ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
-    linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
-    asId: json["as_id"] == null ? null : json["as_id"],
-    asIdName: json["as_id_name"] == null ? null : List<String>.from(json["as_id_name"].map((x) => x)),
-    asDetail: json["as_detail"] == null ? null : json["as_detail"],
-    asDetailName: json["as_detail_name"] == null ? null : List<String>.from(json["as_detail_name"].map((x) => x)),
-    ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
-    citName: json["cit_name"] == null ? null : json["cit_name"],
-    ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
-    cityDetailName: json["city_detail_name"] == null ? null : List<String>.from(json["city_detail_name"].map((x) => x)),
-    ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
-    cityNameGs: json["city_name_gs"] == null ? null : json["city_name_gs"],
-    ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
-    cityDetailNameGs: json["city_detail_name_gs"] == null ? null : json["city_detail_name_gs"],
-    ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
-    ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
-    ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+        ugsAvatar: json["ugs_avatar"] == null ? null : json["ugs_avatar"],
+        ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
+        linkDetailTutor: json["link_detailTutor"] == null ? null : json["link_detailTutor"],
+        asId: json["as_id"] == null ? null : json["as_id"],
+        asIdName: json["as_id_name"] == null ? [] : List<String>.from(json["as_id_name"].map((x) => x)),
+        asDetail: json["as_detail"] == null ? null : json["as_detail"],
+        asDetailName: json["as_detail_name"] == null ? '' : json["as_detail_name"],
+        ugsCity: json["ugs_city"] == null ? '' : json["ugs_city"],
+        citName: json["cit_name"] == null ? null : json["cit_name"],
+        ugsCounty: json["ugs_county"] == null ? null : json["ugs_county"],
+        cityDetailName: json["city_detail_name"] == null ? [] : List<String>.from(json["city_detail_name"].map((x) => x)),
+        ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
+        cityNameGs: json["city_name_gs"] == null ? null : json["city_name_gs"],
+        ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
+        cityDetailNameGs: json["city_detail_name_gs"] == null ? null : json["city_detail_name_gs"],
+        ugsAboutUs: json["ugs_about_us"] == null ? null : json["ugs_about_us"],
+        ugsUnitPrice: json["ugs_unit_price"] == null ? null : json["ugs_unit_price"],
+        ugsMonth: json["ugs_month"] == null ? null : json["ugs_month"],
+  ugsTime: json["ugs_time"] == null ? null : json["ugs_time"],
+
+  ugsSalary: json["ugs_salary"] == null ? null : json["ugs_salary"],
     checkSave: json["check_save"] == null ? null : json["check_save"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "ugs_id": ugsId == null ? null : ugsId,
-    "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
-    "ugs_name": ugsName == null ? null : ugsName,
-    "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
-    "as_id": asId == null ? null : asId,
-    "as_id_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
-    "as_detail": asDetail == null ? null : asDetail,
-    "as_detail_name": asDetailName == null ? null : List<dynamic>.from(asDetailName.map((x) => x)),
-    "ugs_city": ugsCity == null ? null : ugsCity,
-    "cit_name": citName == null ? null : citName,
-    "ugs_county": ugsCounty == null ? null : ugsCounty,
-    "city_detail_name": cityDetailName == null ? null : List<dynamic>.from(cityDetailName.map((x) => x)),
-    "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
-    "city_name_gs": cityNameGs == null ? null : cityNameGs,
-    "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
-    "city_detail_name_gs": cityDetailNameGs == null ? null : cityDetailNameGs,
-    "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
-    "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
-    "ugs_month": ugsMonth == null ? null : ugsMonth,
+  Map<String, dynamic> toJson() =>
+      {
+        "ugs_id": ugsId == null ? null : ugsId,
+        "ugs_avatar": ugsAvatar == null ? null : ugsAvatar,
+        "ugs_name": ugsName == null ? null : ugsName,
+        "link_detailTutor": linkDetailTutor == null ? null : linkDetailTutor,
+        "as_id": asId == null ? null : asId,
+        "as_name": asIdName == null ? null : List<dynamic>.from(asIdName.map((x) => x)),
+        "as_detail": asDetail == null ? null : asDetail,
+        "as_detail_name": asDetailName == null ? null : asDetailName,
+        "ugs_city": ugsCity == null ? null : ugsCity,
+        "cit_name": citName == null ? null : citName,
+        "ugs_county": ugsCounty == null ? null : ugsCounty,
+        "city_detail_name": cityDetailName == null ? null : List<dynamic>.from(cityDetailName.map((x) => x)),
+        "ugs_city_gs": ugsCityGs == null ? null : ugsCityGs,
+        "city_name_gs": cityNameGs == null ? null : cityNameGs,
+        "ugs_county_gs": ugsCountyGs == null ? null : ugsCountyGs,
+        "city_detail_name_gs": cityDetailNameGs == null ? null : cityDetailNameGs,
+        "ugs_about_us": ugsAboutUs == null ? null : ugsAboutUs,
+        "ugs_unit_price": ugsUnitPrice == null ? null : ugsUnitPrice,
+        "ugs_month": ugsMonth == null ? null : ugsMonth,
+        "ugs_time": ugsTime == null ? null : ugsTime,
+
+        "ugs_salary": ugsSalary == null ? null : ugsSalary,
     "check_save": checkSave == null ? null : checkSave,
   };
 }

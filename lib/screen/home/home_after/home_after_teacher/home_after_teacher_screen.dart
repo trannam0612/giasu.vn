@@ -314,7 +314,8 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                       onTap: () => informationClassController.detailClass(int.parse(controller.listLHGD[index].pftId), 0),
                                       child: CardClassHome(
                                         title: controller.listLHGD[index].pftSummary,
-                                        subject: controller.listLHGD[index].asName,
+                                        subject: controller.listLHGD[index].asDetailName==''?controller.listLHGD[index].asName:controller
+                                            .listLHGD[index].asDetailName,
                                         address: controller.listLHGD[index].citName,
                                         time: controller.timeAgo(int.parse(controller.listLHGD[index].dayPost)),
                                       ),
@@ -343,19 +344,20 @@ class _HomeAfterTeacherScreenState extends State<HomeAfterTeacherScreen> {
                                       title: controller.listLHPB[index].pftSummary,
                                       time: controller.timeAgo(int.parse(controller.listLHPB[index].dayPost)),
                                       fee: '${controller.listLHPB[index].pftPrice} vnđ/${controller.listLHPB[index].pftMonth}',
-                                      subject: controller.listLHPB[index].asDetailName??'Chưa cập nhật',
+                                      subject: controller.listLHPB[index].asDetailName ==''?controller.listLHPB[index].asName:controller.listLHPB[index].asDetailName,
                                       address: '${controller.listLHPB[index].ctyDetail}, ${controller.listLHPB[index].citName}',
                                       classId: controller.listLHPB[index].pftId,
                                       methodTeach: controller.listLHPB[index].pftForm,
                                       numberSuggest: controller.listLHPB[index].countDnd,
                                       save: controller.listLHPB[index].checkSave,
-                                      onTap: () {
+                                      onTap: ()async {
                                         if (!controller.listLHPB[index].checkSave) {
-                                          controller.listLHPB[index].checkSave = true;
                                           controller.saveClass(int.parse(controller.listLHPB[index].pftId));
                                         } else {
-                                          controller.listLHPB[index].checkSave = false;
-                                          controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId));
+                                         final res = await controller.deleteClassSaved(int.parse(controller.listLHPB[index].pftId),type: true);
+                                         if(res){
+                                           controller.listLHPB[index].checkSave = false;
+                                         }
                                         }
                                         controller.update();
                                       },

@@ -5,6 +5,7 @@ import 'package:giasu_vn/common/shared/data/models/result_get_info_parent.dart';
 import 'package:giasu_vn/common/shared/data/models/result_get_info_teaacher.dart';
 import 'package:giasu_vn/common/shared/data/repositories/user_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
+import 'package:giasu_vn/data_off/buoi_day.dart';
 import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
 import 'package:giasu_vn/screen/settings/settings_screen.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
@@ -18,6 +19,15 @@ class SettingsController extends GetxController {
   bool isSwitchedMessage = false;
   bool isSwitchedVibrate = false;
   String user;
+  List<buoiday> listbuoiday = [
+    buoiday('Thứ 2', '1', "0", "0"),
+    buoiday('Thứ 3', "0", "0", "0"),
+    buoiday('Thứ 4', "0", "0", "0"),
+    buoiday('Thứ 5', "0", "0", "0"),
+    buoiday('Thứ 6', "0", "0", "0"),
+    buoiday('Thứ 7', "0", "0", "0"),
+    buoiday('CN', "0", "0", "0"),
+  ];
 
   @override
   void onInit() {
@@ -73,6 +83,27 @@ class SettingsController extends GetxController {
       if (resultGetInfoTeacher.data != null) {
         // Get.back();
         // Utils.showToast(resultGetInfoTeacher.data.message);
+        listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
+        listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
+        listbuoiday[0].toi = resultGetInfoTeacher.data.lichday.tt2;
+        listbuoiday[1].sang = resultGetInfoTeacher.data.lichday.st3;
+        listbuoiday[1].chieu = resultGetInfoTeacher.data.lichday.ct3;
+        listbuoiday[1].toi = resultGetInfoTeacher.data.lichday.tt3;
+        listbuoiday[2].sang = resultGetInfoTeacher.data.lichday.st4;
+        listbuoiday[2].chieu = resultGetInfoTeacher.data.lichday.ct4;
+        listbuoiday[2].toi = resultGetInfoTeacher.data.lichday.tt4;
+        listbuoiday[3].sang = resultGetInfoTeacher.data.lichday.st5;
+        listbuoiday[3].chieu = resultGetInfoTeacher.data.lichday.ct5;
+        listbuoiday[3].toi = resultGetInfoTeacher.data.lichday.tt5;
+        listbuoiday[4].sang = resultGetInfoTeacher.data.lichday.st6;
+        listbuoiday[4].chieu = resultGetInfoTeacher.data.lichday.ct6;
+        listbuoiday[4].toi = resultGetInfoTeacher.data.lichday.tt6;
+        listbuoiday[5].sang = resultGetInfoTeacher.data.lichday.st7;
+        listbuoiday[5].chieu = resultGetInfoTeacher.data.lichday.ct7;
+        listbuoiday[5].toi = resultGetInfoTeacher.data.lichday.tt7;
+        listbuoiday[6].sang = resultGetInfoTeacher.data.lichday.scn;
+        listbuoiday[6].chieu = resultGetInfoTeacher.data.lichday.ccn;
+        listbuoiday[6].toi = resultGetInfoTeacher.data.lichday.tcn;
       } else {
         // Get.back();
         Utils.showToast(resultGetInfoTeacher.error.message);

@@ -3,16 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield_box.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
+import 'package:giasu_vn/widgets/custom_txtbox.dart';
 import 'package:giasu_vn/widgets/dialog_time.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:intl/intl.dart';
@@ -86,7 +87,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                                     padding: EdgeInsets.all(30),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(AppDimens.space100),
-                                        border: Border.all(color: controller.errorImage ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
+                                        border: Border.all(color: controller.errorImage.value ? AppColors.redFF0033 : AppColors.primary4C5BD4, width: 0.5)),
                                     child: SvgPicture.asset(Images.ic_add_camera),
                                   ),
                                 )
@@ -103,7 +104,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                                   ),
                                 ),
                         ),
-                        controller.errorImage
+                        controller.errorImage.value
                             ? Padding(
                                 padding: const EdgeInsets.only(top: AppDimens.space4),
                                 child: Text(
@@ -116,13 +117,11 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.fullName,
+                          keyText: controller.fullNameKey,
                           obligatory: true,
-                          error: controller.checkFullName(),
-                          onPressed: () {
-                            // controller.imgFromGallery();
-                          },
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                           title: 'Họ tên',
                           hintText: 'Nhập họ tên',
                           isPassword: false,
@@ -132,17 +131,15 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           keyboardType: TextInputType.number,
+                          keyText: controller.phoneKey,
+                          validator: (p0) => Validate.validatePhone(p0),
                           obligatory: true,
-                          onPressed: () {
-                            controller.changeValuePassword();
-                          },
                           title: 'Số điện thoại',
                           textEditingController: controller.phone,
                           hintText: 'Nhập số điện thoại',
-                          error: controller.checkPhone(),
                         ),
                         SizedBox(
                           height: AppDimens.space20,
@@ -156,19 +153,10 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           list: controller.listGender,
                           borderColor: controller.errorGender ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
-                        // controller.errorGender
-                        //     ? Padding(
-                        //         padding: const EdgeInsets.only(top: AppDimens.space4),
-                        //         child: Text(
-                        //           '\t\tTrường bắt buộc!',
-                        //           style: AppTextStyles.regularW400(context, size: 12, color: AppColors.redFF0033),
-                        //         ),
-                        //       )
-                        //     : Container(),
                         SizedBox(
                           height: AppDimens.space30,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             // controller.dateTime.text.isEmpty
                             controller.dateTime.text = f.format(DateTime.now());
@@ -181,7 +169,6 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           readOnly: true,
                           isShowIcon: true,
                           textEditingController: controller.dateTime,
-                          onPressed: () {},
                           title: 'Ngày sinh',
                           hintText: 'Chọn ngày sinh',
                           iconSuffix: Images.ic_date,
@@ -190,7 +177,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanhParent(context));
@@ -199,7 +186,8 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           isShowIcon: true,
                           obligatory: true,
                           textEditingController: controller.provincial,
-                          onPressed: () {},
+                          keyText: controller.provincialKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),
                           title: 'Tỉnh, thành phố',
                           hintText: 'Chọn tỉnh, thành phố',
                           iconSuffix: Images.ic_arrow_down,
@@ -208,7 +196,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           onTapTextField: () {
                             Get.to(SelectDistrict(context));
                           },
@@ -216,7 +204,9 @@ class RegisterParentStep2Screen extends StatelessWidget {
                           isShowIcon: true,
                           obligatory: true,
                           textEditingController: controller.district,
-                          onPressed: () {},
+                          keyText: controller.districtKey,
+                          validator: (p0) => Validate.validateIsEmpty(p0),
+
                           title: 'Quận/huyện',
                           hintText: 'Chọn Quận/huyện',
                           iconSuffix: Images.ic_arrow_down,
@@ -225,11 +215,12 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
-                          onTapTextField: () {},
+                        CustomTxf(
+                          keyText: controller.addressKey,
+                          validator: (value) => Validate.validateIsEmpty(value),
                           isShowIcon: false,
+                          obligatory: true,
                           textEditingController: controller.address,
-                          onPressed: () {},
                           title: 'Địa chỉ',
                           hintText: 'Địa chỉ của bạn',
                           iconSuffix: Images.ic_arrow_down,
@@ -238,19 +229,16 @@ class RegisterParentStep2Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextFieldBox(
-                          error: controller.checkInformation(),
-                          textEditingController: controller.information,
-                          obligatory: true,
-                          onPressed: () {},
-                          title: 'Mô tả về bản thân',
-                          hintText: 'Nhập mô tả',
-                          isPassword: false,
-                          iconSuffix: Images.ic_plus,
-                        ),
-                        SizedBox(
-                          height: AppDimens.height * 0.07,
-                        ),
+                        // CustomTxfBox(
+                        //   textEditingController: controller.information,
+                        //   title: 'Mô tả về bản thân',
+                        //   hintText: 'Nhập mô tả',
+                        //   isPassword: false,
+                        //   iconSuffix: Images.ic_plus,
+                        // ),
+                        // SizedBox(
+                        //   height: AppDimens.height * 0.07,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: AppDimens.space16),
                           child: SizedBox(
@@ -258,6 +246,7 @@ class RegisterParentStep2Screen extends StatelessWidget {
                             height: AppDimens.height * 0.07,
                             child: CustomButton2(
                               onPressed: () {
+                                print(controller.errorImage);
                                 controller.checkButton();
                               },
                               title: 'Đăng ký',
@@ -502,7 +491,7 @@ DialogImage() {
                           onPressed: () {
                             // controller.avatar = controller.imageAvatar;
                             controller.changeAvatar();
-                            controller.errorImage = false;
+                            controller.errorImage.value = false;
                             // controller.uploadAvatar();
                             Get.back();
                           },

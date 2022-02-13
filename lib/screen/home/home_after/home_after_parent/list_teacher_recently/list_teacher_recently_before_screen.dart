@@ -95,8 +95,8 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
           controller: _controller,
           itemCount: controller.listGSGDBefore.length,
           itemBuilder: (context, index) => InkWell(
-            onTap: () => Get.dialog(DialogErrorLogin()),
-            // onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSGDBefore[index].ugsId), 5),
+            // onTap: () => Get.dialog(DialogErrorLogin()),
+            onTap : () =>  informationTeacherController.detailTeacher(int.parse(controller.listGSGDBefore[index].ugsId), 5),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppDimens.space6, vertical: AppDimens.space6),
               child: SizedBox(
@@ -167,7 +167,9 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
                                 ),
                                 Expanded(
                                   child: Text(
-                                    controller.listGSGDBefore[index].asDetailName.join(', '),
+                                    controller.listGSGDBefore[index].asDetailName != ''
+                                        ? controller.listGSGDBefore[index].asDetailName
+                                        : controller.listGSGDBefore[index].asIdName.join(', '),
                                     style: AppTextStyles.regular(
                                       context,
                                       size: AppDimens.textSize14,
@@ -193,8 +195,8 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
                                   width: AppDimens.space8,
                                 ),
                                 Expanded(
-                                  child: Text(
-                                    '${controller.listGSGDBefore[index].cityDetailName.join(',')}, ${controller.listGSGDBefore[index].citName}',
+                                  child: Text(controller.listGSGDBefore[index].cityDetailName.isNotEmpty?
+                                    '${controller.listGSGDBefore[index].cityDetailName.join(', ')}, ${controller.listGSGDBefore[index].citName}':'${controller.listGSGDBefore[index].citName}',
                                     style: AppTextStyles.regular(
                                       context,
                                       size: AppDimens.textSize14,
@@ -221,7 +223,9 @@ class _ListTeacherRecentlyBeforeScreenState extends State<ListTeacherRecentlyBef
                                   width: AppDimens.space6,
                                 ),
                                 Text(
-                                  controller.listGSGDBefore[index].ugsUnitPrice =='0' ?'${controller.listGSGDBefore[index].ugsSalary} vnđ/${controller.listGSGDBefore[index].ugsMonth}': '${controller.listGSGDBefore[index].ugsUnitPrice} vnđ/${controller.listGSGDBefore[index].ugsMonth}',
+                                  controller.listGSGDBefore[index].ugsUnitPrice == '0'
+                                      ? '${controller.listGSGDBefore[index].ugsSalary} vnđ/${controller.listGSGDBefore[index].ugsMonth}'
+                                      : '${controller.listGSGDBefore[index].ugsUnitPrice} vnđ/${controller.listGSGDBefore[index].ugsTime}',
                                   style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
                                 ),
                               ],

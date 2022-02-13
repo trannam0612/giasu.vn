@@ -188,12 +188,15 @@ class AuthenticationRepositories {
     return rest;
   }
 
-  Future<ResultData> reSendOTPRegister(String email) async {
+  Future<ResultData> reSendOTPRegister(String email,String type) async {
     Map<String, dynamic> header = {
       'accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    Map<String, dynamic> body = {"email": email};
+
+    ///'user_type':type =='1'?'2':'1':
+    ///Tại vì thằng thằng ranh con Hướng n đang để ph là 1, gs là 2 nên phải code củ chuối như này
+    Map<String, dynamic> body = {"email": email,'user_type':type =='1'?'2':'1'};
     ResultData rest = await httpManager.netFetch(Address.send_back_otp, body, header, Options(method: 'post'));
     return rest;
   }

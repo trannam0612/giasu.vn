@@ -143,32 +143,34 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  flex: 7,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          SvgPicture.asset(
-                                            Images.ic_money,
-                                            width: 14,
-                                            height: 14,
-                                          ),
-                                          SizedBox(
-                                            width: AppDimens.space8,
-                                          ),
-                                          Text(
-                                            '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGDMore[index].pftMonth}',
-                                            style: AppTextStyles.regular(
-                                              context,
-                                              size: AppDimens.textSize14,
-                                            ),
-                                            overflow: TextOverflow.fade,
-                                          ),
-                                        ],
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              SvgPicture.asset(
+                                                Images.ic_money,
+                                                width: 14,
+                                                height: 14,
+                                              ),
+                                              SizedBox(
+                                                width: AppDimens.space8,
+                                              ),
+                                              Flexible(
+                                                child: Text(
+                                                  '${controller.listLHGDMore[index].pftPrice} vnđ/${controller.listLHGDMore[index].pftMonth}',
+                                                  maxLines: 1,
+                                                  style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize14,
+                                                  ),
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                       ),
                                       SizedBox(
                                         height: AppDimens.space6,
@@ -186,12 +188,14 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.listLHGDMore[index].asDetailName,
-                                            style: AppTextStyles.regular(
-                                              context,
-                                              size: AppDimens.textSize14,
-                                            ),
-                                          ),
+                                                controller.listLHGDMore[index].asDetailName == ''
+                                                    ? controller.listLHGDMore[index].asName
+                                                    : controller.listLHGDMore[index].asDetailName,
+                                                style: AppTextStyles.regular(
+                                                  context,
+                                                  size: AppDimens.textSize14,
+                                                ),
+                                              ),
                                         ],
                                       ),
                                       SizedBox(
@@ -209,34 +213,37 @@ class _ListClassRecentlyScreenState extends State<ListClassRecentlyScreen> {
                                           SizedBox(
                                             width: AppDimens.space8,
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                              '${controller.listLHGDMore[index].ctyDetail}, ${controller.listLHGDMore[index].citName}',
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
+                                          Flexible(
+                                                child: Text(
+                                                  '${controller.listLHGDMore[index].ctyDetail}, ${controller.listLHGDMore[index].citName}',
+                                                  style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize14,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
                                               ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 6,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                    ),
+                                    SizedBox(
+                                      width: AppDimens.space6,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            'Ngày đăng:',
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
-                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Ngày đăng:',
+                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.grey747474),
+                                              ),
                                           SizedBox(
                                             width: AppDimens.space4,
                                           ),

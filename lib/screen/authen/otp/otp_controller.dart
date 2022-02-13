@@ -67,7 +67,7 @@ class OTPController extends GetxController {
     Get.dialog(DialogLoading());
     try {
       String email = SpUtil.getString(ConstString.EMAIL);
-      ResultData res = await authenticationRepositories.reSendOTPRegister(email);
+      ResultData res = await authenticationRepositories.reSendOTPRegister(email,userType);
       ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
       if (resultReSendOtpRegister.data != null) {
         SpUtil.putString(ConstString.token_register, resultReSendOtpRegister.data.token);
@@ -104,10 +104,12 @@ class OTPController extends GetxController {
     });
     update();
   }
-
+String userType;
   @override
   void onInit() {
     startTimer();
+    userType = SpUtil.getString(ConstString.USER_TYPE);
+    print('userType${userType}');
     // TODO: implement onInit
     super.onInit();
   }

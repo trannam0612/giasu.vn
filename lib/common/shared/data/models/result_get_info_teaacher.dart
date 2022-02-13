@@ -111,9 +111,9 @@ class InfoTutor {
   String ugsGraduationYear;
   String ugsSpecialized;
   String ugsCityGs;
-  dynamic citNameGs;
+  String citNameGs;
   String ugsCountyGs;
-  dynamic citDetailGs;
+  String citDetailGs;
   String ugsAddress;
   String ugsWorkplace;
   String ugsAboutUs;
@@ -143,14 +143,14 @@ class InfoTutor {
     ugsName: json["ugs_name"] == null ? null : json["ugs_name"],
     ugsGender: json["ugs_gender"] == null ? null : json["ugs_gender"],
     ugsBrithday: json["ugs_brithday"] == null ? null : json["ugs_brithday"],
-    ugsMarriage: json["ugs_marriage"] == null ? null : json["ugs_marriage"],
-    nametype: json["nametype"] == null ? null : json["nametype"],
+    ugsMarriage: json["ugs_marriage"] == null ? '' : json["ugs_marriage"],
+    nametype: json["nametype"] == null ? '' : json["nametype"],
     ctName: json["ct_name"] == null ? null : json["ct_name"],
     ugsSchool: json["ugs_school"] == null ? null : json["ugs_school"],
     ugsGraduationYear: json["ugs_graduation_year"] == null ? null : json["ugs_graduation_year"],
-    ugsSpecialized: json["ugs_specialized"] == null ? null : json["ugs_specialized"],
+    ugsSpecialized: json["ugs_specialized"] == null ? '' : json["ugs_specialized"],
     ugsCityGs: json["ugs_city_gs"] == null ? null : json["ugs_city_gs"],
-    citNameGs: json["cit_name_gs"],
+    citNameGs: json["cit_name_gs"] == null ? null : json["cit_name_gs"],
     ugsCountyGs: json["ugs_county_gs"] == null ? null : json["ugs_county_gs"],
     citDetailGs: json["cit_detail_gs"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],

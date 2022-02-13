@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
-import 'package:giasu_vn/screen/authen/forgot/forgot_controller.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 
 import 'change_password_controller.dart';
 
@@ -49,14 +49,16 @@ class ChangePasswordScreen extends StatelessWidget {
                     SizedBox(
                       height: AppDimens.height * 0.1,
                     ),
-                    CustomTextField(
+                    CustomTxf(
+                      keyText: controller.oldPassWordKey,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp(' ')),
                       ],
+                      validator: (p0) => Validate.validateIsEmpty(p0),
                       maxLine: 1,
                       isShowIcon: true,
                       obligatory: true,
-                      onPressed: () {
+                      onPressedIcon: () {
                         controller.changeValueOldPassword();
                       },
                       title: 'Nhập mật khẩu cũ',
@@ -64,19 +66,20 @@ class ChangePasswordScreen extends StatelessWidget {
                       hintText: 'Nhập mật khẩu cũ',
                       isPassword: controller.isShowOldPassWord,
                       iconSuffix: controller.isShowOldPassWord ? Images.ic_eye_on : Images.ic_eye_off,
-                      error: controller.checkOldPassword(),
                     ),
                     SizedBox(
                       height: AppDimens.space20,
                     ),
-                    CustomTextField(
+                    CustomTxf(
+                      keyText: controller.passWordKey,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp(' ')),
                       ],
+                      validator: (p0) => Validate.validatePassword(p0),
                       maxLine: 1,
                       isShowIcon: true,
                       obligatory: true,
-                      onPressed: () {
+                      onPressedIcon: () {
                         controller.changeValuePassword();
                       },
                       title: 'Nhập mật khẩu mới',
@@ -84,27 +87,27 @@ class ChangePasswordScreen extends StatelessWidget {
                       hintText: 'Nhập mật khẩu mới',
                       isPassword: controller.isShowPassword,
                       iconSuffix: controller.isShowPassword ? Images.ic_eye_on : Images.ic_eye_off,
-                      error: controller.checkPassword(),
                     ),
                     SizedBox(
                       height: AppDimens.space20,
                     ),
-                    CustomTextField(
+                    CustomTxf(
+                      keyText: controller.rePassWordKey,
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(RegExp(' ')),
                       ],
+                      validator: (p0) => Validate.validateRePassword(p0, controller.passWord.text),
                       maxLine: 1,
                       isShowIcon: true,
                       obligatory: true,
                       textEditingController: controller.rePassWord,
-                      onPressed: () {
+                      onPressedIcon: () {
                         controller.changeValueRePassword();
                       },
                       title: 'Nhập lại mật khẩu mới',
                       hintText: 'Nhập lại mật khẩu mới',
                       isPassword: controller.isShowRePassword,
                       iconSuffix: controller.isShowRePassword ? Images.ic_eye_on : Images.ic_eye_off,
-                      error: controller.checkRePassword(),
                     ),
                     SizedBox(
                       height: AppDimens.height * 0.07,

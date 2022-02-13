@@ -33,10 +33,19 @@ class InformationClassController extends GetxController {
   ];
 
   @override
+  void onReady() {
+    // TODO: implement onReady
+    token = SpUtil.getString(ConstString.token);
+    print('token = ${token }');
+    super.onReady();
+  }
+  @override
   void onInit() {
     // TODO: implement onInit
+    print('');
     user = SpUtil.getString(ConstString.Status_user);
     token = SpUtil.getString(ConstString.token);
+    print('token = ${token }');
     super.onInit();
   }
 

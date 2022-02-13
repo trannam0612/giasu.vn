@@ -118,7 +118,9 @@ class DataInfo {
     this.nametype,
     this.pftAddress,
     this.pftPhone,
+    this.pftEmail,
     this.checkSave,
+    this.checkTeaching,
     this.checkOffer,
   });
 
@@ -146,7 +148,9 @@ class DataInfo {
   String nametype;
   String pftAddress;
   String pftPhone;
+  String pftEmail;
   bool checkSave;
+  bool checkTeaching;
   bool checkOffer;
 
   factory DataInfo.fromJson(Map<String, dynamic> json) => DataInfo(
@@ -162,7 +166,7 @@ class DataInfo {
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
-    asDetailName: json["as_detail_name"] == null ? null : json["as_detail_name"],
+    asDetailName: json["as_detail_name"] == null ? '' : json["as_detail_name"],
     pftGender: json["pft_gender"] == null ? null : json["pft_gender"],
     pftForm: json["pft_form"] == null ? null : json["pft_form"],
     ctId: json["ct_id"] == null ? null : json["ct_id"],
@@ -174,7 +178,9 @@ class DataInfo {
     nametype: json["nametype"] == null ? null : json["nametype"],
     pftAddress: json["pft_address"] == null ? null : json["pft_address"],
     pftPhone: json["pft_phone"] == null ? null : json["pft_phone"],
+    pftEmail: json["pft_email"] == null ? null : json["pft_email"],
     checkSave: json["check_save"] == null ? null : json["check_save"],
+    checkTeaching: json["check_teaching"] == null ? null : json["check_teaching"],
     checkOffer: json["check_offer"] == null ? null : json["check_offer"],
   );
 

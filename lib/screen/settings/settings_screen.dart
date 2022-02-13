@@ -54,12 +54,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             'Cài đặt',
             style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
           ),
-          leading: IconButton(
-            icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
-            onPressed: () {
-              navigationController.changePage(0);
-            },
-          ),
+          automaticallyImplyLeading: false,
+
         ),
         body: SingleChildScrollView(
           child: controller.resultGetInfoParent.data != null || controller.resultGetInfoTeacher.data != null
@@ -110,7 +106,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         controller.user == '1'
                                             ? Container(
                                                 child: Text(
-                                                  'Điểm: ${controller.resultGetInfoParent.data.data.pointFree}',
+                                                  'Điểm: ${int.parse(controller.resultGetInfoParent.data.data.pointBuy)+int.parse(controller
+                                                      .resultGetInfoParent.data.data.pointFree)}',
                                                   style:
                                                       AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.primary4C5BD4),
                                                 ),
@@ -452,9 +449,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          controller.resultGetInfoTeacher.data.infoTutor.citName == ''
-                                              ? 'Chưa cập nhật'
-                                              : controller.resultGetInfoTeacher.data.infoTutor.citName,
+                                          controller.resultGetInfoTeacher.data.infoTutor.citNameGs,
                                           style: AppTextStyles.regularW500(context, size: AppDimens.textSize16, color: AppColors.black),
                                           overflow: TextOverflow.clip,
                                           textAlign: TextAlign.end,

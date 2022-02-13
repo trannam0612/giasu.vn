@@ -53,15 +53,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         title: Text('Thông báo'),
         backgroundColor: AppColors.primary4C5BD4,
         elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            Images.ic_arrow_left_iphone,
-            color: AppColors.whiteFFFFFF,
-          ),
-          onPressed: () {
-            navigationController.changePage(0);
-          },
-        ),
+        automaticallyImplyLeading: false,
+
       ),
       body: GetBuilder<NotificationController>(
         init: NotificationController(),

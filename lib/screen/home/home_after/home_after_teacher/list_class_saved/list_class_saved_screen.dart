@@ -128,8 +128,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Flexible(
-                                  flex: 9,
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -145,11 +144,15 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                           SizedBox(
                                             width: AppDimens.space8,
                                           ),
-                                          Text(
-                                            '${controller.listLDL[index].pftPrice} vnđ/${controller.listLDL[index].pftMonth}',
-                                            style: AppTextStyles.regular(
-                                              context,
-                                              size: AppDimens.textSize14,
+                                          Flexible(
+                                            child: Text(
+                                              '${controller.listLDL[index].pftPrice} vnđ/${controller.listLDL[index].pftMonth}',
+                                              style: AppTextStyles.regular(
+                                                context,
+                                                size: AppDimens.textSize14,
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
@@ -170,7 +173,9 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.listLDL[index].asDetailName,
+                                            controller.listLDL[index].asDetailName == ''
+                                                ? controller.listLDL[index].asName
+                                                : controller.listLDL[index].asDetailName,
                                             style: AppTextStyles.regular(
                                               context,
                                               size: AppDimens.textSize14,
@@ -208,8 +213,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     ],
                                   ),
                                 ),
-                                Flexible(
-                                  flex: 8,
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -298,8 +302,8 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                           title: 'Đề nghị dạy',
                                           color: AppColors.primary4C5BD4,
                                           onPressed: () {
-                                            controller.offerTeach(int.parse(controller.listLDL[index].pftId));
-                                            controller.listLDL[index].checkOffer = true;
+                                            controller.offerTeach(int.parse(controller.listLDL[index].pftId), type: true);
+
                                             controller.update();
                                           },
                                           textColor: AppColors.whiteFFFFFF,
@@ -315,9 +319,14 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                     textColor: AppColors.black,
                                     onPressed: () {
                                       Get.dialog(DialogConfirm(
-                                        onPressed: () {
-                                          homeAfterTeacherController.deleteClassSaved(int.parse(controller.listLDL[index].pftId));
-                                          controller.listLDL.remove(controller.listLDL[index]);
+                                        onPressed: () async {
+                                          final res = await homeAfterTeacherController.deleteClassSaved(int.parse(controller.listLDL[index].pftId),
+                                              type: false);
+                                          print('res:${res}');
+
+                                          if (res) {
+                                            controller.listLDL.remove(controller.listLDL[index]);
+                                          } else {}
                                           Get.back();
                                           controller.update();
                                         },
@@ -325,7 +334,7 @@ class _ListClassSavedScreenState extends State<ListClassSavedScreen> {
                                       ));
                                     },
                                     color: AppColors.grey747474,
-                                    title: 'Huỷ lưu',
+                                    title: 'Hủy lưu',
                                     backColor: AppColors.whiteFFFFFF,
                                   ),
                                 )

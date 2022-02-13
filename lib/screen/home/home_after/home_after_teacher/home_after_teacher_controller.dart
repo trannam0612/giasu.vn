@@ -8,8 +8,6 @@ import 'package:giasu_vn/common/shared/data/models/result_save_class.dart';
 import 'package:giasu_vn/common/shared/data/repositories/home_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_screen.dart';
-import 'package:giasu_vn/screen/home/home_after/home_after_teacher/home_after_teacher_screen.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_screen.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:intl/intl.dart';
@@ -66,6 +64,8 @@ class HomeAfterTeacherController extends GetxController {
       }
     } catch (e) {
       print(e);
+      print("21123123132: ${e.toString()}");
+
       Get.back();
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
@@ -92,13 +92,15 @@ class HomeAfterTeacherController extends GetxController {
   }
 
   Future<void> saveClass(int idClass) async {
-    // await Future.delayed(Duration(milliseconds: 1));
-    // Get.dialog(DialogLoading());
+    print('saveClass');
     try {
       String token = SpUtil.getString(ConstString.token);
       ResultData res = await homeRepositories.saveClass(token, idClass);
       resultSaveClass = resultSaveClassFromJson(res.data);
       if (resultSaveClass.data != null) {
+        resultHomeAfterTeacher.data.ldl = (int.parse(resultHomeAfterTeacher.data.ldl ?? '0') + 1).toString();
+        listLHPB[listLHPB.indexWhere((element) => element.pftId == idClass.toString())].checkSave = true;
+
         Utils.showToast('Đã lưu');
       } else {
         Utils.showToast(resultSaveClass.error.message);
@@ -110,7 +112,7 @@ class HomeAfterTeacherController extends GetxController {
     update();
   }
 
-  Future<void> deleteClassSaved(int idClass) async {
+  Future<bool> deleteClassSaved(int idClass, {bool type = false}) async {
     // await Future.delayed(Duration(milliseconds: 1));
     // Get.dialog(DialogLoading());
     try {
@@ -119,12 +121,19 @@ class HomeAfterTeacherController extends GetxController {
       resultDeleteClassSaved = resultDeleteClassSavedFromJson(res.data);
       if (resultDeleteClassSaved.data != null) {
         Utils.showToast('Đã bỏ lưu');
+
+        return true;
       } else {
+
         Utils.showToast(resultDeleteClassSaved.error.message);
+        return false;
+
       }
     } catch (e) {
       print(e);
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
+      return false;
+
     }
     update();
   }

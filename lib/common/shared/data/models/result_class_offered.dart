@@ -88,7 +88,7 @@ class ListLddn {
   String pftId;
   String pftSummary;
   String linkDetailClass;
-  int otDate;
+  String otDate;
   String cityId;
   String citName;
   String cityDetail;
@@ -115,7 +115,7 @@ class ListLddn {
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
-    asDetailName: json["as_detail_name"] == null ? null : json["as_detail_name"],
+    asDetailName: json["as_detail_name"] == null ? '' : json["as_detail_name"],
     pftForm: json["pft_form"] == null ? null : json["pft_form"],
     pftPrice: json["pft_price"] == null ? null : json["pft_price"],
     pftMonth: json["pft_month"] == null ? null : json["pft_month"],

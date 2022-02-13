@@ -50,7 +50,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     result: json["result"] == null ? null : json["result"],
     message: json["message"] == null ? null : json["message"],
-    listSubjectTag: json["listSubjectTag"] == null ? null : List<ListSubjectTag>.from(json["listSubjectTag"].map((x) => ListSubjectTag.fromJson(x))),
+    listSubjectTag: json["listSubjectTag"] == null ? [] : List<ListSubjectTag>.from(json["listSubjectTag"].map((x) => ListSubjectTag.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {

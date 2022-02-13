@@ -20,6 +20,7 @@ class ListTeacherRecentlyController extends GetxController {
       ResultData res = await homeRepositories.homeAfter(token, currentPage, limit);
       resultHomeAfterParent = resultHomeAfterParentFromJson(res.data);
       if (resultHomeAfterParent.data != null) {
+        print('resultHomeAfterParent:${resultHomeAfterParent.data.dataDsgsgd.map((e) => e.asIdName)}');
         if (resultHomeAfterParent.data.dataDsgsgd.length > 0) {
           for (int i = 0; i < resultHomeAfterParent.data.dataDsgsgd.length; i++) {
             listGSGDMore.add(resultHomeAfterParent.data.dataDsgsgd[i]);

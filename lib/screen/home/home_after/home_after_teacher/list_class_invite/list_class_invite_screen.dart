@@ -142,8 +142,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Flexible(
-                                      flex: 7,
+                                    Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -159,11 +158,15 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                               SizedBox(
                                                 width: AppDimens.space8,
                                               ),
-                                              Text(
-                                                '${controller.listPHMD[index].pftPrice}vnđ/${controller.listPHMD[index].pftMonth}',
-                                                style: AppTextStyles.regular(
-                                                  context,
-                                                  size: AppDimens.textSize14,
+                                              Flexible(
+                                                child: Text(
+                                                  '${controller.listPHMD[index].pftPrice}vnđ/${controller.listPHMD[index].pftMonth}',
+                                                  style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize14,
+                                                  ),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
                                                 ),
                                               ),
                                             ],
@@ -184,7 +187,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                                 width: AppDimens.space8,
                                               ),
                                               Text(
-                                                controller.listPHMD[index].asDetailName,
+                                                controller.listPHMD[index].asDetailName ==''?controller.listPHMD[index].asName:controller.listPHMD[index].asDetailName,
                                                 style: AppTextStyles.regular(
                                                   context,
                                                   size: AppDimens.textSize14,
@@ -207,13 +210,14 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                               SizedBox(
                                                 width: AppDimens.space8,
                                               ),
-                                              Expanded(
+                                              Flexible(
                                                 child: Text(
                                                   '${controller.listPHMD[index].ctyDetail}, ${controller.listPHMD[index].citName}',
                                                   style: AppTextStyles.regular(
                                                     context,
                                                     size: AppDimens.textSize14,
                                                   ),
+                                                  maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,
                                                 ),
                                               ),
@@ -222,8 +226,7 @@ class _ListClassInviteScreenState extends State<ListClassInviteScreen> {
                                         ],
                                       ),
                                     ),
-                                    Flexible(
-                                      flex: 6,
+                                    Expanded(
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [

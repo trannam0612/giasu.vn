@@ -111,7 +111,7 @@ class ListClass {
     asId: json["as_id"] == null ? null : json["as_id"],
     asName: json["as_name"] == null ? null : json["as_name"],
     asDetail: json["as_detail"] == null ? null : json["as_detail"],
-    asNameDetail: json["as_name_detail"] == null ? null : json["as_name_detail"],
+    asNameDetail: json["as_name_detail"] == null ? '' : json["as_name_detail"],
     cityId: json["city_id"] == null ? null : json["city_id"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     cityDetail: json["city_detail"] == null ? null : json["city_detail"],

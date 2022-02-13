@@ -40,12 +40,23 @@ class ListClassSavedController extends GetxController {
     update();
   }
 
-  Future<void> offerTeach(int idClass) async {
+  Future<void> offerTeach(int idClass, {bool type = false}) async {
     String token = SpUtil.getString(ConstString.token);
     try {
       ResultData res = await homeRepositories.offerTeach(token, idClass);
       resultOfferTeach = resultOfferTeachFromJson(res.data);
       if (resultOfferTeach.data != null) {
+        print('type:${type}');
+
+        if (type == true) {
+          print('type:${type}');
+          listLDL[listLDL.indexWhere((element) => element.pftId == idClass.toString())].checkOffer = true;
+        }
+        else {
+          print('type:${type}');
+
+          print('');
+        }
         Utils.showToast('Đã đề nghị');
       } else {
         Utils.showToast(resultOfferTeach.error.message);

@@ -19,11 +19,15 @@ class ListClassSuggestController extends GetxController {
   List<ListLddn> listLDDN = [];
 
   Future<void> classOffered(int currentPage, int limit) async {
+    print('classOffered');
     String token = SpUtil.getString(ConstString.token);
     try {
       ResultData res = await homeRepositories.classOffered(token, currentPage, limit);
       resultClassOffered = resultClassOfferedFromJson(res.data);
+      print('listLDDN:${listLDDN.length}');
+
       if (resultClassOffered.data != null) {
+        print('listLDDN:${listLDDN.length}');
         if (resultClassOffered.data.listLddn.isNotEmpty) {
           for (int i = 0; i < resultClassOffered.data.listLddn.length; i++) {
             listLDDN.add(resultClassOffered.data.listLddn[i]);
@@ -35,7 +39,7 @@ class ListClassSuggestController extends GetxController {
         Utils.showToast(resultClassOffered.error.message);
       }
     } catch (e) {
-      print(e);
+      print("eeee: ${e.toString()}");
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
     update();
@@ -47,6 +51,7 @@ class ListClassSuggestController extends GetxController {
       ResultData res = await homeRepositories.deleteClassOffered(token, idClass);
       resultDeleteClassOffered = resultDeleteClassOfferedFromJson(res.data);
       if (resultDeleteClassOffered.data != null) {
+        listLDDN.removeWhere((element) => element.pftId == idClass.toString());
         Utils.showToast('Đã xoá');
       } else {
         Utils.showToast(resultDeleteClassOffered.error.message);

@@ -12,7 +12,8 @@ import '../routes/app_pages.dart';
 import '../screen/authen/register/intro_login.dart';
 
 class DialogErrorPass extends StatelessWidget {
-  const DialogErrorPass({Key key}) : super(key: key);
+  final String text;
+  const DialogErrorPass({Key key, this.text = 'Mật khẩu mới không trùng nhau'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class DialogErrorPass extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppDimens.space40),
               child: Text(
-                'Mật khẩu không chứa dấu cách, bao gồm chữ hoa, chữ thường và ít nhất một chữ số',
+                text,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.grey686F7A, lineHeight: 22),
               ),

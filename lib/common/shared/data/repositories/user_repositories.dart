@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -105,6 +106,7 @@ class UserRepositories {
       'ugs_county': county,
       'lichday': lichday,
     };
+    log(body.toString());
 
     ResultData rest = await httpManager.netFetch(Address.update_info_tutor, body, header, Options(method: 'post'));
 

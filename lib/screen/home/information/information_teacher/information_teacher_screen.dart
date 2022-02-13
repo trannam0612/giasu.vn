@@ -10,7 +10,6 @@ import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/common/utils.dart';
-import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/home_after_parent_controller.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_teacher_suggest/list_teacher_suggest_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_teacher/information_teacher_controller.dart';
@@ -18,13 +17,10 @@ import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
-import 'package:giasu_vn/widgets/custom_textfield_box.dart';
 import 'package:giasu_vn/widgets/dialog_error_login.dart';
 import 'package:giasu_vn/widgets/dialog_watch_teacher.dart';
 import 'package:sp_util/sp_util.dart';
 
-import '../../../../common/theme/app_dimens.dart';
-import '../../../../common/theme/app_dimens.dart';
 import '../../../../common/theme/app_dimens.dart';
 import '../../../../common/utils.dart';
 import 'checkbox_list_class.dart';
@@ -177,7 +173,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                       onTap: () {
                                         controller.token != ''
                                             ? Get.dialog(DialogWatchTeacher(
-                                                point: controller.resultDetailTeacher.data.data.dataInfo.pointFree,
+                                                point:
+                                                    '${int.parse(controller.resultDetailTeacher.data.data.dataInfo.pointFree) + int.parse(controller.resultDetailTeacher.data.data.dataInfo.pointBuy)}',
                                                 teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                                                 nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                                                 ontap: () {
@@ -230,6 +227,8 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                     child: InkWell(
                                       onTap: () => controller.token != ''
                                           ? Get.dialog(DialogWatchTeacher(
+                                              point:
+                                                  '${int.parse(controller.resultDetailTeacher.data.data.dataInfo.pointFree) + int.parse(controller.resultDetailTeacher.data.data.dataInfo.pointBuy)}',
                                               teachId: int.parse(controller.resultDetailTeacher.data.data.dataInfo.ugsId),
                                               nameUser: controller.resultDetailTeacher.data.data.dataInfo.ugsName,
                                               ontap: () {
@@ -272,7 +271,9 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                     padding: EdgeInsets.all(AppDimens.space14),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.whiteFFFFFF),
                     child: Text(
-                      controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
+                      controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs == ''
+                          ? 'Chưa cập nhật'
+                          : controller.resultDetailTeacher.data.data.dataInfo.ugsAboutUs,
                       style: AppTextStyles.regularW400(context,
                           size: AppDimens.textSize14, color: AppColors.grey747474, lineHeight: AppDimens.textSize18),
                       textAlign: TextAlign.center,
@@ -436,7 +437,7 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                               ),
                               Text(
                                 controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n') == ''
-                                    ? 'Chưa cập nhật'
+                                    ? controller.resultDetailTeacher.data.data.dataInfo.asIdName.join('\n')
                                     : controller.resultDetailTeacher.data.data.dataInfo.asDetailName.join('\n'),
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: 20),
                               ),
@@ -524,21 +525,60 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                                 'Học phí giảng dạy:',
                                 style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
                               ),
-                              Text(
-                                (controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                            ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                            : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}') ==
-                                        ''
-                                    ? 'Chưa cập nhật'
-                                    : controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
-                                        ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
-                                        : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
-                                textAlign: TextAlign.right,
+                              Expanded(
+                                child: Text(
+                                  controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice == '0'
+                                      ? '${controller.resultDetailTeacher.data.data.dataInfo.ugsSalary} vnđ/\n${controller.resultDetailTeacher.data.data.dataInfo.ugsMonth}'
+                                      : '${controller.resultDetailTeacher.data.data.dataInfo.ugsUnitPrice} vnđ/${controller.resultDetailTeacher.data.data.dataInfo.ugsTime}',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                  textAlign: TextAlign.right,
+                                ),
                               ),
                             ],
                           ),
                         ),
+                        Divider(
+                          thickness: 0.25,
+                          color: AppColors.greyAAAAAA,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Kinh nghiệm giảng dạy:',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${controller.resultDetailTeacher.data.data.dataInfo.ugsExperienceYear} Năm',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding14, vertical: AppDimens.padding8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Trường học:',
+                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.grey747474),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '${controller.resultDetailTeacher.data.data.dataInfo.ugsExperienceYear} Năm',
+                                  style: AppTextStyles.regularW400(context, size: AppDimens.textSize16),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -635,238 +675,240 @@ class _InformationTeacherScreenState extends State<InformationTeacherScreen> {
                   SizedBox(
                     height: AppDimens.space16,
                   ),
-                  Text(
-                    'Đánh giá',
-                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
-                  ),
-                  SizedBox(
-                    height: AppDimens.space16,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: AppDimens.space16, horizontal: AppDimens.space20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(AppDimens.space10),
-                      color: AppColors.whiteFFFFFF,
-                    ),
-                    child: Column(
-                      children: [
-                        RatingBar(
-                          initialRating: 4,
-                          itemSize: 20,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                          ratingWidget: RatingWidget(
-                            full: SvgPicture.asset(Images.ic_star),
-                            empty: SvgPicture.asset(Images.ic_star_border),
-                          ),
-                          unratedColor: AppColors.greyAAAAAA,
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
-                        ),
-                        SizedBox(
-                          height: AppDimens.space28,
-                        ),
-                        CustomTextFieldBox(
-                          title: '',
-                          hintText: 'Viết đánh giá',
-                          hasTitle: false,
-                        ),
-                        SizedBox(
-                          height: AppDimens.space16,
-                        ),
-                        SizedBox(
-                          width: AppDimens.width,
-                          height: 40,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: AppColors.primary4C5BD4,
-                                // background
-                                onPrimary: AppColors.primary4C5BD4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(10.0),
-                                )),
-                            onPressed: () {},
-                            child: Text(
-                              'Đánh giá',
-                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: AppDimens.space28,
-                        ),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          itemCount: 0,
-                          itemBuilder: (context, index) => Container(
-                            padding: EdgeInsets.symmetric(vertical: AppDimens.space16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.greyC4C4C4.withOpacity(0.25),
-                                      spreadRadius: 0,
-                                      blurRadius: 9,
-                                      offset: Offset(0, 2), // changes position of shadow
-                                    ),
-                                  ]),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(80),
-                                    child: CachedNetworkImage(
-                                      imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
-                                      height: 50,
-                                      width: 50,
-                                      fit: BoxFit.cover,
-                                      progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                        child: CircularProgressIndicator(value: downloadProgress.progress),
-                                      ),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: AppDimens.space12,
-                                        ),
-                                        Text(
-                                          'Nguyễn Thị A',
-                                          style: AppTextStyles.regularW700(context, size: AppDimens.textSize16),
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space12,
-                                        ),
-                                        RatingBar(
-                                          initialRating: 4,
-                                          itemSize: 10,
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: false,
-                                          itemCount: 5,
-                                          ignoreGestures: true,
-                                          itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
-                                          ratingWidget: RatingWidget(
-                                            full: SvgPicture.asset(Images.ic_star),
-                                            empty: SvgPicture.asset(Images.ic_star_border),
-                                          ),
-                                          unratedColor: AppColors.greyAAAAAA,
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space4,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: AppDimens.space12),
-                                      child: Text(
-                                        '50 ngày trước',
-                                        style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space18,
-                                    ),
-                                    Container(
-                                      width: AppDimens.width * 0.65,
-                                      child: Text(
-                                        'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
-                                        softWrap: true,
-                                        textAlign: TextAlign.left,
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space14,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            '1 phản hồi',
-                                            style: AppTextStyles.regularW700(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                          ),
-                                          SizedBox(
-                                            width: AppDimens.space6,
-                                          ),
-                                          SvgPicture.asset(Images.ic_arrow_down),
-                                          SizedBox(
-                                            height: AppDimens.space14,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: AppDimens.space16,
-                                    ),
-                                    Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(80),
-                                          child: CachedNetworkImage(
-                                            imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
-                                            height: 38,
-                                            width: 38,
-                                            fit: BoxFit.cover,
-                                            progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-                                              child: CircularProgressIndicator(value: downloadProgress.progress),
-                                            ),
-                                            errorWidget: (context, url, error) => Icon(Icons.error),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: AppDimens.space8,
-                                        ),
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Nguyễn Văn Tuấn Anh',
-                                              style: AppTextStyles.regularW700(context, size: AppDimens.textSize14),
-                                            ),
-                                            SizedBox(
-                                              height: AppDimens.space2,
-                                            ),
-                                            Text(
-                                              '50 ngày trước',
-                                              style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
-                                            ),
-                                            Text('Cảm ơn cô đã quan tâm.'),
-                                          ],
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          separatorBuilder: (context, index) => Divider(
-                            color: AppColors.grey747474,
-                            thickness: 0.15,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: AppDimens.space16,
-                  ),
+                  // Text(
+                  //   'Đánh giá',
+                  //   style: AppTextStyles.regularW500(context, size: AppDimens.textSize20),
+                  // ),
+                  // SizedBox(
+                  //   height: AppDimens.space16,
+                  // ),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(vertical: AppDimens.space16, horizontal: AppDimens.space20),
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(AppDimens.space10),
+                  //     color: AppColors.whiteFFFFFF,
+                  //   ),
+                  //   child: Column(
+                  //     children: [
+                  //       RatingBar(
+                  //         initialRating: 4,
+                  //         itemSize: 20,
+                  //         minRating: 1,
+                  //         direction: Axis.horizontal,
+                  //         allowHalfRating: false,
+                  //         itemCount: 5,
+                  //         itemPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                  //         ratingWidget: RatingWidget(
+                  //           full: SvgPicture.asset(Images.ic_star),
+                  //           empty: SvgPicture.asset(Images.ic_star_border),
+                  //         ),
+                  //         unratedColor: AppColors.greyAAAAAA,
+                  //         onRatingUpdate: (rating) {
+                  //           print(rating);
+                  //         },
+                  //       ),
+                  //       SizedBox(
+                  //         height: AppDimens.space28,
+                  //       ),
+                  //       CustomTextFieldBox(
+                  //         title: '',
+                  //         hintText: 'Viết đánh giá',
+                  //         hasTitle: false,
+                  //       ),
+                  //       SizedBox(
+                  //         height: AppDimens.space16,
+                  //       ),
+                  //       SizedBox(
+                  //         width: AppDimens.width,
+                  //         height: 40,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               primary: AppColors.primary4C5BD4,
+                  //               // background
+                  //               onPrimary: AppColors.primary4C5BD4,
+                  //               shape: RoundedRectangleBorder(
+                  //                 borderRadius: new BorderRadius.circular(10.0),
+                  //               )),
+                  //           onPressed: () {
+                  //             Utils.showToast('Chức năng đang phát triển');
+                  //           },
+                  //           child: Text(
+                  //             'Đánh giá',
+                  //             style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, color: AppColors.whiteFFFFFF),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         height: AppDimens.space28,
+                  //       ),
+                  //       ListView.separated(
+                  //         shrinkWrap: true,
+                  //         itemCount: 0,
+                  //         itemBuilder: (context, index) => Container(
+                  //           padding: EdgeInsets.symmetric(vertical: AppDimens.space16),
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.start,
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Container(
+                  //                 decoration: BoxDecoration(boxShadow: [
+                  //                   BoxShadow(
+                  //                     color: AppColors.greyC4C4C4.withOpacity(0.25),
+                  //                     spreadRadius: 0,
+                  //                     blurRadius: 9,
+                  //                     offset: Offset(0, 2), // changes position of shadow
+                  //                   ),
+                  //                 ]),
+                  //                 child: ClipRRect(
+                  //                   borderRadius: BorderRadius.circular(80),
+                  //                   child: CachedNetworkImage(
+                  //                     imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
+                  //                     height: 50,
+                  //                     width: 50,
+                  //                     fit: BoxFit.cover,
+                  //                     progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                  //                       child: CircularProgressIndicator(value: downloadProgress.progress),
+                  //                     ),
+                  //                     errorWidget: (context, url, error) => Icon(Icons.error),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: [
+                  //                   Row(
+                  //                     children: [
+                  //                       SizedBox(
+                  //                         width: AppDimens.space12,
+                  //                       ),
+                  //                       Text(
+                  //                         'Nguyễn Thị A',
+                  //                         style: AppTextStyles.regularW700(context, size: AppDimens.textSize16),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         width: AppDimens.space12,
+                  //                       ),
+                  //                       RatingBar(
+                  //                         initialRating: 4,
+                  //                         itemSize: 10,
+                  //                         minRating: 1,
+                  //                         direction: Axis.horizontal,
+                  //                         allowHalfRating: false,
+                  //                         itemCount: 5,
+                  //                         ignoreGestures: true,
+                  //                         itemPadding: EdgeInsets.symmetric(horizontal: 3.0),
+                  //                         ratingWidget: RatingWidget(
+                  //                           full: SvgPicture.asset(Images.ic_star),
+                  //                           empty: SvgPicture.asset(Images.ic_star_border),
+                  //                         ),
+                  //                         unratedColor: AppColors.greyAAAAAA,
+                  //                         onRatingUpdate: (rating) {
+                  //                           print(rating);
+                  //                         },
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: AppDimens.space4,
+                  //                   ),
+                  //                   Padding(
+                  //                     padding: const EdgeInsets.only(left: AppDimens.space12),
+                  //                     child: Text(
+                  //                       '50 ngày trước',
+                  //                       style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: AppDimens.space18,
+                  //                   ),
+                  //                   Container(
+                  //                     width: AppDimens.width * 0.65,
+                  //                     child: Text(
+                  //                       'Mình rất hài lòng lòng cô gia sư này, cô dạy rất nhiệt tình, bây giờ con tôi học đã theo kịp...',
+                  //                       softWrap: true,
+                  //                       textAlign: TextAlign.left,
+                  //                       style: AppTextStyles.regularW400(context,
+                  //                           size: AppDimens.textSize14, lineHeight: AppDimens.textSize16, color: AppColors.grey747474),
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: AppDimens.space14,
+                  //                   ),
+                  //                   GestureDetector(
+                  //                     onTap: () {},
+                  //                     child: Row(
+                  //                       children: [
+                  //                         Text(
+                  //                           '1 phản hồi',
+                  //                           style: AppTextStyles.regularW700(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                  //                         ),
+                  //                         SizedBox(
+                  //                           width: AppDimens.space6,
+                  //                         ),
+                  //                         SvgPicture.asset(Images.ic_arrow_down),
+                  //                         SizedBox(
+                  //                           height: AppDimens.space14,
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                   ),
+                  //                   SizedBox(
+                  //                     height: AppDimens.space16,
+                  //                   ),
+                  //                   Row(
+                  //                     children: [
+                  //                       ClipRRect(
+                  //                         borderRadius: BorderRadius.circular(80),
+                  //                         child: CachedNetworkImage(
+                  //                           imageUrl: 'https://i.pinimg.com/originals/06/3c/4b/063c4b41c58c86750a6a8c40a9219d7a.jpg',
+                  //                           height: 38,
+                  //                           width: 38,
+                  //                           fit: BoxFit.cover,
+                  //                           progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+                  //                             child: CircularProgressIndicator(value: downloadProgress.progress),
+                  //                           ),
+                  //                           errorWidget: (context, url, error) => Icon(Icons.error),
+                  //                         ),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         width: AppDimens.space8,
+                  //                       ),
+                  //                       Column(
+                  //                         mainAxisAlignment: MainAxisAlignment.start,
+                  //                         crossAxisAlignment: CrossAxisAlignment.start,
+                  //                         children: [
+                  //                           Text(
+                  //                             'Nguyễn Văn Tuấn Anh',
+                  //                             style: AppTextStyles.regularW700(context, size: AppDimens.textSize14),
+                  //                           ),
+                  //                           SizedBox(
+                  //                             height: AppDimens.space2,
+                  //                           ),
+                  //                           Text(
+                  //                             '50 ngày trước',
+                  //                             style: AppTextStyles.regularW400(context, size: AppDimens.textSize14, color: AppColors.greyAAAAAA),
+                  //                           ),
+                  //                           Text('Cảm ơn cô đã quan tâm.'),
+                  //                         ],
+                  //                       )
+                  //                     ],
+                  //                   )
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         separatorBuilder: (context, index) => Divider(
+                  //           color: AppColors.grey747474,
+                  //           thickness: 0.15,
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: AppDimens.space16,
+                  // ),
                   widget.type == 5
                       ? Container()
                       : widget.type == 0

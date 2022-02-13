@@ -1,5 +1,5 @@
 class Address {
-  static const String DOMAIN = "http://dev3.tinnhanh365.vn";
+  static const String DOMAIN = "https://giasu.timviec365.vn";
   static const String BASE_URL = DOMAIN + "/api_app";
   static const String check_token = BASE_URL + "/check_token.php";
   static const String check_mail_gs = BASE_URL + "/check_mail_register_gs.php";
@@ -75,7 +75,6 @@ class Address {
   static const String get_info_teacher = BASE_URL + "/info_tutor.php";
   static const String update_info_tutor = BASE_URL + "/update_info_tutor.php";
 
-  // static const String detail_city = BASE_URL + "/detail_city.php?ugs_city=1111";
   static String detail_city(int idCity) {
     return '$BASE_URL/detail_city.php?ugs_city=${idCity}';
   }
@@ -84,13 +83,6 @@ class Address {
     return '$BASE_URL/detail_subject.php?as_id=${asId}';
   }
 
-  // static String searchParent(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
-  //   return '$BASE_URL/search_by_filter_tutor.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
-  // }
-  //
-  // static String searchTeacher(int idCity, int idDistrict, int idSubject, int idForm, int currentPage, int limit) {
-  //   return '$BASE_URL/search_by_filter_class.php?=${idCity}&country=${idDistrict}&subject=${idSubject}&form=${idForm}&current_page=${currentPage}&limit=${limit}';
-  // }
 
 //Noti
   static const String notification = BASE_URL + "/notification.php";
@@ -100,5 +92,4 @@ class Address {
   static const String search_list_teacher = BASE_URL + "/list_tutor.php";
   static const String search_list_class = BASE_URL + "/list_class.php";
 
-// static const String detail_subject = BASE_URL + "detail_subject.php";
 }

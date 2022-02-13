@@ -66,6 +66,7 @@ class DataData {
     this.citName,
     this.ugsAddress,
     this.pointFree,
+    this.pointBuy,
   });
 
   String ugsPhone;
@@ -80,6 +81,7 @@ class DataData {
   String citName;
   String ugsAddress;
   String pointFree;
+  String pointBuy;
 
   factory DataData.fromJson(Map<String, dynamic> json) => DataData(
     ugsPhone: json["ugs_phone"] == null ? null : json["ugs_phone"],
@@ -93,7 +95,8 @@ class DataData {
     ugsCity: json["ugs_city"] == null ? null : json["ugs_city"],
     citName: json["cit_name"] == null ? null : json["cit_name"],
     ugsAddress: json["ugs_address"] == null ? null : json["ugs_address"],
-    pointFree: json["point_free"] == null ? null : json["point_free"],
+    pointFree: json["point_free"] == null ? "0" : json["point_free"],
+    pointBuy: json["point_buy"] == null ? "0" : json["point_buy"],
   );
 
   Map<String, dynamic> toJson() => {

@@ -42,7 +42,7 @@ class Data {
   String message;
   List<ListGsdd> listGsdd;
   String currentPage;
-  int limit;
+  String limit;
   int total;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(

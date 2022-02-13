@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,13 +6,10 @@ import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/home/home_after/home_after_parent/list_post_created/list_post_created_controller.dart';
 import 'package:giasu_vn/screen/home/information/information_class/information_class_controller.dart';
-import 'package:giasu_vn/screen/post/post_screen.dart';
 import 'package:giasu_vn/screen/post/update_post/update_post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
 
 class ListPostCreatedScreen extends StatefulWidget {
   final String title;
@@ -149,9 +147,13 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                           SizedBox(
                                             width: AppDimens.space8,
                                           ),
-                                          Text(
-                                            '${controller.listClassPosted[index].pftPrice} vnđ/${controller.listClassPosted[index].pftMonth}',
-                                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                          Flexible(
+                                            child: Text(
+                                              '${controller.listClassPosted[index].pftPrice} vnđ/${controller.listClassPosted[index].pftMonth}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -171,7 +173,9 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                                             width: AppDimens.space8,
                                           ),
                                           Text(
-                                            controller.listClassPosted[index].asNameDetail,
+                                            controller.listClassPosted[index].asNameDetail == ''
+                                                ? controller.listClassPosted[index].asName
+                                                : controller.listClassPosted[index].asNameDetail,
                                             style: AppTextStyles.regular(
                                               context,
                                               size: AppDimens.textSize14,
@@ -282,22 +286,61 @@ class _ListPostCreatedScreenState extends State<ListPostCreatedScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  height: 30,
-                                  width: AppDimens.width * 0.4,
-                                  child: CustomButton2(
-                                    title: controller.listClassPosted[index].trangthaiLop == '0' ? 'Đang tìm gia sư' : 'Đã có gia sư',
-                                    color: controller.listClassPosted[index].trangthaiLop == '0' ? AppColors.secondaryF8971C : AppColors.grey747474,
-                                    onPressed: () {
-                                      controller.changeStatusPostLocal(index);
-                                      controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId),
-                                          int.parse(controller.listClassPosted[index].trangthaiLop));
-
-                                      // updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
-                                    },
-                                    textColor: AppColors.whiteFFFFFF,
-                                  ),
-                                ),
+                                PopupMenuButton(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  color: AppColors.grey686F7A.withOpacity(0.8),
+                                    child: Container(
+                                        height: 30,
+                                        width: AppDimens.width * 0.4,
+                                        decoration: BoxDecoration(
+                                          color:controller.listClassPosted[index].trangthaiLop == '2'? AppColors.grey686F7A:AppColors.secondaryF8971C,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(controller.listClassPosted[index].trangthaiLop == '0'
+                                            ? 'Đang tìm gia sư'
+                                            : controller.listClassPosted[index].trangthaiLop == '1'
+                                                ? 'Đã có gia sư'
+                                                : 'Kết thúc')),
+                                    itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            onTap: () {
+                                              controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId), 0);
+                                            },
+                                            child: Text("Đang tìm gia sư"),
+                                            value: 1,
+                                          ),
+                                          PopupMenuItem(
+                                            onTap: () {
+                                              controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId), 1);
+                                            },
+                                            child: Text("Đã có gia sư"),
+                                            value: 2,
+                                          ),
+                                          PopupMenuItem(
+                                            onTap: () {
+                                              controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId), 2);
+                                            },
+                                            child: Text("Kết thúc"),
+                                            value: 3,
+                                          )
+                                        ]),
+                                // SizedBox(
+                                //   height: 30,
+                                //   width: AppDimens.width * 0.4,
+                                //   child: CustomButton2(
+                                //     title: controller.listClassPosted[index].trangthaiLop == '0' ? 'Đang tìm gia sư' : 'Đã có gia sư',
+                                //     color: controller.listClassPosted[index].trangthaiLop == '0' ? AppColors.secondaryF8971C : AppColors.grey747474,
+                                //     onPressed: () {
+                                //       controller.changeStatusPostLocal(index);
+                                //       controller.changeStatusPost(int.parse(controller.listClassPosted[index].pftId),
+                                //           int.parse(controller.listClassPosted[index].trangthaiLop));
+                                //
+                                //       // updatePostController.getDetailClass(int.parse(controller.listClassPosted[index].pftId));
+                                //     },
+                                //     textColor: AppColors.whiteFFFFFF,
+                                //   ),
+                                // ),
                                 SizedBox(
                                   height: 30,
                                   width: 110,

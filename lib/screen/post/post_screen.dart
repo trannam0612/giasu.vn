@@ -3,21 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
-import 'package:giasu_vn/common/utils.dart';
 import 'package:giasu_vn/data_off/provincial_subject.dart';
-import 'package:giasu_vn/screen/authen/register/register_teacher/register_giasu_controller.dart';
 import 'package:giasu_vn/screen/post/post_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_button_1.dart';
 import 'package:giasu_vn/widgets/custom_button_3.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
-import 'package:giasu_vn/widgets/custom_textfield_box.dart';
-import 'package:giasu_vn/widgets/dialog_time.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
+import 'package:giasu_vn/widgets/custom_txtbox.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
+import 'package:giasu_vn/widgets/drop_down_select_map.dart';
 import 'package:intl/intl.dart';
 
 class PostScreen extends StatelessWidget {
@@ -52,14 +50,14 @@ class PostScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextField(
+                        CustomTxf(
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
+                          keyText: controller.titleKey,
+                          validator: (value) => Validate.validateIsEmpty(value),
                           textEditingController: controller.title,
                           obligatory: true,
-                          error: controller.checkTitle(),
-                          onPressed: () {},
                           title: 'Tiêu đề',
                           hintText: 'Nhập tiêu đề ',
                           isPassword: false,
@@ -69,13 +67,14 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextFieldBox(
+                        CustomTxfBox(
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(RegExp(r'[@#$%^&*()_+\-=\[\]{}\\|<>\/~`•√π÷×¶∆₫£€¢°©®™℅"]+')),
                           ],
+                          keyText: controller.contentTitleKey,
+                          validator: (value) => Validate.validateIsEmpty(value),
                           textEditingController: controller.contentTitle,
                           obligatory: true,
-                          error: controller.checkContentTitle(),
                           onPressed: () {},
                           title: 'Nội dung chi tiết ',
                           hintText: 'Nhập nội dung',
@@ -85,15 +84,25 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        DropDownSelect(
-                          hint: 'Chọn gia sư',
+                        DropDownSelectMap(
+                          title: 'Kiểu gia sư',
+                          isTitle: true,
                           obligatory: true,
-                          title: 'Yêu cầu gia sư',
-                          list: controller.listKieuGS,
-                          onChanged: (String value) => controller.onSelectedKieuGS(value),
+                          hint: 'Chọn kiểu gia sư',
                           dropdownValue: controller.selectedKieuGS,
+                          onChanged: (String value) => controller.onSelectedKieuGs(value),
+                          list: listKieuGS,
                           borderColor: controller.errorKieuGS ? AppColors.redFF0033 : AppColors.grey747474,
                         ),
+                        // DropDownSelect(
+                        //   hint: 'Chọn gia sư',
+                        //   obligatory: true,
+                        //   title: 'Yêu cầu gia sư',
+                        //   list: controller.listKieuGS,
+                        //   onChanged: (String value) => controller.onSelectedKieuGS(value),
+                        //   dropdownValue: controller.selectedKieuGS,
+                        //   borderColor: controller.errorKieuGS ? AppColors.redFF0033 : AppColors.grey747474,
+                        // ),
                         controller.errorKieuGS
                             ? Text(
                                 'Trường bắt buộc!',
@@ -139,24 +148,30 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        DropDownSelect(
-                          hint: 'Chọn môn học chi tiết',
-                          obligatory: true,
-                          title: 'Môn học chi tiết',
-                          list: controller.listTopic.map((e) => e.nameSubject).toList(),
-                          onChanged: (String value) => controller.onSelectedTopicSubject(value),
-                          dropdownValue: controller.selectedTopicSubject,
-                          borderColor: controller.errorTopicSubject ? AppColors.redFF0033 : AppColors.grey747474,
-                        ),
-                        controller.errorTopicSubject
-                            ? Text(
-                                'Trường bắt buộc!',
-                                style: AppTextStyles.regularW500(context, size: AppDimens.textSize12, color: AppColors.redEB5757),
+                        controller.listTopic.isNotEmpty
+                            ? DropDownSelect(
+                                hint: 'Chọn môn học chi tiết',
+                                obligatory: true,
+                                title: 'Môn học chi tiết',
+                                list: controller.listTopic.map((e) => e.nameSubject).toList(),
+                                onChanged: (String value) => controller.onSelectedTopicSubject(value),
+                                dropdownValue: controller.selectedTopicSubject,
+                                borderColor: controller.errorTopicSubject ? AppColors.redFF0033 : AppColors.grey747474,
                               )
-                            : Container(),
-                        SizedBox(
-                          height: AppDimens.space20,
-                        ),
+                            : SizedBox.shrink(),
+                        controller.listTopic.isNotEmpty
+                            ? controller.errorTopicSubject
+                                ? Text(
+                                    'Trường bắt buộc!',
+                                    style: AppTextStyles.regularW500(context, size: AppDimens.textSize12, color: AppColors.redEB5757),
+                                  )
+                                : Container()
+                            : SizedBox.shrink(),
+                        controller.listTopic.isNotEmpty
+                            ? SizedBox(
+                                height: AppDimens.space20,
+                              )
+                            : SizedBox.shrink(),
                         DropDownSelect(
                           hint: 'Chọn lớp',
                           obligatory: true,
@@ -175,13 +190,13 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           textEditingController: controller.numberStudent,
                           obligatory: true,
+                          validator: (value) => Validate.validateIsEmpty(value),
+                          keyText: controller.numberStudentKey,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                          error: controller.checkNumberStudent(),
                           keyboardType: TextInputType.number,
-                          onPressed: () {},
                           title: 'Số lượng học sinh',
                           hintText: 'Nhập số lượng học sinh',
                           isPassword: false,
@@ -252,7 +267,8 @@ class PostScreen extends StatelessWidget {
                             children: <TextSpan>[
                               TextSpan(
                                 text: '*',
-                                style: AppTextStyles.regularW400(context, size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
+                                style: AppTextStyles.regularW400(context,
+                                    size: AppDimens.textSize16, lineHeight: AppDimens.space18, color: AppColors.redEB5757),
                               ),
                             ],
                           ),
@@ -260,148 +276,57 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space4,
                         ),
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: SizedBox(
-                        //         height: AppDimens.height * 0.06,
-                        //         child: TextButton(
-                        //           onPressed: () {
-                        //             controller.changValueButtonLuong();
-                        //           },
-                        //           child: Text(
-                        //             'Cố định',
-                        //             style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
-                        //             textAlign: TextAlign.center,
-                        //           ),
-                        //           style: ElevatedButton.styleFrom(
-                        //             primary: controller.valueButtonLuong ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
-                        //             padding: EdgeInsets.all(AppDimens.space8),
-                        //             onPrimary: Colors.white,
-                        //             shape: RoundedRectangleBorder(
-                        //               side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
-                        //               borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10)),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     SizedBox(
-                        //       width: AppDimens.padding8,
-                        //     ),
-                        //     Expanded(
-                        //       child: SizedBox(
-                        //         height: AppDimens.height * 0.06,
-                        //         child: TextButton(
-                        //           onPressed: () {
-                        //             controller.changValueButtonLuong();
-                        //           },
-                        //           child: Text(
-                        //             'Ước lượng',
-                        //             style: AppTextStyles.regularW700(context, size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
-                        //             textAlign: TextAlign.center,
-                        //           ),
-                        //           style: ElevatedButton.styleFrom(
-                        //             primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
-                        //             padding: EdgeInsets.all(AppDimens.space8),
-                        //             onPrimary: Colors.white,
-                        //             shape: RoundedRectangleBorder(side: BorderSide(width: 1, color: AppColors.primary4C5BD4), borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: AppDimens.space8,
-                        // ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                              child:
-                                  // controller.valueButtonLuong
-                                  //     ?
-                                  CustomTextField(
-                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                error: controller.checkSalaryCD(),
-                                textEditingController: controller.salaryCD,
-                                obligatory: false,
-                                isTitle: false,
-                                keyboardType: TextInputType.number,
-                                onPressed: () {},
-                                title: '',
-                                hintText: '1.000.000VNĐ',
-                                isPassword: false,
+                              child: SizedBox(
+                                height: AppDimens.height * 0.06,
+                                child: TextButton(
+                                  onPressed: () {
+                                    controller.changValueButtonLuong();
+                                  },
+                                  child: Text(
+                                    'Cố định',
+                                    style: AppTextStyles.regularW700(context,
+                                        size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.black12),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    primary: controller.valueButtonLuong ? AppColors.primary4C5BD4 : AppColors.whiteFFFFFF,
+                                    padding: EdgeInsets.all(AppDimens.space8),
+                                    onPrimary: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
+                                      borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10)),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              // : Row(
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     crossAxisAlignment: CrossAxisAlignment.center,
-                              //     children: [
-                              //       Expanded(
-                              //         child: CustomTextField(
-                              //           error: controller.checkSalaryUL1(),
-                              //           textEditingController: controller.salaryUL1,
-                              //           obligatory: false,
-                              //           isTitle: false,
-                              //           onPressed: () {},
-                              //           title: '',
-                              //           keyboardType: TextInputType.number,
-                              //           hintText: '1.000.000VNĐ',
-                              //           isPassword: false,
-                              //         ),
-                              //       ),
-                              //       Text(
-                              //         '~',
-                              //         style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
-                              //       ),
-                              //       Expanded(
-                              //         child: CustomTextField(
-                              //           error: controller.checkSalaryUL2(),
-                              //           textEditingController: controller.salaryUL2,
-                              //           obligatory: false,
-                              //           isTitle: false,
-                              //           keyboardType: TextInputType.number,
-                              //           onPressed: () {},
-                              //           title: '',
-                              //           hintText: '6.000.000VNĐ',
-                              //           isPassword: false,
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   )),
                             ),
                             SizedBox(
-                              width: AppDimens.smallPadding10,
+                              width: AppDimens.padding8,
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
-                              margin: EdgeInsets.only(top: AppDimens.space4),
-                              decoration:
-                                  BoxDecoration(color: AppColors.whiteFFFFFF, borderRadius: BorderRadius.circular(AppDimens.space10), border: Border.all(width: 1, color: AppColors.grey747474)),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  hint: Text(
-                                    'Buổi',
-                                    style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.grey747474),
+                            Expanded(
+                              child: SizedBox(
+                                height: AppDimens.height * 0.06,
+                                child: TextButton(
+                                  onPressed: () {
+                                    controller.changValueButtonLuong();
+                                  },
+                                  child: Text(
+                                    'Ước lượng',
+                                    style: AppTextStyles.regularW700(context,
+                                        size: AppDimens.textSize16, color: controller.valueButtonLuong ? AppColors.black12 : AppColors.whiteFFFFFF),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.black),
-                                  icon: SvgPicture.asset(
-                                    Images.ic_arrow_down,
-                                    color: AppColors.black12,
+                                  style: ElevatedButton.styleFrom(
+                                    primary: controller.valueButtonLuong ? AppColors.whiteFFFFFF : AppColors.primary4C5BD4,
+                                    padding: EdgeInsets.all(AppDimens.space8),
+                                    onPrimary: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(width: 1, color: AppColors.primary4C5BD4),
+                                        borderRadius: BorderRadius.all(Radius.circular(AppDimens.space10))),
                                   ),
-                                  value: controller.selectedStatusFee,
-                                  onChanged: (value) => controller.onSelectedStatusFee(value),
-                                  dropdownColor: AppColors.whiteFFFFFF,
-                                  elevation: 10,
-                                  items: controller.listLuong.map((selectedType) {
-                                    return DropdownMenuItem(
-                                      child: new Text(
-                                        selectedType,
-                                      ),
-                                      value: selectedType,
-                                    );
-                                  }).toList(),
                                 ),
                               ),
                             ),
@@ -410,6 +335,100 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space8,
                         ),
+                        Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                          Expanded(
+                              child: controller.valueButtonLuong
+                                  ? CustomTxf(
+                                      keyText: controller.salaryCDKey,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                      validator: (value) => Validate.validateSalaryCD(value),
+                                      error: controller.checkSalaryCD(),
+                                      textEditingController: controller.salaryCD,
+                                      obligatory: false,
+                                      isTitle: false,
+                                      keyboardType: TextInputType.number,
+                                      title: '',
+                                      hintText: '1.000.000VNĐ',
+                                      isPassword: false,
+                                    )
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: CustomTxf(
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            error: controller.checkSalaryUL1(),
+                                            textEditingController: controller.salaryUL1,
+                                            keyText: controller.salaryUL1Key,
+                                            obligatory: false,
+                                            isTitle: false,
+                                            title: '',
+                                            keyboardType: TextInputType.number,
+                                            hintText: '1.000.000VNĐ',
+                                            validator: (value) => Validate.validateSalaryUL1(value, controller.salaryUL2.text),
+                                            isPassword: false,
+                                          ),
+                                        ),
+                                        Text(
+                                          '~',
+                                          style: AppTextStyles.regularW700(context, size: AppDimens.textSize20, color: AppColors.black12),
+                                        ),
+                                        Expanded(
+                                          child: CustomTxf(
+                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                            error: controller.checkSalaryUL2(),
+                                            textEditingController: controller.salaryUL2,
+                                            keyText: controller.salaryUL2Key,
+                                            obligatory: false,
+                                            isTitle: false,
+                                            validator: (value) => Validate.validateSalaryUL2(value, controller.salaryUL1.text),
+                                            keyboardType: TextInputType.number,
+                                            title: '',
+                                            hintText: '6.000.000VNĐ',
+                                            isPassword: false,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                          SizedBox(
+                            width: AppDimens.smallPadding10,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: AppDimens.space4),
+                            margin: EdgeInsets.only(top: AppDimens.space4),
+                            decoration: BoxDecoration(
+                                color: AppColors.whiteFFFFFF,
+                                borderRadius: BorderRadius.circular(AppDimens.space10),
+                                border: Border.all(width: 1, color: AppColors.grey747474)),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                hint: Text(
+                                  'Buổi',
+                                  style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.grey747474),
+                                ),
+                                style: AppTextStyles.regularW500(context, size: AppDimens.padding16, color: AppColors.black),
+                                icon: SvgPicture.asset(
+                                  Images.ic_arrow_down,
+                                  color: AppColors.black12,
+                                ),
+                                value: controller.selectedStatusFee,
+                                onChanged: (value) => controller.onSelectedStatusFee(value),
+                                dropdownColor: AppColors.whiteFFFFFF,
+                                elevation: 10,
+                                items: controller.listLuong.map((selectedType) {
+                                  return DropdownMenuItem(
+                                    child: new Text(
+                                      selectedType,
+                                    ),
+                                    value: selectedType,
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ]),
+
                         SizedBox(
                           height: AppDimens.space8,
                         ),
@@ -420,15 +439,13 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          keyText: controller.phoneKey,
                           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                           textEditingController: controller.phone,
                           obligatory: true,
-                          error: controller.checkPhone(),
+                          validator: (value) => Validate.validatePhone(value),
                           keyboardType: TextInputType.phone,
-                          onPressed: () {
-                            // Get.dialog(DialogFee());
-                          },
                           title: 'Điện thoại liên hệ',
                           hintText: 'Nhập điện thoại liên hệ',
                           isPassword: false,
@@ -438,17 +455,17 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          keyText: controller.provincialKey,
                           textEditingController: controller.provincial,
                           readOnly: true,
-                          error: controller.checkProvincial(),
+                          validator: (value) => Validate.validateIsEmpty(value),
                           onTapTextField: () {
                             controller.changeSearchProvincial('');
                             Get.to(SelectTinhThanh(context));
                           },
                           obligatory: true,
                           keyboardType: TextInputType.phone,
-                          onPressed: () {},
                           title: 'Khu vực dạy học',
                           hintText: 'Chọn tỉnh, thành phố',
                           isPassword: false,
@@ -458,18 +475,16 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          validator: (value) => Validate.validateIsEmpty(value),
+                          keyText: controller.districtKey,
                           textEditingController: controller.district,
                           readOnly: true,
-                          error: controller.checkDistrict(),
                           onTapTextField: () {
                             Get.to(SelectDistrict(context));
                           },
                           obligatory: true,
                           keyboardType: TextInputType.phone,
-                          onPressed: () {
-                            // Get.dialog(DialogFee());
-                          },
                           title: 'Quận, huyện',
                           hintText: 'Chọn quận, huyện',
                           isPassword: false,
@@ -479,11 +494,11 @@ class PostScreen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.space20,
                         ),
-                        CustomTextField(
+                        CustomTxf(
+                          validator: (value) => Validate.validateIsEmpty(value),
+                          keyText: controller.addressKey,
                           textEditingController: controller.address,
                           obligatory: true,
-                          error: controller.checkAddress(),
-                          onPressed: () {},
                           title: 'Địa chỉ lớp học',
                           hintText: 'Nhập địa chỉ cụ thể',
                           isPassword: false,

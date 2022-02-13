@@ -42,12 +42,8 @@ class MessageScreen extends StatelessWidget {
                       'Tin nhắn',
                       style: AppTextStyles.regularW500(context, size: AppDimens.textSize24, lineHeight: AppDimens.textSize28, color: AppColors.whiteFFFFFF),
                     ),
-                    leading: IconButton(
-                      icon: SvgPicture.asset(Images.ic_arrow_left_iphone),
-                      onPressed: () {
-                        navigationController.changePage(0);
-                      },
-                    ),
+                    automaticallyImplyLeading: false,
+
                   ),
                   body: Container(
                     padding: EdgeInsets.all(AppDimens.padding16),

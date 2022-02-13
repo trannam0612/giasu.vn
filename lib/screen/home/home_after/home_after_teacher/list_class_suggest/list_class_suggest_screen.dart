@@ -12,7 +12,6 @@ import 'package:giasu_vn/widgets/dialog_%20confirm.dart';
 import 'package:intl/intl.dart';
 
 import '../home_after_teacher_controller.dart';
-import '../home_after_teacher_controller.dart';
 
 class ListClassSuggestScreen extends StatefulWidget {
   final String title;
@@ -121,7 +120,6 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                             title: 'Bạn có chắc muốn xóa lớp này không ?',
                             onPressed: () {
                               controller.deleteClassOffered(int.parse(controller.listLDDN[index].pftId));
-                              controller.listLDDN.remove(controller.listLDDN[index]);
                               Get.back();
                               controller.update();
                             },
@@ -166,31 +164,34 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Flexible(
-                                    flex: 7,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                  Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            SvgPicture.asset(
-                                              Images.ic_money,
-                                              width: 16,
-                                              height: 16,
-                                            ),
-                                            SizedBox(
-                                              width: AppDimens.space8,
-                                            ),
-                                            Text(
-                                              '${controller.listLDDN[index].pftPrice} vnđ/${controller.listLDDN[index].pftMonth}',
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
-                                              ),
-                                            ),
-                                          ],
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  Images.ic_money,
+                                                  width: 16,
+                                                  height: 16,
+                                                ),
+                                                SizedBox(
+                                                  width: AppDimens.space8,
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    '${controller.listLDDN[index].pftPrice} vnđ/${controller.listLDDN[index].pftMonth}',
+                                                    style: AppTextStyles.regular(
+                                                      context,
+                                                      size: AppDimens.textSize14,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
                                         ),
                                         SizedBox(
                                           height: AppDimens.space6,
@@ -208,12 +209,14 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                               width: AppDimens.space8,
                                             ),
                                             Text(
-                                              controller.listLDDN[index].asDetailName,
-                                              style: AppTextStyles.regular(
-                                                context,
-                                                size: AppDimens.textSize14,
-                                              ),
-                                            ),
+                                                  controller.listLDDN[index].asDetailName == ''
+                                                      ? controller.listLDDN[index].asName
+                                                      : controller.listLDDN[index].asDetailName,
+                                                  style: AppTextStyles.regular(
+                                                    context,
+                                                    size: AppDimens.textSize14,
+                                                  ),
+                                                ),
                                           ],
                                         ),
                                         SizedBox(
@@ -246,19 +249,20 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                       ],
                                     ),
                                   ),
-                                  Flexible(
-                                    flex: 6,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                  SizedBox(
+                                    width: AppDimens.space6,
+                                  ),
+                                  Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              'Ngày đ/n:',
-                                              style: AppTextStyles.regular(context,
-                                                  size: AppDimens.textSize14,
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Ngày đ/n:',
+                                                  style: AppTextStyles.regular(context, size: AppDimens.textSize14,
                                                   color: AppColors.grey747474),
                                             ),
                                             SizedBox(
@@ -266,13 +270,13 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                convertDate(controller.listLDDN[index].otDate),
-                                                overflow: TextOverflow.ellipsis,
-                                                style: AppTextStyles.regular(
-                                                  context,
-                                                  size: AppDimens.textSize14,
-                                                ),
-                                              ),
+                                                convertDate(int.parse(controller.listLDDN[index].otDate)),
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: AppTextStyles.regular(
+                                                      context,
+                                                      size: AppDimens.textSize14,
+                                                    ),
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -358,11 +362,13 @@ class _ListClassSuggestScreenState extends State<ListClassSuggestScreen> {
                                         width: AppDimens.space6,
                                       ),
                                       Text(
-                                          controller.listLDDN[index].otStatus,
-                                        style: AppTextStyles.regularW400(context,
-                                            size: AppDimens.textSize14,
-                                            color: AppColors.secondaryF8971C),
-                                      )
+                                        controller.listLDDN[index].otStatus,
+                                            style: AppTextStyles.regularW400(context,
+                                                size: AppDimens.textSize14,
+                                                color: controller.listLDDN[index].otStatus != 'Đã từ chối dạy'
+                                                    ? AppColors.secondaryF8971C
+                                                    : AppColors.redEB5757),
+                                          )
                                     ],
                                   ),
                                 ),

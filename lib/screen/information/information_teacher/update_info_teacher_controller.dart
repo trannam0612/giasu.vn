@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
@@ -15,19 +17,19 @@ import 'package:giasu_vn/data_off/provincial_subject.dart';
 import 'package:giasu_vn/routes/app_pages.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step1_screen.dart';
 import 'package:giasu_vn/screen/information/information_teacher/update_info_teacher_step2_screen.dart';
-import 'package:giasu_vn/screen/navigation/navigation_screen.dart';
+import 'package:giasu_vn/screen/navigation/navigation_controller.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
 import 'package:giasu_vn/widgets/dialog_loading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class UpdateInfoTeacherController extends GetxController {
-  AuthenticationRepositories authenticationRepositories =
-      AuthenticationRepositories();
+  AuthenticationRepositories authenticationRepositories = AuthenticationRepositories();
   ResultListDistrict resultListDistrict = ResultListDistrict();
   UserRepositories userRepositories = UserRepositories();
+  NavigationController navigationController = Get.put(NavigationController());
+
   ResultGetInfoTeacher resultGetInfoTeacher = ResultGetInfoTeacher();
   Lichday lichday = Lichday();
   String valueErrorPassword = '';
@@ -38,6 +40,7 @@ class UpdateInfoTeacherController extends GetxController {
   bool errorFullName = false;
   bool errorEmail = false;
   File imageAvatar;
+
   File imageInfor;
   File avatar;
   DateTime start;
@@ -79,6 +82,7 @@ class UpdateInfoTeacherController extends GetxController {
   int idGender = 0;
   int idProvincial = 0;
   int idExp = 0;
+  bool errorStatusTime = false;
 
   //Step3
   bool errorClass = false;
@@ -118,6 +122,7 @@ class UpdateInfoTeacherController extends GetxController {
   String selectedGender;
   String selectedKieuGS;
   String selectedMarriage;
+  bool errorTime = false;
 
   //Step3
   String selectedSubject;
@@ -126,30 +131,37 @@ class UpdateInfoTeacherController extends GetxController {
   String selectedLuong;
   bool valueCheckBox = false;
   bool errorKieuGS = false;
+  bool errorDistrictS3 = false;
+
   String selectedStatusFee = 'Buổi';
+  String selectedTime = 'Buổi';
 
   List<DataSubject> listSubjectSelect = [];
   List<String> listIdSubjectSelect = [];
-  List<String> listSubject = [];
-  List<String> listSubjectTopic = [];
 
   List<String> listDistrictSelect = [];
   List<String> listIdDistrictSelect = [];
   List<String> listIdDetailDistrictSelect = [];
-  List<String> listKieuGS = ['Sinh viên', 'Người đi làm', 'Giáo viên'];
   List<String> listMarriage = ['Đã kết hôn', 'Chưa kết hôn'];
   List<String> listFormTeaching = ['Online', 'Gặp mặt'];
   List<String> listGender = ['Nam', 'Nữ', 'Khác'];
-  List<String> listLuong = ['Buổi', 'Tháng'];
+  Map<int, String> listLuong = {
+    2: 'Buổi',
+    3: 'Tháng',
+  };
   List<String> listFee = ['Chọn hình thức học phí', 'Cố định', 'Ước Lượng'];
 
   //Step1
-  TextEditingController passWord = TextEditingController();
-  TextEditingController rePassWord = TextEditingController();
-  TextEditingController fullName = TextEditingController();
-  TextEditingController email = TextEditingController();
+
+  GlobalKey<FormState> fullNameKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> phoneKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> provincialKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> districtKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> addressKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> numberYearExpKey = GlobalKey(debugLabel: '_SomeState');
 
   //Step2
+  TextEditingController fullName = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController image = TextEditingController();
   TextEditingController dateTime = TextEditingController();
@@ -166,19 +178,24 @@ class UpdateInfoTeacherController extends GetxController {
   TextEditingController school = TextEditingController();
   TextEditingController prize = TextEditingController();
   TextEditingController graduationYear = TextEditingController();
+  TextEditingController specialized = TextEditingController();
   TextEditingController company = TextEditingController();
   TextEditingController information = TextEditingController();
   TextEditingController experienceTeaching = TextEditingController();
-  TextEditingController achievements = TextEditingController();
 
   //Step3
   TextEditingController informationSubject = TextEditingController();
   TextEditingController formTeach = TextEditingController();
-  TextEditingController area = TextEditingController();
   TextEditingController fee = TextEditingController();
   TextEditingController salaryCD = TextEditingController();
   TextEditingController salaryUL1 = TextEditingController();
   TextEditingController salaryUL2 = TextEditingController();
+  TextEditingController areaTeaching = TextEditingController();
+
+  GlobalKey<FormState> salaryCDKey = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> salaryUL1Key = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> salaryUL2Key = GlobalKey(debugLabel: '_SomeState');
+  GlobalKey<FormState> areaTeachingKey = GlobalKey(debugLabel: '_SomeState');
 
   String valueProvincial;
   String urlAvatar = '';
@@ -200,8 +217,7 @@ class UpdateInfoTeacherController extends GetxController {
     try {
       String token = SpUtil.getString(ConstString.token);
       ResultData res = await userRepositories.updateAvatar(token, avatar);
-      ResultUpdateAvatar resultUpdateAvatar =
-          resultUpdateAvatarFromJson(res.data);
+      ResultUpdateAvatar resultUpdateAvatar = resultUpdateAvatarFromJson(res.data);
       if (resultUpdateAvatar.data != null) {
         Get.back();
         Utils.showToast(resultUpdateAvatar.data.message);
@@ -219,68 +235,6 @@ class UpdateInfoTeacherController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    passWord.addListener(() {
-      // checkPassword();
-      update();
-    });
-    rePassWord.addListener(() {
-      // checkRePassword();
-      update();
-    });
-    fullName.addListener(() {
-      update();
-    });
-    email.addListener(() {
-      // checkEmail();
-      update();
-    });
-    phone.addListener(() {
-      update();
-    });
-
-    dateTime.addListener(() {
-      update();
-    });
-    provincial.addListener(() {
-      update();
-    });
-    district.addListener(() {
-      update();
-    });
-    address.addListener(() {
-      update();
-    });
-    numberYearExp.addListener(() {
-      update();
-    });
-    titleExp.addListener(() {
-      update();
-    });
-    timeExpStart.addListener(() {
-      update();
-    });
-    timeExpEnd.addListener(() {
-      update();
-    });
-    informationExp.addListener(() {
-      update();
-    });
-    area.addListener(() {
-      update();
-    });
-    salaryCD.addListener(() {
-      update();
-    });
-    salaryUL1.addListener(() {
-      update();
-    });
-    salaryUL2.addListener(() {
-      update();
-    });
-    search.addListener(() {
-      update();
-    });
     super.onInit();
     update();
   }
@@ -301,27 +255,15 @@ class UpdateInfoTeacherController extends GetxController {
   @override
   void dispose() {
     // TODO: implement dispose
-    fullName.dispose();
-    passWord.dispose();
-    rePassWord.dispose();
-    fullName.dispose();
-    email.dispose();
-    phone.dispose();
-
-    dateTime.dispose();
-    provincial.dispose();
-    district.dispose();
-    address.dispose();
-    numberYearExp.dispose();
-    titleExp.dispose();
-    timeExpStart.dispose();
-    timeExpEnd.dispose();
-    informationExp.dispose();
-    area.dispose();
-    salaryCD.dispose();
-    salaryUL1.dispose();
-    salaryUL2.dispose();
-    search.dispose();
+    fullNameKey.currentState.dispose();
+    phoneKey.currentState.dispose();
+    provincialKey.currentState.dispose();
+    districtKey.currentState.dispose();
+    numberYearExpKey.currentState.dispose();
+    salaryCDKey.currentState.dispose();
+    salaryUL1Key.currentState.dispose();
+    salaryUL2Key.currentState.dispose();
+    areaTeachingKey.currentState.dispose();
     super.dispose();
   }
 
@@ -336,7 +278,7 @@ class UpdateInfoTeacherController extends GetxController {
 
   String checkArea() {
     print('checkProvincial');
-    if (errorArea && area.text.isEmpty) {
+    if (errorArea && areaTeaching.text.isEmpty) {
       return 'Trường bắt buộc!';
     }
     return null;
@@ -437,75 +379,6 @@ class UpdateInfoTeacherController extends GetxController {
     return null;
   }
 
-  void changeProvincial(String value) {
-    provincial.text = value;
-    print(provincial.text);
-    print(value);
-    update();
-  }
-
-  void changeArea(String value) {
-    area.text = value;
-    print(area.text);
-    print(value);
-    update();
-  }
-
-  void changeValuePassword() {
-    print('changeValuePassword');
-    isShowPassword = !isShowPassword;
-    update();
-  }
-
-  void changeValueRePassword() {
-    print('changeValueRePassword');
-    isShowRePassword = !isShowRePassword;
-    update();
-  }
-
-  String checkPassword() {
-    print('checkPassword');
-    if (errorShowPassword && passWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 6) {
-      return 'Mật khẩu tối thiểu 6 kí tự!';
-    }
-    return null;
-  }
-
-  String checkRePassword() {
-    print('checkRePassword');
-    if (errorShowRePassword && rePassWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowRePassword && passWord.text != rePassWord.text) {
-      return 'Mật khẩu không khớp!';
-    }
-    return null;
-  }
-
-  String checkFullName() {
-    if (errorFullName && fullName.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    }
-    return null;
-    update();
-  }
-
-  String checkEmail() {
-    print('checkEmail');
-    if (errorEmail && email.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorEmail &&
-        !email.text.contains('@') &&
-        !email.text.contains('.')) {
-      return 'Email không hợp lệ!';
-    } else if (errorEmail && !email.text.contains('.')) {
-      return 'Email không hợp lệ!';
-    } else {
-      return null;
-    }
-    update();
-  }
 
   imgFromGallery() async {
     File image = await ImagePicker.pickImage(
@@ -530,8 +403,7 @@ class UpdateInfoTeacherController extends GetxController {
   }
 
   imgFromGalleryImageInfor() async {
-    final galleryImage =
-        await ImagePicker.pickImage(source: ImageSource.gallery);
+    final galleryImage = await ImagePicker.pickImage(source: ImageSource.gallery);
     imageInfor = File(galleryImage.path);
     image.text = imageInfor.path.split('image_picker').last.toString();
     print(imageInfor.path.split('image_picker').last.toString());
@@ -556,11 +428,7 @@ class UpdateInfoTeacherController extends GetxController {
 
   void onSelectedGender(String value) {
     selectedGender = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachGioiTinh.length; i++) {
-    //   if (loginController.resultListData.data.danhSachGioiTinh[i].sexName == value) {
-    //     idGender = loginController.resultListData.data.danhSachGioiTinh[i].sexId;
-    //   }
-    // }
+
     errorGender = false;
     update();
   }
@@ -579,11 +447,7 @@ class UpdateInfoTeacherController extends GetxController {
 
   void onSelectedFormTeaching(String value) {
     selectedFormTeaching = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachHinhThucGiangDay.length; i++) {
-    //   if (loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodName == value) {
-    //     idFormTeaching = loginController.resultListData.data.danhSachHinhThucGiangDay[i].methodId;
-    //   }
-    // }
+
     idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2;
     errorFormTeaching = false;
     update();
@@ -591,11 +455,7 @@ class UpdateInfoTeacherController extends GetxController {
 
   void onSelectedLuong(String value) {
     selectedFormTeaching = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachLuongTheo.length; i++) {
-    //   if (loginController.resultListData.data.danhSachLuongTheo[i].name == value) {
-    //     idLuong = loginController.resultListData.data.danhSachLuongTheo[i].id;
-    //   }
-    // }
+
     errorFormTeaching = false;
     update();
   }
@@ -603,47 +463,44 @@ class UpdateInfoTeacherController extends GetxController {
   int idTime;
 
   void onSelectedStatusFee(String value) {
-    selectedStatusFee = value;
-    idTime = selectedStatusFee == 'Buổi'
-        ? 2
-        : selectedStatusFee == 'Tháng'
-            ? 3
-            : 1;
-    errorStatusFee = false;
+    selectedTime = value;
+    listLuong.forEach((key, values) {
+      if (values == value) {
+        idTime = key;
+      }
+    });
+    errorStatusTime = false;
     update();
   }
 
   void onSelectedSubject(String value) {
     selectedSubject = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachMonHoc.length; i++) {
-    //   if (loginController.resultListData.data.danhSachMonHoc[i].subject == value) {
-    //     idSubject = loginController.resultListData.data.danhSachMonHoc[i].idSubject;
-    //   }
-    // }
-    // print(data);
+
     print(idSubject);
     errorSubject = false;
     update();
   }
 
-  void onSelectedKieuGS(String value) {
-    selectedKieuGS = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachKieuGiaSu.length; i++) {
-    //   if (loginController.resultListData.data.danhSachKieuGiaSu[i].nameType == value) {
-    //     idExp = loginController.resultListData.data.danhSachKieuGiaSu[i].typeId;
-    //   }
-    // }
+  void onSelectedKieuGs(String value) {
+    print('value:$value');
+
+    listKieuGS.forEach((key, values) {
+      if (values == value) {
+        idExp = key;
+        if (value == '') {
+          selectedKieuGS = listKieuGS[0];
+        } else {
+          selectedKieuGS = listKieuGS[key];
+        }
+      }
+    });
     errorKieuGS = false;
     update();
   }
 
   void onSelectedMarriage(String value) {
     selectedMarriage = value;
-    // for (int i = 0; i < loginController.resultListData.data.danhSachKieuGiaSu.length; i++) {
-    //   if (loginController.resultListData.data.danhSachKieuGiaSu[i].nameType == value) {
-    //     idExp = loginController.resultListData.data.danhSachKieuGiaSu[i].typeId;
-    //   }
-    // }
+
     errorMarriage = false;
     update();
   }
@@ -742,15 +599,11 @@ class UpdateInfoTeacherController extends GetxController {
     print('getListTopic');
     try {
       print(listSubjectSelect.join(','));
-      ResultData res =
-          await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
-        // Utils.showToast(resultListTopic.data.message);
-      } else {
-        // Utils.showToast(resultListTopic.error.message);
-      }
+      } else {}
     } catch (e) {
       print(e);
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
@@ -764,8 +617,7 @@ class UpdateInfoTeacherController extends GetxController {
     print('getListTopic');
     print(listSubjectSelect.join(','));
     try {
-      ResultData res =
-          await authenticationRepositories.listDetailSubject(idTopic);
+      ResultData res = await authenticationRepositories.listDetailSubject(idTopic);
       resultListTopic = resultListTopicFromJson(res.data);
       if (resultListTopic.data != null) {
         listTopic = resultListTopic.data.listSubjectTag;
@@ -780,10 +632,7 @@ class UpdateInfoTeacherController extends GetxController {
             }
           }
         });
-        // Utils.showToast(resultListTopic.data.message);
-      } else {
-        // Utils.showToast(resultListTopic.error.message);
-      }
+      } else {}
     } catch (e) {
       print(e);
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
@@ -827,50 +676,38 @@ class UpdateInfoTeacherController extends GetxController {
     update();
   }
 
-//Step3
-//
-//   void checkButtonStep1() {
-//     print('checkButton');
-//
-//     errorEmail = true;
-//     errorShowPassword = true;
-//     errorShowRePassword = true;
-//     if (email.text.contains('@') && email.text.contains('.') && passWord.text.length >= 6 && passWord.text.isNotEmpty && passWord.text == rePassWord.text && rePassWord.text.isNotEmpty) {
-//       print('done');
-//       Get.toNamed(Routes.REGISTER_TEACHER_STEP2);
-//     } else {
-//       Get.dialog(DialogError(
-//         title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-//         onTap: () => Get.back(),
-//         textButton: 'Ok',
-//         richText: false,
-//       ));
-//     }
-//     update();
-//   }
-
   void checkButtonStep1() {
-    errorFullName = true;
     errorPhone = true;
     errorImage = true;
-    errorProvincial = true;
     errorDistrict = true;
-    errorAddress = true;
+    errorProvincial = true;
+    errorTitleExp = true;
+    errorTimeExpStart = true;
+    errorTimeExpEnd = true;
+    errorInformationExp = true;
     errorExp = selectedKieuGS.isNullOrBlank ? true : false;
     errorMarriage = selectedMarriage.isNullOrBlank ? true : false;
-    errorImage = imageAvatar.isNullOrBlank ? true : false;
+    errorImage = imageAvatar != null || urlAvatar != '' ? false : true;
+    errorNumberYearExp = numberYearExp.text.isNotEmpty && int.parse(numberYearExp.text == '' ? '0' : numberYearExp.text) <= 0 ? true : false;
     print('checkNullButton');
     if (timeExpStart.text.isNotEmpty && timeExpEnd.text.isNotEmpty) {
-      if (fullName.text.isNotEmpty &&
-          phone.text.isNotEmpty &&
-          regExp.hasMatch(phone.text) &&
+      errorTime = f.parse(timeExpEnd.text).isBefore(f.parse(timeExpStart.text)) ? true : false;
+      if (fullNameKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
           errorMarriage == false &&
-          provincial.text.isNotEmpty &&
-          district.text.isNotEmpty &&
-          f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text))) {
+          errorNumberYearExp == false &&
+          provincialKey.currentState.validate() &&
+          districtKey.currentState.validate() &&
+          f.parse(timeExpStart.text).isBefore(f.parse(timeExpEnd.text)) &&
+          errorImage == false) {
         Get.to(UpdateInfoTeacherStep2Screen());
       } else {
-        errorNTN = true;
+        fullNameKey.currentState.validate();
+        phoneKey.currentState.validate();
+        phoneKey.currentState.validate();
+        provincialKey.currentState.validate();
+        districtKey.currentState.validate();
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
@@ -879,14 +716,21 @@ class UpdateInfoTeacherController extends GetxController {
         ));
       }
     } else {
-      if (fullName.text.isNotEmpty &&
-          phone.text.isNotEmpty &&
-          regExp.hasMatch(phone.text) &&
+      if (fullNameKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
+          phoneKey.currentState.validate() &&
           errorMarriage == false &&
-          provincial.text.isNotEmpty &&
-          district.text.isNotEmpty) {
+          errorNumberYearExp == false &&
+          provincialKey.currentState.validate() &&
+          districtKey.currentState.validate() &&
+          errorImage == false) {
         Get.to(UpdateInfoTeacherStep2Screen());
       } else {
+        fullNameKey.currentState.validate();
+        phoneKey.currentState.validate();
+        phoneKey.currentState.validate();
+        provincialKey.currentState.validate();
+        districtKey.currentState.validate();
         Get.dialog(DialogError(
           title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
           onTap: () => Get.back(),
@@ -904,79 +748,75 @@ class UpdateInfoTeacherController extends GetxController {
 
   void checkButtonStep3() {
     print('checkNullButtonStep3');
-    errorSalaryCD = true;
-    errorSalaryUL1 = true;
-    errorSalaryUL2 = true;
+
     errorArea = true;
     errorProvincial = true;
     errorExp = true;
     errorSubject = listSubjectSelect.isEmpty ? true : false;
+    errorKieuGS = selectedKieuGS.isNullOrBlank || selectedKieuGS == listKieuGS.values.first ? true : false;
     errorSubjectTopic = listSubjectSelectTopic.isEmpty ? true : false;
-    errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
-    errorKieuGS = selectedKieuGS.isNullOrBlank ? true : false;
+    errorDistrictS3 = listDistrictSelect.isEmpty ? true : false;
     errorClass = selectedClass.isNullOrBlank ? true : false;
     errorFormTeaching = selectedFormTeaching.isNullOrBlank ? true : false;
-    final data = listbuoiday.firstWhere(
-        (e) => e.sang == '1' || e.chieu == '1' || e.toi == '1',
-        orElse: () => null);
+    final data = listbuoiday.firstWhere((e) => e.sang == '1' || e.chieu == '1' || e.toi == '1', orElse: () => null);
     errorBuoiDay = data == null ? true : false;
-    print('idTime');
-    print(idTime);
     if (valueButtonLuong) {
-      print('TH1');
-      salaryCD.text.isNotEmpty &&
-              int.parse(salaryCD.text) > 0 &&
-              !errorKieuGS &&
-              listSubjectSelect.isNotEmpty &&
-              (listTopic.isNotEmpty
-                  ? listSubjectSelectTopic.isNotEmpty
-                  : true) &&
-              !selectedClass.isNullOrBlank &&
-              !selectedFormTeaching.isNullOrBlank &&
-              area.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              // ignore: deprecated_member_use
-              data != null &&
-              !selectedStatusFee.isNullOrBlank
-          // ignore: unnecessary_statements
-          ? updateInfoTeacher()
-          // registerTeacher()
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+      if (salaryCDKey.currentState.validate() &&
+          listSubjectSelect.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
+          !selectedFormTeaching.isNullOrBlank &&
+          provincial.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          valueCheckBox &&
+          errorKieuGS == false &&
+          errorSubject == false &&
+          errorDistrictS3 == false &&
+          errorClass == false &&
+          errorFormTeaching == false &&
+          data != null &&
+          !selectedTime.isNullOrBlank) {
+        updateInfoTeacher();
+      } else {
+        salaryCDKey.currentState.validate();
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+      }
+      update();
     } else {
-      print('TH2');
+      if (salaryUL1Key.currentState.validate() &&
+          salaryUL2Key.currentState.validate() &&
+          listSubjectSelect.isNotEmpty &&
+          !selectedClass.isNullOrBlank &&
+          (listTopic.isNotEmpty ? listSubjectSelectTopic.isNotEmpty : true) &&
+          !selectedFormTeaching.isNullOrBlank &&
+          provincial.text.isNotEmpty &&
+          listDistrictSelect.isNotEmpty &&
+          valueCheckBox &&
+          errorKieuGS == false &&
+          errorSubject == false &&
+          errorDistrictS3 == false &&
+          errorClass == false &&
+          errorFormTeaching == false &&
+          data != null &&
+          !selectedTime.isNullOrBlank) {
+        updateInfoTeacher();
+      } else {
+        Get.dialog(DialogError(
+          title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+          onTap: () => Get.back(),
+          textButton: 'Ok',
+          richText: false,
+        ));
+        salaryUL1Key.currentState.validate();
 
-      errorLuong =
-          int.parse(salaryUL1.text) > int.parse(salaryUL2.text) ? true : false;
-      salaryUL1.text.isNotEmpty &&
-              salaryUL2.text.isNotEmpty &&
-              !errorKieuGS &&
-              listSubjectSelect.isNotEmpty &&
-              (listTopic.isNotEmpty
-                  ? listSubjectSelectTopic.isNotEmpty
-                  : true) &&
-              !selectedClass.isNullOrBlank &&
-              !selectedFormTeaching.isNullOrBlank &&
-              area.text.isNotEmpty &&
-              listDistrictSelect.isNotEmpty &&
-              data != null &&
-              int.parse(salaryUL1.text) > 0 &&
-              int.parse(salaryUL2.text) > 0 &&
-              int.parse(salaryUL1.text) < int.parse(salaryUL2.text) &&
-              !selectedStatusFee.isNullOrBlank
-          // ignore: unnecessary_statements
-          ? updateInfoTeacher()
-          // registerTeacher()
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+        salaryUL2Key.currentState.validate();
+      }
+      update();
     }
 
     update();
@@ -1003,29 +843,36 @@ class UpdateInfoTeacherController extends GetxController {
         print(resultGetInfoTeacher.data.infoTutor.ugsBrithday);
         fullName.text = resultGetInfoTeacher.data.infoTutor.ugsName;
         phone.text = resultGetInfoTeacher.data.infoTutor.ugsPhone;
-        selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender == ''
-            ? "Khác"
-            : resultGetInfoTeacher.data.infoTutor.ugsGender;
+        selectedGender = resultGetInfoTeacher.data.infoTutor.ugsGender == '' ? "Khác" : resultGetInfoTeacher.data.infoTutor.ugsGender;
         dateTime.text = resultGetInfoTeacher.data.infoTutor.ugsBrithday;
         selectedMarriage = resultGetInfoTeacher.data.infoTutor.ugsMarriage;
+
+        selectedTime = resultGetInfoTeacher.data.infoTutor.tutorMonth;
+        print('resultGetInfoTeacher.data.infoTutor.tutorMonth${resultGetInfoTeacher.data.infoTutor.tutorMonth}');
+        print('selectedTime${selectedTime}');
+        onSelectedStatusFee(selectedTime);
         provincial.text = resultGetInfoTeacher.data.infoTutor.citNameGs;
         district.text = resultGetInfoTeacher.data.infoTutor.citDetailGs;
         address.text = resultGetInfoTeacher.data.infoTutor.ugsAddress;
         numberYearExp.text = resultGetInfoTeacher.data.infoTutor.ugsExperence;
-        graduationYear.text =
-            resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
+        graduationYear.text = resultGetInfoTeacher.data.infoTutor.ugsGraduationYear;
         titleExp.text = resultGetInfoTeacher.data.infoTutor.ugsTitle;
         timeExpStart.text = resultGetInfoTeacher.data.infoTutor.ugsYearStart;
         timeExpEnd.text = resultGetInfoTeacher.data.infoTutor.ugsYearEnd;
         // end = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearEnd);
         // start = DateTime.parse(resultGetInfoTeacher.data.infoTutor.ugsYearStart);
-        informationExp.text =
-            resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
+        informationExp.text = resultGetInfoTeacher.data.infoTutor.ugsJobDescription;
         school.text = resultGetInfoTeacher.data.infoTutor.ugsSchool;
         prize.text = resultGetInfoTeacher.data.infoTutor.ugsAchievements;
+        specialized.text = resultGetInfoTeacher.data.infoTutor.ugsSpecialized;
         company.text = resultGetInfoTeacher.data.infoTutor.ugsWorkplace;
         information.text = resultGetInfoTeacher.data.infoTutor.ugsAboutUs;
-        selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
+        if (resultGetInfoTeacher.data.infoTutor.nametype != '') {
+          selectedKieuGS = resultGetInfoTeacher.data.infoTutor.nametype;
+        } else {
+          selectedKieuGS = listKieuGS[0];
+        }
+
         listSubjectSelect.clear();
         resultGetInfoTeacher.data.infoTutor.asName.forEach((element) {
           // listDataSubject.map((e) => e.asName == element);
@@ -1040,46 +887,31 @@ class UpdateInfoTeacherController extends GetxController {
         // listSubjectTopic = resultGetInfoTeacher.data.infoTutor.asDetail;
         selectedClass = resultGetInfoTeacher.data.infoTutor.ctName;
         selectedFormTeaching = resultGetInfoTeacher.data.infoTutor.ugsFormality;
-        area.text = resultGetInfoTeacher.data.infoTutor.citName;
+        areaTeaching.text = resultGetInfoTeacher.data.infoTutor.citName;
         listDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetail;
         errorDistrictArea = listDistrictSelect.isEmpty ? true : false;
-        getListDistrictArea(
-            int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
+        getListDistrictArea(int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity));
 
         for (int i = 0; i < listDataClass.length; i++) {
-          if (resultGetInfoTeacher.data.infoTutor.ctName ==
-              listDataClass[i].ctName) {
+          if (resultGetInfoTeacher.data.infoTutor.ctName == listDataClass[i].ctName) {
             idClass = int.parse(listDataClass[i].ctId);
           }
         }
-        salaryCD.text =
-            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-')
-                ? ''
-                : resultGetInfoTeacher.data.infoTutor.tutorSalary;
-        valueButtonLuong =
-            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-')
-                ? false
-                : true;
+        salaryCD.text = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? '' : resultGetInfoTeacher.data.infoTutor.tutorSalary;
+        valueButtonLuong = resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? false : true;
         // resultGetInfoTeacher.data.infoTutor.ugsUnitPrice.isNotEmpty ? valueButtonLuong = true : valueButtonLuong = false;
         selectedStatusFee = resultGetInfoTeacher.data.infoTutor.tutorMonth;
-        salaryUL1.text = resultGetInfoTeacher.data.infoTutor.tutorSalary
-                .contains('-')
-            ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first
-            : '';
-        salaryUL2.text = resultGetInfoTeacher.data.infoTutor.tutorSalary
-                .contains('-')
-            ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last
-            : '';
+        salaryUL1.text =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').first : '';
+        salaryUL2.text =
+            resultGetInfoTeacher.data.infoTutor.tutorSalary.contains('-') ? resultGetInfoTeacher.data.infoTutor.tutorSalary.split('-').last : '';
         idProvincial = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCityGs);
         idDistrict = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCountyGs);
-        listIdSubjectSelect =
-            resultGetInfoTeacher.data.infoTutor.asId.split(',');
-        listIdDistrictSelect =
-            resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
+        listIdSubjectSelect = resultGetInfoTeacher.data.infoTutor.asId.split(',');
+        listIdDistrictSelect = resultGetInfoTeacher.data.infoTutor.asDetailId.split(',');
 
         idValueArea = int.parse(resultGetInfoTeacher.data.infoTutor.ugsCity);
-        listIdDetailDistrictSelect =
-            resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
+        listIdDetailDistrictSelect = resultGetInfoTeacher.data.infoTutor.citDetailId.split(',');
 
         listbuoiday[0].sang = resultGetInfoTeacher.data.lichday.st2;
         listbuoiday[0].chieu = resultGetInfoTeacher.data.lichday.ct2;
@@ -1166,15 +998,11 @@ class UpdateInfoTeacherController extends GetxController {
                   : 0,
           dateTime.text,
           idMariage = selectedMarriage == 'Chưa kết hôn' ? 0 : 1,
-          idExp = selectedKieuGS == 'Sinh viên'
-              ? 1
-              : selectedKieuGS == 'Người đi làm'
-                  ? 2
-                  : 3,
+          idExp,
           idClass,
           school.text,
           numberYearExp.text,
-          'specialized',
+          specialized.text,
           idProvincial,
           idDistrict,
           address.text,
@@ -1190,26 +1018,21 @@ class UpdateInfoTeacherController extends GetxController {
           listSubjectSelectTopic.map((e) => e.idSubject).join(','),
           idFormTeaching = selectedFormTeaching == 'Gặp mặt' ? 1 : 2,
           salaryCD.text,
-          idTime = selectedStatusFee == 'Buổi'
-              ? 2
-              : selectedStatusFee == 'Tháng'
-                  ? 3
-                  : 1,
+          idTime,
           salaryUL1.text,
           salaryUL2.text,
           idValueArea,
           listIdDetailDistrictSelect.join(','),
           resultLichDayToJson(lichday));
-      print('11111');
-      print(idTime);
-      print(selectedStatusFee);
-      print(listIdDetailDistrictSelect.join(','));
-      ResultGetInfoTeacher resultGetInfoTeacher =
-          resultGetInfoTeacherFromJson(res.data);
+      ResultGetInfoTeacher resultGetInfoTeacher = resultGetInfoTeacherFromJson(res.data);
       if (resultGetInfoTeacher.data != null) {
         Get.back();
         Utils.showToast('Cập nhật thông tin thành công!');
-        Get.offAndToNamed(Routes.navigation);
+        navigationController.pageIndex.value = 0;
+        Get
+          ..back()
+          ..offNamed(Routes.navigation);
+        Get.delete();
       } else {
         Get.back();
         Utils.showToast(resultGetInfoTeacher.error.message);

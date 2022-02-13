@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/images.dart';
+import 'package:giasu_vn/common/shared/local/validate.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
 import 'package:giasu_vn/common/theme/app_text_style.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
-import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 
 class RegisterParentStep1Screen extends StatelessWidget {
   @override
@@ -47,58 +48,57 @@ class RegisterParentStep1Screen extends StatelessWidget {
                         SizedBox(
                           height: AppDimens.height * 0.07,
                         ),
-                        CustomTextField(
-                          focus: controller.checkEmailPH,
+                        CustomTxf(
+                          keyText: controller.formEmailKey,
+                          validator: (p0) => Validate.validateEmail(p0,checkMail: controller.valueCheckEmailGS.value),
                           textEditingController: controller.email,
                           obligatory: true,
-                          error: controller.checkEmail(),
-                          onPressed: () {
-                            // controller.imgFromGallery();
-                          },
                           title: 'Email',
-                          hintText: 'nguyenvana@gmail.com',
+                          hintText: 'Nhập email',
                           isPassword: false,
-                          isShowIcon: false,
-                          iconSuffix: Images.ic_file_upload,
+                          iconSuffix: Images.ic_plus,
+                          onChanged: (p0) => controller.onChangeHandler(p0),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(RegExp(' ')),
                           ],
+                          validator: (p0) => Validate.validatePassword(p0),
                           maxLine: 1,
-                          isShowIcon: true,
-                          obligatory: true,
-                          onPressed: () {
+                          onPressedIcon: () {
                             controller.changeValuePassword();
                           },
+                          isShowIcon: true,
+                          obligatory: true,
+                          keyText: controller.passWordKey,
                           title: 'Mật khẩu',
                           textEditingController: controller.passWord,
                           hintText: 'Mật khẩu',
                           keyboardType: TextInputType.text,
                           isPassword: controller.isShowPassword,
                           iconSuffix: controller.isShowPassword ? Images.ic_eye_on : Images.ic_eye_off,
-                          error: controller.checkPassword(),
                         ),
                         SizedBox(
                           height: AppDimens.space10,
                         ),
-                        CustomTextField(
+                        CustomTxf(
                           maxLine: 1,
                           isShowIcon: true,
                           obligatory: true,
+                          keyText: controller.rePassWordKey,
                           keyboardType: TextInputType.text,
                           textEditingController: controller.rePassWord,
-                          onPressed: () {
+                          onPressedIcon: () {
                             controller.changeValueRePassword();
                           },
+                          validator: (p0) => Validate.validateRePassword(p0, controller.passWord.text),
                           title: 'Nhập lại mật khẩu',
                           hintText: 'Nhập lại mật khẩu',
                           isPassword: controller.isShowRePassword,
                           iconSuffix: controller.isShowPassword ? Images.ic_eye_on : Images.ic_eye_off,
-                          error: controller.checkRePassword(),
                         ),
                         SizedBox(
                           height: AppDimens.height * 0.07,

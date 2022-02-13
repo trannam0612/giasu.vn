@@ -4,16 +4,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../common/images.dart';
 import '../common/theme/app_colors.dart';
-import '../common/theme/app_colors.dart';
-import '../common/theme/app_colors.dart';
-import '../common/theme/app_colors.dart';
-import '../common/theme/app_colors.dart';
-import '../common/theme/app_colors.dart';
-import '../common/theme/app_dimens.dart';
 import '../common/theme/app_dimens.dart';
 import '../common/theme/app_text_style.dart';
 import 'custom_button2.dart';
-import 'custom_button_1.dart';
 import 'custom_button_1.dart';
 
 class CardClassHome2 extends StatelessWidget {
@@ -107,9 +100,13 @@ class CardClassHome2 extends StatelessWidget {
                         SizedBox(
                           width: AppDimens.space8,
                         ),
-                        Text(
-                          fee,
-                          style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                        Flexible(
+                          child: Text(
+                            fee,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                          ),
                         ),
                       ],
                     ),
@@ -230,7 +227,7 @@ class CardClassHome2 extends StatelessWidget {
                           width: AppDimens.space8,
                         ),
                         Text(
-                          numberSuggest,
+                          numberSuggest ?? '',
                           style: AppTextStyles.regular(
                             context,
                             size: AppDimens.textSize14,

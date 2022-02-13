@@ -59,6 +59,7 @@ class LoginController extends GetxController {
       ResultData res = await authenticationRepositories.loginParent(email.text, pass.text);
       ResultLogin resultLogin = resultLoginFromJson(res.data);
       if (resultLogin.data != null) {
+        print('Thanhf coong');
         Get.back();
         SpUtil.putString(ConstString.Status_user, '1');
         print(resultLogin.data.data.token);
@@ -74,6 +75,8 @@ class LoginController extends GetxController {
         // Get.toNamed(Routes.navigation);
         // homeAfterParent(1, 10);
       } else {
+        print('Thanhf coong1');
+
         if (resultLogin.error.code == 401) {
           reSendOTPRegister();
           Get.back();
@@ -83,7 +86,7 @@ class LoginController extends GetxController {
         }
       }
     } catch (e) {
-      print(e);
+      print("eeeee:${e.toString()}");
       Get.back();
       Utils.showToast('Xảy ra lỗi. Vui lòng thử lại!');
     }
@@ -94,7 +97,7 @@ class LoginController extends GetxController {
     Get.dialog(DialogLoading());
     try {
       String email = SpUtil.getString(ConstString.EMAIL);
-      ResultData res = await authenticationRepositories.reSendOTPRegister(email);
+      ResultData res = await authenticationRepositories.reSendOTPRegister(email,userType);
       ResultReSendOtpRegister resultReSendOtpRegister = resultReSendOtpRegisterFromJson(res.data);
       if (resultReSendOtpRegister.data != null) {
         Get.back();
@@ -154,6 +157,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> listCitySubject() async {
+    print('listCitySubject');
     try {
       ResultData res = await authenticationRepositories.listCitySubject();
       resultListProvincialSubjectClass = resultListProvincialSubjectClassFromJson(res.data);

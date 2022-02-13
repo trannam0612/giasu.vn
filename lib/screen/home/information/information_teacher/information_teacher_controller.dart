@@ -152,6 +152,7 @@ class InformationTeacherController extends GetxController {
         listbuoiday[6].toi = resultDetailTeacher.data.data.lichday.tcn;
         print('resultDetailTeacher.data.data.dataInfo.ugsGender');
         print(resultDetailTeacher.data.data.dataInfo.ugsGender);
+        print(resultDetailTeacher.data.data.dataInfo.pointFree);
         Get.back();
         Get.to(InformationTeacherScreen(
           type: type,

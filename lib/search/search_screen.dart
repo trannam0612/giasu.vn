@@ -14,6 +14,7 @@ import 'package:giasu_vn/search/search_controller.dart';
 import 'package:giasu_vn/widgets/custom_button2.dart';
 import 'package:giasu_vn/widgets/custom_search_textfield.dart';
 import 'package:giasu_vn/widgets/custom_textfield.dart';
+import 'package:giasu_vn/widgets/custom_txf.dart';
 import 'package:giasu_vn/widgets/drop_down_select.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sp_util/sp_util.dart';
@@ -130,24 +131,25 @@ class _SearchScreenState extends State<SearchScreen> {
                           SizedBox(
                             height: AppDimens.space50,
                           ),
-                          CustomTextField(
+                          CustomTxf(
                             onTapTextField: () {
+                              Get.to(SelectTinhThanh(context));
+                            },
+                            onPressedIcon: () {
                               Get.to(SelectTinhThanh(context));
                             },
                             readOnly: true,
                             isShowIcon: true,
                             obligatory: false,
                             textEditingController: controller.provincial,
-                            onPressed: () {},
                             title: 'Tỉnh, thành phố',
                             hintText: 'Chọn tỉnh, thành phố',
                             iconSuffix: Images.ic_arrow_down,
-                            error: controller.checkProvincial(),
                           ),
                           SizedBox(
                             height: AppDimens.space18,
                           ),
-                          CustomTextField(
+                          CustomTxf(
                             onTapTextField: () {
                               Get.to(SelectClass(context));
                             },
@@ -155,11 +157,13 @@ class _SearchScreenState extends State<SearchScreen> {
                             isShowIcon: true,
                             obligatory: false,
                             textEditingController: controller.className,
-                            onPressed: () {},
+                            onPressedIcon: () {
+                              Get.to(SelectClass(context));
+
+                            },
                             title: 'Lớp học',
                             hintText: 'Chọn lớp học',
                             iconSuffix: Images.ic_arrow_down,
-                            error: controller.checkDistrict(),
                           ),
                           SizedBox(
                             height: AppDimens.space18,

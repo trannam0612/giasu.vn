@@ -100,6 +100,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                 style: AppTextStyles.regularW500(context, size: AppDimens.textSize20, color: AppColors.grey747474),
               ),
             ) : ListView.builder(
+              cacheExtent: 9999,
               physics: BouncingScrollPhysics(),
               controller: _controller,
               itemCount: controller.listGSDL.length,
@@ -223,7 +224,8 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              controller.listGSDL[index].asDetailName.join(', '),
+                                              controller.listGSDL[index].asDetailName.isEmpty?controller.listGSDL[index].asName:controller
+                                                  .listGSDL[index].asDetailName.join(', '),
                                               style: AppTextStyles.regular(
                                                 context,
                                                 size: AppDimens.textSize14,
@@ -240,24 +242,30 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              SvgPicture.asset(
-                                                Images.ic_money,
-                                                color: AppColors.secondaryF8971C,
-                                                width: 16,
-                                                height: 16,
-                                              ),
-                                              SizedBox(
-                                                width: AppDimens.space6,
-                                              ),
-                                              Text(
-                                                controller.listGSDL[index].ugsUnitPrice == '0' ?"${controller.listGSDL[index].ugsSalary} vnđ/${controller.listGSDL[index].ugsMonth}" : "${controller.listGSDL[index].ugsUnitPrice} vnđ/${controller.listGSDL[index].ugsMonth}",
-                                                style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
-                                              ),
-                                            ],
+                                          Expanded(
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  Images.ic_money,
+                                                  color: AppColors.secondaryF8971C,
+                                                  width: 16,
+                                                  height: 16,
+                                                ),
+                                                SizedBox(
+                                                  width: AppDimens.space6,
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    controller.listGSDL[index].ugsUnitPrice == '0' ?"${controller.listGSDL[index].ugsSalary} vnđ/${controller.listGSDL[index].ugsMonth}" : "${controller.listGSDL[index].ugsUnitPrice} vnđ/${controller.listGSDL[index].ugsMonth}",
+                                                    style: AppTextStyles.regular(context, size: AppDimens.textSize14, color: AppColors.secondaryF8971C),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           SizedBox(
                                             width: 95,
@@ -298,6 +306,7 @@ class _ListTeacherSavedState extends State<ListTeacherSaved> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
                                     child: CachedNetworkImage(
+                                      fadeInDuration : const Duration(milliseconds: 400),
                                       imageUrl: controller.listGSDL[index].ugsAvatar,
                                       width: 60,
                                       height: 60,

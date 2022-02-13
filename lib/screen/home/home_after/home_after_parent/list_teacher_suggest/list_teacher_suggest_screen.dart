@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:giasu_vn/common/constants.dart';
+import 'package:giasu_vn/common/convert.dart';
 import 'package:giasu_vn/common/images.dart';
 import 'package:giasu_vn/common/theme/app_colors.dart';
 import 'package:giasu_vn/common/theme/app_dimens.dart';
@@ -233,7 +234,7 @@ class _ListTeacherSuggestedScreenState extends State<ListTeacherSuggestedScreen>
                                           width: AppDimens.space4,
                                         ),
                                         Text(
-                                          controller.listGSDD[index].otDate,
+                                          Convert.convertTempDate(int.parse(controller.listGSDD[index].otDate), 'dd-MM-yyyy'),
                                           style: AppTextStyles.regularW400(
                                             context,
                                             size: AppDimens.textSize14,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:giasu_vn/common/constants.dart';
 import 'package:giasu_vn/common/shared/data/http/result_data.dart';
 import 'package:giasu_vn/common/shared/data/models/result_check_mail.dart';
 import 'package:giasu_vn/common/shared/data/models/result_list_district.dart';
-import 'package:giasu_vn/common/shared/data/models/result_list_provincial_subject.dart';
 import 'package:giasu_vn/common/shared/data/models/result_register_parent.dart';
 import 'package:giasu_vn/common/shared/data/repositories/authen_repositories.dart';
 import 'package:giasu_vn/common/utils.dart';
@@ -15,9 +15,7 @@ import 'package:giasu_vn/screen/authen/login/login_controller.dart';
 import 'package:giasu_vn/screen/authen/otp/otp_screen.dart';
 import 'package:giasu_vn/screen/authen/register/register_phuhuynh/register_phuhuynh_step2_screen.dart';
 import 'package:giasu_vn/widgets/dialog_error.dart';
-import 'package:giasu_vn/widgets/dialog_pass.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 class RegisterPhuHuynhController extends GetxController {
@@ -39,7 +37,7 @@ class RegisterPhuHuynhController extends GetxController {
   bool errorProvincial = false;
   bool errorDistrict = false;
   bool errorAddress = false;
-  bool errorImage = false;
+  RxBool errorImage = false.obs;
   bool errorInformation = false;
   File imageAvatar;
   File imageInfor;
@@ -52,6 +50,10 @@ class RegisterPhuHuynhController extends GetxController {
   TextEditingController passWord = TextEditingController();
   TextEditingController rePassWord = TextEditingController();
 
+  final GlobalKey<FormState> formEmailKey = GlobalKey();
+  final GlobalKey<FormState> passWordKey = GlobalKey();
+  final GlobalKey<FormState> rePassWordKey = GlobalKey();
+
   //step2
   TextEditingController fullName = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -61,49 +63,29 @@ class RegisterPhuHuynhController extends GetxController {
   TextEditingController district = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController information = TextEditingController();
+
+  final GlobalKey<FormState> fullNameKey = GlobalKey();
+  final GlobalKey<FormState> phoneKey = GlobalKey();
+  final GlobalKey<FormState> provincialKey = GlobalKey();
+  final GlobalKey<FormState> districtKey = GlobalKey();
+  final GlobalKey<FormState> addressKey = GlobalKey();
+
   String gender;
   List<String> listGender = ['Nam', 'Nữ'];
   List<ListDistrict> listDistrict = [];
-  RxBool valueCheckEmailGS = true.obs;
+  RxBool valueCheckEmailGS = false.obs;
+  Timer searchOnStoppedTyping;
+
+  onChangeHandler(value) {
+    const duration = Duration(milliseconds: 800); // set the duration that you want call search() after that.
+    if (searchOnStoppedTyping != null) {
+      searchOnStoppedTyping.cancel(); // clear timer
+    }
+    searchOnStoppedTyping = new Timer(duration, () => checkMailPH());
+  }
 
   @override
   void onInit() {
-    email.addListener(() {
-      update();
-    });
-    passWord.addListener(() {
-      update();
-    });
-    rePassWord.addListener(() {
-      update();
-    });
-    fullName.addListener(() {
-      update();
-    });
-    phone.addListener(() {
-      update();
-    });
-    dateTime.addListener(() {
-      update();
-    });
-    provincial.addListener(() {
-      update();
-    });
-    district.addListener(() {
-      update();
-    });
-    address.addListener(() {
-      update();
-    });
-    information.addListener(() {
-      update();
-    });
-    search.addListener(() {
-      update();
-    });
-    checkEmailPH.addListener(() {
-      checkMailPH();
-    });
     // TODO: implement onInit
 
     super.onInit();
@@ -159,65 +141,6 @@ class RegisterPhuHuynhController extends GetxController {
     update();
   }
 
-  String checkPassword() {
-    print('checkPassword');
-    if (errorShowPassword && passWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowPassword && passWord.text.length < 8) {
-      return 'Mật khẩu tối thiểu 8 kí tự!';
-    } else if (errorShowPassword && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      return 'Mật khẩu sai định dạng!';
-    }
-    return null;
-  }
-
-  String checkRePassword() {
-    print('checkRePassword');
-    if (errorShowRePassword && rePassWord.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorShowRePassword && passWord.text != rePassWord.text) {
-      return 'Mật khẩu không khớp!';
-    }
-    return null;
-  }
-
-  String checkEmail() {
-    if (errorEmail && email.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    } else if (errorEmail && !email.text.contains('@')) {
-      return 'Email không hợp lệ!';
-    } else if (errorEmail && !email.text.contains('.')) {
-      return 'Email không hợp lệ!';
-    } else if (!valueCheckEmailGS.value) {
-      return 'Email đã tồn tại!';
-    } else {
-      return null;
-    }
-  }
-
-  String checkFullName() {
-    if (errorName && fullName.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    }
-    return null;
-  }
-
-  RegExp regExp = new RegExp(r'^((0[0-9])|(84[0-9]))\d{8,10}$');
-
-  String checkPhone() {
-    print('checkPassword');
-
-    if (errorPhone && phone.text.isEmpty) {
-      return 'Trường bắt buộc!';
-    }
-    // else if (errorPhone && phone.text.length != 10) {
-    //   return 'Số điện thoại không hợp lệ!';
-    // }
-    else if (errorPhone && !regExp.hasMatch(phone.text)) {
-      return 'Số điện thoại sai định dạng!';
-    }
-    return null;
-  }
 
   String checkDate() {
     if (errorDateTime && dateTime.text.isEmpty) {
@@ -265,26 +188,16 @@ class RegisterPhuHuynhController extends GetxController {
   }
 
   void checkButtonStep1() {
-    errorEmail = true;
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    if (passWord.text.length >= 8 && !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text)) {
-      Get.dialog(DialogErrorPass());
+    if (formEmailKey.currentState.validate() && passWordKey.currentState.validate() && rePassWordKey.currentState.validate()) {
+      print('done');
+      Get.to(RegisterParentStep2Screen());
     } else {
-      email.text.isNotEmpty &&
-              valueCheckEmailGS.value &&
-              email.text.contains('@') &&
-              email.text.contains('.') &&
-              passWord.text.length >= 8 &&
-              RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])').hasMatch(passWord.text) &&
-              rePassWord.text == passWord.text
-          ? Get.to(RegisterParentStep2Screen())
-          : Get.dialog(DialogError(
-              title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-              onTap: () => Get.back(),
-              textButton: 'Ok',
-              richText: false,
-            ));
+      Get.dialog(DialogError(
+        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+        onTap: () => Get.back(),
+        textButton: 'Ok',
+        richText: false,
+      ));
     }
 
     update();
@@ -328,39 +241,30 @@ class RegisterPhuHuynhController extends GetxController {
   }
 
   void checkButton() {
-    errorEmail = true;
-    errorShowPassword = true;
-    errorShowRePassword = true;
-    errorName = true;
-    errorPhone = true;
-    // errorDateTime = true;
-    errorProvincial = true;
-    errorDistrict = true;
-    // errorAddress = true;
-    errorInformation = true;
-    // errorGender = gender.isNullOrBlank ? true : false;
-    errorImage = avatar.isNullOrBlank ? true : false;
-    // print()
-    fullName.text.isNotEmpty &&
-            phone.text.isNotEmpty &&
-            regExp.hasMatch(phone.text) &&
-            // errorGender == false &&
-            // dateTime.text.isNotEmpty &&
-            provincial.text.isNotEmpty &&
-            district.text.isNotEmpty &&
-            information.text.isNotEmpty
-        // &&
-        // address.text.isNotEmpty
-        ?
-        // Get.to(RegisterParentStep2Screen())
-        // Utils.showToast('Cập nhật thành công')
-        registerParent()
-        : Get.dialog(DialogError(
-            title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
-            onTap: () => Get.back(),
-            textButton: 'Ok',
-            richText: false,
-          ));
+    avatar != null ? errorImage.value = false : true;
+    print('errorImage:$errorImage');
+
+    if (!errorImage.value &&
+        fullNameKey.currentState.validate() &&
+        phoneKey.currentState.validate() &&
+        provincialKey.currentState.validate() &&
+        addressKey.currentState.validate() &&
+        districtKey.currentState.validate()) {
+      registerParent();
+    } else {
+      errorImage.value = true;
+      fullNameKey.currentState.validate();
+      phoneKey.currentState.validate();
+      provincialKey.currentState.validate();
+      addressKey.currentState.validate();
+      districtKey.currentState.validate();
+      Get.dialog(DialogError(
+        title: 'Tất cả các thông tin trên là bắt buộc để đăng ký.',
+        onTap: () => Get.back(),
+        textButton: 'Ok',
+        richText: false,
+      ));
+    }
     update();
   }
 
@@ -370,7 +274,7 @@ class RegisterPhuHuynhController extends GetxController {
       if (email.text.isNotEmpty) {
         ResultData res = await authenticationRepositories.checkMailPH(email.text);
         ResultCheckMail resultCheckMail = resultCheckMailFromJson(res.data);
-        if (resultCheckMail.data != null) {
+        if (resultCheckMail.data == null) {
           valueCheckEmailGS.value = true;
         } else {
           valueCheckEmailGS.value = false;
